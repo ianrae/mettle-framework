@@ -32,6 +32,10 @@ public class ParseTests extends BaseTest
 	{
 		public String name;
 		public List<FieldDef> fieldL = new ArrayList<FieldDef>();
+		public List<String> queryL = new ArrayList<String>();
+		public boolean extendInterface;
+		public boolean extendMock;
+		public boolean extendReal;
 	}
 	
 	public static class DalGenXmlParser extends SfxBaseObj
@@ -54,7 +58,15 @@ public class ParseTests extends BaseTest
 			SfxXmlParser p = new SfxXmlParser(doc);
 			ArrayList<Element> list = p.getAllByXPath(doc, "//entity");
 			
-			Element entityEl = list.get(0);
+			for(Element entityEl : list)
+			{
+				parseEntity(p, entityEl);
+			}
+			return (this.getErrorCount() == 0);
+		}
+		
+		public void parseEntity(SfxXmlParser p, Element entityEl) throws Exception
+		{
 			EntityDef def = new EntityDef();
 			this._entityL.add(def);
 			def.name = getEl(entityEl, "name");
@@ -65,42 +77,92 @@ public class ParseTests extends BaseTest
 				_tracker.errorOccurred("Entity name must not be empty");
 			}
 			
-			for(int i = 0; i < 10; i++)
+			//fields
+			for(int i = 0; i < 1000; i++)
 			{
 				Element tmp = p.getIthByName(entityEl, "field", i);
-				if (tmp != null)
+				if (tmp == null)
 				{
-					FieldDef fdef = new FieldDef();
-					String s = getBody(tmp);
-					String[] ar = s.split(" ");
-					if (ar.length == 0 || (ar.length == 1 && ar[0].isEmpty()))
-					{
-						errorOccuredInEntity("field must not be empty");
-					}
-					else if (ar.length == 1)
-					{
-						String name = ar[0].trim();
-						if (name.equals("id"))
-						{
-							fdef.name = name;
-							fdef.typeName = "long";
-						}
-						else
-						{
-							errorOccuredInEntity(String.format("field '%s' needs a type", name));
-						}
-					}
-					if (ar.length >= 2)
-					{
-						int n = ar.length;
-						fdef.typeName = ar[n - 2].trim();
-						fdef.name = ar[n - 1].trim();
-						parseAnnotations(fdef, ar);
-					}
-					def.fieldL.add(fdef);
+					break;
+				}
+				else
+				{
+					parseField(def, tmp);
 				}
 			}
-			return true;
+			//queries
+			for(int i = 0; i < 1000; i++)
+			{
+				Element tmp = p.getIthByName(entityEl, "query", i);
+				if (tmp == null)
+				{
+					break;
+				}
+				else
+				{
+					parseQuery(def, tmp);
+				}
+			}
+			
+			//more
+			def.extendInterface = getExtend(p, entityEl, "interface");
+			def.extendMock = getExtend(p, entityEl,  "mock");
+			def.extendReal = getExtend(p, entityEl, "real");
+		}
+		
+		private boolean getExtend(SfxXmlParser p, Element entityEl, String name)
+		{
+			Element tmp = p.getIthByName(entityEl, name, 0);
+			if (tmp == null)
+			{
+				return false;
+			}
+			return getBool(tmp, "extend");
+		}
+
+		private boolean getBool(Element tmp, String name) 
+		{
+			String s = getEl(tmp, name);
+			s = s.toLowerCase();
+			return (s.equals("true"));
+		}
+
+		private void parseField(EntityDef def, Element tmp)
+		{
+			FieldDef fdef = new FieldDef();
+			String s = getBody(tmp);
+			String[] ar = s.split(" ");
+			if (ar.length == 0 || (ar.length == 1 && ar[0].isEmpty()))
+			{
+				errorOccuredInEntity("field must not be empty");
+			}
+			else if (ar.length == 1)
+			{
+				String name = ar[0].trim();
+				if (name.equals("id"))
+				{
+					fdef.name = name;
+					fdef.typeName = "long";
+				}
+				else
+				{
+					errorOccuredInEntity(String.format("field '%s' needs a type", name));
+				}
+			}
+			if (ar.length >= 2)
+			{
+				int n = ar.length;
+				fdef.typeName = ar[n - 2].trim();
+				fdef.name = ar[n - 1].trim();
+				parseAnnotations(fdef, ar);
+			}
+			def.fieldL.add(fdef);
+		}
+		
+		private void parseQuery(EntityDef def, Element tmp)
+		{
+			String s = getBody(tmp);
+			def.queryL.add(s);
 		}
 		
 		String _currentEntityName;
@@ -136,7 +198,7 @@ public class ParseTests extends BaseTest
 			return s.trim();
 		}
 
-		public Object getErrorCount() 
+		public int getErrorCount() 
 		{
 			return _tracker.getErrorCount();
 		}
@@ -168,6 +230,13 @@ public class ParseTests extends BaseTest
 		assertEquals("label", fdef.name);
 		assertEquals("String", fdef.typeName);
 		assertEquals(1, fdef.annotationL.size());
+		assertEquals(0, parser.getErrorCount());
+		
+		assertEquals(1, def.queryL.size());
+		assertEquals("find_by_label", def.queryL.get(0));
+		assertEquals(true, def.extendInterface);
+		assertEquals(true, def.extendMock);
+		assertEquals(true, def.extendReal);
 	}
 	
 
@@ -182,5 +251,20 @@ public class ParseTests extends BaseTest
 		
 		assertEquals(1, parser._entityL.size());
 		assertEquals(3, parser.getErrorCount());
+	}
+	@Test
+	public void testTwo() throws Exception
+	{
+		log("--testTwo--");
+		SfxContext ctx = new SfxContext();
+		String path = this.getTestFile("dalgen2.xml");
+		DalGenXmlParser parser = new DalGenXmlParser(ctx);
+		boolean b = parser.parse(path);
+		
+		assertEquals(2, parser._entityL.size());
+		assertEquals(0, parser.getErrorCount());
+		
+		EntityDef def = parser._entityL.get(1);
+		assertEquals("User", def.name);
 	}
 }
