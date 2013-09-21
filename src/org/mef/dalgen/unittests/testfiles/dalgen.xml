@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<entities orm="ebean">
+<entity name="Task">
+<field>id:Long</field>
+<field>@Required label:String</field>
+<query>find_by_label</query>
+<interface extend="true" />
+<mock extend="true" />
+<real extend="true" />
+</entity>
+</entities>

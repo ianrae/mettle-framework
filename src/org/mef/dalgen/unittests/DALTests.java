@@ -15,13 +15,12 @@ public class DALTests extends BaseTest
 	}
 	public static class Task extends Entity
 	{
-		public Object carrier;
 		public long id;
 		public String label;
 		public boolean enabled;
 	}
 	
-	public static class TaskModel
+	public static class TaskModel //extends Model
 	{
 		private Task entity;
 		
@@ -61,6 +60,8 @@ public class DALTests extends BaseTest
 		List<Task> all();
 		void delete(long id);
 		void save(Task entity);
+		
+		Task find_by_label(String label);
 	}
 	
 	public static class MockTaskDAL implements ITaskDAL
@@ -107,6 +108,19 @@ public class DALTests extends BaseTest
 		{
 			delete(entity.id); //remove existing
 			_L.add(entity);
+		}
+
+		@Override
+		public Task find_by_label(String label) 
+		{
+			for(Task entity : _L)
+			{
+				if (entity.label == label)
+				{
+					return entity;
+				}
+			}
+			return null; //not found
 		}
 	}
 	
@@ -169,6 +183,8 @@ public class DALTests extends BaseTest
 		assertEquals(44, dal.all().get(0).id);
 		
 		assertEquals(entity, dal.findById(44));
+		assertEquals(entity, dal.find_by_label("abc"));
+		assertEquals(null, dal.find_by_label("def"));
 	}
 
 	@Test
