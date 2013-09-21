@@ -1,0 +1,14 @@
+fielddecl(type, name, value) ::= "   <type> <name><init(value)>;"
+init(v) ::= "<if(v)> = <v><endif>"
+
+
+classdecl(type, name) ::= << public class <name> extends Entity
+{
+	
+>>
+
+endclassdecl() ::= <<
+}
+>>
+
+sampleloop(items) ::= "<items:{it|<it.id>: <it.lastName>, <it.firstName>\n}>"
