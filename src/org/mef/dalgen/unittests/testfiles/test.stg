@@ -1,0 +1,12 @@
+decl(type, name, value) ::= "<type> <name><init(value)>;"
+init(v) ::= "<if(v)> = <v><endif>"
+
+
+classdecl(type, name) ::= << public class <name>
+{
+	public Object carrier;
+	public <type> xxx;
+}
+>>
+
+sampleloop(items) ::= "<items:{it|<it.id>: <it.lastName>, <it.firstName>\n}>"
