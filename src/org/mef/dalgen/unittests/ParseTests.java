@@ -13,6 +13,9 @@ import org.stringtemplate.v4.compiler.STParser.namedArg_return;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import sfx.SfxBaseObj;
+import sfx.SfxContext;
+import sfx.SfxErrorTracker;
 import sfx.SfxXmlParser;
 import sfx.SfxXmlReader;
 
@@ -31,12 +34,16 @@ public class ParseTests extends BaseTest
 		public List<FieldDef> fieldL = new ArrayList<FieldDef>();
 	}
 	
-	public static class DalGenXmlParser
+	public static class DalGenXmlParser extends SfxBaseObj
 	{
 		public List<EntityDef> _entityL = new ArrayList<EntityDef>();
+		SfxErrorTracker _tracker;
 		
-		public DalGenXmlParser()
+		public DalGenXmlParser(SfxContext ctx)
 		{
+			super(ctx);
+			_tracker = new SfxErrorTracker(ctx);
+
 		}
 		
 		public boolean parse(String path) throws Exception
@@ -51,6 +58,12 @@ public class ParseTests extends BaseTest
 			EntityDef def = new EntityDef();
 			this._entityL.add(def);
 			def.name = getEl(entityEl, "name");
+			this._currentEntityName = def.name;
+			
+			if (def.name.isEmpty())
+			{
+				_tracker.errorOccurred("Entity name must not be empty");
+			}
 			
 			for(int i = 0; i < 10; i++)
 			{
@@ -60,9 +73,9 @@ public class ParseTests extends BaseTest
 					FieldDef fdef = new FieldDef();
 					String s = getBody(tmp);
 					String[] ar = s.split(" ");
-					if (ar.length == 0)
+					if (ar.length == 0 || (ar.length == 1 && ar[0].isEmpty()))
 					{
-						
+						errorOccuredInEntity("field must not be empty");
 					}
 					else if (ar.length == 1)
 					{
@@ -71,6 +84,10 @@ public class ParseTests extends BaseTest
 						{
 							fdef.name = name;
 							fdef.typeName = "long";
+						}
+						else
+						{
+							errorOccuredInEntity(String.format("field '%s' needs a type", name));
 						}
 					}
 					if (ar.length >= 2)
@@ -86,12 +103,24 @@ public class ParseTests extends BaseTest
 			return true;
 		}
 		
+		String _currentEntityName;
+		private void errorOccuredInEntity(String msg)
+		{
+			String s = String.format("ENTITY %s: %s", _currentEntityName, msg);
+			_tracker.errorOccurred(s);
+			//log(s);
+		}
+		
 		private void parseAnnotations(FieldDef fdef, String[] ar)
 		{
 			int n = ar.length;
 			for(int i = 0; i < (n - 2); i++)
 			{
 				String s = ar[i].trim();
+				if (! s.startsWith("@"))
+				{
+					errorOccuredInEntity(String.format("field '%s' has invalid annotation: '%s'. Did you forget the '@'?", fdef.name, s));
+				}
 				fdef.annotationL.add(s);
 			}
 			
@@ -106,14 +135,20 @@ public class ParseTests extends BaseTest
 			String s = el.getTextContent();
 			return s.trim();
 		}
+
+		public Object getErrorCount() 
+		{
+			return _tracker.getErrorCount();
+		}
 	}
 
 	@Test
 	public void test() throws Exception
 	{
 		log("--test--");
+		SfxContext ctx = new SfxContext();
 		String path = this.getTestFile("dalgen.xml");
-		DalGenXmlParser parser = new DalGenXmlParser();
+		DalGenXmlParser parser = new DalGenXmlParser(ctx);
 		boolean b = parser.parse(path);
 		
 		assertEquals(1, parser._entityL.size());
@@ -136,4 +171,16 @@ public class ParseTests extends BaseTest
 	}
 	
 
+	@Test
+	public void testBad() throws Exception
+	{
+		log("--testBad--");
+		SfxContext ctx = new SfxContext();
+		String path = this.getTestFile("dalgen-bad.xml");
+		DalGenXmlParser parser = new DalGenXmlParser(ctx);
+		boolean b = parser.parse(path);
+		
+		assertEquals(1, parser._entityL.size());
+		assertEquals(3, parser.getErrorCount());
+	}
 }
