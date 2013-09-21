@@ -15,16 +15,39 @@ import sfx.SfxContext;
 
 public class CodeGenTests extends BaseTest
 {
-	public static class EntityCodeGen extends SfxBaseObj
+	public abstract static class CodeGenBase extends SfxBaseObj
 	{
-		private String _path;
-		STGroup _group;
+//		private String _path;
+		protected STGroup _group;
 
-		public EntityCodeGen(SfxContext ctx, String path)
+		public CodeGenBase(SfxContext ctx, String path)
 		{
 			super(ctx);
-			_path = path;
-			_group = new STGroupFile(_path);
+//			_path = path;
+			_group = new STGroupFile(path);
+		}
+		
+		
+		protected String genFields(EntityDef def)
+		{
+			
+			String result = "";
+			for(FieldDef fdef : def.fieldL)
+			{
+				result += this.buildField(fdef);
+				result += "\n\n";
+			}
+			return result;
+		}
+		
+		protected abstract String buildField(FieldDef fdef);
+	}
+	
+	public static class EntityCodeGen extends CodeGenBase
+	{
+		public EntityCodeGen(SfxContext ctx, String path)
+		{
+			super(ctx, path);
 		}
 		
 		public String generate(EntityDef def)
@@ -42,19 +65,8 @@ public class CodeGenTests extends BaseTest
 			return result;
 		}
 		
-		private String genFields(EntityDef def)
-		{
-			
-			String result = "";
-			for(FieldDef fdef : def.fieldL)
-			{
-				result += this.buildField(fdef);
-				result += "\n\n";
-			}
-			return result;
-		}
-		
-		private String buildField(FieldDef fdef)
+		@Override
+		protected String buildField(FieldDef fdef)
 		{
 			ST st = _group.getInstanceOf("fielddecl");
 			String result = "";
@@ -63,23 +75,27 @@ public class CodeGenTests extends BaseTest
 			result = st.render(); 
 
 			String s = "";
-			for(String ann : fdef.annotationL)
-			{
-				if (s.isEmpty())
-				{
-					s += "   ";
-				}
-				s += ann + " ";
-			}
-			if (! s.isEmpty())
-			{
-				s += "\n";
-			}
+//			for(String ann : fdef.annotationL)
+//			{
+//				if (s.isEmpty())
+//				{
+//					s += "   ";
+//				}
+//				s += ann + " ";
+//			}
+//			if (! s.isEmpty())
+//			{
+//				s += "\n";
+//			}
 			
 			result = s + result;
 			return result;
 		}
 	}
+	
+	
+	
+	
 	@Test
 	public void test() throws Exception
 	{

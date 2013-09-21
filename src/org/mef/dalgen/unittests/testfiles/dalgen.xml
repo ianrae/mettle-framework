@@ -3,6 +3,7 @@
 <entity name="Task">
 <field>long id</field>
 <field>@Required String label</field>
+<field>boolean enabled</field>
 <query>find_by_label</query>
 <interface extend="true" />
 <mock extend="true" />

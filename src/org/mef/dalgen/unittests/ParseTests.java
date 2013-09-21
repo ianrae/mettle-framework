@@ -30,8 +30,7 @@ public class ParseTests extends BaseTest
 		EntityDef def = parser._entityL.get(0);
 		assertEquals("Task", def.name);
 		
-		assertEquals(2, def.fieldL.size());
-		assertEquals(2, def.fieldL.size());
+		assertEquals(3, def.fieldL.size());
 		
 		FieldDef fdef = def.fieldL.get(0);
 		assertEquals("id", fdef.name);
