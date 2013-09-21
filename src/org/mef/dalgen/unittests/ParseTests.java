@@ -20,9 +20,9 @@ public class ParseTests extends BaseTest
 	public void test() throws Exception
 	{
 		log("--test--");
-		SfxContext ctx = new SfxContext();
+		createContext();
 		String path = this.getTestFile("dalgen.xml");
-		DalGenXmlParser parser = new DalGenXmlParser(ctx);
+		DalGenXmlParser parser = new DalGenXmlParser(_ctx);
 		boolean b = parser.parse(path);
 		
 		assertEquals(1, parser._entityL.size());

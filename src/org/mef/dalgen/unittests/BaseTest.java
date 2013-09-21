@@ -4,11 +4,17 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import sfx.SfxContext;
 import sfx.SfxFileUtils;
 
 public class BaseTest 
 {
-
+	protected SfxContext _ctx;
+	protected void createContext()
+	{
+		_ctx = new SfxContext();
+	}
+	
 	protected void log(String s)
 	{
 		System.out.println(s);
