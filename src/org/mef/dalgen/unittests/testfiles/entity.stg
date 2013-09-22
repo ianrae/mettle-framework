@@ -1,6 +1,12 @@
+header() ::= <<
+package org.mef.dalgen.unittests.gen;
+
+import org.mef.dal.*;
+
+>>
 
 fielddecl(type, name, value) ::= <<
-    <type> <name><init(value)>;
+    public <type> <name><init(value)>;
 >>
 init(v) ::= "<if(v)> = <v><endif>"
 

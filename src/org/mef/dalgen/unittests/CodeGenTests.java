@@ -10,6 +10,8 @@ import org.mef.dalgen.codegen.ModelCodeGen;
 import org.mef.dalgen.parser.DalGenXmlParser;
 import org.mef.dalgen.parser.EntityDef;
 
+import sfx.SfxTextWriter;
+
 
 
 public class CodeGenTests extends BaseTest
@@ -26,6 +28,12 @@ public class CodeGenTests extends BaseTest
 		String code = gen.generate(def);	
 		log(code);
 		assertEquals(true, 10 < code.length());
+		
+		String outPath = this.getUnitTetDir("gen\\Task.java");
+		SfxTextWriter w = new SfxTextWriter(outPath, null);
+		w.addLine(code);
+		boolean b = w.writeFile();
+		assertEquals(true, b);
 	}
 	
 	@Test
@@ -69,6 +77,9 @@ public class CodeGenTests extends BaseTest
 		log(code);
 		assertEquals(true, 10 < code.length());
 	}
+	
+	
+	
 	//--- helper fns ---
 	private EntityDef readEntityDef() throws Exception
 	{
@@ -79,4 +90,6 @@ public class CodeGenTests extends BaseTest
 		assertEquals(1, parser._entityL.size());
 		return parser._entityL.get(0);
 	}
+
+
 }

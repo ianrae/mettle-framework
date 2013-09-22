@@ -28,5 +28,13 @@ public class BaseTest
 		path = utils.PathCombine(path, filepath);
 		return path;
 	}
+	protected String getUnitTetDir(String filepath)
+	{
+		SfxFileUtils utils = new SfxFileUtils();
+		String path = utils.getCurrentDir();
+		path = utils.PathCombine(path, "src\\org\\mef\\dalgen\\unittests");
+		path = utils.PathCombine(path, filepath);
+		return path;
+	}
 
 }
