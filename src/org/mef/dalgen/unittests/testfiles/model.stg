@@ -1,0 +1,28 @@
+fielddecl(type, name, bigName) ::= <<
+		public <type> get<bigName>() {
+			return this.entity.<name>;
+		}
+		public void set<bigName>(<type> val) {
+			this.entity.<name> = val;
+		}
+>>
+
+
+
+classdecl(type, name) ::= <<public class <name> extends Model
+{
+		private <type> entity;
+		public void initEntity(<type> entity)
+		{
+			this.entity = entity;
+		}
+		
+		//getters and setters
+		
+>>
+
+endclassdecl() ::= <<
+}
+>>
+
+sampleloop(items) ::= "<items:{it|<it.id>: <it.lastName>, <it.firstName>\n}>"

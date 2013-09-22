@@ -105,7 +105,7 @@ public class CodeGenTests extends BaseTest
 		{
 			ST st = _group.getInstanceOf("classdecl");
 			st.add("type", "int");
-			st.add("name", def.name);
+			st.add("name", def.name + "Model");
 			String result = st.render(); 
 			
 			result += genFields(def);
@@ -123,6 +123,7 @@ public class CodeGenTests extends BaseTest
 			String result = "";
 			st.add("type", fdef.typeName);
 			st.add("name", fdef.name);
+			st.add("bigName", uppify(fdef.name));
 			result = st.render(); 
 
 			String s = "";
@@ -141,6 +142,14 @@ public class CodeGenTests extends BaseTest
 			
 			result = s + result;
 			return result;
+		}
+
+		private Object uppify(String name) 
+		{
+			String upper = name.toUpperCase();
+			String s = upper.substring(0, 1);
+			s += name.substring(1);
+			return s;
 		}
 	}
 	
@@ -167,7 +176,7 @@ public class CodeGenTests extends BaseTest
 		createContext();
 		EntityDef def = readEntityDef();
 		
-		String path = this.getTestFile("entity.stg");
+		String path = this.getTestFile("model.stg");
 		ModelCodeGen gen = new ModelCodeGen(_ctx, path);
 		String code = gen.generate(def);	
 		log(code);
