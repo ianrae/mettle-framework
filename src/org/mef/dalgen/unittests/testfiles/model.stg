@@ -1,8 +1,8 @@
-fielddecl(type, name, bigName) ::= <<
+fielddecl(type, name, bigName, setName) ::= <<
 		public <type> get<bigName>() {
 			return this.entity.<name>;
 		}
-		public void set<bigName>(<type> val) {
+		public void <setName><bigName>(<type> val) {
 			this.entity.<name> = val;
 		}
 >>
