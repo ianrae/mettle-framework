@@ -15,10 +15,9 @@ public class EntityCodeGen extends CodeGenBase
 		
 		public String generate(EntityDef def)
 		{
-			ST st = _group.getInstanceOf("header");
-			String result = st.render(); 
+			String result = genHeader(); 
 			
-			st = _group.getInstanceOf("classdecl");
+			ST st = _group.getInstanceOf("classdecl");
 			st.add("type", "int");
 			st.add("name", def.name);
 			result += st.render(); 

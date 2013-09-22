@@ -1,3 +1,11 @@
+header() ::= <<
+package org.mef.dalgen.unittests.gen;
+
+import org.mef.dal.*;
+import play.data.*;
+
+>>
+
 fielddecl(type, name, bigName, setName) ::= <<
 
     <type> <name>;

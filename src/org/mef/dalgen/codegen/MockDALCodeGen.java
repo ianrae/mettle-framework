@@ -15,9 +15,10 @@ public class MockDALCodeGen extends CodeGenBase
 	
 	public String generate(EntityDef def)
 	{
+		String result = genHeader(); 
 		ST st = _group.getInstanceOf("classdecl");
 		st.add("name", def.name);
-		String result = st.render(); 
+		result += st.render(); 
 		
 		result += genQueries(def);
 		st = _group.getInstanceOf("endclassdecl");
@@ -33,7 +34,7 @@ public class MockDALCodeGen extends CodeGenBase
 		{
 			ST st = _group.getInstanceOf("querydecl");
 			String fieldName = getFieldName(query);
-			st.add("type", getFieldType(def, fieldName));
+			st.add("type", def.name); //getFieldType(def, fieldName));
 			st.add("name", fieldName);
 			result = st.render(); 
 			result += "\n\n";

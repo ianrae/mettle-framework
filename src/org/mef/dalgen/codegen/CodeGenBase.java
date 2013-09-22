@@ -2,6 +2,7 @@ package org.mef.dalgen.codegen;
 
 import org.mef.dalgen.parser.EntityDef;
 import org.mef.dalgen.parser.FieldDef;
+import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.STGroup;
 import org.stringtemplate.v4.STGroupFile;
 
@@ -12,6 +13,8 @@ public abstract class CodeGenBase extends SfxBaseObj
 	{
 //		private String _path;
 		protected STGroup _group;
+		
+		public boolean forUnitTest;
 
 		public CodeGenBase(SfxContext ctx, String path)
 		{
@@ -67,4 +70,12 @@ public abstract class CodeGenBase extends SfxBaseObj
 			int pos = query.indexOf(target);
 			return query.substring(pos + target.length());
 		}
+		
+		protected String genHeader()
+		{
+			ST st = _group.getInstanceOf("header");
+			String result = st.render(); 
+			return result;
+		}
+		
 	}

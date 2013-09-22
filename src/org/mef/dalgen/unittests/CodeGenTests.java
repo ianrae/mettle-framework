@@ -13,9 +13,10 @@ import org.mef.dalgen.parser.EntityDef;
 import sfx.SfxTextWriter;
 
 
-
 public class CodeGenTests extends BaseTest
 {
+	private static boolean genFiles = true;
+	
 	@Test
 	public void testEntity() throws Exception
 	{
@@ -29,13 +30,9 @@ public class CodeGenTests extends BaseTest
 		log(code);
 		assertEquals(true, 10 < code.length());
 		
-		String outPath = this.getUnitTetDir("gen\\Task.java");
-		SfxTextWriter w = new SfxTextWriter(outPath, null);
-		w.addLine(code);
-		boolean b = w.writeFile();
-		assertEquals(true, b);
+		writeFile("Task", code);
+		
 	}
-	
 	@Test
 	public void testModel() throws Exception
 	{
@@ -45,9 +42,12 @@ public class CodeGenTests extends BaseTest
 		
 		String path = this.getTestFile("model.stg");
 		ModelCodeGen gen = new ModelCodeGen(_ctx, path);
+		gen.forUnitTest = true;
 		String code = gen.generate(def);	
 		log(code);
 		assertEquals(true, 10 < code.length());
+		
+		writeFile("TaskModel", code);
 	}
 	
 	@Test
@@ -62,6 +62,7 @@ public class CodeGenTests extends BaseTest
 		String code = gen.generate(def);	
 		log(code);
 		assertEquals(true, 10 < code.length());
+		writeFile("ITaskDAL", code);
 	}
 	
 	@Test
@@ -76,6 +77,7 @@ public class CodeGenTests extends BaseTest
 		String code = gen.generate(def);	
 		log(code);
 		assertEquals(true, 10 < code.length());
+		writeFile("MockTaskDAL", code);
 	}
 	
 	
@@ -91,5 +93,20 @@ public class CodeGenTests extends BaseTest
 		return parser._entityL.get(0);
 	}
 
+	private void writeFile(String fileName, String code)
+	{
+		if (! genFiles)
+		{
+			return;
+		}
+		
+		String outPath = this.getUnitTetDir(String.format("gen\\%s.java", fileName));
+		log(fileName + ": " + outPath);
+		SfxTextWriter w = new SfxTextWriter(outPath, null);
+		w.addLine(code);
+		boolean b = w.writeFile();
+		assertEquals(true, b);
+		
+	}
 
 }

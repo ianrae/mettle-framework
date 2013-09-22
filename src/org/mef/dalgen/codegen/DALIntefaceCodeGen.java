@@ -15,10 +15,12 @@ public class DALIntefaceCodeGen extends CodeGenBase
 		
 		public String generate(EntityDef def)
 		{
+			String result = genHeader(); 
+			
 			ST st = _group.getInstanceOf("classdecl");
 			st.add("type", def.name);
 			st.add("bigName", uppify(def.name));
-			String result = st.render(); 
+			result += st.render(); 
 			
 			result += genQueries(def);
 			
@@ -35,7 +37,7 @@ public class DALIntefaceCodeGen extends CodeGenBase
 			{
 				ST st = _group.getInstanceOf("querydecl");
 				String fieldName = getFieldName(query);
-				st.add("type", getFieldType(def, fieldName));
+				st.add("type", def.name); //getFieldType(def, fieldName));
 				st.add("name", fieldName);
 				st.add("fullName", query);
 				result = st.render(); 

@@ -1,7 +1,14 @@
+header() ::= <<
+package org.mef.dalgen.unittests.gen;
+
+import org.mef.dal.*;
+import java.util.List;
+
+>>
 
 
 classdecl(type, bigName) ::= <<
-public static interface I<bigName>DAL
+public interface I<bigName>DAL
 {
 	int count();
 	<type> findById(long id);
@@ -16,5 +23,5 @@ endclassdecl() ::= <<
 >>
 
 querydecl(type, name, fullName) ::= <<
-public <type> <fullName>();
+public <type> <fullName>(String val);
 >>

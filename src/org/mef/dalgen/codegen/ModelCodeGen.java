@@ -15,10 +15,12 @@ public class ModelCodeGen extends CodeGenBase
 	
 	public String generate(EntityDef def)
 	{
+		String result = genHeader(); 
+
 		ST st = _group.getInstanceOf("classdecl");
-		st.add("type", "int");
+		st.add("type", def.name);
 		st.add("name", def.name + "Model");
-		String result = st.render(); 
+		result += st.render(); 
 		
 		result += genFields(def);
 		
@@ -51,6 +53,11 @@ public class ModelCodeGen extends CodeGenBase
 		if (! s.isEmpty())
 		{
 			s += "\n";
+		}
+		
+		if (forUnitTest)
+		{
+			s = "//" + s;
 		}
 		
 		result = s + result;

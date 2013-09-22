@@ -1,3 +1,15 @@
+header() ::= <<
+package org.mef.dalgen.unittests.gen;
+
+import org.mef.dal.*;
+import java.util.List;
+import java.util.ArrayList;
+
+
+>>
+
+
+
 querydecl(type, name) ::= <<
     @Override
     public <type> find_by_<name>(String val) 
@@ -16,7 +28,7 @@ querydecl(type, name) ::= <<
 
 
 classdecl(name) ::= <<
-public static class Mock<name>DAL implements I<name>DAL
+public class Mock<name>DAL implements I<name>DAL
 {
     private ArrayList\<<name>\> _L = new ArrayList\<<name>\>();
     
