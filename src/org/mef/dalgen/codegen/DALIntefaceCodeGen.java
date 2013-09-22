@@ -43,24 +43,6 @@ public class DALIntefaceCodeGen extends CodeGenBase
 			}
 			return result;
 		}
-		private String getFieldType(EntityDef def, String fieldName)
-		{
-			for(FieldDef fdef : def.fieldL)
-			{
-				if (fdef.name.equals(fieldName))
-				{
-					return fdef.typeName;
-				}
-				
-			}
-			return "?";
-		}
-		private String getFieldName(String query)
-		{
-			String target = "find_by_"; //support find_all later!
-			int pos = query.indexOf(target);
-			return query.substring(pos + target.length());
-		}
 
 		@Override
 		protected String buildField(FieldDef fdef) {

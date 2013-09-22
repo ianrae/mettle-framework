@@ -5,9 +5,11 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import org.mef.dalgen.codegen.DALIntefaceCodeGen;
 import org.mef.dalgen.codegen.EntityCodeGen;
+import org.mef.dalgen.codegen.MockDALCodeGen;
 import org.mef.dalgen.codegen.ModelCodeGen;
 import org.mef.dalgen.parser.DalGenXmlParser;
 import org.mef.dalgen.parser.EntityDef;
+
 
 
 public class CodeGenTests extends BaseTest
@@ -54,6 +56,19 @@ public class CodeGenTests extends BaseTest
 		assertEquals(true, 10 < code.length());
 	}
 	
+	@Test
+	public void testMockDAL() throws Exception
+	{
+		log("--testMockDAL--");
+		createContext();
+		EntityDef def = readEntityDef();
+		
+		String path = this.getTestFile("dal_mock.stg");
+		MockDALCodeGen gen = new MockDALCodeGen(_ctx, path);
+		String code = gen.generate(def);	
+		log(code);
+		assertEquals(true, 10 < code.length());
+	}
 	//--- helper fns ---
 	private EntityDef readEntityDef() throws Exception
 	{

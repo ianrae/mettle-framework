@@ -48,4 +48,23 @@ public abstract class CodeGenBase extends SfxBaseObj
 			s += name.substring(1);
 			return s;
 		}
+		
+		protected String getFieldType(EntityDef def, String fieldName)
+		{
+			for(FieldDef fdef : def.fieldL)
+			{
+				if (fdef.name.equals(fieldName))
+				{
+					return fdef.typeName;
+				}
+				
+			}
+			return "?";
+		}
+		protected String getFieldName(String query)
+		{
+			String target = "find_by_"; //support find_all later!
+			int pos = query.indexOf(target);
+			return query.substring(pos + target.length());
+		}
 	}
