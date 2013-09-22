@@ -20,6 +20,8 @@ public class MockDALCodeGen extends CodeGenBase
 		String result = st.render(); 
 		
 		result += genQueries(def);
+		st = _group.getInstanceOf("endclassdecl");
+		result += st.render(); 
 		
 		return result;
 	}

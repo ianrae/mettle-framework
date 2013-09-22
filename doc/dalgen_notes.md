@@ -264,7 +264,29 @@ However, if the support in the controller is already very good, then leave it th
 uses annotations in your controller and is easy to use. You can still
 test with integration tests.
 
+DALGEN
+---------------
 
+	dalgen /version    prints out version
+	
+	dalgan new         generates mef directories
+	
+	dalgen             runs and generates files, ovewriting any existing files
+	
+	startup
+	cdir is current dir
+	read dalgen.xml --> error out
+	for each entity
+	   generate entity, idal, mockdal, realdal, utils, model --> all into textbuffers
+	   
+	if all ok then
+	  write out all textbuffers
+	  
+deploy
+    dalgen-lib.jar
+	dalgen.bat
+	
+	
 
  
  

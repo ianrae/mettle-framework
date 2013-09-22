@@ -38,19 +38,6 @@ public class EntityCodeGen extends CodeGenBase
 			result = st.render(); 
 
 			String s = "";
-//			for(String ann : fdef.annotationL)
-//			{
-//				if (s.isEmpty())
-//				{
-//					s += "   ";
-//				}
-//				s += ann + " ";
-//			}
-//			if (! s.isEmpty())
-//			{
-//				s += "\n";
-//			}
-			
 			result = s + result;
 			return result;
 		}

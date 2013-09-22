@@ -22,8 +22,8 @@ public class DALIntefaceCodeGen extends CodeGenBase
 			
 			result += genQueries(def);
 			
-//			st = _group.getInstanceOf("endclassdecl");
-//			result += st.render(); 
+			st = _group.getInstanceOf("endclassdecl");
+			result += st.render(); 
 			
 			return result;
 		}

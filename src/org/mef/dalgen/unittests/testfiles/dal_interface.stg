@@ -1,17 +1,20 @@
 
 
-classdecl(type, bigName) ::= <<public static interface I<bigName>DAL
-	{
-		int count();
-		<type> findById(long id);
-		List\<<type>\> all();
-		void delete(long id);
-		void save(<type> entity);
-		
-	}
-		
+classdecl(type, bigName) ::= <<
+public static interface I<bigName>DAL
+{
+	int count();
+	<type> findById(long id);
+	List\<<type>\> all();
+	void delete(long id);
+	void save(<type> entity);        
+        
+>>
+
+endclassdecl() ::= <<
+}
 >>
 
 querydecl(type, name, fullName) ::= <<
-		public <type> <fullName>();
+public <type> <fullName>();
 >>
