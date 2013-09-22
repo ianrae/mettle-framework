@@ -34,4 +34,18 @@ public abstract class CodeGenBase extends SfxBaseObj
 		}
 		
 		protected abstract String buildField(FieldDef fdef);
+		
+		
+		protected boolean isId(String name) 
+		{
+			return (name.equals("id"));
+		}
+
+		protected Object uppify(String name) 
+		{
+			String upper = name.toUpperCase();
+			String s = upper.substring(0, 1);
+			s += name.substring(1);
+			return s;
+		}
 	}

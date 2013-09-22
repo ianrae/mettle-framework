@@ -1,4 +1,7 @@
 fielddecl(type, name, bigName, setName) ::= <<
+
+		<type> <name>;
+		
 		public <type> get<bigName>() {
 			return this.entity.<name>;
 		}

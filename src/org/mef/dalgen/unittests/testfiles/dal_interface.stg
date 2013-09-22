@@ -1,0 +1,17 @@
+
+
+classdecl(type, bigName) ::= <<public static interface I<bigName>DAL
+	{
+		int count();
+		<type> findById(long id);
+		List\<<type>\> all();
+		void delete(long id);
+		void save(<type> entity);
+		
+	}
+		
+>>
+
+querydecl(type, name, fullName) ::= <<
+		public <type> <fullName>();
+>>

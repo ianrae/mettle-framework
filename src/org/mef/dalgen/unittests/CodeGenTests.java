@@ -48,37 +48,68 @@ public class CodeGenTests extends BaseTest
 			result = st.render(); 
 
 			String s = "";
-//			for(String ann : fdef.annotationL)
-//			{
-//				if (s.isEmpty())
-//				{
-//					s += "   ";
-//				}
-//				s += ann + " ";
-//			}
-//			if (! s.isEmpty())
-//			{
-//				s += "\n";
-//			}
+			for(String ann : fdef.annotationL)
+			{
+				if (s.isEmpty())
+				{
+					s += "   ";
+				}
+				s += ann + " ";
+			}
+			if (! s.isEmpty())
+			{
+				s += "\n";
+			}
 			
 			result = s + result;
 			return result;
 		}
 
-		private boolean isId(String name) 
-		{
-			return (name.equals("id"));
-		}
-
-		private Object uppify(String name) 
-		{
-			String upper = name.toUpperCase();
-			String s = upper.substring(0, 1);
-			s += name.substring(1);
-			return s;
-		}
 	}
 	
+	public static class DALIntefaceCodeGen extends CodeGenBase
+	{
+		public DALIntefaceCodeGen(SfxContext ctx, String path)
+		{
+			super(ctx, path);
+		}
+		
+		public String generate(EntityDef def)
+		{
+			ST st = _group.getInstanceOf("classdecl");
+			st.add("type", def.name);
+			st.add("bigName", uppify(def.name));
+			String result = st.render(); 
+			
+			result += genQueries(def);
+			
+//			st = _group.getInstanceOf("endclassdecl");
+//			result += st.render(); 
+			
+			return result;
+		}
+		
+		protected String genQueries(EntityDef def)
+		{
+			String result = "";
+			for(String query : def.queryL)
+			{
+				ST st = _group.getInstanceOf("querydecl");
+				st.add("type", "Stringx");
+				st.add("name", "label");
+				st.add("fullName", query);
+				result = st.render(); 
+				result += "\n\n";
+			}
+			return result;
+		}
+
+		@Override
+		protected String buildField(FieldDef fdef) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+	}
 	
 	
 	@Test
@@ -104,6 +135,20 @@ public class CodeGenTests extends BaseTest
 		
 		String path = this.getTestFile("model.stg");
 		ModelCodeGen gen = new ModelCodeGen(_ctx, path);
+		String code = gen.generate(def);	
+		log(code);
+		assertEquals(true, 10 < code.length());
+	}
+	
+	@Test
+	public void testIDAL() throws Exception
+	{
+		log("--testIDAL--");
+		createContext();
+		EntityDef def = readEntityDef();
+		
+		String path = this.getTestFile("dal_interface.stg");
+		DALIntefaceCodeGen gen = new DALIntefaceCodeGen(_ctx, path);
 		String code = gen.generate(def);	
 		log(code);
 		assertEquals(true, 10 < code.length());
