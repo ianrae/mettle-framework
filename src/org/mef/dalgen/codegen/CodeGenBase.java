@@ -74,6 +74,7 @@ public abstract class CodeGenBase extends SfxBaseObj
 		protected String genHeader()
 		{
 			ST st = _group.getInstanceOf("header");
+			st.add("package", "org.mef.dalgen.unittests.gen");
 			String result = st.render(); 
 			return result;
 		}

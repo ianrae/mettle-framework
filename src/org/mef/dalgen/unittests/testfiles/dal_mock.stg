@@ -1,5 +1,5 @@
-header() ::= <<
-package org.mef.dalgen.unittests.gen;
+header(package) ::= <<
+package <package>;
 
 import org.mef.dal.*;
 import java.util.List;
@@ -10,9 +10,9 @@ import java.util.ArrayList;
 
 
 
-querydecl(type, name) ::= <<
+querydecl(type, fieldType, name) ::= <<
     @Override
-    public <type> find_by_<name>(String val) 
+    public <type> find_by_<name>(<fieldType> val) 
     {
         for(<type> entity : _L)
         {

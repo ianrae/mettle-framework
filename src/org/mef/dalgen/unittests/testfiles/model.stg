@@ -1,5 +1,5 @@
-header() ::= <<
-package org.mef.dalgen.unittests.gen;
+header(package) ::= <<
+package <package>;
 
 import org.mef.dal.*;
 import play.data.*;

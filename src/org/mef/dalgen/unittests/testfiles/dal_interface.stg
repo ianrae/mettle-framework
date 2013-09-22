@@ -1,5 +1,5 @@
-header() ::= <<
-package org.mef.dalgen.unittests.gen;
+header(package) ::= <<
+package <package>;
 
 import org.mef.dal.*;
 import java.util.List;
@@ -22,6 +22,6 @@ endclassdecl() ::= <<
 }
 >>
 
-querydecl(type, name, fullName) ::= <<
-public <type> <fullName>(String val);
+querydecl(type, fieldType, fullName) ::= <<
+public <type> <fullName>(<fieldType> val);
 >>

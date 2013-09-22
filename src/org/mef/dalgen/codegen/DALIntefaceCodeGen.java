@@ -38,7 +38,7 @@ public class DALIntefaceCodeGen extends CodeGenBase
 				ST st = _group.getInstanceOf("querydecl");
 				String fieldName = getFieldName(query);
 				st.add("type", def.name); //getFieldType(def, fieldName));
-				st.add("name", fieldName);
+				st.add("fieldType", getFieldType(def, fieldName));
 				st.add("fullName", query);
 				result = st.render(); 
 				result += "\n\n";
