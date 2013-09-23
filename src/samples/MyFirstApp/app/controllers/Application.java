@@ -2,6 +2,7 @@ package controllers;
 
 import java.util.List;
 
+import org.mef.framework.commands.DeleteCommand;
 import org.mef.framework.commands.IndexCommand;
 
 import boundaries.ApplicationBoundary;
@@ -70,9 +71,12 @@ public class Application extends Controller
 	  }
   }
 
-	public static Result deleteTask(Long id) {
-	 Task.delete(id);
-	  return redirect(routes.Application.tasks());	
+	public static Result deleteTask(Long id) 
+	{
+		//	 Task.delete(id);
+		ApplicationBoundary boundary = Boundary.createApplicationBoundary();
+		HomePageReply reply = (HomePageReply) boundary.process(new DeleteCommand(id), null);
+		return redirect(routes.Application.tasks());	
 	}  
 
 	public static Result logout() {

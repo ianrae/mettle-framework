@@ -15,32 +15,22 @@ import mef.presenters.HomePagePresenter;
 
 public class Boundary 
 {
-	public static SfxContext theContext;
-//	private static DALTask theDAL;
-	private static HomePagePresenter thePresenter;
+	public static SfxContext theCtx;
 	
 	private static void init()
 	{
-		if (theContext == null)
+		if (theCtx == null)
 		{
-//			theDAL = new DALTask();
-			theContext = Initializer.createContext(new TaskDAL());
-			thePresenter = new HomePagePresenter(theContext);
+			theCtx = Initializer.createContext(new TaskDAL());
 		}
 	}
 	
 	public static ApplicationBoundary createApplicationBoundary()
 	{
 		init();
-		return new ApplicationBoundary(theContext);
+		return new ApplicationBoundary(theCtx);
 	}
 	
-//	public static HomePagePresenter getHomePresenter()
-//	{
-//		init();
-//		return thePresenter;
-//	}
-//	
 	public static Task convertToTask(TaskEO entity)
 	{
 		Task t = new Task();

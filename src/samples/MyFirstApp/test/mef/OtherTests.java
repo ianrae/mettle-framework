@@ -31,7 +31,7 @@ public class OtherTests
 		assertNotNull(invoker._method);
 
 		_counter = 0;
-		DeleteCommand delmsg = new DeleteCommand();
+		DeleteCommand delmsg = new DeleteCommand(44L);
 		s = (String) invoker.call(delmsg);
 
 		assertEquals(1, _counter);

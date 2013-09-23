@@ -62,8 +62,7 @@ public class HomePagePresenterTests
 		assertEquals(1, dal.size());
 		
 		HomePagePresenter presenter = new HomePagePresenter(_ctx);
-		DeleteCommand cmd = new DeleteCommand();
-		cmd.id = t.id;
+		DeleteCommand cmd = new DeleteCommand(t.id);
 		
 		HomePageReply reply = (HomePageReply) presenter.process(cmd);
 		
@@ -88,8 +87,7 @@ public class HomePagePresenterTests
 		assertEquals(1, dal.size());
 		
 		HomePagePresenter presenter = new HomePagePresenter(_ctx);
-		DeleteCommand cmd = new DeleteCommand();
-		cmd.id = 99L; //not exist
+		DeleteCommand cmd = new DeleteCommand(99L); //not exist
 		
 		HomePageReply reply = (HomePageReply) presenter.process(cmd);
 		
