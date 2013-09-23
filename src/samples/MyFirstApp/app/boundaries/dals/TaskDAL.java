@@ -1,6 +1,8 @@
-package boundaries;
+package boundaries.dals;
 
 import java.util.List;
+
+import boundaries.Boundary;
 
 import models.Task;
 

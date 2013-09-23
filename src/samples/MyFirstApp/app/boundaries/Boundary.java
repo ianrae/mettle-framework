@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.mef.framework.sfx.SfxContext;
 
+import boundaries.dals.TaskDAL;
+
 
 import models.Task;
 import mef.core.Initializer;
@@ -27,12 +29,18 @@ public class Boundary
 		}
 	}
 	
-	public static HomePagePresenter getHomePresenter()
+	public static ApplicationBoundary createApplicationBoundary()
 	{
 		init();
-		return thePresenter;
+		return new ApplicationBoundary(theContext);
 	}
 	
+//	public static HomePagePresenter getHomePresenter()
+//	{
+//		init();
+//		return thePresenter;
+//	}
+//	
 	public static Task convertToTask(TaskEO entity)
 	{
 		Task t = new Task();

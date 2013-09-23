@@ -3,14 +3,10 @@ package controllers;
 import java.util.List;
 
 import org.mef.framework.commands.IndexCommand;
-import org.mef.framework.commands.Command;
-import org.mef.framework.replies.Reply;
-import org.mef.framework.sfx.SfxBaseObj;
-import org.mef.framework.sfx.SfxContext;
 
+import boundaries.ApplicationBoundary;
 import boundaries.Boundary;
 
-import mef.presenters.HomePagePresenter;
 import mef.presenters.HomePageReply;
 import play.*;
 import play.mvc.*;
@@ -23,31 +19,6 @@ import views.html.*;
 
 public class Application extends Controller 
 {
-	public static class Bound extends SfxBaseObj
-	{
-		public Bound(SfxContext ctx)
-		{
-			super(ctx);
-		}
-		public Reply process(Command cmd, Object route)
-		{
-			HomePagePresenter presenter = new HomePagePresenter(_ctx);
-			
-			Reply reply = presenter.process(cmd);
-			if (reply.failed())
-			{
-				return null; //some hard-code error page
-			}
-			else if (reply.getForward() != null) //change to forward
-			{
-				return null; //return route
-			}
-			return reply;
-			
-		}
-	}
-	
-	
 	static Form<Task> taskForm = Form.form(Task.class);  
 	
     public static Result index() {
@@ -58,11 +29,10 @@ public class Application extends Controller
 	
 	public static Result tasks() 
 	{
-		Boundary.getHomePresenter(); //inits dal in svcloc
-		Bound boundary = new Bound(Boundary.theContext);
-		HomePageReply resp = (HomePageReply) boundary.process(new IndexCommand(), null);
+		ApplicationBoundary boundary = Boundary.createApplicationBoundary();
+		HomePageReply reply = (HomePageReply) boundary.process(new IndexCommand(), null);
 		
-		List<Task> L = Boundary.convertToTask(resp._allL);
+		List<Task> L = Boundary.convertToTask(reply._allL);
 //		List<Task> L = Task.all();
 		Logger.info("xxLOGGERBOUND " + L.size());
 		

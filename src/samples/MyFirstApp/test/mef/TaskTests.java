@@ -7,7 +7,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import mef.dals.mocks.MockTaskDAL;
+import mef.dals.MockTaskDAL;
 import mef.entities.TaskEO;
 
 public class TaskTests {

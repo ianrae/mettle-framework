@@ -6,11 +6,13 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import org.mef.framework.commands.DeleteCommand;
 import org.mef.framework.commands.IndexCommand;
+import org.mef.framework.presenters.Presenter;
+import org.mef.framework.replies.Reply;
 import org.mef.framework.sfx.SfxContext;
 
 import mef.core.Initializer;
 import mef.dals.ITaskDAL;
-import mef.dals.mocks.MockTaskDAL;
+import mef.dals.MockTaskDAL;
 import mef.entities.TaskEO;
 import mef.presenters.HomePagePresenter;
 import mef.presenters.HomePageReply;
@@ -23,11 +25,13 @@ public class HomePagePresenterTests
 	{
 		init();
 		HomePagePresenter presenter = new HomePagePresenter(_ctx);
-		HomePageReply resp = (HomePageReply) presenter.process(new IndexCommand());
+		HomePageReply reply = (HomePageReply) presenter.process(new IndexCommand());
 		
-		assertNotNull(resp);
-		assertEquals(0, resp._allL.size());
-		assertEquals(null, resp.getFlash());
+		assertNotNull(reply);
+		assertEquals(0, reply._allL.size());
+		assertEquals(null, reply.getFlash());
+		
+		assertEquals(reply.getViewName(), Reply.VIEW_DEFAULT);
 	}
 
 	@Test
@@ -38,10 +42,11 @@ public class HomePagePresenterTests
 		dal._dbDown = true;
 		
 		HomePagePresenter presenter = new HomePagePresenter(_ctx);
-		HomePageReply resp = (HomePageReply) presenter.process(new IndexCommand());
+		HomePageReply reply = (HomePageReply) presenter.process(new IndexCommand());
 		
-		assertNotNull(resp);
-		assertEquals(true, resp.failed()); //should go to error page. something bad happened
+		assertNotNull(reply);
+		assertEquals(true, reply.failed()); //should go to error page. something bad happened
+		
 		// resp._allL may be null
 	}
 	
@@ -67,6 +72,7 @@ public class HomePagePresenterTests
 		assertEquals(null, reply.getFlash());
 		assertEquals(0, reply._allL.size());
 		assertEquals(0, dal.size());
+		assertEquals(reply.getViewName(), Reply.VIEW_DEFAULT);
 		// resp._allL may be null
 	}
 	
@@ -93,6 +99,7 @@ public class HomePagePresenterTests
 		assertEquals("could not find task", reply.getFlash());
 		assertEquals(1, reply._allL.size());
 		assertEquals(1, dal.size());
+		assertEquals(reply.getViewName(), Reply.VIEW_DEFAULT);
 		// resp._allL may be null
 	}
 	

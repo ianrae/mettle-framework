@@ -1,4 +1,4 @@
-package mef.dals.mocks;
+package mef.dals;
 
 import java.util.ArrayList;
 import java.util.List;
