@@ -1,0 +1,35 @@
+@(tasks: List[Task], taskForm: Form[Task])
+
+@import helper._
+
+@main("Todo list") {
+    
+ @flash.get("flash_content")   
+    
+    <h1>@tasks.size() task(s)</h1>
+    
+    <ul>
+        @for(task <- tasks) {
+            <li>
+                @task.getLabel()  @task.getId()
+                
+                @form(routes.Application.deleteTask(task.getId())) {
+                    <input type="submit" value="Delete">
+                }
+            </li>
+        }
+    </ul>
+    
+    <h2>Addxxx a new task</h2>
+    
+    @form(routes.Application.newTask()) {
+        
+        @inputText(taskForm("label")) 
+        
+        <input type="submit" value="Create">
+        
+    }
+
+        <a class="brand" href="/logout">play-example-form</a>
+    
+}

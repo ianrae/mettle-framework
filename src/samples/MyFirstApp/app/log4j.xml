@@ -1,0 +1,34 @@
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+   <!-- JUSTINFO logging -->
+   <appender name="JUSTINFO" class="org.apache.log4j.FileAppender">
+      <param name="File" value="./info.log" />
+      <param name="Threshold" value="INFO" />
+      <layout class="org.apache.log4j.PatternLayout">
+         <param name="ConversionPattern" value="%-5p %t - %m%n"/>
+      </layout>
+      <filter class="org.apache.log4j.varia.LevelRangeFilter">
+         <param name="LevelMin" value="INFO" />
+         <param name="LevelMax" value="INFO" />
+       </filter>
+    </appender>
+
+    <!-- JUSTERROR logging -->
+    <appender name="JUSTERROR" class="org.apache.log4j.FileAppender">
+       <param name="File" value="./error.log" />
+       <layout class="org.apache.log4j.PatternLayout">
+          <param name="ConversionPattern" value="%-5p %t - %m%n"/>
+       </layout>
+       <filter class="org.apache.log4j.varia.LevelRangeFilter">
+          <param name="LevelMin" value="ERROR" />
+          <param name="LevelMax" value="ERROR" />
+       </filter>
+    </appender>
+
+    <!-- define root logger priority to ERROR -->
+    <root>
+       <level value="ERROR"/>
+       <appender-ref ref="JUSTINFO"/>
+       <appender-ref ref="JUSTERROR"/>
+    </root>
+</log4j:configuration>
