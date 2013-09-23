@@ -1,6 +1,5 @@
 package org.mef.dalgen.unittests.gen;
 
-import org.mef.dal.*;
 import java.util.List;
 import java.util.ArrayList;
 

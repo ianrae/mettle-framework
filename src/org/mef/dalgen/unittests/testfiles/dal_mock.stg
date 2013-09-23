@@ -1,7 +1,6 @@
 header(package) ::= <<
 package <package>;
 
-import org.mef.dal.*;
 import java.util.List;
 import java.util.ArrayList;
 
