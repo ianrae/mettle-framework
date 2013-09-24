@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 
 import org.junit.Test;
+import org.mef.framework.commands.CreateCommand;
 import org.mef.framework.commands.DeleteCommand;
 import org.mef.framework.commands.IndexCommand;
 import org.mef.framework.presenters.Presenter;
@@ -96,6 +97,32 @@ public class HomePagePresenterTests
 		assertEquals(false, reply.failed()); 
 		assertEquals("somewhere", reply.getForward()); //can go back to same page, but with msg
 		assertEquals("could not find task", reply.getFlash());
+		assertEquals(1, reply._allL.size());
+		assertEquals(1, dal.size());
+		assertEquals(reply.getViewName(), Reply.VIEW_DEFAULT);
+		// resp._allL may be null
+	}
+	
+	@Test
+	public void testCreateTask() 
+	{
+		init();
+		MockTaskDAL dal = getDAL();
+		Task t = new Task();
+		t.id = 46L;
+		t.label = "task1";
+		assertEquals(0, dal.size());
+		
+		HomePagePresenter presenter = new HomePagePresenter(_ctx);
+		CreateCommand cmd = new CreateCommand();
+		MockFormBinder binder = new MockFormBinder(t);
+		cmd.setFormBinder(binder);
+		
+		HomePageReply reply = (HomePageReply) presenter.process(cmd);
+		
+		assertNotNull(reply);
+		assertEquals(false, reply.failed()); //should go to error page. something bad happened
+		assertEquals(null, reply.getFlash());
 		assertEquals(1, reply._allL.size());
 		assertEquals(1, dal.size());
 		assertEquals(reply.getViewName(), Reply.VIEW_DEFAULT);

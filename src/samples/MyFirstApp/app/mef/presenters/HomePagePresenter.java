@@ -1,6 +1,8 @@
 package mef.presenters;
 
 import org.mef.framework.Logger;
+import org.mef.framework.binder.IFormBinder;
+import org.mef.framework.commands.CreateCommand;
 import org.mef.framework.commands.DeleteCommand;
 import org.mef.framework.commands.IndexCommand;
 import org.mef.framework.commands.Command;
@@ -28,6 +30,23 @@ public class HomePagePresenter extends Presenter
 		return fillPage(resp);
 	}
 
+	public HomePageReply onCreateCommand(CreateCommand cmd)
+	{
+		HomePageReply reply = new HomePageReply();
+		
+		IFormBinder binder = cmd.getFormBinder();
+		if (! binder.bind())
+		{
+			reply.setFlash("binding failed!");
+		}
+		else
+		{
+			Task entity = binder.getObject();
+			_dal.save(entity);
+		}
+
+		return fillPage(reply);
+	}
 	public HomePageReply onDeleteCommand(DeleteCommand cmd)
 	{
 		HomePageReply reply = new HomePageReply();
