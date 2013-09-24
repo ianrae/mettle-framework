@@ -12,6 +12,7 @@ import play.test.*;
 // import play.data.validation.ValidationError;
 // import play.data.validation.Constraints.RequiredValidator;
 import play.data.*;
+import mef.entities.Task;
 import models.*;
 
 import play.i18n.Lang;
@@ -38,9 +39,9 @@ public class ApplicationTest {
     
     @Test
     public void renderTemplate() {
-         Form<TaskModel> taskForm = Form.form(TaskModel.class);  
+         Form<Task> taskForm = Form.form(Task.class);  
 
-         List<TaskModel> emptyList = new ArrayList<TaskModel>();
+         List<Task> emptyList = new ArrayList<Task>();
           Content html = views.html.index.render(emptyList, taskForm); //"Your new application is ready.");
         assertThat(contentType(html)).isEqualTo("text/html");
         assertThat(contentAsString(html)).contains("Addxxx a new task");

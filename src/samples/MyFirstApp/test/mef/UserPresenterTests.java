@@ -12,22 +12,22 @@ import org.mef.framework.replies.Reply;
 import org.mef.framework.sfx.SfxContext;
 
 import mef.core.Initializer;
-import mef.dals.ITaskDAL;
+import mef.dals.IUserDAL;
 import mef.dals.MockTaskDAL;
 import mef.dals.MockUserDAL;
-import mef.entities.Task;
-import mef.presenters.HomePagePresenter;
-import mef.presenters.HomePageReply;
+import mef.entities.User;
+import mef.presenters.UserPresenter;
+import mef.presenters.UserReply;
 
-public class HomePagePresenterTests 
+public class UserPresenterTests 
 {
 
 	@Test
 	public void test() 
 	{
 		init();
-		HomePagePresenter presenter = new HomePagePresenter(_ctx);
-		HomePageReply reply = (HomePageReply) presenter.process(new IndexCommand());
+		UserPresenter presenter = new UserPresenter(_ctx);
+		UserReply reply = (UserReply) presenter.process(new IndexCommand());
 		
 		assertNotNull(reply);
 		assertEquals(0, reply._allL.size());
@@ -36,38 +36,22 @@ public class HomePagePresenterTests
 		assertEquals(reply.getViewName(), Reply.VIEW_DEFAULT);
 	}
 
-//fix this -support dal.dbDown!!
-	@Test
-	public void testDBDown() 
-	{
-		init();
-		MockTaskDAL dal = getDAL(); 
-		dal._dbDown = true;
-		
-		HomePagePresenter presenter = new HomePagePresenter(_ctx);
-		HomePageReply reply = (HomePageReply) presenter.process(new IndexCommand());
-		
-		assertNotNull(reply);
-		assertEquals(true, reply.failed()); //should go to error page. something bad happened
-		
-		// resp._allL may be null
-	}
 	
 	@Test
-	public void testDeleteTask() 
+	public void testDeleteUser() 
 	{
 		init();
-		MockTaskDAL dal = getDAL();
-		Task t = new Task();
+		MockUserDAL dal = getDAL();
+		User t = new User();
 		t.id = 46L;
-		t.label = "task1";
+		t.name = "task1";
 		dal.save(t);
 		assertEquals(1, dal.size());
 		
-		HomePagePresenter presenter = new HomePagePresenter(_ctx);
+		UserPresenter presenter = new UserPresenter(_ctx);
 		DeleteCommand cmd = new DeleteCommand(t.id);
 		
-		HomePageReply reply = (HomePageReply) presenter.process(cmd);
+		UserReply reply = (UserReply) presenter.process(cmd);
 		
 		assertNotNull(reply);
 		assertEquals(false, reply.failed()); //should go to error page. something bad happened
@@ -79,20 +63,20 @@ public class HomePagePresenterTests
 	}
 	
 	@Test
-	public void testBadDeleteTask() 
+	public void testBadDeleteUser() 
 	{
 		init();
-		MockTaskDAL dal = getDAL();
-		Task t = new Task();
+		MockUserDAL dal = getDAL();
+		User t = new User();
 		t.id = 46L;
-		t.label = "task1";
+		t.name = "task1";
 		dal.save(t);
 		assertEquals(1, dal.size());
 		
-		HomePagePresenter presenter = new HomePagePresenter(_ctx);
+		UserPresenter presenter = new UserPresenter(_ctx);
 		DeleteCommand cmd = new DeleteCommand(99L); //not exist
 		
-		HomePageReply reply = (HomePageReply) presenter.process(cmd);
+		UserReply reply = (UserReply) presenter.process(cmd);
 		
 		assertNotNull(reply);
 		assertEquals(false, reply.failed()); 
@@ -105,26 +89,26 @@ public class HomePagePresenterTests
 	}
 	
 	@Test
-	public void testCreateTask() 
+	public void testCreateUser() 
 	{
 		init();
-		MockTaskDAL dal = getDAL();
-		Task t = new Task();
+		MockUserDAL dal = getDAL();
+		User t = new User();
 		t.id = 46L;
-		t.label = "task1";
+		t.name = "task1";
 		assertEquals(0, dal.size());
 		
-		HomePagePresenter presenter = new HomePagePresenter(_ctx);
+		UserPresenter presenter = new UserPresenter(_ctx);
 		CreateCommand cmd = new CreateCommand();
 		MockFormBinder binder = new MockFormBinder(t);
 		cmd.setFormBinder(binder);
 		
-		HomePageReply reply = (HomePageReply) presenter.process(cmd);
+		UserReply reply = (UserReply) presenter.process(cmd);
 		
 		assertNotNull(reply);
 		assertEquals(false, reply.failed()); //should go to error page. something bad happened
 		assertEquals(null, reply.getFlash());
-		assertEquals(null, reply._allL);
+		assertEquals(1, reply._allL.size());
 		assertEquals(1, dal.size());
 		assertEquals(reply.getViewName(), Reply.VIEW_DEFAULT);
 		// resp._allL may be null
@@ -137,9 +121,9 @@ public class HomePagePresenterTests
 		_ctx = Initializer.createContext(new MockTaskDAL(), new MockUserDAL());
 	}
 	
-	private MockTaskDAL getDAL()
+	private MockUserDAL getDAL()
 	{
-		MockTaskDAL dal = (MockTaskDAL) _ctx.getServiceLocator().getInstance(ITaskDAL.class); 
+		MockUserDAL dal = (MockUserDAL) _ctx.getServiceLocator().getInstance(IUserDAL.class); 
 		return dal;
 	}
 }

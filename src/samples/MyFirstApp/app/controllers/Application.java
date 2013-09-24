@@ -9,6 +9,7 @@ import org.mef.framework.commands.IndexCommand;
 import boundaries.ApplicationBoundary;
 import boundaries.Boundary;
 
+import mef.entities.Task;
 import mef.presenters.HomePageReply;
 import play.*;
 import play.mvc.*;
@@ -21,7 +22,7 @@ import views.html.*;
 
 public class Application extends Controller 
 {
-	static Form<TaskModel> taskForm = Form.form(TaskModel.class);  
+	static Form<Task> taskForm = Form.form(Task.class);  
 	
     public static Result index() {
 //        return ok(index.render("Your new xxapplication is ready."));
@@ -33,52 +34,63 @@ public class Application extends Controller
 	{
 		ApplicationBoundary boundary = Boundary.createApplicationBoundary();
 		HomePageReply reply = (HomePageReply) boundary.process(new IndexCommand());
+		if (boundary.result != null)
+		{
+			return boundary.result;
+		}
 		
-		List<TaskModel> L = Boundary.convertToTaskModel(reply._allL);
+//		List<TaskModel> L = Boundary.convertToTaskModel(reply._allL);
 //		List<Task> L = Task.all();
-		Logger.info("xxLOGGERBOUND " + L.size());
+//		Logger.info("xxLOGGERBOUND " + L.size());
 		
 		System.out.println("BOUND!");
 	return ok(
-		views.html.index.render(L, taskForm)
+		views.html.index.render(reply._allL, taskForm)
 	  );
 	}
   
 	public static Result newTask() 
 	{
 		ApplicationBoundary boundary = Boundary.createApplicationBoundary();
-		HomePageReply reply = (HomePageReply) boundary.process(new CreateCommand(), taskForm);
+		HomePageReply reply = (HomePageReply) boundary.process(new CreateCommand(), new Task()); //taskForm.get());
+		if (boundary.result != null)
+		{
+			return boundary.result;
+		}
 		
 		if (reply.getForward() == null)
 		{
 		  flash("flash_content", "hi !");
 		  System.out.println("xxxyy");
-//		  java.util.Map<String, List<ValidationError>> map = filledForm.errors();		  
-//		  for(String key : map.keySet())
-//		  {
-//			  List<ValidationError> val = map.get(key);
-//			  for(ValidationError err : val)
-//			  {
-//				  System.out.println(String.format("%s: %s", key, err.message()));
-//			  }
-//		  }
+		  java.util.Map<String, List<ValidationError>> map = boundary.getValidationErrors();		  
+		  for(String key : map.keySet())
+		  {
+			  List<ValidationError> val = map.get(key);
+			  for(ValidationError err : val)
+			  {
+				  System.out.println(String.format("%s: %s", key, err.message()));
+			  }
+		  }
 		  return ok(
 //				  views.html.index.render(TaskModel.all(), filledForm)
-				  views.html.index.render(TaskModel.all(), taskForm) //!!fix later
+				  views.html.index.render(reply._allL, taskForm) //!!fix later
 				  );
 		  
 		} else {
 //			TaskModel.create(filledForm.get());
-			System.out.println("#T = " + TaskModel.all().size());
+//			System.out.println("#T = " + TaskModel.all().size());
 			return redirect(routes.Application.tasks());  
 		}
   }
 
 	public static Result deleteTask(Long id) 
 	{
-		//	 Task.delete(id);
 		ApplicationBoundary boundary = Boundary.createApplicationBoundary();
 		HomePageReply reply = (HomePageReply) boundary.process(new DeleteCommand(id));
+		if (boundary.result != null)
+		{
+			return boundary.result;
+		}
 		return redirect(routes.Application.tasks());	
 	}  
 

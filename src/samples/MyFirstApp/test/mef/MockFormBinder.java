@@ -1,14 +1,14 @@
 package mef;
 
-import mef.entities.Task;
+import org.mef.framework.entities.*;
 
 import org.mef.framework.binder.IFormBinder;
 
 public class MockFormBinder implements IFormBinder
 {
-	private Task entity;
+	private Entity entity;
 	
-	public MockFormBinder(Task entity)
+	public MockFormBinder(Entity entity)
 	{
 		this.entity = entity;
 	}
@@ -18,8 +18,14 @@ public class MockFormBinder implements IFormBinder
 	}
 
 	@Override
-	public Task getObject() 
+	public Entity getObject() 
 	{
 		return entity;
+	}
+	
+	@Override
+	public Object getValidationErrors() 
+	{
+		return null;
 	}
 }

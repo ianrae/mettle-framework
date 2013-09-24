@@ -1,10 +1,15 @@
 package org.mef.framework.binder;
 
+import java.util.List;
+import java.util.Map;
+
 import mef.entities.Task;
 
 public interface IFormBinder
 {
 	boolean bind();
 
-	Task getObject();
+	Object getObject();
+
+	Object getValidationErrors();
 }

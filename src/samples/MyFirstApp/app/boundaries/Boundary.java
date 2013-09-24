@@ -6,11 +6,14 @@ import java.util.List;
 import org.mef.framework.sfx.SfxContext;
 
 import boundaries.dals.TaskDAL;
+import boundaries.dals.UserDAL;
 
 
 import models.TaskModel;
+import models.UserModel;
 import mef.core.Initializer;
 import mef.entities.Task;
+import mef.entities.User;
 import mef.presenters.HomePagePresenter;
 
 public class Boundary 
@@ -21,7 +24,7 @@ public class Boundary
 	{
 		if (theCtx == null)
 		{
-			theCtx = Initializer.createContext(new TaskDAL());
+			theCtx = Initializer.createContext(new TaskDAL(), new UserDAL()); //fix later!!
 		}
 	}
 	
@@ -68,4 +71,35 @@ public class Boundary
 		}
 		return entityL;
 	}
+	
+	//User
+	public static UserModel convertToUserModel(User entity)
+	{
+		UserModel t = new UserModel();
+		t.entity = entity;
+		t.setId(entity.id);
+		t.setName(entity.name);
+		//email later!!
+		return t;
+	}
+	public static User convertFromUserModel(UserModel t)
+	{
+		User entity = new User();
+		entity.carrier = t;
+		entity.id = (t.getId() == null) ? 0 : t.getId();
+		entity.name	= t.getName();
+		//!email!!
+		return entity;
+	}
+	public static List<User> convertFromUser(List<UserModel> L)
+	{
+		ArrayList<User> entityL = new ArrayList<User>();
+		for(UserModel t : L)
+		{
+			User entity = convertFromUserModel(t);
+			entityL.add(entity);
+		}
+		return entityL;
+	}
+	
 }

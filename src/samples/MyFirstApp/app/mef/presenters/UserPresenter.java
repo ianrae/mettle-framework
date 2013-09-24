@@ -11,28 +11,28 @@ import org.mef.framework.replies.Reply;
 import org.mef.framework.sfx.SfxBaseObj;
 import org.mef.framework.sfx.SfxContext;
 
-import mef.dals.ITaskDAL;
-import mef.entities.Task;
+import mef.dals.IUserDAL;
+import mef.entities.User;
 
-public class HomePagePresenter extends Presenter
+public class UserPresenter extends Presenter
 {
-	private ITaskDAL _dal;
+	private IUserDAL _dal;
 
-	public HomePagePresenter(SfxContext ctx)
+	public UserPresenter(SfxContext ctx)
 	{
 		super(ctx); 
-		_dal = (ITaskDAL) getInstance(ITaskDAL.class);
+		_dal = (IUserDAL) getInstance(IUserDAL.class);
 	}
 	
-	public HomePageReply onIndexCommand(IndexCommand cmd)
+	public UserReply onIndexCommand(IndexCommand cmd)
 	{
-		HomePageReply resp = new HomePageReply();
+		UserReply resp = new UserReply();
 		return fillPage(resp);
 	}
 
-	public HomePageReply onCreateCommand(CreateCommand cmd)
+	public UserReply onCreateCommand(CreateCommand cmd)
 	{
-		HomePageReply reply = new HomePageReply();
+		UserReply reply = new UserReply();
 		
 		IFormBinder binder = cmd.getFormBinder();
 		if (! binder.bind())
@@ -41,7 +41,7 @@ public class HomePagePresenter extends Presenter
 		}
 		else
 		{
-			Task entity = (Task) binder.getObject();
+			User entity = (User) binder.getObject();
 			if (entity == null)
 			{
 				reply.setFailed(true);
@@ -49,19 +49,18 @@ public class HomePagePresenter extends Presenter
 			else
 			{
 				_dal.save(entity);
-				Logger.info("saved new, ID: " + entity.id);
+				Logger.info("saved new");
 				reply.setForward("index");
-				return reply; //no need to fillpage 'cause redirecting
 			}
 		}
 
 		return fillPage(reply);
 	}
-	public HomePageReply onDeleteCommand(DeleteCommand cmd)
+	public UserReply onDeleteCommand(DeleteCommand cmd)
 	{
-		HomePageReply reply = new HomePageReply();
+		UserReply reply = new UserReply();
 		
-		Task t = _dal.findById(cmd.id);
+		User t = _dal.findById(cmd.id);
 		if (t == null)
 		{
 			reply.setForward("somewhere");
@@ -75,7 +74,7 @@ public class HomePagePresenter extends Presenter
 		return fillPage(reply);
 	}
 	
-	private HomePageReply fillPage(HomePageReply reply)
+	private UserReply fillPage(UserReply reply)
 	{
 		Logger.info("hey in fill!!");
 		reply._allL = _dal.all();
