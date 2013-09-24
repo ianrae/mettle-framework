@@ -47,7 +47,7 @@ public class HomePagePresenter extends Presenter
 	private HomePageReply fillPage(HomePageReply reply)
 	{
 		Logger.info("hey in fill!!");
-		reply._allL = _dal.findAll();
+		reply._allL = _dal.all();
 		if (reply._allL == null)
 		{
 			reply.setFailed(true);

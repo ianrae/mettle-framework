@@ -19,13 +19,21 @@ fielddecl(type, name, bigName, setName) ::= <<
 >>
 
 
-classdecl(type, name) ::= <<public class <name> extends Model
+classdecl(type, name) ::= <<
+@Entity
+public class <name> extends Model
 {
+	@Transient
     private <type> entity;
     public void initEntity(<type> entity)
     {
         this.entity = entity;
     }
+	
+	public static Finder\<Long,<type>\> find = new Finder(
+			Long.class, <type>.class
+			);  
+	
     
     //getters and setters
         

@@ -16,7 +16,7 @@ public class TaskTests {
 	public void test() 
 	{
 		MockTaskDAL dal = new MockTaskDAL();
-		List<Task> L = dal.findAll();
+		List<Task> L = dal.all();
 		assertEquals(0, L.size());
 		
 		Task t = new Task();
@@ -25,7 +25,7 @@ public class TaskTests {
 		t.label = "abc";
 
 		dal.save(t);
-		L = dal.findAll();
+		L = dal.all();
 		assertEquals(1, L.size());
 		
 		Task t2 = dal.findById(id);

@@ -33,7 +33,7 @@ public class Application extends Controller
 		ApplicationBoundary boundary = Boundary.createApplicationBoundary();
 		HomePageReply reply = (HomePageReply) boundary.process(new IndexCommand(), null);
 		
-		List<TaskModel> L = Boundary.convertToTask(reply._allL);
+		List<TaskModel> L = Boundary.convertToTaskModel(reply._allL);
 //		List<Task> L = Task.all();
 		Logger.info("xxLOGGERBOUND " + L.size());
 		

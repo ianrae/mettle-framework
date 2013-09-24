@@ -8,7 +8,7 @@ public interface ITaskDAL
 {
 	void save(Task t);
 	Task findById(long id);
-	List<Task> findAll();
+	List<Task> all();
 	int size();
 	void delete(long id); 
 }

@@ -38,7 +38,7 @@ public class MockTaskDAL implements ITaskDAL
 		return null;
 	}
 	
-	public List<Task> findAll()
+	public List<Task> all()
 	{
 		if (_dbDown) return null;
 		return _L;

@@ -8,7 +8,7 @@ public class MockTaskDAL implements ITaskDAL
     private ArrayList<Task> _L = new ArrayList<Task>();
 
     @Override
-    public int count() 
+    public int size() 
     {
         return _L.size();
     }

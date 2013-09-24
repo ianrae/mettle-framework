@@ -4,7 +4,7 @@ import org.mef.dal.*;
 import java.util.List;
 public interface ITaskDAL
 {
-	int count();
+	int size();
 	Task findById(long id);
 	List<Task> all();
 	void delete(long id);

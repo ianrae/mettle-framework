@@ -10,7 +10,7 @@ import java.util.List;
 classdecl(type, bigName) ::= <<
 public interface I<bigName>DAL
 {
-	int count();
+	int size();
 	<type> findById(long id);
 	List\<<type>\> all();
 	void delete(long id);

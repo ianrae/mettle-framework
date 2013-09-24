@@ -32,7 +32,7 @@ public class Mock<name>DAL implements I<name>DAL
     private ArrayList\<<name>\> _L = new ArrayList\<<name>\>();
     
     @Override
-    public int count() 
+    public int size() 
     {
         return _L.size();
     }

@@ -31,14 +31,14 @@ public class Boundary
 		return new ApplicationBoundary(theCtx);
 	}
 	
-	public static TaskModel convertToTask(Task entity)
+	public static TaskModel convertToTaskModel(Task entity)
 	{
 		TaskModel t = new TaskModel();
 		t.setId(entity.id);
 		t.setLabel(entity.label);
 		return t;
 	}
-	public static Task convertFromTask(TaskModel t)
+	public static Task convertFromTaskModel(TaskModel t)
 	{
 		Task entity = new Task();
 		entity.id = t.getId();
@@ -46,12 +46,12 @@ public class Boundary
 		return entity;
 	}
 
-	public static List<TaskModel> convertToTask(List<Task> entityL)
+	public static List<TaskModel> convertToTaskModel(List<Task> entityL)
 	{
 		ArrayList<TaskModel> L = new ArrayList<TaskModel>();
 		for(Task task : entityL)
 		{
-			TaskModel t = convertToTask(task);
+			TaskModel t = convertToTaskModel(task);
 			L.add(t);
 		}
 		return L;
@@ -61,7 +61,7 @@ public class Boundary
 		ArrayList<Task> entityL = new ArrayList<Task>();
 		for(TaskModel t : L)
 		{
-			Task entity = convertFromTask(t);
+			Task entity = convertFromTaskModel(t);
 			entityL.add(entity);
 		}
 		return entityL;
