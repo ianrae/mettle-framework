@@ -38,7 +38,7 @@ public class Boundary
 	{
 		TaskModel t = new TaskModel();
 		t.setEntity(entity);
-		t.forceId(entity.id);
+		t.setId(entity.id);
 		t.setLabel(entity.label);
 		return t;
 	}

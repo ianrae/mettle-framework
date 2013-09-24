@@ -27,33 +27,39 @@ public class TaskModel extends Model
 			Long.class, TaskModel.class
 			);  
 
+	@Id
+	private Long id;
+	
+	@Required 
+	private String label;
+	
+	private boolean enabled;
 
     //getters and setters
-            Long id;
-
     public Long getId() {
         return this.entity.id;
     }
-    public void forceId(Long val) {
+    public void setId(Long val) {
+    	this.id = val;
         this.entity.id = val;
     }
 
-    String label;
-
-    public String getLabel() {
-        return this.entity.label;
+    public String getLabel() 
+    {
+    	return label;
+//        return this.entity.label;
     }
     public void setLabel(String val) {
+    	this.label = val;
         this.entity.label = val;
     }
-
-    boolean enabled;
 
     public boolean getEnabled() {
         return this.entity.enabled;
     }
     public void setEnabled(boolean val) {
         this.entity.enabled = val;
+        this.enabled = val;
     }
 
 }

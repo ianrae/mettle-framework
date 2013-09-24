@@ -7,6 +7,7 @@ import models.TaskModel;
 
 import org.mef.framework.binder.IFormBinder;
 
+import play.Logger;
 import play.data.Form;
 
 public class FormBinder implements IFormBinder
@@ -32,6 +33,12 @@ public class FormBinder implements IFormBinder
 		if (model == null)
 		{
 			return null;
+		}
+		
+		Logger.info("555");
+		if (model.getLabel() != null)
+		{
+			Logger.info("55: " + model.getLabel());
 		}
 		Task entity = Boundary.convertFromTaskModel(model);
 		model.setEntity(entity);
