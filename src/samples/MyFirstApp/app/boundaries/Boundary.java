@@ -37,8 +37,8 @@ public class Boundary
 	public static TaskModel convertToTaskModel(Task entity)
 	{
 		TaskModel t = new TaskModel();
-		t.entity = entity;
-		t.setId(entity.id);
+		t.setEntity(entity);
+		t.forceId(entity.id);
 		t.setLabel(entity.label);
 		return t;
 	}

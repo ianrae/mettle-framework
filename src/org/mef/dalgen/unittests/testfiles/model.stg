@@ -1,8 +1,14 @@
 header(package) ::= <<
 package <package>;
 
-import org.mef.framework.entities.Entity;
+//import org.mef.framework.entities.Entity;
 import play.data.*;
+import java.util.*;
+import play.db.ebean.*;
+import play.data.validation.Constraints.*;
+import javax.persistence.*;
+import mef.entities.*;
+
 
 >>
 
@@ -25,13 +31,18 @@ public class <name> extends Model
 {
 	@Transient
     private <type> entity;
-    public void initEntity(<type> entity)
+    public void setEntity(<type> entity)
     {
         this.entity = entity;
     }
+	public <type> getEntity()
+	{
+		return this.entity;
+	}
 	
-	public static Finder\<Long,<type>\> find = new Finder(
-			Long.class, <type>.class
+	
+	public static Finder\<Long,<name>\> find = new Finder(
+			Long.class, <name>.class
 			);  
 	
     

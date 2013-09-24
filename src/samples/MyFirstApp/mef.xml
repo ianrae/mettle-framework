@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <entities orm="ebean">
 <entity name="Task">
-<field>long id</field>
+<field>Long id</field>
 <field>@Required String label</field>
 <field>boolean enabled</field>
 <query>find_by_label</query>

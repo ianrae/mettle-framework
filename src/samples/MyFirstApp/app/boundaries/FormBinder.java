@@ -33,8 +33,9 @@ public class FormBinder implements IFormBinder
 		{
 			return null;
 		}
-		model.entity = Boundary.convertFromTaskModel(model);
-		return model.entity;
+		Task entity = Boundary.convertFromTaskModel(model);
+		model.setEntity(entity);
+		return entity;
 	}
 	
 	@Override

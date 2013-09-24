@@ -13,6 +13,7 @@ public class DALIntefaceCodeGen extends CodeGenBase
 			super(ctx, path, packageName);
 		}
 		
+		@Override
 		public String generate(EntityDef def)
 		{
 			String result = genHeader(); 

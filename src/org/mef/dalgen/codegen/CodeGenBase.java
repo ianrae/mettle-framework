@@ -38,6 +38,8 @@ public abstract class CodeGenBase extends SfxBaseObj
 			return result;
 		}
 		
+		public abstract String generate(EntityDef def);
+		
 		protected abstract String buildField(FieldDef fdef);
 		
 		

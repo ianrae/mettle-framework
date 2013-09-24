@@ -27,14 +27,15 @@ public class TaskDAL implements ITaskDAL
 	public Task findById(long id) 
 	{
 		TaskModel t = TaskModel.find.byId(id);
-		t.entity = Boundary.convertFromTaskModel(t);
-		return t.entity;
+		Task entity = Boundary.convertFromTaskModel(t);
+		t.setEntity(entity);
+		return entity;
 	}
 
 	@Override
 	public List<Task> all() 
 	{
-		List<TaskModel> L = TaskModel.all();
+		List<TaskModel> L = TaskModel.find.all();
 		List<Task> entityL = Boundary.convertFromTask(L);
 		return entityL;
 	}
@@ -42,7 +43,7 @@ public class TaskDAL implements ITaskDAL
 	@Override
 	public int size() 
 	{
-		return TaskModel.all().size();
+		return TaskModel.find.all().size();
 	}
 
 	@Override
