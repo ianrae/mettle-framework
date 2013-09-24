@@ -104,7 +104,7 @@ public class CodeGenTests extends BaseTest
 			return;
 		}
 		
-		String outPath = this.getUnitTetDir(String.format("gen\\%s.java", fileName));
+		String outPath = this.getUnitTestDir(String.format("gen\\%s.java", fileName));
 		log(fileName + ": " + outPath);
 		SfxTextWriter w = new SfxTextWriter(outPath, null);
 		w.addLine(code);
