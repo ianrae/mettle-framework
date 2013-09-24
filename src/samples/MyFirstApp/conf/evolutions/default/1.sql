@@ -6,7 +6,6 @@
 create table task_model (
   id                        bigint not null,
   label                     varchar(255),
-  enabled                   boolean,
   constraint pk_task_model primary key (id))
 ;
 

@@ -33,7 +33,7 @@ public class TaskModel extends Model
 	@Required 
 	private String label;
 	
-	private boolean enabled;
+//	private boolean enabled;
 
     //getters and setters
     public Long getId() {
@@ -54,12 +54,12 @@ public class TaskModel extends Model
         this.entity.label = val;
     }
 
-    public boolean getEnabled() {
-        return this.entity.enabled;
-    }
-    public void setEnabled(boolean val) {
-        this.entity.enabled = val;
-        this.enabled = val;
-    }
+//    public boolean getEnabled() {
+//        return this.entity.enabled;
+//    }
+//    public void setEnabled(boolean val) {
+//        this.entity.enabled = val;
+//        this.enabled = val;
+//    }
 
 }
