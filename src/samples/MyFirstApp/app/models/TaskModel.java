@@ -12,20 +12,8 @@ import mef.entities.*;
 public class TaskModel extends Model
 {
 	@Transient
-    private Task entity;
-    public void setEntity(Task entity)
-    {
-        this.entity = entity;
-    }
-	public Task getEntity()
-	{
-		return this.entity;
-	}
+    public Task entity = new Task();
 
-
-	public static Finder<Long,TaskModel> find = new Finder(
-			Long.class, TaskModel.class
-			);  
 
 	@Id
 	private Long id;
@@ -37,7 +25,7 @@ public class TaskModel extends Model
 
     //getters and setters
     public Long getId() {
-        return this.entity.id;
+        return this.id;
     }
     public void setId(Long val) {
     	this.id = val;
@@ -54,6 +42,10 @@ public class TaskModel extends Model
         this.entity.label = val;
     }
 
+    public static Finder<Long,TaskModel> find = new Finder(
+    		Long.class, TaskModel.class
+    		);  
+    
 //    public boolean getEnabled() {
 //        return this.entity.enabled;
 //    }

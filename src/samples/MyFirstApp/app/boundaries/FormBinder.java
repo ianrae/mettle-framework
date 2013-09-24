@@ -41,7 +41,7 @@ public class FormBinder implements IFormBinder
 			Logger.info("55: " + model.getLabel());
 		}
 		Task entity = Boundary.convertFromTaskModel(model);
-		model.setEntity(entity);
+		model.entity = entity;
 		return entity;
 	}
 	

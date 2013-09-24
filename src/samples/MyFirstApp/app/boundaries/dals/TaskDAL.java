@@ -28,7 +28,7 @@ public class TaskDAL implements ITaskDAL
 	{
 		TaskModel t = TaskModel.find.byId(id);
 		Task entity = Boundary.convertFromTaskModel(t);
-		t.setEntity(entity);
+		t.entity = entity;
 		return entity;
 	}
 
