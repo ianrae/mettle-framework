@@ -60,17 +60,24 @@ public class MethodInvoker extends SfxBaseObj
 				log("err: null _method");
 			}
 			Object result = null;
-			try {
+			try 
+			{
+				log("a0");
 				result = _method.invoke(_target, param1);
-			} catch (IllegalArgumentException e) {
+				log("a1");
+			} catch (IllegalArgumentException e) 
+			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} catch (IllegalAccessException e) {
+			} catch (IllegalAccessException e) 
+			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} catch (InvocationTargetException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			} catch (InvocationTargetException e) 
+			{
+				log("EXCEPTION in presenter!");
+//				e.printStackTrace();
+				e.getCause().printStackTrace();
 			}
 			return result;
 		}

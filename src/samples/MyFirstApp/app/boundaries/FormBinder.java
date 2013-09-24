@@ -28,6 +28,11 @@ public class FormBinder implements IFormBinder
 	public Task getObject() 
 	{
 		TaskModel model = boundForm.get();
+		if (model == null)
+		{
+			return null;
+		}
+		model.entity = Boundary.convertFromTaskModel(model);
 		return model.entity;
 	}
 

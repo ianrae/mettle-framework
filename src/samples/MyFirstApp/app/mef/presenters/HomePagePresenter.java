@@ -42,9 +42,16 @@ public class HomePagePresenter extends Presenter
 		else
 		{
 			Task entity = binder.getObject();
-			_dal.save(entity);
-			Logger.info("saved new");
-			reply.setForward("index");
+			if (entity == null)
+			{
+				reply.setFailed(true);
+			}
+			else
+			{
+				_dal.save(entity);
+				Logger.info("saved new");
+				reply.setForward("index");
+			}
 		}
 
 		return fillPage(reply);

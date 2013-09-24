@@ -1,6 +1,7 @@
 package boundaries;
 
 import mef.presenters.HomePagePresenter;
+import mef.presenters.HomePageReply;
 import models.TaskModel;
 
 import org.mef.framework.commands.Command;
@@ -36,11 +37,11 @@ public class ApplicationBoundary extends SfxBaseObj
 		Reply reply = presenter.process(cmd);
 		if (reply.failed())
 		{
-			return null; //some hard-code error page
+			return new HomePageReply(); //null; //some hard-code error page
 		}
 		else if (reply.getForward() != null) //change to forward
 		{
-			return null; //return route
+			return new HomePageReply(); //null; //return route
 		}
 		return reply;
 	}

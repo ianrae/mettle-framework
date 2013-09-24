@@ -43,7 +43,7 @@ public class Boundary
 	{
 		Task entity = new Task();
 		entity.carrier = t;
-		entity.id = t.getId();
+		entity.id = (t.getId() == null) ? 0 : t.getId();
 		entity.label = t.getLabel();
 		return entity;
 	}

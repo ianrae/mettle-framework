@@ -52,7 +52,7 @@ public class Application extends Controller
 		if (reply.getForward() == null)
 		{
 		  flash("flash_content", "hi !");
-		  
+		  System.out.println("xxxyy");
 //		  java.util.Map<String, List<ValidationError>> map = filledForm.errors();		  
 //		  for(String key : map.keySet())
 //		  {
