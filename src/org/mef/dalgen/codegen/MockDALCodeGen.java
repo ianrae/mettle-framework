@@ -8,9 +8,9 @@ import sfx.SfxContext;
 
 public class MockDALCodeGen extends CodeGenBase
 {
-	public MockDALCodeGen(SfxContext ctx, String path)
+	public MockDALCodeGen(SfxContext ctx, String path, String packageName)
 	{
-		super(ctx, path);
+		super(ctx, path, packageName);
 	}
 	
 	public String generate(EntityDef def)

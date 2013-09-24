@@ -2,7 +2,7 @@
 //
 //import org.mef.dal.*;
 //import play.data.*;
-//@Entity
+////@Entity
 //public class TaskModel extends Model
 //{
 //	@Transient

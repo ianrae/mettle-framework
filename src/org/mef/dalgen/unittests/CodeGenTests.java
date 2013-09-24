@@ -25,7 +25,8 @@ public class CodeGenTests extends BaseTest
 		EntityDef def = readEntityDef();
 		
 		String path = this.getTestFile("entity.stg");
-		EntityCodeGen gen = new EntityCodeGen(_ctx, path);
+		String packageName = "org.mef.dalgen.unittests.gen";
+		EntityCodeGen gen = new EntityCodeGen(_ctx, path, packageName);
 		String code = gen.generate(def);	
 		log(code);
 		assertEquals(true, 10 < code.length());
@@ -41,7 +42,8 @@ public class CodeGenTests extends BaseTest
 		EntityDef def = readEntityDef();
 		
 		String path = this.getTestFile("model.stg");
-		ModelCodeGen gen = new ModelCodeGen(_ctx, path);
+		String packageName = "org.mef.dalgen.unittests.gen";
+		ModelCodeGen gen = new ModelCodeGen(_ctx, path, packageName);
 		gen.forUnitTest = true;
 		String code = gen.generate(def);	
 		log(code);
@@ -58,7 +60,8 @@ public class CodeGenTests extends BaseTest
 		EntityDef def = readEntityDef();
 		
 		String path = this.getTestFile("dal_interface.stg");
-		DALIntefaceCodeGen gen = new DALIntefaceCodeGen(_ctx, path);
+		String packageName = "org.mef.dalgen.unittests.gen";
+		DALIntefaceCodeGen gen = new DALIntefaceCodeGen(_ctx, path, packageName);
 		String code = gen.generate(def);	
 		log(code);
 		assertEquals(true, 10 < code.length());
@@ -73,7 +76,8 @@ public class CodeGenTests extends BaseTest
 		EntityDef def = readEntityDef();
 		
 		String path = this.getTestFile("dal_mock.stg");
-		MockDALCodeGen gen = new MockDALCodeGen(_ctx, path);
+		String packageName = "org.mef.dalgen.unittests.gen";
+		MockDALCodeGen gen = new MockDALCodeGen(_ctx, path, packageName);
 		String code = gen.generate(def);	
 		log(code);
 		assertEquals(true, 10 < code.length());

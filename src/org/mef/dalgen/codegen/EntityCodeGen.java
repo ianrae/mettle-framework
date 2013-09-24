@@ -8,9 +8,9 @@ import sfx.SfxContext;
 
 public class EntityCodeGen extends CodeGenBase
 	{
-		public EntityCodeGen(SfxContext ctx, String path)
+		public EntityCodeGen(SfxContext ctx, String path, String packageName)
 		{
-			super(ctx, path);
+			super(ctx, path, packageName);
 		}
 		
 		public String generate(EntityDef def)

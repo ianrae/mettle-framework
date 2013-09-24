@@ -13,14 +13,16 @@ public abstract class CodeGenBase extends SfxBaseObj
 	{
 //		private String _path;
 		protected STGroup _group;
+		public String _packageName;
 		
 		public boolean forUnitTest;
 
-		public CodeGenBase(SfxContext ctx, String path)
+		public CodeGenBase(SfxContext ctx, String path, String packageName)
 		{
 			super(ctx);
 //			_path = path;
 			_group = new STGroupFile(path);
+			_packageName = packageName;
 		}
 		
 		
@@ -74,7 +76,7 @@ public abstract class CodeGenBase extends SfxBaseObj
 		protected String genHeader()
 		{
 			ST st = _group.getInstanceOf("header");
-			st.add("package", "org.mef.dalgen.unittests.gen");
+			st.add("package", _packageName);
 			String result = st.render(); 
 			return result;
 		}

@@ -8,9 +8,9 @@ import sfx.SfxContext;
 
 public class DALIntefaceCodeGen extends CodeGenBase
 	{
-		public DALIntefaceCodeGen(SfxContext ctx, String path)
+		public DALIntefaceCodeGen(SfxContext ctx, String path, String packageName)
 		{
-			super(ctx, path);
+			super(ctx, path, packageName);
 		}
 		
 		public String generate(EntityDef def)
