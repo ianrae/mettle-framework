@@ -15,43 +15,41 @@ public class TaskModel extends Model
     public Task entity = new Task();
 
 
-	@Id
-	private Long id;
-	
-	@Required 
-	private String label;
-	
-//	private boolean enabled;
+	public static Finder<Long,TaskModel> find = new Finder(
+			Long.class, TaskModel.class
+			);  
+
 
     //getters and setters
+           @Id 
+    Long id;
+
     public Long getId() {
         return this.id;
     }
     public void setId(Long val) {
-    	this.id = val;
+		this.id = val;
         this.entity.id = val;
     }
 
-    public String getLabel() 
-    {
-    	return label;
-//        return this.entity.label;
+    String label;
+
+    public String getLabel() {
+        return this.label;
     }
     public void setLabel(String val) {
-    	this.label = val;
+		this.label = val;
         this.entity.label = val;
     }
 
-    public static Finder<Long,TaskModel> find = new Finder(
-    		Long.class, TaskModel.class
-    		);  
-    
-//    public boolean getEnabled() {
-//        return this.entity.enabled;
-//    }
-//    public void setEnabled(boolean val) {
-//        this.entity.enabled = val;
-//        this.enabled = val;
-//    }
+    boolean enabled;
+
+    public boolean getEnabled() {
+        return this.enabled;
+    }
+    public void setEnabled(boolean val) {
+		this.enabled = val;
+        this.entity.enabled = val;
+    }
 
 }

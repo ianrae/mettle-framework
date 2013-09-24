@@ -39,7 +39,7 @@ public class ModelCodeGen extends CodeGenBase
 		st.add("type", fdef.typeName);
 		st.add("name", fdef.name);
 		st.add("bigName", uppify(fdef.name));
-		st.add("setName", isId(fdef.name) ? "force" : "set");
+		st.add("setName", isId(fdef.name) ? "set" : "set");
 		result = st.render(); 
 
 		String s = "";

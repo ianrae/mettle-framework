@@ -17,9 +17,10 @@ fielddecl(type, name, bigName, setName) ::= <<
     <type> <name>;
     
     public <type> get<bigName>() {
-        return this.entity.<name>;
+        return this.<name>;
     }
     public void <setName><bigName>(<type> val) {
+		this.<name> = val;
         this.entity.<name> = val;
     }
 >>
@@ -30,15 +31,7 @@ classdecl(type, name) ::= <<
 public class <name> extends Model
 {
 	@Transient
-    private <type> entity;
-    public void setEntity(<type> entity)
-    {
-        this.entity = entity;
-    }
-	public <type> getEntity()
-	{
-		return this.entity;
-	}
+    public <type> entity = new <type>();
 	
 	
 	public static Finder\<Long,<name>\> find = new Finder(
