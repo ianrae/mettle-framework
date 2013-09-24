@@ -5,9 +5,14 @@ import play.db.ebean.*;
 import play.data.validation.Constraints.*;
 import javax.persistence.*;
 
-@Entity
-public class TaskModel extends Model {    
+import mef.entities.Task;
 
+@Entity
+public class TaskModel extends Model 
+{    
+	@Transient
+	public Task entity;
+	
 	@Id
 	private Long id;
 	public Long getId() 

@@ -15,7 +15,11 @@ public class TaskDAL implements ITaskDAL
 	@Override
 	public void save(Task entity) 
 	{
-		TaskModel t = (TaskModel)entity.carrier; //Boundary.convertToTaskModel(entity);
+		TaskModel t = (TaskModel)entity.carrier; 
+		if (t == null) //not yet known by db? (newly created)
+		{
+			t = Boundary.convertToTaskModel(entity);
+		}
 		t.save();
 	}
 
@@ -23,8 +27,8 @@ public class TaskDAL implements ITaskDAL
 	public Task findById(long id) 
 	{
 		TaskModel t = TaskModel.find.byId(id);
-		Task entity = Boundary.convertFromTaskModel(t);
-		return entity;
+		t.entity = Boundary.convertFromTaskModel(t);
+		return t.entity;
 	}
 
 	@Override

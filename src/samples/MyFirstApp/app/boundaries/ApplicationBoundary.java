@@ -1,6 +1,7 @@
 package boundaries;
 
 import mef.presenters.HomePagePresenter;
+import models.TaskModel;
 
 import org.mef.framework.commands.Command;
 import org.mef.framework.replies.Reply;
@@ -12,11 +13,19 @@ import play.data.Form;
 
 public class ApplicationBoundary extends SfxBaseObj
 {
+	
 	public ApplicationBoundary(SfxContext ctx)
 	{
 		super(ctx);
 	}
-	public Reply process(Command cmd, Object route)
+	
+	public Reply process(Command cmd, Form<TaskModel> taskForm)
+	{
+		FormBinder binder = new FormBinder(taskForm);
+		cmd.setFormBinder(binder);
+		return process(cmd);
+	}
+	public Reply process(Command cmd)
 	{
 		//!!add http cgi params as cmd.setParameters
 		DynamicForm dynamicForm = Form.form().bindFromRequest();

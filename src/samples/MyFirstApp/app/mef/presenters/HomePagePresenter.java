@@ -43,6 +43,8 @@ public class HomePagePresenter extends Presenter
 		{
 			Task entity = binder.getObject();
 			_dal.save(entity);
+			Logger.info("saved new");
+			reply.setForward("index");
 		}
 
 		return fillPage(reply);
