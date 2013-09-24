@@ -38,7 +38,6 @@ public class TaskModel extends Model
         this.entity.id = val;
     }
 
-   @Required 
     String label;
 
     public String getLabel() {

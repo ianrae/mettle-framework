@@ -17,6 +17,11 @@ public class Presenter extends SfxBaseObj
 		super(ctx);
 	}
 	
+	protected Reply createReply()
+	{
+		return null;
+	}
+	
 	public Reply process(Command cmd)
 	{
 		String methodName = cmd.getClass().getName();
@@ -28,18 +33,18 @@ public class Presenter extends SfxBaseObj
 		methodName = "on" + methodName;
 		log("looking for: " + methodName);
 		
+		Reply reply = createReply();
 		MethodInvoker invoker = new MethodInvoker(_ctx, this, methodName, Command.class);
 
 		Object res = invoker.call(cmd);
 		if (res == null)
 		{
 			Logger.warn("null from invoker.call!!");
-			Reply reply = new Reply();
 			reply.setFailed(true);
 			return reply;
 		}
 
-		Reply reply = (Reply)res;
+		reply = (Reply)res;
 		return reply;
 	}
 

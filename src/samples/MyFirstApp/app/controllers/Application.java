@@ -61,14 +61,14 @@ public class Application extends Controller
 		if (reply.getForward() == null)
 		{
 		  flash("flash_content", "hi !");
-		  System.out.println("xxxyy");
+		  System.out.println("5xxxyy");
 		  java.util.Map<String, List<ValidationError>> map = boundary.getValidationErrors();		  
 		  for(String key : map.keySet())
 		  {
 			  List<ValidationError> val = map.get(key);
 			  for(ValidationError err : val)
 			  {
-				  System.out.println(String.format("%s: %s", key, err.message()));
+				  System.out.println(String.format("invalid: %s: %s", key, err.message()));
 			  }
 		  }
 		  return ok(

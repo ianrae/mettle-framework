@@ -4,9 +4,9 @@
 # --- !Ups
 
 create table task_model (
-  id                        bigint not null,
+  id                        bigint,
   label                     varchar(255),
-  constraint pk_task_model primary key (id))
+  enabled                   boolean)
 ;
 
 create table user_model (
@@ -14,8 +14,6 @@ create table user_model (
   name                      varchar(255),
   constraint pk_user_model primary key (id))
 ;
-
-create sequence task_model_seq;
 
 create sequence user_model_seq;
 
@@ -31,8 +29,6 @@ drop table if exists task_model;
 drop table if exists user_model;
 
 SET REFERENTIAL_INTEGRITY TRUE;
-
-drop sequence if exists task_model_seq;
 
 drop sequence if exists user_model_seq;
 
