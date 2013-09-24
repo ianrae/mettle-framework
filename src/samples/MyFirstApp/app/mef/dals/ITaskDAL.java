@@ -3,12 +3,13 @@ package mef.dals;
 import java.util.List;
 
 import mef.entities.Task;
-
 public interface ITaskDAL
 {
-	void save(Task t);
+	int size();
 	Task findById(long id);
 	List<Task> all();
-	int size();
-	void delete(long id); 
+	void delete(long id);
+	void save(Task entity);        
+        public Task find_by_label(String val);
+
 }

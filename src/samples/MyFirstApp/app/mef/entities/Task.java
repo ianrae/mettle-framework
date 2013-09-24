@@ -1,7 +1,14 @@
 package mef.entities;
 
-public class Task 
+import org.mef.framework.entities.Entity;
+
+
+public class Task extends Entity
 {
-	public long id;
-	public String label;
+    public long id;
+
+    public String label;
+
+    public boolean enabled;
+
 }

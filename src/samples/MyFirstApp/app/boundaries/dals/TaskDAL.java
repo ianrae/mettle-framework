@@ -48,4 +48,10 @@ public class TaskDAL implements ITaskDAL
 		t.delete();
 	}
 
+	@Override
+	public Task find_by_label(String val) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
