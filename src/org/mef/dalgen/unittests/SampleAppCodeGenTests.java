@@ -25,7 +25,7 @@ public class SampleAppCodeGenTests extends BaseTest
 			EntityDef def = readEntityDef(appDir);
 			
 			String path = this.pathCombine(stDir, "entity.stg");
-			String packageName = "org.mef.dalgen.unittests.gen";
+			String packageName = "mef.entities";
 			EntityCodeGen gen = new EntityCodeGen(_ctx, path, packageName);
 			String code = gen.generate(def);	
 			log(code);
@@ -52,12 +52,12 @@ public class SampleAppCodeGenTests extends BaseTest
 //			}
 			
 			String outPath = this.pathCombine(appDir, subDir);
-			outPath = this.pathCombine(outPath, String.format("gen\\%s.java", fileName));
+			outPath = this.pathCombine(outPath, String.format("%s.java", fileName));
 			log(fileName + ": " + outPath);
-//			SfxTextWriter w = new SfxTextWriter(outPath, null);
-//			w.addLine(code);
-//			boolean b = w.writeFile();
-//			assertEquals(true, b);
+			SfxTextWriter w = new SfxTextWriter(outPath, null);
+			w.addLine(code);
+			boolean b = w.writeFile();
+			assertEquals(true, b);
 			
 		}
 		
@@ -72,9 +72,10 @@ public class SampleAppCodeGenTests extends BaseTest
 		log("--testEntity--");
 		createContext();
 		DalCodeGenerator gen = new DalCodeGenerator(_ctx);
-		String appDir = "C:\\Users\\ian\\Documents\\GitHub\\dalgen\\src\\samples\\MyFirstApp";
+		String appDir = this.getCurrentDir("src\\samples\\MyFirstApp");
 		String stDir = this.getUnitTestDir("testfiles");
 		boolean b = gen.generate(appDir, stDir);
+		
 	}
 
 }

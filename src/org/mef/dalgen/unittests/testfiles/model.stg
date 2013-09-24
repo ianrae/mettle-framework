@@ -1,7 +1,7 @@
 header(package) ::= <<
 package <package>;
 
-import org.mef.dal.*;
+import org.mef.framework.entities.Entity;
 import play.data.*;
 
 >>

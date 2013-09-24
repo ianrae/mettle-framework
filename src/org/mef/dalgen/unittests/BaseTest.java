@@ -39,5 +39,15 @@ public class BaseTest
 		}
 		return path;
 	}
+	protected String getCurrentDir(String filepath)
+	{
+		SfxFileUtils utils = new SfxFileUtils();
+		String path = utils.getCurrentDir();
+		if (filepath != null)
+		{
+			path = utils.PathCombine(path, filepath);
+		}
+		return path;
+	}
 
 }
