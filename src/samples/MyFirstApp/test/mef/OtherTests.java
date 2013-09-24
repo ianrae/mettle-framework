@@ -2,6 +2,8 @@ package mef;
 
 import static org.junit.Assert.*;
 
+import java.util.HashMap;
+
 import org.junit.Test;
 import org.mef.framework.commands.DeleteCommand;
 import org.mef.framework.commands.Command;
@@ -36,6 +38,20 @@ public class OtherTests
 
 		assertEquals(1, _counter);
 		assertEquals("abc", s);
+	}
+	
+	@Test
+	public void testCommand()
+	{
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("abc", "def");
+		
+		Command cmd = new Command();
+		cmd.setParameters(map);
+		
+		assertEquals("def", cmd.getParameter("abc"));
+		assertEquals(null, cmd.getParameter("xyz"));
+		
 	}
 	
 	private void log(String s)

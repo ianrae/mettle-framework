@@ -15,7 +15,7 @@ public class TaskDAL implements ITaskDAL
 	@Override
 	public void save(Task entity) 
 	{
-		TaskModel t = Boundary.convertToTaskModel(entity);
+		TaskModel t = (TaskModel)entity.carrier; //Boundary.convertToTaskModel(entity);
 		t.save();
 	}
 
@@ -49,7 +49,8 @@ public class TaskDAL implements ITaskDAL
 	}
 
 	@Override
-	public Task find_by_label(String val) {
+	public Task find_by_label(String val) 
+	{
 		// TODO Auto-generated method stub
 		return null;
 	}

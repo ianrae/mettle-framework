@@ -35,21 +35,21 @@ public class HomePagePresenterTests
 	}
 
 //fix this -support dal.dbDown!!
-//	@Test
-//	public void testDBDown() 
-//	{
-//		init();
-//		MockTaskDAL dal = getDAL(); 
-//		dal._dbDown = true;
-//		
-//		HomePagePresenter presenter = new HomePagePresenter(_ctx);
-//		HomePageReply reply = (HomePageReply) presenter.process(new IndexCommand());
-//		
-//		assertNotNull(reply);
-//		assertEquals(true, reply.failed()); //should go to error page. something bad happened
-//		
-//		// resp._allL may be null
-//	}
+	@Test
+	public void testDBDown() 
+	{
+		init();
+		MockTaskDAL dal = getDAL(); 
+		dal._dbDown = true;
+		
+		HomePagePresenter presenter = new HomePagePresenter(_ctx);
+		HomePageReply reply = (HomePageReply) presenter.process(new IndexCommand());
+		
+		assertNotNull(reply);
+		assertEquals(true, reply.failed()); //should go to error page. something bad happened
+		
+		// resp._allL may be null
+	}
 	
 	@Test
 	public void testDeleteTask() 
