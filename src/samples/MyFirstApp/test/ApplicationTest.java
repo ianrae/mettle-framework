@@ -38,9 +38,9 @@ public class ApplicationTest {
     
     @Test
     public void renderTemplate() {
-         Form<Task> taskForm = Form.form(Task.class);  
+         Form<TaskModel> taskForm = Form.form(TaskModel.class);  
 
-         List<Task> emptyList = new ArrayList<Task>();
+         List<TaskModel> emptyList = new ArrayList<TaskModel>();
           Content html = views.html.index.render(emptyList, taskForm); //"Your new application is ready.");
         assertThat(contentType(html)).isEqualTo("text/html");
         assertThat(contentAsString(html)).contains("Addxxx a new task");

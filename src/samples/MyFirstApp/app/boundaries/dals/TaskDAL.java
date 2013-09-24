@@ -4,47 +4,47 @@ import java.util.List;
 
 import boundaries.Boundary;
 
-import models.Task;
+import models.TaskModel;
 
 import mef.dals.ITaskDAL;
-import mef.entities.TaskEO;
+import mef.entities.Task;
 
 public class TaskDAL implements ITaskDAL 
 {
 
 	@Override
-	public void save(TaskEO entity) 
+	public void save(Task entity) 
 	{
-		Task t = Boundary.convertToTask(entity);
+		TaskModel t = Boundary.convertToTask(entity);
 		t.save();
 	}
 
 	@Override
-	public TaskEO findById(long id) 
+	public Task findById(long id) 
 	{
-		Task t = Task.find.byId(id);
-		TaskEO entity = Boundary.convertFromTask(t);
+		TaskModel t = TaskModel.find.byId(id);
+		Task entity = Boundary.convertFromTask(t);
 		return entity;
 	}
 
 	@Override
-	public List<TaskEO> findAll() 
+	public List<Task> findAll() 
 	{
-		List<Task> L = Task.all();
-		List<TaskEO> entityL = Boundary.convertFromTask(L);
+		List<TaskModel> L = TaskModel.all();
+		List<Task> entityL = Boundary.convertFromTask(L);
 		return entityL;
 	}
 
 	@Override
 	public int size() 
 	{
-		return Task.all().size();
+		return TaskModel.all().size();
 	}
 
 	@Override
 	public void delete(long id) 
 	{
-		Task t = Task.find.byId(id);
+		TaskModel t = TaskModel.find.byId(id);
 		t.delete();
 	}
 

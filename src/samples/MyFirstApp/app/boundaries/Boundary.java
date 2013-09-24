@@ -8,9 +8,9 @@ import org.mef.framework.sfx.SfxContext;
 import boundaries.dals.TaskDAL;
 
 
-import models.Task;
+import models.TaskModel;
 import mef.core.Initializer;
-import mef.entities.TaskEO;
+import mef.entities.Task;
 import mef.presenters.HomePagePresenter;
 
 public class Boundary 
@@ -31,37 +31,37 @@ public class Boundary
 		return new ApplicationBoundary(theCtx);
 	}
 	
-	public static Task convertToTask(TaskEO entity)
+	public static TaskModel convertToTask(Task entity)
 	{
-		Task t = new Task();
+		TaskModel t = new TaskModel();
 		t.setId(entity.id);
 		t.setLabel(entity.label);
 		return t;
 	}
-	public static TaskEO convertFromTask(Task t)
+	public static Task convertFromTask(TaskModel t)
 	{
-		TaskEO entity = new TaskEO();
+		Task entity = new Task();
 		entity.id = t.getId();
 		entity.label = t.getLabel();
 		return entity;
 	}
 
-	public static List<Task> convertToTask(List<TaskEO> entityL)
+	public static List<TaskModel> convertToTask(List<Task> entityL)
 	{
-		ArrayList<Task> L = new ArrayList<Task>();
-		for(TaskEO task : entityL)
+		ArrayList<TaskModel> L = new ArrayList<TaskModel>();
+		for(Task task : entityL)
 		{
-			Task t = convertToTask(task);
+			TaskModel t = convertToTask(task);
 			L.add(t);
 		}
 		return L;
 	}
-	public static List<TaskEO> convertFromTask(List<Task> L)
+	public static List<Task> convertFromTask(List<TaskModel> L)
 	{
-		ArrayList<TaskEO> entityL = new ArrayList<TaskEO>();
-		for(Task t : L)
+		ArrayList<Task> entityL = new ArrayList<Task>();
+		for(TaskModel t : L)
 		{
-			TaskEO entity = convertFromTask(t);
+			Task entity = convertFromTask(t);
 			entityL.add(entity);
 		}
 		return entityL;

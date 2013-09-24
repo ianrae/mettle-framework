@@ -20,7 +20,7 @@ import views.html.*;
 
 public class Application extends Controller 
 {
-	static Form<Task> taskForm = Form.form(Task.class);  
+	static Form<TaskModel> taskForm = Form.form(TaskModel.class);  
 	
     public static Result index() {
 //        return ok(index.render("Your new xxapplication is ready."));
@@ -33,7 +33,7 @@ public class Application extends Controller
 		ApplicationBoundary boundary = Boundary.createApplicationBoundary();
 		HomePageReply reply = (HomePageReply) boundary.process(new IndexCommand(), null);
 		
-		List<Task> L = Boundary.convertToTask(reply._allL);
+		List<TaskModel> L = Boundary.convertToTask(reply._allL);
 //		List<Task> L = Task.all();
 		Logger.info("xxLOGGERBOUND " + L.size());
 		
@@ -44,7 +44,7 @@ public class Application extends Controller
 	}
   
 	public static Result newTask() {
-	 Form<Task> filledForm = taskForm.bindFromRequest();
+	 Form<TaskModel> filledForm = taskForm.bindFromRequest();
 	  if(filledForm.hasErrors()) {
 //		return badRequest(
 //		  views.html.index.render(Task.all(), filledForm)
@@ -61,12 +61,12 @@ public class Application extends Controller
 			  }
 		  }
 		return ok(
-				  views.html.index.render(Task.all(), filledForm)
+				  views.html.index.render(TaskModel.all(), filledForm)
 				);
 		
 	  } else {
-		Task.create(filledForm.get());
-		System.out.println("#T = " + Task.all().size());
+		TaskModel.create(filledForm.get());
+		System.out.println("#T = " + TaskModel.all().size());
 		return redirect(routes.Application.tasks());  
 	  }
   }

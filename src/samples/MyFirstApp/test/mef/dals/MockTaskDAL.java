@@ -4,18 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mef.dals.ITaskDAL;
-import mef.entities.TaskEO;
+import mef.entities.Task;
 
 public class MockTaskDAL implements ITaskDAL
 {
-	ArrayList<TaskEO> _L = new ArrayList<TaskEO>();
+	ArrayList<Task> _L = new ArrayList<Task>();
 	public boolean _dbDown;
 	
-	public void save(TaskEO t)
+	public void save(Task t)
 	{
 		if (_dbDown) return;
 		
-		TaskEO existing = findById(t.id);
+		Task existing = findById(t.id);
 		if (existing != null)
 		{
 			_L.remove(existing);
@@ -23,13 +23,13 @@ public class MockTaskDAL implements ITaskDAL
 		_L.add(t);
 	}
 	
-	public TaskEO findById(long id)
+	public Task findById(long id)
 	{
 		if (_dbDown) return null;
 		
 		for(int i = 0; i < _L.size(); i++)
 		{
-			TaskEO t = _L.get(i);
+			Task t = _L.get(i);
 			if (t.id == id)
 			{
 				return t;
@@ -38,7 +38,7 @@ public class MockTaskDAL implements ITaskDAL
 		return null;
 	}
 	
-	public List<TaskEO> findAll()
+	public List<Task> findAll()
 	{
 		if (_dbDown) return null;
 		return _L;
@@ -50,7 +50,7 @@ public class MockTaskDAL implements ITaskDAL
 
 	public void delete(long id) 
 	{
-		TaskEO existing = findById(id);
+		Task existing = findById(id);
 		if (existing != null)
 		{
 			_L.remove(existing);

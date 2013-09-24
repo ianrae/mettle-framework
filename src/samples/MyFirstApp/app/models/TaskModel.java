@@ -6,7 +6,7 @@ import play.data.validation.Constraints.*;
 import javax.persistence.*;
 
 @Entity
-public class Task extends Model {    
+public class TaskModel extends Model {    
 
 	@Id
 	private Long id;
@@ -30,15 +30,15 @@ public class Task extends Model {
 		this.label = label;
 	}
 
-	public static Finder<Long,Task> find = new Finder(
-			Long.class, Task.class
+	public static Finder<Long,TaskModel> find = new Finder(
+			Long.class, TaskModel.class
 			);  
 
-	public static List<Task> all() {
+	public static List<TaskModel> all() {
 		return find.all();
 	}
 
-	public static void create(Task task) {
+	public static void create(TaskModel task) {
 		task.save();
 	}
 

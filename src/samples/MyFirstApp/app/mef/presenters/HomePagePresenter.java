@@ -10,7 +10,7 @@ import org.mef.framework.sfx.SfxBaseObj;
 import org.mef.framework.sfx.SfxContext;
 
 import mef.dals.ITaskDAL;
-import mef.entities.TaskEO;
+import mef.entities.Task;
 
 public class HomePagePresenter extends Presenter
 {
@@ -32,7 +32,7 @@ public class HomePagePresenter extends Presenter
 	{
 		HomePageReply reply = new HomePageReply();
 		
-		TaskEO t = _dal.findById(cmd.id);
+		Task t = _dal.findById(cmd.id);
 		if (t == null)
 		{
 			reply.setForward("somewhere");

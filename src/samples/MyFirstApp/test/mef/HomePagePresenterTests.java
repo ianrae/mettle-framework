@@ -13,7 +13,7 @@ import org.mef.framework.sfx.SfxContext;
 import mef.core.Initializer;
 import mef.dals.ITaskDAL;
 import mef.dals.MockTaskDAL;
-import mef.entities.TaskEO;
+import mef.entities.Task;
 import mef.presenters.HomePagePresenter;
 import mef.presenters.HomePageReply;
 
@@ -55,7 +55,7 @@ public class HomePagePresenterTests
 	{
 		init();
 		MockTaskDAL dal = getDAL();
-		TaskEO t = new TaskEO();
+		Task t = new Task();
 		t.id = 46L;
 		t.label = "task1";
 		dal.save(t);
@@ -80,7 +80,7 @@ public class HomePagePresenterTests
 	{
 		init();
 		MockTaskDAL dal = getDAL();
-		TaskEO t = new TaskEO();
+		Task t = new Task();
 		t.id = 46L;
 		t.label = "task1";
 		dal.save(t);
