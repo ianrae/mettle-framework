@@ -33,6 +33,11 @@ public class Boundary
 		init();
 		return new ApplicationBoundary(theCtx);
 	}
+	public static UserBoundary createUserBoundary() 
+	{
+		init();
+		return new UserBoundary(theCtx);
+	}
 	
 	public static TaskModel convertToTaskModel(Task entity)
 	{
@@ -101,5 +106,6 @@ public class Boundary
 		}
 		return entityL;
 	}
+
 	
 }

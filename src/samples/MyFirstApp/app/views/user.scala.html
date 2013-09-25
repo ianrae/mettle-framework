@@ -1,0 +1,28 @@
+@(users: List[mef.entities.User], userForm: Form[mef.entities.User])
+
+@import helper._
+
+@main("Users list") {
+    
+ @flash.get("flash_content")   
+    
+    <h1>@users.size() users(s)</h1>
+    
+    <ul>
+        @for(user <- users) {
+            <li>
+                @user.name  @user.id
+
+				@form(routes.UserC.deleteUser(user.id)) {
+                    <input type="submit" value="Delete">
+                }</br>
+				
+				<a href="@routes.UserC.edit(user.id)">Edit User</a>
+            </li>
+        }
+    </ul>
+    
+
+        <a class="brand" href="/logout">play-example-form</a><br/>
+ 	<a class="brand" href="/users/new">New User...</a>   
+}

@@ -13,5 +13,14 @@ POST    /tasks/:id/delete       controllers.Application.deleteTask(id: Long)
 # Logout
 GET 	/logout                 controllers.Owner.logout()
 
+# Users          
+GET     /users                  controllers.UserC.index()
+GET     /users/new              controllers.UserC.newUser()
+POST    /users/new              controllers.UserC.createUser()
+POST    /users/:id/delete       controllers.UserC.deleteUser(id: Long)
+GET     /users/:id/edit 		controllers.UserC.edit(id: Long)
+POST    /users/update           controllers.UserC.updateUser()
+
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

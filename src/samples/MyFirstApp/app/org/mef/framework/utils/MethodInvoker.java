@@ -11,12 +11,14 @@ public class MethodInvoker extends SfxBaseObj
 		Object _target;
 		public Method _method;
 		Class<?> _methodParam1;
+		String _methodName;
 		
 		public MethodInvoker(SfxContext ctx, Object target, String methodName, Class<?> param1)
 		{
 			super(ctx);
 			_method = null;
 			_target = target;
+			_methodName = methodName;
 			try {
 			  _method = target.getClass().getMethod(methodName, param1);
 			  
@@ -57,7 +59,8 @@ public class MethodInvoker extends SfxBaseObj
 		{
 			if (_method == null)
 			{
-				log("err: null _method");
+				log("err: can't find method: " + _methodName);
+				return null;
 			}
 			Object result = null;
 			try 

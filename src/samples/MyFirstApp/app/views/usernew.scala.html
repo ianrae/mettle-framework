@@ -1,0 +1,22 @@
+@(users: List[mef.entities.User], userForm: Form[mef.entities.User])
+
+@import helper._
+
+@main("Users list") {
+    
+ @flash.get("flash_content")   
+    
+    
+    <h2>Create a new user</h2>
+    
+    @form(routes.UserC.createUser()) {
+        
+        @helper.inputText(userForm("name"))
+        <input type="submit" value="Create">
+        
+    }
+    
+
+        <a class="brand" href="/logout">play-example-form</a><br/>
+
+}

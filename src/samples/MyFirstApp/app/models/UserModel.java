@@ -11,7 +11,7 @@ import mef.entities.User;
 public class UserModel extends Model 
 {    
 	@Transient
-	public User entity;
+	public User entity = new User();
 	
 	@Id
 	private Long id;
@@ -22,6 +22,7 @@ public class UserModel extends Model
 	public void setId(Long val)
 	{
 		id = val;
+        this.entity.id = val;
 	}
 
 	@Required
@@ -30,9 +31,10 @@ public class UserModel extends Model
 	{
 		return name;
 	}
-	public void setName(String label) 
+	public void setName(String val) 
 	{
-		this.name = name;
+		this.name = val;
+        this.entity.name = val;
 	}
 
 	public static Finder<Long,UserModel> find = new Finder(

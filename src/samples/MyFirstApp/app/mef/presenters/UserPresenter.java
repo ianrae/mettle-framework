@@ -4,8 +4,11 @@ import org.mef.framework.Logger;
 import org.mef.framework.binder.IFormBinder;
 import org.mef.framework.commands.CreateCommand;
 import org.mef.framework.commands.DeleteCommand;
+import org.mef.framework.commands.EditCommand;
 import org.mef.framework.commands.IndexCommand;
 import org.mef.framework.commands.Command;
+import org.mef.framework.commands.NewCommand;
+import org.mef.framework.commands.UpdateCommand;
 import org.mef.framework.presenters.Presenter;
 import org.mef.framework.replies.Reply;
 import org.mef.framework.sfx.SfxBaseObj;
@@ -17,17 +20,33 @@ import mef.entities.User;
 public class UserPresenter extends Presenter
 {
 	private IUserDAL _dal;
+	private UserReply _reply;
 
 	public UserPresenter(SfxContext ctx)
 	{
 		super(ctx); 
 		_dal = (IUserDAL) getInstance(IUserDAL.class);
 	}
+	@Override
+	protected Reply createReply()
+	{
+		_reply = new UserReply();
+		return _reply;
+	}
 	
 	public UserReply onIndexCommand(IndexCommand cmd)
 	{
-		UserReply resp = new UserReply();
-		return fillPage(resp);
+		UserReply reply = new UserReply();
+		return fillPage(reply);
+	}
+
+	public UserReply onNewCommand(NewCommand cmd)
+	{
+		UserReply reply = new UserReply();
+		reply._entity = new User();
+		//default vals
+		reply._entity.name = "defaultname";
+		return reply; //don't add list
 	}
 
 	public UserReply onCreateCommand(CreateCommand cmd)
@@ -38,6 +57,7 @@ public class UserPresenter extends Presenter
 		if (! binder.bind())
 		{
 			reply.setFlash("binding failed!");
+			return fillPage(reply);
 		}
 		else
 		{
@@ -52,10 +72,54 @@ public class UserPresenter extends Presenter
 				Logger.info("saved new");
 				reply.setForward("index");
 			}
+			return fillPage(reply); //for now!!
 		}
-
-		return fillPage(reply);
 	}
+	
+	public UserReply onEditCommand(EditCommand cmd)
+	{
+		UserReply reply = new UserReply();
+		
+		User user = _dal.findById(cmd.id);
+		if (user == null)
+		{
+			reply.setForward("notfound");
+			return reply;
+		}
+		else
+		{
+			reply._entity = user;
+			return reply;
+		}
+	}
+	public UserReply onUpdateCommand(UpdateCommand cmd)
+	{
+		UserReply reply = new UserReply();
+		
+		IFormBinder binder = cmd.getFormBinder();
+		if (! binder.bind())
+		{
+			reply.setFlash("binding failed!");
+			return fillPage(reply);
+		}
+		else
+		{
+			User entity = (User) binder.getObject();
+			if (entity == null)
+			{
+				reply.setFailed(true);
+			}
+			else
+			{
+				_dal.save(entity);
+				Logger.info("saved update: " + entity.name);
+				reply.setForward("index");
+			}
+			return fillPage(reply);
+		}
+	}
+	
+	
 	public UserReply onDeleteCommand(DeleteCommand cmd)
 	{
 		UserReply reply = new UserReply();

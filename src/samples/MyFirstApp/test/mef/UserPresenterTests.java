@@ -6,7 +6,10 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import org.mef.framework.commands.CreateCommand;
 import org.mef.framework.commands.DeleteCommand;
+import org.mef.framework.commands.EditCommand;
 import org.mef.framework.commands.IndexCommand;
+import org.mef.framework.commands.NewCommand;
+import org.mef.framework.commands.UpdateCommand;
 import org.mef.framework.presenters.Presenter;
 import org.mef.framework.replies.Reply;
 import org.mef.framework.sfx.SfxContext;
@@ -30,74 +33,35 @@ public class UserPresenterTests
 		UserPresenter presenter = new UserPresenter(_ctx);
 		UserReply reply = (UserReply) presenter.process(new IndexCommand());
 		
-		assertNotNull(reply);
-		assertEquals(0, reply._allL.size());
-		assertEquals(null, reply.getFlash());
-		
-		assertEquals(reply.getViewName(), Reply.VIEW_DEFAULT);
+		chkReplySucessful(reply, null, Reply.VIEW_DEFAULT, null);
+		chkDalSize(0);
+		chkReplyWithoutEntity(reply, true, 0);
 	}
 
 	
 	@Test
-	public void testDeleteUser() 
+	public void testNewUser() 
 	{
 		init();
-		MockUserDAL dal = getDAL();
-		User t = new User();
-		t.id = 46L;
-		t.name = "task1";
-		dal.save(t);
-		assertEquals(1, dal.size());
-		
 		UserPresenter presenter = new UserPresenter(_ctx);
-		DeleteCommand cmd = new DeleteCommand(t.id);
+		NewCommand cmd = new NewCommand();
 		
 		UserReply reply = (UserReply) presenter.process(cmd);
 		
-		assertNotNull(reply);
-		assertEquals(false, reply.failed()); //should go to error page. something bad happened
-		assertEquals(null, reply.getFlash());
-		assertEquals(0, reply._allL.size());
-		assertEquals(0, dal.size());
-		assertEquals(reply.getViewName(), Reply.VIEW_DEFAULT);
-		// resp._allL may be null
-	}
-	
-	@Test
-	public void testBadDeleteUser() 
-	{
-		init();
-		MockUserDAL dal = getDAL();
-		User t = new User();
-		t.id = 46L;
-		t.name = "task1";
-		dal.save(t);
-		assertEquals(1, dal.size());
-		
-		UserPresenter presenter = new UserPresenter(_ctx);
-		DeleteCommand cmd = new DeleteCommand(99L); //not exist
-		
-		UserReply reply = (UserReply) presenter.process(cmd);
-		
-		assertNotNull(reply);
-		assertEquals(false, reply.failed()); 
-		assertEquals("somewhere", reply.getForward()); //can go back to same page, but with msg
-		assertEquals("could not find task", reply.getFlash());
-		assertEquals(1, reply._allL.size());
-		assertEquals(1, dal.size());
-		assertEquals(reply.getViewName(), Reply.VIEW_DEFAULT);
-		// resp._allL may be null
+		chkReplySucessful(reply, null, Reply.VIEW_DEFAULT, null);
+		assertEquals("defaultname", reply._entity.name);
+		chkDalSize(0);
+		chkReplyWithEntity(reply, false, 0);
 	}
 	
 	@Test
 	public void testCreateUser() 
 	{
 		init();
-		MockUserDAL dal = getDAL();
 		User t = new User();
 		t.id = 46L;
 		t.name = "task1";
-		assertEquals(0, dal.size());
+		assertEquals(0, _dal.size());
 		
 		UserPresenter presenter = new UserPresenter(_ctx);
 		CreateCommand cmd = new CreateCommand();
@@ -106,20 +70,163 @@ public class UserPresenterTests
 		
 		UserReply reply = (UserReply) presenter.process(cmd);
 		
-		assertNotNull(reply);
-		assertEquals(false, reply.failed()); //should go to error page. something bad happened
-		assertEquals(null, reply.getFlash());
-		assertEquals(1, reply._allL.size());
-		assertEquals(1, dal.size());
-		assertEquals(reply.getViewName(), Reply.VIEW_DEFAULT);
-		// resp._allL may be null
+		chkReplySucessful(reply, "index", Reply.VIEW_DEFAULT, null);
+		chkDalSize(1);
+		chkReplyWithoutEntity(reply, true, 1);
 	}
 	
+	@Test
+	public void testEditUser() 
+	{
+		init();
+		User t = new User();
+		t.id = 46L;
+		t.name = "task1";
+		_dal.save(t);
+		assertEquals(1, _dal.size());
+		
+		UserPresenter presenter = new UserPresenter(_ctx);
+		EditCommand cmd = new EditCommand(t.id);
+		UserReply reply = (UserReply) presenter.process(cmd);
+		
+		chkReplySucessful(reply, null, Reply.VIEW_DEFAULT, null);
+		chkDalSize(1);
+		chkReplyWithEntity(reply, false, 0);
+	}
+	@Test
+	public void testBadEditUser() 
+	{
+		init();
+		User t = new User();
+		t.id = 46L;
+		t.name = "task1";
+		_dal.save(t);
+		assertEquals(1, _dal.size());
+		
+		UserPresenter presenter = new UserPresenter(_ctx);
+		EditCommand cmd = new EditCommand(99L);
+		UserReply reply = (UserReply) presenter.process(cmd);
+		
+		chkReplySucessful(reply, "notfound", Reply.VIEW_DEFAULT, null);
+		chkDalSize(1);
+		chkReplyWithoutEntity(reply, false, 0);
+	}
+	
+	@Test
+	public void testUpdateUser() 
+	{
+		init();
+		User t = new User();
+		t.id = 46L;
+		t.name = "task1";
+		assertEquals(0, _dal.size());
+		
+		UserPresenter presenter = new UserPresenter(_ctx);
+		UpdateCommand cmd = new UpdateCommand();
+		t.name = "task2";
+		MockFormBinder binder = new MockFormBinder(t);
+		cmd.setFormBinder(binder);
+		
+		UserReply reply = (UserReply) presenter.process(cmd);
+		
+		chkReplySucessful(reply, "index", Reply.VIEW_DEFAULT, null);
+		chkDalSize(1);
+		chkReplyWithoutEntity(reply, true, 1);
+		
+		User t2 = _dal.findById(t.id);
+		assertEquals("task2", t2.name);
+	}
+	
+	
+	@Test
+	public void testDeleteUser() 
+	{
+		init();
+		User t = new User();
+		t.id = 46L;
+		t.name = "task1";
+		_dal.save(t);
+		assertEquals(1, _dal.size());
+		
+		UserPresenter presenter = new UserPresenter(_ctx);
+		DeleteCommand cmd = new DeleteCommand(t.id);
+		
+		UserReply reply = (UserReply) presenter.process(cmd);
+		
+		chkReplySucessful(reply, null, Reply.VIEW_DEFAULT, null);
+		chkDalSize(0);
+		chkReplyWithoutEntity(reply, true, 0);
+	}
+	
+	@Test
+	public void testBadDeleteUser() 
+	{
+		init();
+		User t = new User();
+		t.id = 46L;
+		t.name = "task1";
+		_dal.save(t);
+		assertEquals(1, _dal.size());
+		
+		UserPresenter presenter = new UserPresenter(_ctx);
+		DeleteCommand cmd = new DeleteCommand(99L); //not exist
+		
+		UserReply reply = (UserReply) presenter.process(cmd);
+		
+		chkReplySucessful(reply, "somewhere", Reply.VIEW_DEFAULT, "could not find task");
+		chkDalSize(1);
+		chkReplyWithoutEntity(reply, true, 1);
+	}
+	
+	
 	//--------- helper fns--------------
+	private void chkReplySucessful(Reply reply, String forward, String view, String flash)
+	{
+		assertNotNull(reply);
+		assertEquals(false, reply.failed()); //should go to error page. something bad happened
+		assertEquals(forward, reply.getForward());
+		assertEquals(view, reply.getViewName());
+		assertEquals(flash, reply.getFlash());
+	}
+	private void chkDalSize(int expected)
+	{
+		assertEquals(expected, _dal.size());
+	}
+	private void chkReplyWithEntity(UserReply reply, boolean listExists, int expected)
+	{
+		assertNotNull(reply._entity);
+		if (listExists)
+		{
+			assertNotNull(reply._allL);
+			assertEquals(expected, reply._allL.size());
+		}
+		else
+		{
+			assertNull(reply._allL);
+		}
+	}
+	private void chkReplyWithoutEntity(UserReply reply, boolean listExists, int expected)
+	{
+		assertEquals(null, reply._entity);
+		if (listExists)
+		{
+			assertNotNull(reply._allL);
+			assertEquals(expected, reply._allL.size());
+		}
+		else
+		{
+			assertNull(reply._allL);
+		}
+	}
+	
+	
+	
 	protected SfxContext _ctx;
+	private MockUserDAL _dal;
 	private void init()
 	{
 		_ctx = Initializer.createContext(new MockTaskDAL(), new MockUserDAL());
+		_dal = getDAL();
 	}
 	
 	private MockUserDAL getDAL()

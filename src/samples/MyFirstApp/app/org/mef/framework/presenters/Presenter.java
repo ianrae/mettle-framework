@@ -34,8 +34,17 @@ public class Presenter extends SfxBaseObj
 		log("looking for: " + methodName);
 		
 		Reply reply = createReply();
+		if (reply == null)
+		{
+			Logger.warn("you forgot to implement createReply!!");
+			reply = new Reply();
+			reply.setFailed(true);
+			return reply;
+		}
+		
+		
 		MethodInvoker invoker = new MethodInvoker(_ctx, this, methodName, Command.class);
-
+		
 		Object res = invoker.call(cmd);
 		if (res == null)
 		{
