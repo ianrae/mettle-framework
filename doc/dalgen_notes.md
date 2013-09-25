@@ -284,6 +284,14 @@ deploy
 	dalgen.bat
 	
 	
+-------------------------------24SepTue
+to do
+------
+done formbinder
+done codegen 
+
+-codegen of boundar
+-user all 6 methods
 
  
  
