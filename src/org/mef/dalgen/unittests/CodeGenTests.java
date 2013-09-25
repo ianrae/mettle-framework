@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 import org.mef.dalgen.codegen.DALIntefaceCodeGen;
+import org.mef.dalgen.codegen.DALUtilsCodeGen;
 import org.mef.dalgen.codegen.EntityCodeGen;
 import org.mef.dalgen.codegen.MockDALCodeGen;
 import org.mef.dalgen.codegen.ModelCodeGen;
@@ -85,6 +86,21 @@ public class CodeGenTests extends BaseTest
 	}
 	
 	
+	@Test
+	public void testDALUtils() throws Exception
+	{
+		log("--testDALUtils--");
+		createContext();
+		EntityDef def = readEntityDef();
+		
+		String path = this.getTestFile("dal_utils.stg");
+		String packageName = "org.mef.dalgen.unittests.gen";
+		DALUtilsCodeGen gen = new DALUtilsCodeGen(_ctx, path, packageName);
+		String code = gen.generate(def);	
+		log(code);
+		assertEquals(true, 10 < code.length());
+		writeFile("TaskDALUtils", code);
+	}
 	
 	//--- helper fns ---
 	private EntityDef readEntityDef() throws Exception
@@ -104,12 +120,12 @@ public class CodeGenTests extends BaseTest
 			return;
 		}
 		
-		String outPath = this.getUnitTestDir(String.format("gen\\%s.java", fileName));
-		log(fileName + ": " + outPath);
-		SfxTextWriter w = new SfxTextWriter(outPath, null);
-		w.addLine(code);
-		boolean b = w.writeFile();
-		assertEquals(true, b);
+//		String outPath = this.getUnitTestDir(String.format("gen\\%s.java", fileName));
+//		log(fileName + ": " + outPath);
+//		SfxTextWriter w = new SfxTextWriter(outPath, null);
+//		w.addLine(code);
+//		boolean b = w.writeFile();
+//		assertEquals(true, b);
 		
 	}
 

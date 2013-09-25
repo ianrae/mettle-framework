@@ -3,6 +3,7 @@ package mef.mocks;
 import java.util.List;
 import java.util.ArrayList;
 import mef.entities.*;
+import mef.dals.*;
 
 public class MockTaskDAL_GEN implements ITaskDAL
 {
