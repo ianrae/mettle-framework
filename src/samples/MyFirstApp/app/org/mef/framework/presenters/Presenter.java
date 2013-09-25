@@ -1,6 +1,8 @@
 package org.mef.framework.presenters;
 
 
+import mef.presenters.UserReply;
+
 import org.mef.framework.Logger;
 import org.mef.framework.commands.Command;
 import org.mef.framework.replies.Reply;
@@ -56,5 +58,6 @@ public class Presenter extends SfxBaseObj
 		reply = (Reply)res;
 		return reply;
 	}
+
 
 }

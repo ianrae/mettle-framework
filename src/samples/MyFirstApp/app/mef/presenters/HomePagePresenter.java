@@ -54,7 +54,7 @@ public class HomePagePresenter extends Presenter
 			{
 				_dal.save(entity);
 				Logger.info("saved new, ID: " + entity.id);
-				_reply.setForward("index");
+				_reply.setForward(Reply.FORWARD_INDEX);
 				return _reply; //no need to fillpage 'cause redirecting
 			}
 		}
@@ -66,7 +66,7 @@ public class HomePagePresenter extends Presenter
 		Task t = _dal.findById(cmd.id);
 		if (t == null)
 		{
-			_reply.setForward("somewhere");
+			_reply.setForward(Reply.FORWARD_NOT_FOUND);
 			_reply.setFlash("could not find task");
 		}
 		else

@@ -5,6 +5,7 @@ import java.util.List;
 import org.mef.framework.commands.CreateCommand;
 import org.mef.framework.commands.DeleteCommand;
 import org.mef.framework.commands.IndexCommand;
+import org.mef.framework.replies.Reply;
 
 import boundaries.ApplicationBoundary;
 import boundaries.Boundary;
@@ -58,7 +59,7 @@ public class Application extends Controller
 			return boundary.result;
 		}
 		
-		if (reply.getForward() == null)
+		if (!reply.isForward())
 		{
 		  flash("flash_content", "hi !");
 		  System.out.println("5xxxyy");

@@ -4,18 +4,32 @@ public class Reply
 {
 	private boolean _failed;
 //	private boolean _badRequest;
-	private String _forward;
-	private String _view;
+	//private int _forward;
+	private int _view;
 
 	private String _flash;
 	
-	public static final String VIEW_DEFAULT = ".";
+	public static final int VIEW_NONE = 0;
+	public static final int VIEW_INDEX = 1;
+	public static final int VIEW_NEW = 2;
+	public static final int VIEW_CREATED = 3;
+	public static final int VIEW_EDIT = 4;
+	public static final int VIEW_UPDATED = 5;
+	public static final int VIEW_DELETE = 6;
+	public static final int VIEW_DELETED = 7;
+	
+	
+	public static final int FORWARD_INDEX = 101;
+	public static final int FORWARD_NEW = 102;
+	public static final int FORWARD_EDIT = 104;
+	public static final int FORWARD_DELETE = 106;
+	public static final int FORWARD_NOT_FOUND = 107;
+	public static final int FOWARD_ERROR = 108;
 	
 	public Reply()
 	{
-		_view = VIEW_DEFAULT;
+		_view = VIEW_NONE;
 	}
-	
 	
 	public boolean failed() 
 	{
@@ -25,13 +39,17 @@ public class Reply
 	{
 		_failed = b;
 	}
-	public String getForward() 
+	public int getForward() 
 	{
-		return _forward;
+		return _view;
 	}
-	public void setForward(String s) 
+	public void setForward(int val) 
 	{
-		_forward = s;
+		_view = val;
+	}
+	public boolean isForward()
+	{
+		return _view >= 100;
 	}
 
 	public void setFlash(String s) 
@@ -43,11 +61,11 @@ public class Reply
 		return _flash;
 	}
 	
-	public void setViewName(String s)
+	public void setViewName(int val)
 	{
-		_view = s;
+		_view = val;
 	}
-	public String getViewName()
+	public int getViewName()
 	{
 		return _view;
 	}

@@ -26,14 +26,22 @@ import mef.presenters.UserReply;
 public class UserPresenterTests 
 {
 
+	//GET 	users/    		index          VINDEX
+	//GET 	users/new 		new            VNEW
+	//POST  users/new   	create form    f index
+	//GET   users/:id/edit  edit           VEDIT
+	//POST  users/:id/edit  update form    f index
+	//POST 	users/:id/delete delete		   f index
+	
+	
 	@Test
-	public void test() 
+	public void indexTest() 
 	{
 		init();
 		UserPresenter presenter = new UserPresenter(_ctx);
 		UserReply reply = (UserReply) presenter.process(new IndexCommand());
 		
-		chkReplySucessful(reply, null, Reply.VIEW_DEFAULT, null);
+		chkReplySucessful(reply, Reply.VIEW_INDEX, null);
 		chkDalSize(0);
 		chkReplyWithoutEntity(reply, true, 0);
 	}
@@ -48,7 +56,7 @@ public class UserPresenterTests
 		
 		UserReply reply = (UserReply) presenter.process(cmd);
 		
-		chkReplySucessful(reply, null, Reply.VIEW_DEFAULT, null);
+		chkReplySucessful(reply, Reply.VIEW_NEW, null);
 		assertEquals("defaultname", reply._entity.name);
 		chkDalSize(0);
 		chkReplyWithEntity(reply, false, 0);
@@ -70,7 +78,7 @@ public class UserPresenterTests
 		
 		UserReply reply = (UserReply) presenter.process(cmd);
 		
-		chkReplySucessful(reply, "index", Reply.VIEW_DEFAULT, null);
+		chkReplySucessful(reply, Reply.FORWARD_INDEX, null);
 		chkDalSize(1);
 		chkReplyWithoutEntity(reply, true, 1);
 	}
@@ -89,7 +97,7 @@ public class UserPresenterTests
 		EditCommand cmd = new EditCommand(t.id);
 		UserReply reply = (UserReply) presenter.process(cmd);
 		
-		chkReplySucessful(reply, null, Reply.VIEW_DEFAULT, null);
+		chkReplySucessful(reply, Reply.VIEW_EDIT, null);
 		chkDalSize(1);
 		chkReplyWithEntity(reply, false, 0);
 	}
@@ -107,7 +115,7 @@ public class UserPresenterTests
 		EditCommand cmd = new EditCommand(99L);
 		UserReply reply = (UserReply) presenter.process(cmd);
 		
-		chkReplySucessful(reply, "notfound", Reply.VIEW_DEFAULT, null);
+		chkReplySucessful(reply, Reply.FORWARD_NOT_FOUND, null);
 		chkDalSize(1);
 		chkReplyWithoutEntity(reply, false, 0);
 	}
@@ -129,7 +137,7 @@ public class UserPresenterTests
 		
 		UserReply reply = (UserReply) presenter.process(cmd);
 		
-		chkReplySucessful(reply, "index", Reply.VIEW_DEFAULT, null);
+		chkReplySucessful(reply, Reply.FORWARD_INDEX, null);
 		chkDalSize(1);
 		chkReplyWithoutEntity(reply, true, 1);
 		
@@ -153,7 +161,7 @@ public class UserPresenterTests
 		
 		UserReply reply = (UserReply) presenter.process(cmd);
 		
-		chkReplySucessful(reply, null, Reply.VIEW_DEFAULT, null);
+		chkReplySucessful(reply, Reply.FORWARD_INDEX, null);
 		chkDalSize(0);
 		chkReplyWithoutEntity(reply, true, 0);
 	}
@@ -173,18 +181,17 @@ public class UserPresenterTests
 		
 		UserReply reply = (UserReply) presenter.process(cmd);
 		
-		chkReplySucessful(reply, "somewhere", Reply.VIEW_DEFAULT, "could not find task");
+		chkReplySucessful(reply, Reply.FORWARD_NOT_FOUND, "could not find task");
 		chkDalSize(1);
 		chkReplyWithoutEntity(reply, true, 1);
 	}
 	
 	
 	//--------- helper fns--------------
-	private void chkReplySucessful(Reply reply, String forward, String view, String flash)
+	private void chkReplySucessful(Reply reply, int view, String flash)
 	{
 		assertNotNull(reply);
 		assertEquals(false, reply.failed()); //should go to error page. something bad happened
-		assertEquals(forward, reply.getForward());
 		assertEquals(view, reply.getViewName());
 		assertEquals(flash, reply.getFlash());
 	}
