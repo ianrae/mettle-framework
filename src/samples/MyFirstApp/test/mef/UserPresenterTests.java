@@ -13,9 +13,10 @@ import org.mef.framework.sfx.SfxContext;
 
 import mef.core.Initializer;
 import mef.dals.IUserDAL;
-import mef.dals.MockTaskDAL;
-import mef.dals.MockUserDAL;
 import mef.entities.User;
+import mef.mocks.MockFormBinder;
+import mef.mocks.MockTaskDAL;
+import mef.mocks.MockUserDAL;
 import mef.presenters.UserPresenter;
 import mef.presenters.UserReply;
 

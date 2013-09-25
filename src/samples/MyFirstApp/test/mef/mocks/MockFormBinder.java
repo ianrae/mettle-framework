@@ -1,4 +1,4 @@
-package mef;
+package mef.mocks;
 
 import org.mef.framework.entities.*;
 

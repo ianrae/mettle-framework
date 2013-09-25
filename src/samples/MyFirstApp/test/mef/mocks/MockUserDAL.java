@@ -1,8 +1,9 @@
-package mef.dals;
+package mef.mocks;
 
 import java.util.List;
 import java.util.ArrayList;
 
+import mef.dals.IUserDAL;
 import mef.entities.User;
 
 
