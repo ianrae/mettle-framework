@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.mef.dalgen.codegen.CodeGenBase;
 import org.mef.dalgen.codegen.DALIntefaceCodeGen;
 import org.mef.dalgen.codegen.EntityCodeGen;
+import org.mef.dalgen.codegen.MockDALCodeGen;
 import org.mef.dalgen.codegen.ModelCodeGen;
 import org.mef.dalgen.parser.DalGenXmlParser;
 import org.mef.dalgen.parser.EntityDef;
@@ -51,6 +52,15 @@ public class SampleAppCodeGenTests extends BaseTest
 			path = this.pathCombine(stDir, "dal_interface.stg");
 			DALIntefaceCodeGen gen3 = new DALIntefaceCodeGen(_ctx, path, "mef.dals");
 			b = generateOneFile(def, gen3, "ITaskDAL", "app\\mef\\dals");
+			if (!b )
+			{
+				return false; //!!
+			}
+			
+			path = this.pathCombine(stDir, "dal_mock.stg");
+			MockDALCodeGen gen4 = new MockDALCodeGen(_ctx, path, "mef.dals");
+			gen4.genExtension = true;
+			b = generateOneFile(def, gen4, "MockTaskDAL_GEN", "test\\mef\\dals");
 			if (!b )
 			{
 				return false; //!!

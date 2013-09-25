@@ -8,6 +8,8 @@ import sfx.SfxContext;
 
 public class MockDALCodeGen extends CodeGenBase
 {
+	public boolean genExtension;
+	
 	public MockDALCodeGen(SfxContext ctx, String path, String packageName)
 	{
 		super(ctx, path, packageName);
@@ -18,7 +20,14 @@ public class MockDALCodeGen extends CodeGenBase
 	{
 		String result = genHeader(); 
 		ST st = _group.getInstanceOf("classdecl");
-		st.add("name", def.name);
+		
+		String className = "Mock" + def.name + "DAL";
+		if (genExtension)
+		{
+			className += "_GEN";
+		}
+		st.add("name", className);
+		st.add("type", def.name);
 		result += st.render(); 
 		
 		result += genQueries(def);
