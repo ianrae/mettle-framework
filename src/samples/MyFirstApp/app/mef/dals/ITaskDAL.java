@@ -1,8 +1,7 @@
 package mef.dals;
 
+import mef.entities.*;
 import java.util.List;
-
-import mef.entities.Task;
 public interface ITaskDAL
 {
 	int size();

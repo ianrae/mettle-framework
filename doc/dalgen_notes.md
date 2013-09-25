@@ -59,8 +59,8 @@ DALGEN reads an XML file that specifies the entities
 
 <entities orm="ebean" >
 <entity name="Task">
-<field>id:Long</field>
-<field>@Required label:String</field>
+<field>@Id Long id</field>
+<field>@Required String label</field>
 <query>find_by_label</query>
 <interface extend="true" />
 <mock extend="true" />
@@ -91,21 +91,20 @@ The "*" shows where DALGEN puts files
    
 Presenters
 ---------------
-Each controller in your Play application has a corresponding presenter.  The process method processes a web request and
-produces a response ready to be rendered by the view.
+Each controller in your Play application has a corresponding presenter.  The process method processes a command and
+produces a reply ready to be rendered by the view.
 
-	Response process(Request request);
+	Reply process(Command cmd);
 
-This method uses reflection to call a matching doXYZ() method in the presenter. For example, a TaskDeleteRequest would
-call a doTaskDelete(TaskDeleteRequest) method.
+This method uses reflection to call a matching doXYZ() method in the presenter. For example, a DeleteCommand would
+call a onDeleteCommand method.
 	
 For a TaskController you would create these MEF classses
 
  * TaskPresenter
- * TaskRequest (optional -- use Request if no params)
- * TaskResponse
+ * TaskReply
 
-Request objects contain the web request's CGI params and/or form data.  
+Command objects contain the web request's CGI params and/or form data.  
 @{play.mvc.Http.Context.current().args(key)=value}
 GET   /clients/:id          controllers.Clients.show(id: Long)  
 cgi: public java.util.Map<java.lang.String,java.lang.String[]> asFormUrlEncoded()
@@ -113,33 +112,31 @@ or maybe:    DynamicForm data = Form.form().bindFromRequest(); // will read each
  
 
 
-Response objects contain all the data needed to render that page. All data is entity objects.
-Response object support
+Reply objects contain all the data needed to render that page. All data is entity objects.
+Reply object support
  * failed -- something bad happened, goto error page
- * badRequest -- can still render page but action did not succeed. may be flash mesage
- * flashMessage
  * forward -- redirect.  Is a string that represents a route. 
- * viewName -- which view to render. "DEFAULT" means render the normal view for that controller method
+ * view -- which view to render. "DEFAULT" means render the normal view for that controller method
+ * flashMessage
  
-The response object returned by process does not have to match the request. TaskDeleteRequest may return some
-other response than TaskResponse (probably as part of a redirect). IS THIS TRUE? maybe just need redirect.
+The reply object returned by process does have to match the command. 
 
 Sample method
 
-  Response doProcess(EditTaskRequest request)
+  Reply onEditCommand(EditCommand cmd)
   {
-     Task task = _dal.findById(request.id);
-	 IFormBinder binder = request.binder;
+     Task task = _dal.findById(cmd.id);
+	 IFormBinder binder = cmd.getFormBinder();
 	 binder.init_empty_form(task);
-	 return new TaskResponse(binder);
+	 return _reply; //already created for you
   }
 
 
 Filters
 -------
 Presenters can have filters attached. "Pre" filters are run by Presenter.process() before the presenter's doXYZ method is called.
-They can adjust the request or terminate further processing.  For example, an auth filter might check if the user is currently logged in
-and return a redirect response if not.
+They can adjust the command or terminate further processing.  For example, an auth filter might check if the user is currently logged in
+and return a redirect reply if not.
 "Post" filters are run after doXYZ()
 
   
@@ -149,7 +146,7 @@ All objects in MEF have access to a service locator object, that will create DAL
 
 Views
 --------
-Play already has excellent views.  MEF does not do any view code.  The response object should contain enough data to render
+Play already has excellent views.  MEF does not do any view code.  The reply object should contain enough data to render
 the page.
 
 Play views can be easily tested as well (no fakeApplication needed).
@@ -158,13 +155,13 @@ Lifecycle of a Web Request
 ------------------------
 
  * Play receieves the request and routes to a controller
- * Controller method uses boundary to create a presenter and request object
+ * Controller method uses boundary to create a presenter and command object
    * presenter is loaded with any filters it has been configured for
  * Presenter.process called. It calls any pre-filters.
- * doXYZ() called.  It generally uses one or more DALs to get or modify entities. It returns a response object.
+ * onXYZ() called.  It generally uses one or more DALs to get or modify entities. It returns a reply object.
  * controller does one of two things:
-   * redirects to a route specified by the response
-   * renders the view specified by the response
+   * redirects to a route specified by the reply
+   * renders the view specified by the reply
    
 Forms
 ------
@@ -173,7 +170,7 @@ On a 'new' or 'edit' action the presenter will create an empty form.  It will us
    Form<Task> form = taskForm...bind from Task 
    
 Controller would do
-   Form<Task> form = (Form<Task>)response.formBinder.getForm();
+   Form<Task> form = (Form<Task>)reply.formBinder.getForm();
    views.html.index.render(form, ...
    
 On postback, the controller would create a formbinder holding the form data, and the presenter would (secretly) call

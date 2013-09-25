@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 import org.mef.dalgen.codegen.CodeGenBase;
+import org.mef.dalgen.codegen.DALIntefaceCodeGen;
 import org.mef.dalgen.codegen.EntityCodeGen;
 import org.mef.dalgen.codegen.ModelCodeGen;
 import org.mef.dalgen.parser.DalGenXmlParser;
@@ -42,13 +43,18 @@ public class SampleAppCodeGenTests extends BaseTest
 			path = this.pathCombine(stDir, "model.stg");
 			ModelCodeGen gen2 = new ModelCodeGen(_ctx, path, "models");
 			b = generateOneFile(def, gen2, "TaskModel", "app\\models");
-//			String path = this.pathCombine(stDir, "entity.stg");
-//			String packageName = "mef.entities";
-//			EntityCodeGen gen = new EntityCodeGen(_ctx, path, packageName);
-//			String code = gen.generate(def);	
-//			//log(code);
-//			
-//			writeFile(appDir, "app\\mef\\entities", "Task", code);
+			if (!b )
+			{
+				return false; //!!
+			}
+			
+			path = this.pathCombine(stDir, "dal_interface.stg");
+			DALIntefaceCodeGen gen3 = new DALIntefaceCodeGen(_ctx, path, "mef.dals");
+			b = generateOneFile(def, gen3, "ITaskDAL", "app\\mef\\dals");
+			if (!b )
+			{
+				return false; //!!
+			}
 			
 			return b;
 		}
