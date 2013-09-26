@@ -18,7 +18,12 @@ public class UserDAL implements IUserDAL
 		UserModel t = (UserModel)entity.carrier; 
 		if (t == null) //not yet known by db? (newly created)
 		{
+			System.out.println("save-auto-create");
 			t = Boundary.convertToUserModel(entity);
+		}
+		else //touch all (for ebean)
+		{
+			t.setName(entity.name);
 		}
 		t.save();
 	}

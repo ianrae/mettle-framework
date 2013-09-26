@@ -106,7 +106,7 @@ public class UserC extends Controller
 		Form<User> frm = Form.form(User.class);
 		frm = frm.fill(reply._entity);
 	return ok(
-			views.html.useredit.render(reply._allL, frm)
+			views.html.useredit.render(reply._allL, frm, reply._entity.id)
 	  );
 	}
     

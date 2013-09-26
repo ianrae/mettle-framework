@@ -1,4 +1,4 @@
-@(users: List[mef.entities.User], userForm: Form[mef.entities.User])
+@(users: List[mef.entities.User], userForm: Form[mef.entities.User], id: Long)
 
 @import helper._
 
@@ -9,7 +9,7 @@
     
     <h2>Edit user</h2>
     
-    @form(routes.UserC.updateUser(999L)) {
+    @form(routes.UserC.updateUser(id)) {
         
         @helper.inputText(userForm("name"))
         
