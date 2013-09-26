@@ -34,7 +34,7 @@ public class HomePagePresenterTests
 		assertEquals(0, reply._allL.size());
 		assertEquals(null, reply.getFlash());
 		
-		assertEquals(reply.getViewName(), Reply.VIEW_NONE);
+		assertEquals(reply.getDestination(), Reply.VIEW_NONE);
 	}
 
 //fix this -support dal.dbDown!!
@@ -75,7 +75,7 @@ public class HomePagePresenterTests
 		assertEquals(null, reply.getFlash());
 		assertEquals(0, reply._allL.size());
 		assertEquals(0, dal.size());
-		assertEquals(reply.getViewName(), Reply.VIEW_NONE);
+		assertEquals(reply.getDestination(), Reply.VIEW_NONE);
 		// resp._allL may be null
 	}
 	
@@ -97,11 +97,10 @@ public class HomePagePresenterTests
 		
 		assertNotNull(reply);
 		assertEquals(false, reply.failed()); 
-		assertEquals(Reply.FORWARD_NOT_FOUND, reply.getForward()); //can go back to same page, but with msg
+		assertEquals(Reply.FORWARD_NOT_FOUND, reply.getDestination()); //can go back to same page, but with msg
 		assertEquals("could not find task", reply.getFlash());
 		assertEquals(1, reply._allL.size());
 		assertEquals(1, dal.size());
-		assertEquals(reply.getViewName(), Reply.VIEW_NONE);
 		// resp._allL may be null
 	}
 	
@@ -127,7 +126,7 @@ public class HomePagePresenterTests
 		assertEquals(null, reply.getFlash());
 		assertEquals(null, reply._allL);
 		assertEquals(1, dal.size());
-		assertEquals(reply.getViewName(), Reply.VIEW_NONE);
+		assertEquals(Reply.FORWARD_INDEX, reply.getDestination());
 		// resp._allL may be null
 	}
 	

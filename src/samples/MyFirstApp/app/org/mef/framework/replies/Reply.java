@@ -5,7 +5,7 @@ public class Reply
 	private boolean _failed;
 //	private boolean _badRequest;
 	//private int _forward;
-	private int _view;
+	private int _destination;
 
 	private String _flash;
 	
@@ -28,7 +28,7 @@ public class Reply
 	
 	public Reply()
 	{
-		_view = VIEW_NONE;
+		_destination = VIEW_NONE;
 	}
 	
 	public boolean failed() 
@@ -39,17 +39,9 @@ public class Reply
 	{
 		_failed = b;
 	}
-	public int getForward() 
-	{
-		return _view;
-	}
-	public void setForward(int val) 
-	{
-		_view = val;
-	}
 	public boolean isForward()
 	{
-		return _view >= 100;
+		return _destination >= 100;
 	}
 
 	public void setFlash(String s) 
@@ -61,13 +53,13 @@ public class Reply
 		return _flash;
 	}
 	
-	public void setViewName(int val)
+	public void setDestination(int val)
 	{
-		_view = val;
+		_destination = val;
 	}
-	public int getViewName()
+	public int getDestination()
 	{
-		return _view;
+		return _destination;
 	}
 
 }

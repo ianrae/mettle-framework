@@ -54,9 +54,11 @@ public class UserC extends Controller
 			return boundary.result;
 		}
 		
-		System.out.println("BOUND!");
+		System.out.println("BOUND.. " + reply._entity.name);
+		Form<User> frm = Form.form(User.class);
+		frm = frm.fill(reply._entity);
 	return ok(
-		views.html.usernew.render(reply._allL, UserForm)
+		views.html.usernew.render(reply._allL, frm)
 	  );
 	}
     
@@ -100,8 +102,11 @@ public class UserC extends Controller
 			return boundary.result;
 		}
 		
+		System.out.println("BOUND.. " + reply._entity.name);
+		Form<User> frm = Form.form(User.class);
+		frm = frm.fill(reply._entity);
 	return ok(
-			views.html.useredit.render(reply._allL, boundary.makeForm(reply))
+			views.html.useredit.render(reply._allL, frm)
 	  );
 	}
     

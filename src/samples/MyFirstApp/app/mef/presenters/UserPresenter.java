@@ -37,14 +37,14 @@ public class UserPresenter extends Presenter
 	public UserReply onIndexCommand(IndexCommand cmd)
 	{
 		UserReply reply = createReply(); //
-		reply.setViewName(Reply.VIEW_INDEX);
+		reply.setDestination(Reply.VIEW_INDEX);
 		return fillPage(reply);
 	}
 
 	public UserReply onNewCommand(NewCommand cmd)
 	{
 		UserReply reply = createReply();//Reply.VIEW_NEW);
-		reply.setViewName(Reply.VIEW_NEW);
+		reply.setDestination(Reply.VIEW_NEW);
 		reply._entity = new User();
 		//default vals
 		reply._entity.name = "defaultname";
@@ -54,7 +54,7 @@ public class UserPresenter extends Presenter
 	public UserReply onCreateCommand(CreateCommand cmd)
 	{
 		UserReply reply = new UserReply();
-		reply.setViewName(Reply.VIEW_NEW);
+		reply.setDestination(Reply.VIEW_NEW);
 		
 		IFormBinder binder = cmd.getFormBinder();
 		if (! binder.bind())
@@ -73,7 +73,7 @@ public class UserPresenter extends Presenter
 			{
 				_dal.save(entity);
 				Logger.info("saved new");
-				reply.setForward(Reply.FORWARD_INDEX);
+				reply.setDestination(Reply.FORWARD_INDEX);
 			}
 			return fillPage(reply); //for now!!
 		}
@@ -82,12 +82,12 @@ public class UserPresenter extends Presenter
 	public UserReply onEditCommand(EditCommand cmd)
 	{
 		UserReply reply = new UserReply();
-		reply.setViewName(Reply.VIEW_EDIT);
+		reply.setDestination(Reply.VIEW_EDIT);
 		
 		User user = _dal.findById(cmd.id);
 		if (user == null)
 		{
-			reply.setForward(Reply.FORWARD_NOT_FOUND);
+			reply.setDestination(Reply.FORWARD_NOT_FOUND);
 			return reply;
 		}
 		else
@@ -99,7 +99,7 @@ public class UserPresenter extends Presenter
 	public UserReply onUpdateCommand(UpdateCommand cmd)
 	{
 		UserReply reply = new UserReply();
-		reply.setViewName(Reply.VIEW_INDEX);
+		reply.setDestination(Reply.VIEW_INDEX);
 		
 		IFormBinder binder = cmd.getFormBinder();
 		if (! binder.bind())
@@ -118,7 +118,7 @@ public class UserPresenter extends Presenter
 			{
 				_dal.save(entity);
 				Logger.info("saved update: " + entity.name);
-				reply.setForward(Reply.FORWARD_INDEX);
+				reply.setDestination(Reply.FORWARD_INDEX);
 			}
 			return fillPage(reply);
 		}
@@ -128,12 +128,12 @@ public class UserPresenter extends Presenter
 	public UserReply onDeleteCommand(DeleteCommand cmd)
 	{
 		UserReply reply = new UserReply();
-		reply.setViewName(Reply.FORWARD_INDEX);
+		reply.setDestination(Reply.FORWARD_INDEX);
 		
 		User t = _dal.findById(cmd.id);
 		if (t == null)
 		{
-			reply.setForward(Reply.FORWARD_NOT_FOUND);
+			reply.setDestination(Reply.FORWARD_NOT_FOUND);
 			reply.setFlash("could not find task");
 		}
 		else

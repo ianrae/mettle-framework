@@ -192,7 +192,7 @@ public class UserPresenterTests
 	{
 		assertNotNull(reply);
 		assertEquals(false, reply.failed()); //should go to error page. something bad happened
-		assertEquals(view, reply.getViewName());
+		assertEquals(view, reply.getDestination());
 		assertEquals(flash, reply.getFlash());
 	}
 	private void chkDalSize(int expected)
