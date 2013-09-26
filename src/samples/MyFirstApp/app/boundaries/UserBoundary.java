@@ -2,7 +2,7 @@ package boundaries;
 
 import mef.entities.User;
 import mef.presenters.UserPresenter;
-import mef.presenters.UserReply;
+import mef.presenters.replies.UserReply;
 import models.UserModel;
 
 import org.mef.framework.binder.IFormBinder;

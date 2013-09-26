@@ -21,7 +21,7 @@ import mef.mocks.MockFormBinder;
 import mef.mocks.MockTaskDAL;
 import mef.mocks.MockUserDAL;
 import mef.presenters.UserPresenter;
-import mef.presenters.UserReply;
+import mef.presenters.replies.UserReply;
 
 public class UserPresenterTests 
 {
@@ -127,7 +127,8 @@ public class UserPresenterTests
 		User t = new User();
 		t.id = 46L;
 		t.name = "task1";
-		assertEquals(0, _dal.size());
+		_dal.save(t);
+		assertEquals(1, _dal.size());
 		
 		UserPresenter presenter = new UserPresenter(_ctx);
 		UpdateCommand cmd = new UpdateCommand(t.id);

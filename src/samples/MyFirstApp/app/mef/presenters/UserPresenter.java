@@ -1,5 +1,7 @@
 package mef.presenters;
 
+import java.util.List;
+
 import org.mef.framework.Logger;
 import org.mef.framework.binder.IFormBinder;
 import org.mef.framework.commands.CreateCommand;
@@ -16,6 +18,7 @@ import org.mef.framework.sfx.SfxContext;
 
 import mef.dals.IUserDAL;
 import mef.entities.User;
+import mef.presenters.replies.UserReply;
 
 public class UserPresenter extends Presenter
 {

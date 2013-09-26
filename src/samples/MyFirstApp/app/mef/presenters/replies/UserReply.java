@@ -1,11 +1,10 @@
-package mef.presenters;
+package mef.presenters.replies;
 
 import java.util.List;
 
 import mef.entities.User;
 
 import org.mef.framework.replies.Reply;
-
 
 public class UserReply extends Reply
 {
@@ -15,6 +14,4 @@ public class UserReply extends Reply
 	public UserReply()
 	{
 	}
-
-	
 }

@@ -11,7 +11,7 @@ import boundaries.ApplicationBoundary;
 import boundaries.Boundary;
 
 import mef.entities.Task;
-import mef.presenters.HomePageReply;
+import mef.presenters.replies.HomePageReply;
 import play.*;
 import play.mvc.*;
 import play.core.Router.Routes;

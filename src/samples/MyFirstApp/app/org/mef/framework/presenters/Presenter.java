@@ -1,7 +1,7 @@
 package org.mef.framework.presenters;
 
 
-import mef.presenters.UserReply;
+import mef.presenters.replies.UserReply;
 
 import org.mef.framework.Logger;
 import org.mef.framework.commands.Command;

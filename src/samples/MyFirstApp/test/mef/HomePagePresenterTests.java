@@ -18,7 +18,7 @@ import mef.mocks.MockFormBinder;
 import mef.mocks.MockTaskDAL;
 import mef.mocks.MockUserDAL;
 import mef.presenters.HomePagePresenter;
-import mef.presenters.HomePageReply;
+import mef.presenters.replies.HomePageReply;
 
 public class HomePagePresenterTests 
 {
