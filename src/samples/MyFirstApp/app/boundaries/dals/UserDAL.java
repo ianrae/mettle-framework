@@ -27,6 +27,10 @@ public class UserDAL implements IUserDAL
 	public User findById(long id) 
 	{
 		UserModel t = UserModel.find.byId(id);
+		if (t == null)
+		{
+			return null;
+		}
 		t.entity = Boundary.convertFromUserModel(t);
 		return t.entity;
 	}

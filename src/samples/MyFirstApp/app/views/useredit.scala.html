@@ -9,11 +9,11 @@
     
     <h2>Edit user</h2>
     
-    @form(routes.UserC.updateUser()) {
+    @form(routes.UserC.updateUser(999L)) {
         
         @helper.inputText(userForm("name"))
         
-        <input type="submit" value="Save">
+        <input type="submit" value="Savex">
         
     }
     

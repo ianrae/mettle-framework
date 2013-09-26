@@ -116,9 +116,20 @@ public class UserPresenter extends Presenter
 			}
 			else
 			{
-				_dal.save(entity);
-				Logger.info("saved update: " + entity.name);
-				reply.setDestination(Reply.FORWARD_INDEX);
+				User user = _dal.findById(cmd.id);
+				if (user == null)
+				{
+					reply.setDestination(Reply.FORWARD_NOT_FOUND);
+					return reply;
+				}
+				else
+				{
+					user.name = entity.name;
+					Logger.info("userID: " + user.id);
+					_dal.save(user);
+					Logger.info("xsaved update: " + user.name);
+					reply.setDestination(Reply.FORWARD_INDEX);
+				}
 			}
 			return fillPage(reply);
 		}

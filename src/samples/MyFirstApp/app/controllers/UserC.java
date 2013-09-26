@@ -110,10 +110,10 @@ public class UserC extends Controller
 	  );
 	}
     
-    public static Result updateUser() 
+    public static Result updateUser(Long id) 
     {
 		UserBoundary boundary = Boundary.createUserBoundary();
-		UserReply reply = (UserReply) boundary.process(new UpdateCommand(), new User());
+		UserReply reply = (UserReply) boundary.process(new UpdateCommand(id), new User());
 		if (boundary.result != null)
 		{
 			return boundary.result;

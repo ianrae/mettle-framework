@@ -130,7 +130,7 @@ public class UserPresenterTests
 		assertEquals(0, _dal.size());
 		
 		UserPresenter presenter = new UserPresenter(_ctx);
-		UpdateCommand cmd = new UpdateCommand();
+		UpdateCommand cmd = new UpdateCommand(t.id);
 		t.name = "task2";
 		MockFormBinder binder = new MockFormBinder(t);
 		cmd.setFormBinder(binder);
