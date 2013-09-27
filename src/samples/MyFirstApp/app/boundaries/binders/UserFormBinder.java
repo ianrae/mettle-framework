@@ -62,5 +62,14 @@ public class UserFormBinder implements IFormBinder
 	{
 		return filledForm.errors();
 	}
+	
+	public UserModel getRawObj()
+	{
+		return filledForm.get();
+	}
+	public Form<UserModel> getRawForm()
+	{
+		return filledForm;
+	}
 
 }

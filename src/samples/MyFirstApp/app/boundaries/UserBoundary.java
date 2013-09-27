@@ -15,6 +15,7 @@ import org.mef.framework.sfx.SfxContext;
 import play.data.Form;
 import play.data.validation.ValidationError;
 import boundaries.binders.UserFormBinder;
+import boundaries.dals.UserDAL;
 import controllers.routes;
 
 public class UserBoundary extends BoundaryBase
@@ -34,10 +35,15 @@ public class UserBoundary extends BoundaryBase
 		return process(cmd);
 	}
 	
-	public Form<User> makeForm(UserReply reply)
+	public Form<UserModel> makeForm(UserReply reply)
 	{
-		Form<User> frm =  Form.form(User.class);
-		frm = frm.fill(reply._entity);
+		if (binder != null)
+		{
+			return binder.getRawForm();
+		}
+		Form<UserModel> frm = Form.form(UserModel.class);
+		UserModel model = UserDAL.createModelFromEntity(reply._entity);
+		frm = frm.fill(model);
 		return frm;
 	}
 	

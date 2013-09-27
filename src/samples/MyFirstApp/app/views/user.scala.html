@@ -1,4 +1,4 @@
-@(users: List[mef.entities.User], userForm: Form[mef.entities.User])
+@(users: List[mef.entities.User], userForm: Form[UserModel])
 
 @import helper._
 
@@ -12,12 +12,12 @@
         @for(user <- users) {
             <li>
                 @user.name  @user.id
-
+				<a href="@routes.UserC.edit(user.id)">Edit User</a>
 				@form(routes.UserC.deleteUser(user.id)) {
                     <input type="submit" value="Delete">
-                }</br>
+                }
 				
-				<a href="@routes.UserC.edit(user.id)">Edit User</a>
+				
             </li>
         }
     </ul>

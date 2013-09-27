@@ -30,7 +30,7 @@ import views.html.*;
 
 public class UserC extends Controller 
 {
-	static Form<User> UserForm = Form.form(User.class);  
+	static Form<UserModel> UserForm = Form.form(UserModel.class);  
 	
 	public static Result index() 
     {
@@ -84,7 +84,7 @@ public class UserC extends Controller
 			return redirect(routes.Owner.logout());
 		}
 		
-		Form<User> frm = null;
+		Form<UserModel> frm = null;
 		String errMsg = "";
 		String flashMsg = (reply.getFlash() != null) ? reply.getFlash() : "";
 		switch(reply.getDestination())
