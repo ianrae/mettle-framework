@@ -9,4 +9,13 @@
 <mock extend="true" />
 <real extend="true" />
 </entity>
+
+<entity name="User">
+<field>@Id Long id</field>
+<field>String name</field>
+<interface extend="true" />
+<mock extend="true" />
+<real extend="true" />
+</entity>
+
 </entities>

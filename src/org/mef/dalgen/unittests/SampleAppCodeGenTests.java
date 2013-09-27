@@ -18,9 +18,10 @@ public class SampleAppCodeGenTests extends BaseTest
 		String stDir = this.getUnitTestDir("testfiles");
 		
 		int n = gen.init(appDir, stDir);
-		assertEquals(1, n);
+		assertEquals(2, n);
 		
-		boolean b = gen.generate(0);
+//		boolean b = gen.generate(0);
+		boolean b = gen.generate(1);
 		
 	}
 

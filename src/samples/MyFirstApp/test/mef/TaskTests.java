@@ -58,7 +58,7 @@ public class TaskTests {
 		long id = 45;
 		t.id = id;
 		t.name = "abc";
-		t.email = "bob@def.com";
+//		t.email = "bob@def.com";
 
 		dal.save(t);
 		L = dal.all();

@@ -1,9 +1,7 @@
 package mef.dals;
 
+import mef.entities.*;
 import java.util.List;
-
-import mef.entities.User;
-
 public interface IUserDAL
 {
 	int size();
@@ -11,5 +9,4 @@ public interface IUserDAL
 	List<User> all();
 	void delete(long id);
 	void save(User entity);        
-
-}
+        }
