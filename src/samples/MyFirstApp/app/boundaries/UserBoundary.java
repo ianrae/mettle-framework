@@ -53,22 +53,7 @@ public class UserBoundary extends BoundaryBase
 	
 	public String getAllValidationErrors()
 	{
-		if (binder == null)
-		{
-			return "";
-			
-		}
-		String s = "";
-		Map<String, List<ValidationError>> map = (Map<String, List<ValidationError>>) binder.getValidationErrors();
-		for(String key : map.keySet())
-		{
-			List<ValidationError> val = map.get(key);
-			for(ValidationError err : val)
-			{
-				s += ", " + String.format("%s: %s", key, err.message());
-			}
-		}		
-		return s;
+		return dogetAllValidationErrors(binder);
 	}
 	
 }
