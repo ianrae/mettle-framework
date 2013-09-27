@@ -4,11 +4,17 @@
 
 @main("Users list") {
     
- @flash.get("flash_content")   
-    
     
     <h2>Create a new user</h2>
     
+@if(flash.containsKey("fail")) {
+        <div 
+        <strong>Oops!</strong> @flash.get("fail")
+        </div>
+    }  else {
+    <div> no flash </div>
+    } 
+        
     <div>flash: @flashMsg</div>
     <div>errors: @errMsg</div>
     

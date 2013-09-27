@@ -6,6 +6,8 @@ import java.util.*;
 import play.db.ebean.*;
 import play.data.validation.Constraints.*;
 import javax.persistence.*;
+
+import boundaries.dals.PhoneDAL;
 import mef.entities.*;
 
 @Entity
@@ -27,8 +29,8 @@ public class UserModel extends Model
 	}
 
     //getters and setters
-           @Id 
-    Long id;
+    @Id 
+    private Long id;
 
     public Long getId() {
         return this.id;
@@ -39,7 +41,7 @@ public class UserModel extends Model
     }
 
     @Required
-    String name;
+    private String name;
 
     public String getName() {
         return this.name;
@@ -49,4 +51,22 @@ public class UserModel extends Model
         this.entity.name = val;
     }
 
+    @OneToOne
+    private PhoneModel phone;    
+    
+    public PhoneModel getPhone() {
+        return phone;
+    }
+    public void setPhone(PhoneModel val) {
+		this.phone = val;
+		if (val != null)
+		{
+			Phone entity = PhoneDAL.createEntityFromModel(phone);
+			this.entity.phone = entity;
+		}
+		else
+		{
+			this.entity.phone = null;
+		}
+    }
 }

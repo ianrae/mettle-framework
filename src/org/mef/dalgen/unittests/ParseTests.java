@@ -45,9 +45,11 @@ public class ParseTests extends BaseTest
 		
 		assertEquals(1, def.queryL.size());
 		assertEquals("find_by_label", def.queryL.get(0));
-		assertEquals(true, def.extendInterface);
-		assertEquals(true, def.extendMock);
-		assertEquals(true, def.extendReal);
+		assertEquals(false, def.extendInterface);
+		assertEquals(false, def.extendMock);
+		assertEquals(false, def.extendReal);
+		assertEquals(true, def.extendEntity);
+		assertEquals(false, def.extendModel);
 	}
 	
 

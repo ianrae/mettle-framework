@@ -5,8 +5,11 @@
 <field>@Required String label</field>
 <field>boolean enabled</field>
 <query>find_by_label</query>
-<interface extend="true" />
-<mock extend="true" />
-<real extend="true" />
+
+<codegen what="entity" extend="true" />
+<codegen what="model" extend="false" />
+<codegen what="dal_interface" extend="false" />
+<codegen what="dal_mock" extend="false" />
+<codegen what="dal_real" extend="false" />
 </entity>
 </entities>

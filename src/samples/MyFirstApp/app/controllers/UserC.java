@@ -87,6 +87,7 @@ public class UserC extends Controller
 		
 		Form<UserModel> frm = null;
 		String errMsg = "";
+		String flashKey = reply.getFlashKey();
 		String flashMsg = (reply.getFlash() != null) ? reply.getFlash() : "";
 		switch(reply.getDestination())
 		{

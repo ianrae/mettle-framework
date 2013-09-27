@@ -10,11 +10,13 @@ import models.UserModel;
 
 import org.mef.framework.boundaries.BoundaryBase;
 import org.mef.framework.commands.Command;
+import org.mef.framework.replies.Reply;
 import org.mef.framework.sfx.SfxContext;
 
 import play.Logger;
 import play.data.Form;
 import play.data.validation.ValidationError;
+import play.mvc.Controller;
 import boundaries.binders.UserFormBinder;
 import boundaries.dals.UserDAL;
 import controllers.routes;
@@ -57,6 +59,13 @@ public class UserBoundary extends BoundaryBase
 		UserPresenter presenter = new UserPresenter(_ctx);
 		
 		UserReply reply = (UserReply) presenter.process(cmd);
+		
+		String flashKey = reply.getFlashKey();
+		String flashMsg = reply.getFlash();
+		if (flashKey != null)
+		{
+			Controller.flash(flashKey, flashMsg);
+		}
 		return reply;
 	}
 	

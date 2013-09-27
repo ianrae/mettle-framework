@@ -69,7 +69,7 @@ public class UserPresenterTests extends BasePresenterTest
 		
 		UserReply reply = (UserReply) _presenter.process(cmd);
 		
-		chkReplySucessful(reply, Reply.FORWARD_INDEX, null);
+		chkReplySucessful(reply, Reply.FORWARD_INDEX, "created user task1");
 		chkDalSize(1);
 		chkReplyWithoutEntity(reply, true, 1);
 	}

@@ -11,4 +11,6 @@ public class EntityDef
 	public boolean extendInterface;
 	public boolean extendMock;
 	public boolean extendReal;
+	public boolean extendEntity;
+	public boolean extendModel;
 }

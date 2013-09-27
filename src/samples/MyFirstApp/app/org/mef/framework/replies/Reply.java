@@ -7,6 +7,7 @@ public class Reply
 	//private int _forward;
 	private int _destination;
 
+	private String _flashKey;
 	private String _flash;
 	
 	public static final int VIEW_NONE = 0;
@@ -44,9 +45,24 @@ public class Reply
 		return _destination >= 100;
 	}
 
-	public void setFlash(String s) 
+	public void setFlashFail(String s)
 	{
+		this.setFlash("fail", s);
+	}
+	public void setFlashSuccess(String s)
+	{
+		this.setFlash("success", s);
+	}
+	
+	
+	public void setFlash(String key, String s) 
+	{
+		_flashKey = key;
 		_flash = s;
+	}
+	public String getFlashKey()
+	{
+		return _flashKey;
 	}
 	public String getFlash()
 	{

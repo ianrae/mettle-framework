@@ -294,6 +294,15 @@ done codegen
 -user all 6 methods
 -dal should work properly with carrier and entity
 
+
+CODEGEN
+
+ Entity
+ Model
+ DalInterface
+ MockDAL
+ RealDAL
+ 
  
  
  

@@ -62,7 +62,7 @@ public class UserPresenter extends Presenter
 		IFormBinder binder = cmd.getFormBinder();
 		if (! binder.bind())
 		{
-			reply.setFlash("binding failed!");
+			reply.setFlashFail("binding failed!");
 			Logger.info("BINDING failed");
 			reply._entity = (User) binder.getObject();
 			return reply;
@@ -78,6 +78,7 @@ public class UserPresenter extends Presenter
 			{
 				_dal.save(entity);
 				Logger.info("saved new");
+				reply.setFlashSuccess("created user " + entity.name);
 				reply.setDestination(Reply.FORWARD_INDEX);
 			}
 			return fillPage(reply); //for now!!
@@ -109,7 +110,7 @@ public class UserPresenter extends Presenter
 		IFormBinder binder = cmd.getFormBinder();
 		if (! binder.bind())
 		{
-			reply.setFlash("binding failed!");
+			reply.setFlashFail("binding failed!");
 			reply._entity = (User) binder.getObject();
 			if (reply._entity == null)
 			{
@@ -156,7 +157,7 @@ public class UserPresenter extends Presenter
 		if (t == null)
 		{
 			reply.setDestination(Reply.FORWARD_NOT_FOUND);
-			reply.setFlash("could not find task");
+			reply.setFlashFail("could not find task");
 		}
 		else
 		{

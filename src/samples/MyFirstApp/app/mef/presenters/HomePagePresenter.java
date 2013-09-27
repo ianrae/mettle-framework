@@ -42,7 +42,7 @@ public class HomePagePresenter extends Presenter
 		IFormBinder binder = cmd.getFormBinder();
 		if (! binder.bind())
 		{
-			_reply.setFlash("binding failed!");
+			_reply.setFlash("fail", "binding failed!");
 		}
 		else
 		{
@@ -68,7 +68,7 @@ public class HomePagePresenter extends Presenter
 		if (t == null)
 		{
 			_reply.setDestination(Reply.FORWARD_NOT_FOUND);
-			_reply.setFlash("could not find task");
+			_reply.setFlash("fail", "could not find task");
 		}
 		else
 		{

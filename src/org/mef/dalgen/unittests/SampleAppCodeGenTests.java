@@ -8,7 +8,7 @@ import org.mef.dalgen.codegen.DalCodeGenerator;
 
 public class SampleAppCodeGenTests extends BaseTest
 {
-	@Test
+//	@Test
 	public void testEntity() throws Exception
 	{
 		log("--testEntity--");
