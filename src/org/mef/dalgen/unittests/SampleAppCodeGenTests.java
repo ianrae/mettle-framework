@@ -11,7 +11,7 @@ public class SampleAppCodeGenTests extends BaseTest
 	@Test
 	public void testEntity() throws Exception
 	{
-		boolean genFiles = true;
+		boolean genFiles = false;
 		if (! genFiles)
 		{
 			return;

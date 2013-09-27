@@ -4,12 +4,14 @@ package mef.entities;
 
 import org.mef.framework.entities.Entity;
 
-public class User_GEN extends Entity
+public class User extends User_GEN
 {
-    public Long id;
-
-    public String name;
-
-    public Phone phone;
-
+	public String validate() 
+	{
+		if (name != null && name.equals("bob"))
+		{
+			return "no bobs allowed";
+		}
+		return null;
+	}
 }

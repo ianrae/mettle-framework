@@ -40,7 +40,7 @@ public class <name> extends Model
 			Long.class, <name>.class
 			);  
 	
-	public static List\<<type>Model\> all() {
+	public static List\<<type>Model> all() {
 		return find.all();
 	}
 	public static void delete(Long id) {

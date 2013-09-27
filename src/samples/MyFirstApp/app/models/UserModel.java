@@ -21,7 +21,7 @@ public class UserModel extends Model
 			Long.class, UserModel.class
 			);  
 
-	public static List<UserModel\> all() {
+	public static List<UserModel> all() {
 		return find.all();
 	}
 	public static void delete(Long id) {

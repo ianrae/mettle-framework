@@ -19,7 +19,6 @@ create table task_model (
 create table user_model (
   id                        bigint not null,
   name                      varchar(255),
-  phone_id                  bigint,
   constraint pk_user_model primary key (id))
 ;
 
@@ -29,8 +28,6 @@ create sequence task_model_seq;
 
 create sequence user_model_seq;
 
-alter table user_model add constraint fk_user_model_phone_1 foreign key (phone_id) references phone_model (id) on delete restrict on update restrict;
-create index ix_user_model_phone_1 on user_model (phone_id);
 
 
 

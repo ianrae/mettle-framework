@@ -17,7 +17,6 @@ import java.util.List;
 // Part 3 - mock DAL 
 
 
-import mef.dals.MockUserDAL;
 import mef.entities.User;
 import mef.mocks.MockTaskDAL;
 
