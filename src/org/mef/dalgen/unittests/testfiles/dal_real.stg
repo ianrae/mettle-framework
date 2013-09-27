@@ -1,4 +1,5 @@
 header(package, type) ::= <<
+//THIS FILE HAS BEEN AUTO-GENERATED. DO NOT MODIFY.
 package <package>;
 
 import java.util.ArrayList;

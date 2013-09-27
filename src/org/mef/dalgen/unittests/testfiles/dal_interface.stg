@@ -1,4 +1,6 @@
 header(package) ::= <<
+//THIS FILE HAS BEEN AUTO-GENERATED. DO NOT MODIFY.
+
 package <package>;
 
 import mef.entities.*;
@@ -7,8 +9,8 @@ import java.util.List;
 >>
 
 
-classdecl(type, bigName) ::= <<
-public interface I<bigName>DAL
+classdecl(type, name) ::= <<
+public interface <name>
 {
 	int size();
 	<type> findById(long id);

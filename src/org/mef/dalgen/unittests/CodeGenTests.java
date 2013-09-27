@@ -42,7 +42,7 @@ public class CodeGenTests extends BaseTest
 		log("--testModel--");
 		createContext();
 		EntityDef def = readEntityDef();
-		
+		def.extendModel = true;
 		String path = this.getTestFile("model.stg");
 		String packageName = "org.mef.dalgen.unittests.gen";
 		ModelCodeGen gen = new ModelCodeGen(_ctx, path, packageName);
@@ -60,7 +60,7 @@ public class CodeGenTests extends BaseTest
 		log("--testIDAL--");
 		createContext();
 		EntityDef def = readEntityDef();
-		
+		def.extendInterface = true;
 		String path = this.getTestFile("dal_interface.stg");
 		String packageName = "org.mef.dalgen.unittests.gen";
 		DALIntefaceCodeGen gen = new DALIntefaceCodeGen(_ctx, path, packageName);
@@ -76,7 +76,7 @@ public class CodeGenTests extends BaseTest
 		log("--testMockDAL--");
 		createContext();
 		EntityDef def = readEntityDef();
-		
+		def.extendMock = true;
 		String path = this.getTestFile("dal_mock.stg");
 		String packageName = "org.mef.dalgen.unittests.gen";
 		MockDALCodeGen gen = new MockDALCodeGen(_ctx, path, packageName);
@@ -92,7 +92,7 @@ public class CodeGenTests extends BaseTest
 		log("--testRealDAL--");
 		createContext();
 		EntityDef def = readEntityDef();
-		
+		def.extendReal = true;
 		String path = this.getTestFile("dal_real.stg");
 		String packageName = "boundaries.dals";
 		RealDALCodeGen gen = new RealDALCodeGen(_ctx, path, packageName);

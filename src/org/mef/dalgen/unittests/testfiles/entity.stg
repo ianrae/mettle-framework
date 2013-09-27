@@ -1,4 +1,6 @@
 header(package) ::= <<
+//THIS FILE HAS BEEN AUTO-GENERATED. DO NOT MODIFY.
+
 package <package>;
 
 import org.mef.framework.entities.Entity;

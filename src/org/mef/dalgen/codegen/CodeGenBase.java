@@ -91,4 +91,15 @@ public abstract class CodeGenBase extends SfxBaseObj
 			return result;
 		}
 		
+		
+		protected String makeClassName(String name, boolean extend)
+		{
+			String s = name;
+			if (extend)
+			{
+				s += "_GEN";
+			}
+			return s;
+		}
+		
 	}

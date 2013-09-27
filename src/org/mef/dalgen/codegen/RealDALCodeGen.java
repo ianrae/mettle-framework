@@ -8,8 +8,6 @@ import sfx.SfxContext;
 
 public class RealDALCodeGen extends CodeGenBase
 {
-	public boolean genExtension;
-	
 	public RealDALCodeGen(SfxContext ctx, String path, String packageName)
 	{
 		super(ctx, path, packageName);
@@ -22,10 +20,7 @@ public class RealDALCodeGen extends CodeGenBase
 		ST st = _group.getInstanceOf("classdecl");
 		
 		String className = def.name + "DAL";
-		if (genExtension)
-		{
-			className += "_GEN";
-		}
+		className = makeClassName(className, def.extendReal);
 		st.add("name", className);
 		st.add("type", def.name);
 		result += st.render(); 
