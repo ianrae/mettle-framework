@@ -306,6 +306,14 @@ CODEGEN
  
  
  
+-	public String validate() 
+-	{
+-		if (name != null && name.equals("bob"))
+-		{
+-			return "no bobs allowed";
+-		}
+-		return null;
+-	}
 
  
 

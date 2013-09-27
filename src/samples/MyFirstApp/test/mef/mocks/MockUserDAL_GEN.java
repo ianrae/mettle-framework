@@ -1,3 +1,5 @@
+//THIS FILE HAS BEEN AUTO-GENERATED. DO NOT MODIFY.
+
 package mef.mocks;
 
 import java.util.List;
@@ -5,7 +7,7 @@ import java.util.ArrayList;
 import mef.entities.*;
 import mef.dals.*;
 
-public class MockUserDAL_GEN implements IUserDAL
+public class MockUserDAL implements IUserDAL
 {
     private ArrayList<User> _L = new ArrayList<User>();
 

@@ -1,3 +1,5 @@
+//THIS FILE HAS BEEN AUTO-GENERATED. DO NOT MODIFY.
+
 package mef.dals;
 
 import mef.entities.*;

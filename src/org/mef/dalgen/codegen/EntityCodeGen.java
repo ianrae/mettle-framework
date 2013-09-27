@@ -20,7 +20,7 @@ public class EntityCodeGen extends CodeGenBase
 			
 			ST st = _group.getInstanceOf("classdecl");
 			st.add("type", "int");
-			st.add("name", makeClassName(def.name, def.extendEntity));
+			st.add("name", getClassName(def));
 			result += st.render(); 
 			
 			result += genFields(def);
@@ -29,6 +29,12 @@ public class EntityCodeGen extends CodeGenBase
 			result += st.render(); 
 			
 			return result;
+		}
+		
+		@Override
+		public String getClassName(EntityDef def)
+		{
+			return makeClassName(def.name, def.extendEntity);
 		}
 		
 		

@@ -13,7 +13,7 @@
 <entity name="User">
 <field>@Id Long id</field>
 <field>@Required String name</field>
-
+<field>Phone phone</field>
 
 <codegen what="entity" extend="true" />
 <codegen what="model" extend="false" />

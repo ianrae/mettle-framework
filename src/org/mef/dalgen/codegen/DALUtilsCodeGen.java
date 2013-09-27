@@ -19,8 +19,7 @@ public class DALUtilsCodeGen extends CodeGenBase
 		String result = genHeader(); 
 		ST st = _group.getInstanceOf("classdecl");
 		
-		String className = def.name + "DALUtils";
-		st.add("name", className);
+		st.add("name", getClassName(def));
 		st.add("type", def.name);
 		result += st.render(); 
 		
@@ -50,6 +49,12 @@ public class DALUtilsCodeGen extends CodeGenBase
 	protected String buildField(FieldDef fdef)
 	{
 		return "";
+	}
+
+	@Override
+	public String getClassName(EntityDef def) 
+	{
+		return def.name + "DALUtils";
 	}
 
 }

@@ -41,7 +41,7 @@ public abstract class CodeGenBase extends SfxBaseObj
 		public abstract String generate(EntityDef def);
 		
 		protected abstract String buildField(FieldDef fdef);
-		
+		public abstract String getClassName(EntityDef def);
 		
 		protected boolean isId(String name) 
 		{

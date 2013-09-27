@@ -35,7 +35,7 @@ public class DalCodeGenerator extends SfxBaseObj
 		
 		String path = this.pathCombine(stDir, "entity.stg");
 		EntityCodeGen gen = new EntityCodeGen(_ctx, path, "mef.entities");
-		boolean b = generateOneFile(def, gen, name, "app\\mef\\entities");
+		boolean b = generateOneFile(def, gen, "app\\mef\\entities");
 		if (!b )
 		{
 			return false; //!!
@@ -43,7 +43,7 @@ public class DalCodeGenerator extends SfxBaseObj
 
 		path = this.pathCombine(stDir, "model.stg");
 		ModelCodeGen gen2 = new ModelCodeGen(_ctx, path, "models");
-		b = generateOneFile(def, gen2, name + "Model", "app\\models");
+		b = generateOneFile(def, gen2, "app\\models");
 		if (!b )
 		{
 			return false; //!!
@@ -51,7 +51,7 @@ public class DalCodeGenerator extends SfxBaseObj
 		
 		path = this.pathCombine(stDir, "dal_interface.stg");
 		DALIntefaceCodeGen gen3 = new DALIntefaceCodeGen(_ctx, path, "mef.dals");
-		b = generateOneFile(def, gen3, String.format("I%sDAL", name), "app\\mef\\dals");
+		b = generateOneFile(def, gen3, "app\\mef\\dals");
 		if (!b )
 		{
 			return false; //!!
@@ -59,7 +59,7 @@ public class DalCodeGenerator extends SfxBaseObj
 		
 		path = this.pathCombine(stDir, "dal_mock.stg");
 		MockDALCodeGen gen4 = new MockDALCodeGen(_ctx, path, "mef.mocks");
-		b = generateOneFile(def, gen4, String.format("Mock%sDAL_GEN", name), "test\\mef\\mocks");
+		b = generateOneFile(def, gen4, "test\\mef\\mocks");
 		if (!b )
 		{
 			return false; //!!
@@ -67,11 +67,11 @@ public class DalCodeGenerator extends SfxBaseObj
 		
 		return b;
 	}
-	private boolean generateOneFile(EntityDef def, CodeGenBase gen, String className, String relPath) throws Exception
+	private boolean generateOneFile(EntityDef def, CodeGenBase gen, String relPath) throws Exception
 	{
 		String code = gen.generate(def);	
 		//log(code);
-		
+		String className = gen.getClassName(def);	
 		return writeFile(appDir, relPath, className, code);
 	}
 	private DalGenXmlParser readEntityDef(String appDir) throws Exception

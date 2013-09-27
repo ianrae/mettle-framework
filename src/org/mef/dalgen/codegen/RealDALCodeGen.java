@@ -19,9 +19,7 @@ public class RealDALCodeGen extends CodeGenBase
 		String result = genHeader(def.name); 
 		ST st = _group.getInstanceOf("classdecl");
 		
-		String className = def.name + "DAL";
-		className = makeClassName(className, def.extendReal);
-		st.add("name", className);
+		st.add("name", getClassName(def));
 		st.add("type", def.name);
 		result += st.render(); 
 		
@@ -31,6 +29,15 @@ public class RealDALCodeGen extends CodeGenBase
 		
 		return result;
 	}
+	
+	@Override
+	public String getClassName(EntityDef def)
+	{
+		String className = def.name + "DAL";
+		className = makeClassName(className, def.extendReal);
+		return className;
+	}
+	
 	
 	protected String genQueries(EntityDef def)
 	{

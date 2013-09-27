@@ -8,9 +8,15 @@ import org.mef.dalgen.codegen.DalCodeGenerator;
 
 public class SampleAppCodeGenTests extends BaseTest
 {
-//	@Test
+	@Test
 	public void testEntity() throws Exception
 	{
+		boolean genFiles = true;
+		if (! genFiles)
+		{
+			return;
+		}
+		
 		log("--testEntity--");
 		createContext();
 		DalCodeGenerator gen = new DalCodeGenerator(_ctx);

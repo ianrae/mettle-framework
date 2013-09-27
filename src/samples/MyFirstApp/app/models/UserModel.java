@@ -1,3 +1,5 @@
+//THIS FILE HAS BEEN AUTO-GENERATED. DO NOT MODIFY.
+
 package models;
 
 //import org.mef.framework.entities.Entity;
@@ -6,8 +8,6 @@ import java.util.*;
 import play.db.ebean.*;
 import play.data.validation.Constraints.*;
 import javax.persistence.*;
-
-import boundaries.dals.PhoneDAL;
 import mef.entities.*;
 
 @Entity
@@ -21,7 +21,7 @@ public class UserModel extends Model
 			Long.class, UserModel.class
 			);  
 
-	public static List<UserModel> all() {
+	public static List<UserModel\> all() {
 		return find.all();
 	}
 	public static void delete(Long id) {
@@ -29,8 +29,8 @@ public class UserModel extends Model
 	}
 
     //getters and setters
-    @Id 
-    private Long id;
+           @Id 
+    Long id;
 
     public Long getId() {
         return this.id;
@@ -40,8 +40,8 @@ public class UserModel extends Model
         this.entity.id = val;
     }
 
-    @Required
-    private String name;
+   @Required 
+    String name;
 
     public String getName() {
         return this.name;
@@ -51,22 +51,14 @@ public class UserModel extends Model
         this.entity.name = val;
     }
 
-    @OneToOne
-    private PhoneModel phone;    
-    
-    public PhoneModel getPhone() {
-        return phone;
+    Phone phone;
+
+    public Phone getPhone() {
+        return this.phone;
     }
-    public void setPhone(PhoneModel val) {
+    public void setPhone(Phone val) {
 		this.phone = val;
-		if (val != null)
-		{
-			Phone entity = PhoneDAL.createEntityFromModel(phone);
-			this.entity.phone = entity;
-		}
-		else
-		{
-			this.entity.phone = null;
-		}
+        this.entity.phone = val;
     }
+
 }

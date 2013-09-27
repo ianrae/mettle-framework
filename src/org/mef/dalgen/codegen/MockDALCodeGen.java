@@ -19,9 +19,7 @@ public class MockDALCodeGen extends CodeGenBase
 		String result = genHeader(); 
 		ST st = _group.getInstanceOf("classdecl");
 		
-		String className = "Mock" + def.name + "DAL";
-		className = makeClassName(className, def.extendMock);
-		st.add("name", className);
+		st.add("name", getClassName(def));
 		st.add("type", def.name);
 		result += st.render(); 
 		
@@ -30,6 +28,14 @@ public class MockDALCodeGen extends CodeGenBase
 		result += st.render(); 
 		
 		return result;
+	}
+	
+	@Override
+	public String getClassName(EntityDef def)
+	{
+		String className = "Mock" + def.name + "DAL";
+		className = makeClassName(className, def.extendMock);
+		return className;
 	}
 	
 	protected String genQueries(EntityDef def)

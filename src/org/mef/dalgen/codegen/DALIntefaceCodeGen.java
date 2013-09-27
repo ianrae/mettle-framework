@@ -20,9 +20,7 @@ public class DALIntefaceCodeGen extends CodeGenBase
 			
 			ST st = _group.getInstanceOf("classdecl");
 			st.add("type", def.name);
-			
-			String s = "I" + uppify(def.name) + "DAL";
-			st.add("name", makeClassName(s, def.extendInterface));
+			st.add("name", getClassName(def));
 			result += st.render(); 
 			
 			result += genQueries(def);
@@ -32,6 +30,15 @@ public class DALIntefaceCodeGen extends CodeGenBase
 			
 			return result;
 		}
+		
+		
+		@Override
+		public String getClassName(EntityDef def)
+		{
+			String s = "I" + uppify(def.name) + "DAL";
+			return makeClassName(s, def.extendInterface);
+		}
+		
 		
 		protected String genQueries(EntityDef def)
 		{
