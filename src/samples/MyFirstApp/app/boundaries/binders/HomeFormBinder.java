@@ -1,4 +1,4 @@
-package boundaries;
+package boundaries.binders;
 
 import java.util.Map;
 
@@ -7,15 +7,17 @@ import models.TaskModel;
 
 import org.mef.framework.binder.IFormBinder;
 
+import boundaries.dals.TaskDAL;
+
 import play.Logger;
 import play.data.Form;
 
-public class FormBinder implements IFormBinder
+public class HomeFormBinder implements IFormBinder
 {
 	private Form<TaskModel> taskForm;
 	private Form<TaskModel> filledForm;
 
-	public FormBinder(Form<TaskModel> taskForm)
+	public HomeFormBinder(Form<TaskModel> taskForm)
 	{
 		this.taskForm = taskForm;
 	}
@@ -40,7 +42,7 @@ public class FormBinder implements IFormBinder
 		{
 			Logger.info("55: " + model.getLabel());
 		}
-		Task entity = Boundary.convertFromTaskModel(model);
+		Task entity = TaskDAL.createEntityFromModel(model);
 		model.entity = entity;
 		return entity;
 	}

@@ -11,7 +11,7 @@ import mef.entities.User;
 public class UserModel extends Model 
 {    
 	@Transient
-	public User entity = new User();
+	public User entity = new User(); //needed else get illegalStateException
 	
 	@Id
 	private Long id;
@@ -45,9 +45,9 @@ public class UserModel extends Model
 		return find.all();
 	}
 
-	public static void create(UserModel task) {
-		task.save();
-	}
+//	public static void create(UserModel task) {
+//		task.save();
+//	}
 
 	public static void delete(Long id) {
 		find.ref(id).delete();

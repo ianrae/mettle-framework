@@ -2,17 +2,16 @@ package boundaries;
 
 import mef.entities.Task;
 import mef.presenters.HomePagePresenter;
+import mef.presenters.replies.HomePageReply;
 import models.TaskModel;
 
 import org.mef.framework.boundaries.BoundaryBase;
 import org.mef.framework.commands.Command;
-import org.mef.framework.entities.Entity;
-import org.mef.framework.replies.Reply;
 import org.mef.framework.sfx.SfxContext;
 
-import controllers.routes;
-import play.api.mvc.Call;
 import play.data.Form;
+import boundaries.binders.HomeFormBinder;
+import controllers.routes;
 
 public class ApplicationBoundary extends BoundaryBase
 {
@@ -21,27 +20,28 @@ public class ApplicationBoundary extends BoundaryBase
 		super(ctx);
 	}
 	
-	@Override
-	protected FormBinder createFormBinder(Command cmd, Entity entity)
+	public HomePageReply addFormAndProcess(Command cmd)
 	{
-		//TaskModel model = Boundary.convertToTaskModel(task);
-		Form<TaskModel> taskForm =  Form.form(TaskModel.class);
-		FormBinder binder = new FormBinder(taskForm);
-		return binder;
+		Form<TaskModel> validationForm =  Form.form(TaskModel.class);
+		HomeFormBinder binder = new HomeFormBinder(validationForm);
+		cmd.setFormBinder(binder);
+		return process(cmd);
+	}
+	
+	public Form<Task> makeForm(HomePageReply reply)
+	{
+		Form<Task> frm =  Form.form(Task.class);
+		frm = frm.fill(reply._entity);
+		return frm;
 	}
 	
 	@Override
-	public Reply process(Command cmd)
+	public HomePageReply process(Command cmd)
 	{
 		begin(cmd);
 		HomePagePresenter presenter = new HomePagePresenter(_ctx);
 		
-		Reply reply = presenter.process(cmd);
-		if (reply.failed())
-		{
-			result = play.mvc.Results.redirect(routes.Owner.logout());
-			return reply;
-		}
+		HomePageReply reply = (HomePageReply) presenter.process(cmd);
 		return reply;
 	}
 	

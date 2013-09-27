@@ -63,7 +63,8 @@ public class UserPresenter extends Presenter
 		if (! binder.bind())
 		{
 			reply.setFlash("binding failed!");
-			return fillPage(reply);
+			reply._entity = (User) binder.getObject();
+			return reply;
 		}
 		else
 		{
@@ -102,13 +103,14 @@ public class UserPresenter extends Presenter
 	public UserReply onUpdateCommand(UpdateCommand cmd)
 	{
 		UserReply reply = new UserReply();
-		reply.setDestination(Reply.VIEW_INDEX);
+		reply.setDestination(Reply.VIEW_EDIT);
 		
 		IFormBinder binder = cmd.getFormBinder();
 		if (! binder.bind())
 		{
 			reply.setFlash("binding failed!");
-			return fillPage(reply);
+			reply._entity = (User) binder.getObject();
+			return reply;
 		}
 		else
 		{

@@ -9,6 +9,7 @@ import mef.entities.Task;
 public class HomePageReply extends Reply
 {
 	public List<Task> _allL;
+	public Task _entity; //for New and Create
 	
 	
 	public HomePageReply()

@@ -13,7 +13,7 @@ import org.mef.framework.replies.Reply;
 import boundaries.ApplicationBoundary;
 import boundaries.Boundary;
 import boundaries.UserBoundary;
-import boundaries.UserFormBinder;
+import boundaries.binders.UserFormBinder;
 
 import mef.presenters.replies.HomePageReply;
 import mef.presenters.replies.UserReply;
@@ -31,92 +31,79 @@ public class UserC extends Controller
 {
 	static Form<User> UserForm = Form.form(User.class);  
 	
-    public static Result index() 
+	public static Result index() 
     {
 		UserBoundary boundary = Boundary.createUserBoundary();
 		UserReply reply = boundary.process(new IndexCommand());
-		return doRenderOrForward(boundary, reply, UserForm);
+		return doRenderOrForward(boundary, reply);
 	}
     
     public static Result newUser() 
     {
 		UserBoundary boundary = Boundary.createUserBoundary();
 		UserReply reply = boundary.process(new NewCommand());
-		if (boundary.result != null)
-		{
-			return boundary.result;
-		}
-		
-		System.out.println("BOUND.. " + reply._entity.name);
-		Form<User> frm = Form.form(User.class);
-		frm = frm.fill(reply._entity);
-		return doRenderOrForward(boundary, reply, UserForm);
+		System.out.println("xBOUND.. " + reply._entity.name);
+		return doRenderOrForward(boundary, reply);
 	}
     
     public static Result createUser() 
     {
 		UserBoundary boundary = Boundary.createUserBoundary();
-		CreateCommand cmd = new CreateCommand();
 		
 		UserReply reply = boundary.addFormAndProcess(new CreateCommand());
-		return doRenderOrForward(boundary, reply, UserForm);
+		return doRenderOrForward(boundary, reply);
 	}
     
     public static Result deleteUser(Long id) 
     {
 		UserBoundary boundary = Boundary.createUserBoundary();
 		UserReply reply = boundary.process(new DeleteCommand(id));
-		return doRenderOrForward(boundary, reply, UserForm);
+		return doRenderOrForward(boundary, reply);
 	}
     
     public static Result edit(Long id) 
     {
 		UserBoundary boundary = Boundary.createUserBoundary();
 		UserReply reply = boundary.process(new EditCommand(id));
-		Form<User> frm = Form.form(User.class);
-		frm = frm.fill(reply._entity);
-		return doRenderOrForward(boundary, reply, frm);
+		return doRenderOrForward(boundary, reply);
 	}
     
     public static Result updateUser(Long id) 
     {
 		UserBoundary boundary = Boundary.createUserBoundary();
-		UserReply reply = (UserReply) boundary.process(new UpdateCommand(id), new User());
-		return doRenderOrForward(boundary, reply, UserForm);
+		UserReply reply = (UserReply) boundary.addFormAndProcess(new UpdateCommand(id));
+		return doRenderOrForward(boundary, reply);
 	}
     
     
-    private static Result doRenderOrForward(UserBoundary boundary, UserReply reply, Form<User> frm)
+    private static Result doRenderOrForward(UserBoundary boundary, UserReply reply)
     {
-		if (boundary.result != null)
+		if (reply.failed())
 		{
-			return boundary.result;
+			return redirect(routes.Owner.logout());
 		}
 		
+		Form<User> frm = null;
 		switch(reply.getDestination())
 		{
 		case Reply.VIEW_INDEX:
-			return ok(
-					views.html.user.render(reply._allL, UserForm)
-					);    	
+			return ok(views.html.user.render(reply._allL, UserForm));    	
 
-			case Reply.VIEW_NEW:
-				return ok(
-						views.html.usernew.render(reply._allL, frm)
-					  );
-				
-			case Reply.VIEW_EDIT:
-				return ok(
-						views.html.useredit.render(reply._allL, frm, reply._entity.id)
-				  );
-				
-			case Reply.FORWARD_INDEX:
-			case Reply.FORWARD_NOT_FOUND:
-				return Results.redirect(routes.UserC.index());
-//		public static final int FOWARD_ERROR = 108:
-			
-			default:
-				return play.mvc.Results.redirect(routes.Owner.logout());	
-		}
-    }
+		case Reply.VIEW_NEW:
+			frm = boundary.makeForm(reply); 
+			return ok(views.html.usernew.render(reply._allL, frm));
+
+		case Reply.VIEW_EDIT:
+			frm = boundary.makeForm(reply); 
+			return ok(views.html.useredit.render(reply._allL, frm, reply._entity.id));
+
+		case Reply.FORWARD_INDEX:
+		case Reply.FORWARD_NOT_FOUND:
+			return Results.redirect(routes.UserC.index());
+			//		public static final int FOWARD_ERROR = 108:
+
+		default:
+			return play.mvc.Results.redirect(routes.Owner.logout());	
+    	}
+	}
 }

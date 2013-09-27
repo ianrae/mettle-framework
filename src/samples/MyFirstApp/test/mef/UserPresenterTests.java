@@ -3,7 +3,9 @@ package mef;
 import static org.junit.Assert.*;
 
 
+import org.junit.Before;
 import org.junit.Test;
+import org.mef.framework.commands.Command;
 import org.mef.framework.commands.CreateCommand;
 import org.mef.framework.commands.DeleteCommand;
 import org.mef.framework.commands.EditCommand;
@@ -23,23 +25,22 @@ import mef.mocks.MockUserDAL;
 import mef.presenters.UserPresenter;
 import mef.presenters.replies.UserReply;
 
-public class UserPresenterTests 
+public class UserPresenterTests extends BasePresenterTest
 {
 
-	//GET 	users/    		index          VINDEX
-	//GET 	users/new 		new            VNEW
-	//POST  users/new   	create form    f index
-	//GET   users/:id/edit  edit           VEDIT
-	//POST  users/:id/edit  update form    f index
-	//POST 	users/:id/delete delete		   f index
-	
-	
+	//HTTP  URL             ACTION  FRM    VIEW/REDIR     
+	//GET 	users/    		index          INDEX
+	//GET 	users/new 		new            NEW
+	//POST  users/new   	create  form   r:index, NEW(if validation fails)
+	//GET   users/:id/edit  edit           EDIT, NOTFOUND(if invalid id)
+	//POST  users/:id/edit  update  form   r:index, NOTFOUND(if invalid id), EDIT(if validation fails)
+	//POST 	users/:id/delete delete		   r:index, NOTFOUND(if invalid id)
+
+	//--- index ---
 	@Test
 	public void indexTest() 
 	{
-		init();
-		UserPresenter presenter = new UserPresenter(_ctx);
-		UserReply reply = (UserReply) presenter.process(new IndexCommand());
+		UserReply reply = (UserReply) _presenter.process(new IndexCommand());
 		
 		chkReplySucessful(reply, Reply.VIEW_INDEX, null);
 		chkDalSize(0);
@@ -47,14 +48,11 @@ public class UserPresenterTests
 	}
 
 	
+	//--- new ---
 	@Test
 	public void testNewUser() 
 	{
-		init();
-		UserPresenter presenter = new UserPresenter(_ctx);
-		NewCommand cmd = new NewCommand();
-		
-		UserReply reply = (UserReply) presenter.process(cmd);
+		UserReply reply = (UserReply) _presenter.process( new NewCommand());
 		
 		chkReplySucessful(reply, Reply.VIEW_NEW, null);
 		assertEquals("defaultname", reply._entity.name);
@@ -62,21 +60,14 @@ public class UserPresenterTests
 		chkReplyWithEntity(reply, false, 0);
 	}
 	
+	//--- create ---
 	@Test
 	public void testCreateUser() 
 	{
-		init();
-		User t = new User();
-		t.id = 46L;
-		t.name = "task1";
-		assertEquals(0, _dal.size());
+		User t = initUser();
+		Command cmd = createWithBinder(new CreateCommand(), t, true);
 		
-		UserPresenter presenter = new UserPresenter(_ctx);
-		CreateCommand cmd = new CreateCommand();
-		MockFormBinder binder = new MockFormBinder(t);
-		cmd.setFormBinder(binder);
-		
-		UserReply reply = (UserReply) presenter.process(cmd);
+		UserReply reply = (UserReply) _presenter.process(cmd);
 		
 		chkReplySucessful(reply, Reply.FORWARD_INDEX, null);
 		chkDalSize(1);
@@ -84,59 +75,49 @@ public class UserPresenterTests
 	}
 	
 	@Test
+	public void testCreateUser_ValFail() 
+	{
+		User t = initUser();
+		Command cmd = createWithBinder(new CreateCommand(), t, false);
+		
+		UserReply reply = (UserReply) _presenter.process(cmd);
+		
+		chkReplySucessful(reply, Reply.VIEW_NEW, "binding failed!");
+		chkDalSize(0);
+		chkReplyWithEntity(reply, false, 0);
+	}
+	
+	//--- index ---
+	@Test
 	public void testEditUser() 
 	{
-		init();
-		User t = new User();
-		t.id = 46L;
-		t.name = "task1";
-		_dal.save(t);
-		assertEquals(1, _dal.size());
-		
-		UserPresenter presenter = new UserPresenter(_ctx);
-		EditCommand cmd = new EditCommand(t.id);
-		UserReply reply = (UserReply) presenter.process(cmd);
+		User t = initAndSaveUser();
+		UserReply reply = (UserReply) _presenter.process(new EditCommand(t.id));
 		
 		chkReplySucessful(reply, Reply.VIEW_EDIT, null);
 		chkDalSize(1);
 		chkReplyWithEntity(reply, false, 0);
 	}
 	@Test
-	public void testBadEditUser() 
+	public void testEditUser_NotFound() 
 	{
-		init();
-		User t = new User();
-		t.id = 46L;
-		t.name = "task1";
-		_dal.save(t);
-		assertEquals(1, _dal.size());
-		
-		UserPresenter presenter = new UserPresenter(_ctx);
-		EditCommand cmd = new EditCommand(99L);
-		UserReply reply = (UserReply) presenter.process(cmd);
+		User t = initAndSaveUser();
+		UserReply reply = (UserReply) _presenter.process(new EditCommand(99L));
 		
 		chkReplySucessful(reply, Reply.FORWARD_NOT_FOUND, null);
 		chkDalSize(1);
 		chkReplyWithoutEntity(reply, false, 0);
 	}
 	
+	//--- index ---
 	@Test
 	public void testUpdateUser() 
 	{
-		init();
-		User t = new User();
-		t.id = 46L;
-		t.name = "task1";
-		_dal.save(t);
-		assertEquals(1, _dal.size());
+		User t = initAndSaveUser();
+		t.name = "task2"; //simulate user edit
+		Command cmd = createWithBinder(new UpdateCommand(t.id), t, true);
 		
-		UserPresenter presenter = new UserPresenter(_ctx);
-		UpdateCommand cmd = new UpdateCommand(t.id);
-		t.name = "task2";
-		MockFormBinder binder = new MockFormBinder(t);
-		cmd.setFormBinder(binder);
-		
-		UserReply reply = (UserReply) presenter.process(cmd);
+		UserReply reply = (UserReply) _presenter.process(cmd);
 		
 		chkReplySucessful(reply, Reply.FORWARD_INDEX, null);
 		chkDalSize(1);
@@ -145,22 +126,40 @@ public class UserPresenterTests
 		User t2 = _dal.findById(t.id);
 		assertEquals("task2", t2.name);
 	}
+	@Test
+	public void testUpdateUser_ValFail() 
+	{
+		User t = initAndSaveUser();
+		t.name = "task2"; //simulate user edit
+		Command cmd = createWithBinder(new UpdateCommand(t.id), t, false);
+		
+		UserReply reply = (UserReply) _presenter.process(cmd);
+		
+		chkReplySucessful(reply, Reply.VIEW_EDIT, "binding failed!");
+		chkDalSize(1);
+		chkReplyWithEntity(reply, false, 0);
+		
+		User t2 = _dal.findById(t.id);
+		assertEquals("task2", t2.name); //unchanged (but mock dal kinda broken)
+	}
+	@Test
+	public void testUpdateUser_NotFound() 
+	{
+		User t = initAndSaveUser();
+		Command cmd = createWithBinder(new UpdateCommand(99L), t, true);
+		UserReply reply = (UserReply) _presenter.process(cmd);
+		
+		chkReplySucessful(reply, Reply.FORWARD_NOT_FOUND, null);
+		chkDalSize(1);
+		chkReplyWithoutEntity(reply, false, 0);
+	}
 	
 	
 	@Test
 	public void testDeleteUser() 
 	{
-		init();
-		User t = new User();
-		t.id = 46L;
-		t.name = "task1";
-		_dal.save(t);
-		assertEquals(1, _dal.size());
-		
-		UserPresenter presenter = new UserPresenter(_ctx);
-		DeleteCommand cmd = new DeleteCommand(t.id);
-		
-		UserReply reply = (UserReply) presenter.process(cmd);
+		User t = initAndSaveUser();
+		UserReply reply = (UserReply) _presenter.process( new DeleteCommand(t.id));
 		
 		chkReplySucessful(reply, Reply.FORWARD_INDEX, null);
 		chkDalSize(0);
@@ -170,17 +169,8 @@ public class UserPresenterTests
 	@Test
 	public void testBadDeleteUser() 
 	{
-		init();
-		User t = new User();
-		t.id = 46L;
-		t.name = "task1";
-		_dal.save(t);
-		assertEquals(1, _dal.size());
-		
-		UserPresenter presenter = new UserPresenter(_ctx);
-		DeleteCommand cmd = new DeleteCommand(99L); //not exist
-		
-		UserReply reply = (UserReply) presenter.process(cmd);
+		User t = initAndSaveUser();
+		UserReply reply = (UserReply) _presenter.process(new DeleteCommand(99L)); //not exist
 		
 		chkReplySucessful(reply, Reply.FORWARD_NOT_FOUND, "could not find task");
 		chkDalSize(1);
@@ -189,14 +179,7 @@ public class UserPresenterTests
 	
 	
 	//--------- helper fns--------------
-	private void chkReplySucessful(Reply reply, int view, String flash)
-	{
-		assertNotNull(reply);
-		assertEquals(false, reply.failed()); //should go to error page. something bad happened
-		assertEquals(view, reply.getDestination());
-		assertEquals(flash, reply.getFlash());
-	}
-	private void chkDalSize(int expected)
+	protected void chkDalSize(int expected)
 	{
 		assertEquals(expected, _dal.size());
 	}
@@ -229,12 +212,14 @@ public class UserPresenterTests
 	
 	
 	
-	protected SfxContext _ctx;
 	private MockUserDAL _dal;
-	private void init()
+	private UserPresenter _presenter;
+	@Before
+	public void init()
 	{
-		_ctx = Initializer.createContext(new MockTaskDAL(), new MockUserDAL());
+		super.init();
 		_dal = getDAL();
+		this._presenter = new UserPresenter(_ctx);
 	}
 	
 	private MockUserDAL getDAL()
@@ -242,4 +227,22 @@ public class UserPresenterTests
 		MockUserDAL dal = (MockUserDAL) _ctx.getServiceLocator().getInstance(IUserDAL.class); 
 		return dal;
 	}
+	
+	private User initUser()
+	{
+		User t = new User();
+		t.id = 46L;
+		t.name = "task1";
+		assertEquals(0, _dal.size());
+		return t;
+	}
+	
+	private User initAndSaveUser()
+	{
+		User t = initUser();
+		_dal.save(t);
+		assertEquals(1, _dal.size());
+		return t;
+	}
+	
 }

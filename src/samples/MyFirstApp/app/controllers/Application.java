@@ -35,10 +35,6 @@ public class Application extends Controller
 	{
 		ApplicationBoundary boundary = Boundary.createApplicationBoundary();
 		HomePageReply reply = (HomePageReply) boundary.process(new IndexCommand());
-		if (boundary.result != null)
-		{
-			return boundary.result;
-		}
 		
 //		List<TaskModel> L = Boundary.convertToTaskModel(reply._allL);
 //		List<Task> L = Task.all();
@@ -53,11 +49,7 @@ public class Application extends Controller
 	public static Result newTask() 
 	{
 		ApplicationBoundary boundary = Boundary.createApplicationBoundary();
-		HomePageReply reply = (HomePageReply) boundary.process(new CreateCommand(), new Task()); //taskForm.get());
-		if (boundary.result != null)
-		{
-			return boundary.result;
-		}
+		HomePageReply reply = boundary.addFormAndProcess(new CreateCommand()); //taskForm.get());
 		
 		if (!reply.isForward())
 		{
@@ -88,10 +80,6 @@ public class Application extends Controller
 	{
 		ApplicationBoundary boundary = Boundary.createApplicationBoundary();
 		HomePageReply reply = (HomePageReply) boundary.process(new DeleteCommand(id));
-		if (boundary.result != null)
-		{
-			return boundary.result;
-		}
 		return redirect(routes.Application.tasks());	
 	}  
 

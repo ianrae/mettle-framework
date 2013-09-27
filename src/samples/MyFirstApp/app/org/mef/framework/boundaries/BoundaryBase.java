@@ -15,7 +15,7 @@ import org.mef.framework.replies.Reply;
 import org.mef.framework.sfx.SfxBaseObj;
 import org.mef.framework.sfx.SfxContext;
 
-import boundaries.FormBinder;
+import boundaries.binders.HomeFormBinder;
 
 import controllers.routes;
 
@@ -27,7 +27,7 @@ import play.mvc.Result;
 
 public abstract class BoundaryBase extends SfxBaseObj
 {
-	public Result result;
+//	public Result result;
 	protected Command _cmd;
 
 	public BoundaryBase(SfxContext ctx)
@@ -35,17 +35,8 @@ public abstract class BoundaryBase extends SfxBaseObj
 		super(ctx);
 	}
 	
-	
-	public Reply process(Command cmd, Entity entity)
-	{
-		IFormBinder binder = createFormBinder(cmd, entity);
-		cmd.setFormBinder(binder);
-		return process(cmd);
-	}
-
 	//covariant return
 	public abstract Reply process(Command cmd);
-	protected abstract IFormBinder createFormBinder(Command cmd, Entity entity);
 	
 	protected void begin(Command cmd)
 	{

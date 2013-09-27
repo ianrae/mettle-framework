@@ -1,5 +1,7 @@
 package mef.mocks;
 
+import mef.entities.User;
+
 import org.mef.framework.entities.*;
 
 import org.mef.framework.binder.IFormBinder;
@@ -7,6 +9,7 @@ import org.mef.framework.binder.IFormBinder;
 public class MockFormBinder implements IFormBinder
 {
 	private Entity entity;
+	public boolean isValid = true;
 	
 	public MockFormBinder(Entity entity)
 	{
@@ -14,7 +17,13 @@ public class MockFormBinder implements IFormBinder
 	}
 	public boolean bind()
 	{
-		return true;
+		String s = entity.validate();
+		if (s != null)
+		{
+			return false; //failed validation!
+		}
+		
+		return isValid;
 	}
 
 	@Override

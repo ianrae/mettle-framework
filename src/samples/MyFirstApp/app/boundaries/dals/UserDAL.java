@@ -1,5 +1,6 @@
 package boundaries.dals;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import boundaries.Boundary;
@@ -15,18 +16,19 @@ public class UserDAL implements IUserDAL
 	@Override
 	public void save(User entity) 
 	{
-		UserModel t = (UserModel)entity.carrier; 
+		UserModel t = (UserModel)entity.cc; 
 		if (t == null) //not yet known by db? (newly created)
 		{
 			System.out.println("save-auto-create");
-			t = Boundary.convertToUserModel(entity);
+			t = createModelFromEntity(entity); //create model, set entity, and call all setters
 		}
-		else //touch all (for ebean)
+		else //touch all (for ebean), except id
 		{
 			t.setName(entity.name);
 		}
 		t.save();
 	}
+	
 
 	@Override
 	public User findById(long id) 
@@ -36,7 +38,7 @@ public class UserDAL implements IUserDAL
 		{
 			return null;
 		}
-		t.entity = Boundary.convertFromUserModel(t);
+		t.entity = createEntityFromModel(t); //create entity, set m.cc and t.entity, copy all fields from model to entity
 		return t.entity;
 	}
 
@@ -44,7 +46,7 @@ public class UserDAL implements IUserDAL
 	public List<User> all() 
 	{
 		List<UserModel> L = UserModel.all();
-		List<User> entityL = Boundary.convertFromUser(L);
+		List<User> entityL = createEntityFromModel(L);
 		return entityL;
 	}
 
@@ -61,5 +63,42 @@ public class UserDAL implements IUserDAL
 		t.delete();
 	}
 
+	//User
+	//create model, set entity, and call all setters
+	public static UserModel createModelFromEntity(User entity)
+	{
+		UserModel t = new UserModel();
+		entity.cc = t;
+		t.entity = entity;
+		t.setId(entity.id);
+		t.setName(entity.name);
+		//email later!!
+		return t;
+	}
+	//create entity, set m.cc and t.entity, copy all fields from model to entity
+	public static User createEntityFromModel(UserModel t)
+	{
+		if (t.entity != null && t.entity.cc != null)
+		{
+			return t.entity; //already exists
+		}
+		User entity = new User();
+		entity.cc = t;
+		t.entity = entity;
+		entity.id = (t.getId() == null) ? 0 : t.getId();
+		entity.name	= t.getName();
+		//!email!!
+		return entity;
+	}
+	public static List<User> createEntityFromModel(List<UserModel> L)
+	{
+		ArrayList<User> entityL = new ArrayList<User>();
+		for(UserModel t : L)
+		{
+			User entity = createEntityFromModel(t);
+			entityL.add(entity);
+		}
+		return entityL;
+	}
 
 }

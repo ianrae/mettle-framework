@@ -1,4 +1,4 @@
-package boundaries;
+package boundaries.binders;
 
 import java.util.Map;
 
@@ -7,22 +7,32 @@ import models.UserModel;
 
 import org.mef.framework.binder.IFormBinder;
 
+import boundaries.dals.UserDAL;
+
 import play.Logger;
 import play.data.Form;
 
 public class UserFormBinder implements IFormBinder
 {
-	private Form<UserModel> UserForm;
+	private Form<UserModel> validationForm;
 	private Form<UserModel> filledForm;
 
-	public UserFormBinder(Form<UserModel> UserForm)
+	public UserFormBinder(Form<UserModel> validationForm)
 	{
-		this.UserForm = UserForm;
+		this.validationForm = validationForm;
 	}
 	@Override
 	public boolean bind() 
 	{
-		this.filledForm = UserForm.bindFromRequest();
+		this.filledForm = validationForm.bindFromRequest();
+		
+		User entity = getObject();
+		String s = entity.validate();
+		if (s != null)
+		{
+			filledForm.reject("entity", s); //add the error
+		}
+
 		return ! filledForm.hasErrors();
 	}
 
@@ -35,8 +45,7 @@ public class UserFormBinder implements IFormBinder
 			return null;
 		}
 		
-		User entity = Boundary.convertFromUserModel(model);
-		model.entity = entity;
+		User entity = UserDAL.createEntityFromModel(model);
 		return entity;
 	}
 	
