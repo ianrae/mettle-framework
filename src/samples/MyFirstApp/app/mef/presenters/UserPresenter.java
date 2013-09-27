@@ -110,6 +110,11 @@ public class UserPresenter extends Presenter
 		{
 			reply.setFlash("binding failed!");
 			reply._entity = (User) binder.getObject();
+			if (reply._entity == null)
+			{
+				Logger.info("failbinding null entity!");
+				reply._entity = _dal.findById(cmd.id); //fix better later!!
+			}
 			return reply;
 		}
 		else

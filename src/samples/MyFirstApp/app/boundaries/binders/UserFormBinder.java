@@ -27,18 +27,26 @@ public class UserFormBinder implements IFormBinder
 		this.filledForm = validationForm.bindFromRequest();
 		
 		User entity = getObject();
-		String s = entity.validate();
-		if (s != null)
+		if (entity != null)
 		{
-			filledForm.reject("entity", s); //add the error
+			String s = entity.validate();
+			if (s != null)
+			{
+				filledForm.reject("entity", s); //add the error
+			}
 		}
-
+		
 		return ! filledForm.hasErrors();
 	}
 
 	@Override
 	public User getObject() 
 	{
+		if (filledForm.hasErrors())
+		{
+			return null;
+		}
+		
 		UserModel model = filledForm.get();
 		if (model == null)
 		{

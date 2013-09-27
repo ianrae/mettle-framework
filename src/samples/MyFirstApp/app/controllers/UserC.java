@@ -1,6 +1,7 @@
 package controllers;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mef.framework.commands.CreateCommand;
 import org.mef.framework.commands.DeleteCommand;
@@ -84,6 +85,8 @@ public class UserC extends Controller
 		}
 		
 		Form<User> frm = null;
+		String errMsg = "";
+		String flashMsg = (reply.getFlash() != null) ? reply.getFlash() : "";
 		switch(reply.getDestination())
 		{
 		case Reply.VIEW_INDEX:
@@ -91,11 +94,16 @@ public class UserC extends Controller
 
 		case Reply.VIEW_NEW:
 			frm = boundary.makeForm(reply); 
-			return ok(views.html.usernew.render(reply._allL, frm));
+			errMsg = boundary.getAllValidationErrors();
+			errMsg = "some " + errMsg;
+			
+			return ok(views.html.usernew.render(reply._allL, frm, errMsg, flashMsg));
 
 		case Reply.VIEW_EDIT:
 			frm = boundary.makeForm(reply); 
-			return ok(views.html.useredit.render(reply._allL, frm, reply._entity.id));
+			errMsg = boundary.getAllValidationErrors();
+			errMsg = "some " + errMsg;
+			return ok(views.html.useredit.render(reply._allL, frm, reply._entity.id, errMsg, flashMsg));
 
 		case Reply.FORWARD_INDEX:
 		case Reply.FORWARD_NOT_FOUND:

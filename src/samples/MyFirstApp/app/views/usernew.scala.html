@@ -1,4 +1,4 @@
-@(users: List[mef.entities.User], userForm: Form[mef.entities.User])
+@(users: List[mef.entities.User], userForm: Form[mef.entities.User], errMsg: String, flashMsg: String)
 
 @import helper._
 
@@ -8,6 +8,9 @@
     
     
     <h2>Create a new user</h2>
+    
+    <div>flash: @flashMsg</div>
+    <div>errors: @errMsg</div>
     
     @form(routes.UserC.createUser()) {
         
