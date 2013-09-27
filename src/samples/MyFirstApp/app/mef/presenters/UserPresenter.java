@@ -63,6 +63,7 @@ public class UserPresenter extends Presenter
 		if (! binder.bind())
 		{
 			reply.setFlash("binding failed!");
+			Logger.info("BINDING failed");
 			reply._entity = (User) binder.getObject();
 			return reply;
 		}

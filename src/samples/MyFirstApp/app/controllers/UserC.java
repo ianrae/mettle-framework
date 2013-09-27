@@ -42,6 +42,7 @@ public class UserC extends Controller
     public static Result newUser() 
     {
 		UserBoundary boundary = Boundary.createUserBoundary();
+		Logger.info("newuser..");
 		UserReply reply = boundary.process(new NewCommand());
 		System.out.println("xBOUND.. " + reply._entity.name);
 		return doRenderOrForward(boundary, reply);
@@ -50,7 +51,7 @@ public class UserC extends Controller
     public static Result createUser() 
     {
 		UserBoundary boundary = Boundary.createUserBoundary();
-		
+		Logger.info("createuser..");
 		UserReply reply = boundary.addFormAndProcess(new CreateCommand());
 		return doRenderOrForward(boundary, reply);
 	}

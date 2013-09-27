@@ -5,7 +5,7 @@
       <param name="File" value="./info.log" />
       <param name="Threshold" value="INFO" />
       <layout class="org.apache.log4j.PatternLayout">
-         <param name="ConversionPattern" value="%-5p %t - %m%n"/>
+         <param name="ConversionPattern" value="%-5p %m%n"/>
       </layout>
       <filter class="org.apache.log4j.varia.LevelRangeFilter">
          <param name="LevelMin" value="INFO" />
@@ -17,7 +17,7 @@
     <appender name="JUSTERROR" class="org.apache.log4j.FileAppender">
        <param name="File" value="./error.log" />
        <layout class="org.apache.log4j.PatternLayout">
-          <param name="ConversionPattern" value="%-5p %t - %m%n"/>
+          <param name="ConversionPattern" value="%-5p %m%n"/>
        </layout>
        <filter class="org.apache.log4j.varia.LevelRangeFilter">
           <param name="LevelMin" value="ERROR" />

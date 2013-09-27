@@ -25,13 +25,15 @@ public class UserFormBinder implements IFormBinder
 	public boolean bind() 
 	{
 		this.filledForm = validationForm.bindFromRequest();
-		
+		Logger.info("b0");
 		User entity = getObject();
 		if (entity != null)
 		{
+			Logger.info("b1");
 			String s = entity.validate();
 			if (s != null)
 			{
+				Logger.info("b2");
 				filledForm.reject("entity", s); //add the error
 			}
 		}
@@ -42,17 +44,21 @@ public class UserFormBinder implements IFormBinder
 	@Override
 	public User getObject() 
 	{
+		Logger.info("g0");
 		if (filledForm.hasErrors())
 		{
+			Logger.info("g1");
 			return null;
 		}
 		
 		UserModel model = filledForm.get();
 		if (model == null)
 		{
+			Logger.info("g2");
 			return null;
 		}
 		
+		Logger.info("g3");
 		User entity = UserDAL.createEntityFromModel(model);
 		return entity;
 	}

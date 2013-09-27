@@ -38,6 +38,7 @@ public class UserModel extends Model
         this.entity.id = val;
     }
 
+    @Required
     String name;
 
     public String getName() {

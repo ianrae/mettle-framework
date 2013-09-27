@@ -12,6 +12,7 @@ import org.mef.framework.boundaries.BoundaryBase;
 import org.mef.framework.commands.Command;
 import org.mef.framework.sfx.SfxContext;
 
+import play.Logger;
 import play.data.Form;
 import play.data.validation.ValidationError;
 import boundaries.binders.UserFormBinder;
@@ -39,8 +40,10 @@ public class UserBoundary extends BoundaryBase
 	{
 		if (binder != null)
 		{
+			Logger.info("mf-binder");
 			return binder.getRawForm();
 		}
+		Logger.info("mf-make");
 		Form<UserModel> frm = Form.form(UserModel.class);
 		UserModel model = UserDAL.createModelFromEntity(reply._entity);
 		frm = frm.fill(model);
