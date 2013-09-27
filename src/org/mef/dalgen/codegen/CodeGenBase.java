@@ -77,8 +77,16 @@ public abstract class CodeGenBase extends SfxBaseObj
 		
 		protected String genHeader()
 		{
+			return genHeader(null);
+		}
+		protected String genHeader(String type)
+		{
 			ST st = _group.getInstanceOf("header");
 			st.add("package", _packageName);
+			if (type != null)
+			{
+				st.add("type", type);
+			}
 			String result = st.render(); 
 			return result;
 		}

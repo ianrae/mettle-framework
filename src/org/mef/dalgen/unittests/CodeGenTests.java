@@ -8,6 +8,7 @@ import org.mef.dalgen.codegen.DALUtilsCodeGen;
 import org.mef.dalgen.codegen.EntityCodeGen;
 import org.mef.dalgen.codegen.MockDALCodeGen;
 import org.mef.dalgen.codegen.ModelCodeGen;
+import org.mef.dalgen.codegen.RealDALCodeGen;
 import org.mef.dalgen.parser.DalGenXmlParser;
 import org.mef.dalgen.parser.EntityDef;
 
@@ -16,7 +17,7 @@ import sfx.SfxTextWriter;
 
 public class CodeGenTests extends BaseTest
 {
-	private static boolean genFiles = true;
+	private static boolean genFiles = false;
 	
 	@Test
 	public void testEntity() throws Exception
@@ -85,6 +86,21 @@ public class CodeGenTests extends BaseTest
 		writeFile("MockTaskDAL", code);
 	}
 	
+	@Test
+	public void testRealDAL() throws Exception
+	{
+		log("--testRealDAL--");
+		createContext();
+		EntityDef def = readEntityDef();
+		
+		String path = this.getTestFile("dal_real.stg");
+		String packageName = "boundaries.dals";
+		RealDALCodeGen gen = new RealDALCodeGen(_ctx, path, packageName);
+		String code = gen.generate(def);	
+		log(code);
+		assertEquals(true, 10 < code.length());
+		writeFile("TaskDAL", code);
+	}
 	
 //	@Test
 //	public void testDALUtils() throws Exception
