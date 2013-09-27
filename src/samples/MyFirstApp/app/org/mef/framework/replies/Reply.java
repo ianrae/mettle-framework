@@ -18,6 +18,7 @@ public class Reply
 	public static final int VIEW_UPDATED = 5;
 	public static final int VIEW_DELETE = 6;
 	public static final int VIEW_DELETED = 7;
+	public static final int VIEW_SHOW = 8;
 	
 	
 	public static final int FORWARD_INDEX = 101;

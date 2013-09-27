@@ -306,14 +306,19 @@ CODEGEN
  
  
  
--	public String validate() 
--	{
--		if (name != null && name.equals("bob"))
+
++    public void setPhone(Phone val) {
+ 		this.phone = val;
+-		if (val != null)
 -		{
--			return "no bobs allowed";
+-			Phone entity = PhoneDAL.createEntityFromModel(phone);
+-			this.entity.phone = entity;
 -		}
--		return null;
--	}
+-		else
+-		{
+-			this.entity.phone = null;
+-		}
++        this.entity.phone = val;
 
  
 

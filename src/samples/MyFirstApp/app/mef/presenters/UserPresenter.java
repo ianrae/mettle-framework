@@ -10,6 +10,7 @@ import org.mef.framework.commands.EditCommand;
 import org.mef.framework.commands.IndexCommand;
 import org.mef.framework.commands.Command;
 import org.mef.framework.commands.NewCommand;
+import org.mef.framework.commands.ShowCommand;
 import org.mef.framework.commands.UpdateCommand;
 import org.mef.framework.presenters.Presenter;
 import org.mef.framework.replies.Reply;
@@ -166,6 +167,25 @@ public class UserPresenter extends Presenter
 
 		return fillPage(reply);
 	}
+	
+	public UserReply onShowCommand(ShowCommand cmd)
+	{
+		UserReply reply = new UserReply();
+		reply.setDestination(Reply.VIEW_SHOW);
+		
+		User user = _dal.findById(cmd.id);
+		if (user == null)
+		{
+			reply.setDestination(Reply.FORWARD_NOT_FOUND);
+			return reply;
+		}
+		else
+		{
+			reply._entity = user;
+			return reply;
+		}
+	}
+
 	
 	private UserReply fillPage(UserReply reply)
 	{

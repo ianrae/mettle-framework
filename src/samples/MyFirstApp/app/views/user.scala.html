@@ -20,6 +20,7 @@
 				<div>
                 @user.name  @user.id
 				<a href="@routes.UserC.edit(user.id)">Edit User</a>
+				<a href="@routes.UserC.show(user.id)">Show</a>
 				@form(routes.UserC.deleteUser(user.id)) {
                     <input type="submit" value="Delete">
                 }

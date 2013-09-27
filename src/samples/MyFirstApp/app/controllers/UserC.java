@@ -8,6 +8,7 @@ import org.mef.framework.commands.DeleteCommand;
 import org.mef.framework.commands.EditCommand;
 import org.mef.framework.commands.IndexCommand;
 import org.mef.framework.commands.NewCommand;
+import org.mef.framework.commands.ShowCommand;
 import org.mef.framework.commands.UpdateCommand;
 import org.mef.framework.replies.Reply;
 
@@ -76,6 +77,13 @@ public class UserC extends Controller
 		UserReply reply = (UserReply) boundary.addFormAndProcess(new UpdateCommand(id));
 		return doRenderOrForward(boundary, reply);
 	}
+    public static Result show(Long id) 
+    {
+		UserBoundary boundary = Boundary.createUserBoundary();
+		UserReply reply = boundary.process(new ShowCommand(id));
+		return doRenderOrForward(boundary, reply);
+	}
+    
     
     
     private static Result doRenderOrForward(UserBoundary boundary, UserReply reply)
@@ -106,6 +114,9 @@ public class UserC extends Controller
 			errMsg = boundary.getAllValidationErrors();
 			errMsg = "some " + errMsg;
 			return ok(views.html.useredit.render(reply._allL, frm, reply._entity.id, errMsg, flashMsg));
+
+		case Reply.VIEW_SHOW:
+			return ok(views.html.usershow.render(reply._entity));
 
 		case Reply.FORWARD_INDEX:
 		case Reply.FORWARD_NOT_FOUND:

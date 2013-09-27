@@ -11,6 +11,7 @@ import org.mef.framework.commands.DeleteCommand;
 import org.mef.framework.commands.EditCommand;
 import org.mef.framework.commands.IndexCommand;
 import org.mef.framework.commands.NewCommand;
+import org.mef.framework.commands.ShowCommand;
 import org.mef.framework.commands.UpdateCommand;
 import org.mef.framework.presenters.Presenter;
 import org.mef.framework.replies.Reply;
@@ -35,6 +36,7 @@ public class UserPresenterTests extends BasePresenterTest
 	//GET   users/:id/edit  edit           EDIT, NOTFOUND(if invalid id)
 	//POST  users/:id/edit  update  form   r:index, NOTFOUND(if invalid id), EDIT(if validation fails)
 	//POST 	users/:id/delete delete		   r:index, NOTFOUND(if invalid id)
+	//GET   users/:id       show           SHOW,NOTFOUND
 
 	//--- index ---
 	@Test
@@ -87,7 +89,7 @@ public class UserPresenterTests extends BasePresenterTest
 		chkReplyWithEntity(reply, false, 0);
 	}
 	
-	//--- index ---
+	//--- edit ---
 	@Test
 	public void testEditUser() 
 	{
@@ -109,7 +111,7 @@ public class UserPresenterTests extends BasePresenterTest
 		chkReplyWithoutEntity(reply, false, 0);
 	}
 	
-	//--- index ---
+	//--- update ---
 	@Test
 	public void testUpdateUser() 
 	{
@@ -155,6 +157,7 @@ public class UserPresenterTests extends BasePresenterTest
 	}
 	
 	
+	//--- delete ---
 	@Test
 	public void testDeleteUser() 
 	{
@@ -176,6 +179,28 @@ public class UserPresenterTests extends BasePresenterTest
 		chkDalSize(1);
 		chkReplyWithoutEntity(reply, true, 1);
 	}
+	
+	//--- show ---
+		@Test
+		public void testShowUser() 
+		{
+			User t = initAndSaveUser();
+			UserReply reply = (UserReply) _presenter.process(new ShowCommand(t.id));
+			
+			chkReplySucessful(reply, Reply.VIEW_SHOW, null);
+			chkDalSize(1);
+			chkReplyWithEntity(reply, false, 0);
+		}
+//		@Test
+//		public void testEditUser_NotFound() 
+//		{
+//			User t = initAndSaveUser();
+//			UserReply reply = (UserReply) _presenter.process(new EditCommand(99L));
+//			
+//			chkReplySucessful(reply, Reply.FORWARD_NOT_FOUND, null);
+//			chkDalSize(1);
+//			chkReplyWithoutEntity(reply, false, 0);
+//		}
 	
 	
 	//--------- helper fns--------------

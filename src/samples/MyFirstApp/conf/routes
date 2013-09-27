@@ -20,6 +20,7 @@ POST    /users/new              controllers.UserC.createUser()
 POST    /users/:id/delete       controllers.UserC.deleteUser(id: Long)
 GET     /users/:id/edit 		controllers.UserC.edit(id: Long)
 POST    /users/update           controllers.UserC.updateUser(id: Long)
+GET     /users/:id		 		controllers.UserC.show(id: Long)
 
 
 # Map static resources from the /public folder to the /assets URL path
