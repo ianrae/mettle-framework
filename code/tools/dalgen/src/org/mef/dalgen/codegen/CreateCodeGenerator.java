@@ -16,15 +16,14 @@ import sfx.SfxBaseObj;
 import sfx.SfxContext;
 import sfx.SfxTextWriter;
 
-public class DalCodeGenerator extends SfxBaseObj
+public class CreateCodeGenerator extends SfxBaseObj
 {
 	private String appDir;
 	private String stDir;
 	private DalGenXmlParser parser;
-	private boolean _needParentClass;
 	public boolean disableFileIO;
 	
-	public DalCodeGenerator(SfxContext ctx)
+	public CreateCodeGenerator(SfxContext ctx)
 	{
 		super(ctx);
 	}
@@ -54,47 +53,10 @@ public class DalCodeGenerator extends SfxBaseObj
 	public boolean generate(int index) throws Exception
 	{
 		EntityDef def = parser._entityL.get(index);
-		String name = def.name;
 		
-		String path = this.pathCombine(stDir, "entity.stg");
-		EntityCodeGen gen = new EntityCodeGen(_ctx, path, "mef.entities");
-		boolean b = generateOneFile(def, gen, "app\\mef\\entities");
-		if (!b )
-		{
-			return false; //!!
-		}
-		if (_needParentClass)
-		{
-			path = this.pathCombine(stDir, "entity-based-on-gen.stg");
-			gen = new EntityCodeGen(_ctx, path, "mef.entities");
-			def.extendEntity = false;
-			b = generateOneFile(def, gen, "app\\mef\\entities");
-			def.extendEntity = true; //restore
-			if (!b )
-			{
-				return false; //!!
-			}			
-		}
-
-		path = this.pathCombine(stDir, "model.stg");
-		ModelCodeGen gen2 = new ModelCodeGen(_ctx, path, "models");
-		b = generateOneFile(def, gen2, "app\\models");
-		if (!b )
-		{
-			return false; //!!
-		}
-		
-		path = this.pathCombine(stDir, "dal_interface.stg");
-		DALIntefaceCodeGen gen3 = new DALIntefaceCodeGen(_ctx, path, "mef.dals");
-		b = generateOneFile(def, gen3, "app\\mef\\dals");
-		if (!b )
-		{
-			return false; //!!
-		}
-		
-		path = this.pathCombine(stDir, "dal_mock.stg");
-		MockDALCodeGen gen4 = new MockDALCodeGen(_ctx, path, "mef.mocks");
-		b = generateOneFile(def, gen4, "test\\mef\\mocks");
+		String path = this.pathCombine(stDir, "presenter.stg");
+		EntityCodeGen gen = new EntityCodeGen(_ctx, path, "mef.presenters");
+		boolean b = generateOneFile(def, gen, "app\\mef\\presenters");
 		if (!b )
 		{
 			return false; //!!
@@ -110,29 +72,25 @@ public class DalCodeGenerator extends SfxBaseObj
 			return true; //do nothing
 		}
 		
-		_needParentClass = false;
 		String code = gen.generate(def);	
-		//log(code);
 		String className = gen.getClassName(def);	
+
+		String path = this.pathCombine(appDir, relPath);
+		path = this.pathCombine(path, className + ".java");
+		File f = new File(path);
+		if (f.exists())
+		{
+			log(path);
+			this.log(def.name + ": skipping - already exists");
+			return true;
+		}
+		
 		boolean b = writeFile(appDir, relPath, className, code);
 		if (!b)
 		{
 			return false;
 		}
 		
-		//if _GEN and parent class doesn't exist
-		if (className.endsWith("_GEN"))
-		{
-			className = className.replace("_GEN", "");
-			String path = this.pathCombine(appDir, relPath);
-			path = this.pathCombine(path, className + ".java");
-			File f = new File(path);
-			if (! f.exists())
-			{
-				this.log("FFFFF");
-				_needParentClass = true;
-			}
-		}
 		return true;
 	}
 	private DalGenXmlParser readEntityDef(String appDir) throws Exception

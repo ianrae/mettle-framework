@@ -34,7 +34,7 @@ public class EntityCodeGen extends CodeGenBase
 		@Override
 		public String getClassName(EntityDef def)
 		{
-			return makeClassName(def.name, def.extendEntity);
+			return def.name + "Presenter";
 		}
 		
 		

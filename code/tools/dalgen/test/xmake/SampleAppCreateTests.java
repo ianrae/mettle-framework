@@ -2,10 +2,10 @@ package xmake;
 
 
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
-import org.mef.dalgen.codegen.DalCodeGenerator;
+import org.mef.dalgen.codegen.CreateCodeGenerator;
 
 import unittests.BaseTest;
 
@@ -18,7 +18,7 @@ public class SampleAppCreateTests extends BaseTest
 	{
 		log("--testEntity--");
 		createContext();
-		DalCodeGenerator gen = new DalCodeGenerator(_ctx);
+		CreateCodeGenerator gen = new CreateCodeGenerator(_ctx);
 		gen.disableFileIO = true;
 		
 		String appDir = this.getCurrentDir("..\\..\\samples\\MyFirstApp");
