@@ -6,7 +6,7 @@
 <field>boolean enabled</field>
 <field>Note note</field>
 <query>find_by_label</query>
-<method>search_by_name</method>
+<method><![CDATA[List<Task> search_by_name(String name)]]></method>
 
 <codegen what="entity" extend="true" />
 <codegen what="model" extend="false" />

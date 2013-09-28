@@ -24,6 +24,7 @@ public class MockDALCodeGen extends CodeGenBase
 		result += st.render(); 
 		
 		result += genQueries(def);
+		result += genMethods(def);
 		st = _group.getInstanceOf("endclassdecl");
 		result += st.render(); 
 		
@@ -53,6 +54,8 @@ public class MockDALCodeGen extends CodeGenBase
 		}
 		return result;
 	}
+	
+
 	
 	@Override
 	protected String buildField(EntityDef def, FieldDef fdef)

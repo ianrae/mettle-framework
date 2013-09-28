@@ -31,5 +31,5 @@ public <type> <fullName>(<fieldType> val);
 >>
 
 methoddecl(meth) ::= <<
-public <meth>;
+<meth>;
 >>

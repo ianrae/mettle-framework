@@ -28,12 +28,18 @@ querydecl(type, fieldType, name) ::= <<
     }
 >>
 
+methoddecl(meth) ::= <<
+public <meth>
+{
+	return null;
+}
+>>
 
 
 classdecl(name, type) ::= <<
 public class <name> implements I<type>DAL
 {
-    private ArrayList\<<type>\> _L = new ArrayList\<<type>\>();
+    protected ArrayList\<<type>\> _L = new ArrayList\<<type>\>();
     
     @Override
     public int size() 

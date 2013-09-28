@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import mef.entities.*;
 import mef.dals.*;
 import org.mef.framework.binder.IFormBinder;
-public class MockPhoneDAL implements IPhoneDAL
+public class MockUserDAL_GEN implements IUserDAL
 {
-    protected ArrayList<Phone> _L = new ArrayList<Phone>();
+    protected ArrayList<User> _L = new ArrayList<User>();
 
     @Override
     public int size() 
@@ -18,9 +18,9 @@ public class MockPhoneDAL implements IPhoneDAL
     }
 
     @Override
-    public Phone findById(long id) 
+    public User findById(long id) 
     {
-        for(Phone entity : _L)
+        for(User entity : _L)
         {
             if (entity.id == id)
             {
@@ -31,7 +31,7 @@ public class MockPhoneDAL implements IPhoneDAL
     }
 
     @Override
-    public List<Phone> all() 
+    public List<User> all() 
     {
         return _L; //ret copy??!!
     }
@@ -39,7 +39,7 @@ public class MockPhoneDAL implements IPhoneDAL
     @Override
     public void delete(long id) 
     {
-        Phone entity = this.findById(id);
+        User entity = this.findById(id);
         if (entity != null)
         {
             _L.remove(entity);
@@ -47,7 +47,7 @@ public class MockPhoneDAL implements IPhoneDAL
     }
 
     @Override
-    public void save(Phone entity) 
+    public void save(User entity) 
     {
         delete(entity.id); //remove existing
         _L.add(entity);
@@ -56,9 +56,14 @@ public class MockPhoneDAL implements IPhoneDAL
     @Override
     public void updateFrom(IFormBinder binder) 
     {
-    	Phone entity = (Phone) binder.getObject();
+    	User entity = (User) binder.getObject();
     	save(entity);
 
     }
 
-	}
+	public List<Task> search_by_name(String name)
+{
+	return null;
+}
+
+}

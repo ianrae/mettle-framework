@@ -102,4 +102,16 @@ public abstract class CodeGenBase extends SfxBaseObj
 			return s;
 		}
 		
+		protected String genMethods(EntityDef def)
+		{
+			String result = "";
+			for(String method : def.methodL)
+			{
+				ST st = _group.getInstanceOf("methoddecl");
+				st.add("meth", method);
+				result = st.render(); 
+				result += "\n\n";
+			}
+			return result;
+		}
 	}

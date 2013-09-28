@@ -24,6 +24,7 @@ public class RealDALCodeGen extends CodeGenBase
 		result += st.render(); 
 		
 		result += genQueries(def);
+		result += genMethods(def);
 		st = _group.getInstanceOf("endclassdecl");
 		result += st.render(); 
 		

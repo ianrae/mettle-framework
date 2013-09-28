@@ -57,19 +57,6 @@ public class DALIntefaceCodeGen extends CodeGenBase
 			return result;
 		}
 		
-		protected String genMethods(EntityDef def)
-		{
-			String result = "";
-			for(String method : def.methodL)
-			{
-				ST st = _group.getInstanceOf("methoddecl");
-				st.add("meth", method);
-				result = st.render(); 
-				result += "\n\n";
-			}
-			return result;
-		}
-
 		@Override
 		protected String buildField(EntityDef def, FieldDef fdef) {
 			// TODO Auto-generated method stub

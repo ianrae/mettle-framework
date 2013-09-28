@@ -17,11 +17,14 @@
 <field>@Required String name</field>
 <field>@ManyToOne Phone phone</field>
 
+<method><![CDATA[List<Task> search_by_name(String name)]]></method>
+
+<!-- note: if have custom methods, then extend must be true for dal_mock and dal_real so you can write them -->
 <codegen what="entity" extend="true" />
 <codegen what="model" extend="false" />
 <codegen what="dal_interface" extend="false" />
-<codegen what="dal_mock" extend="false" />
-<codegen what="dal_real" extend="false" />
+<codegen what="dal_mock" extend="true" />
+<codegen what="dal_real" extend="true" />
 </entity>
 
 <entity name="Phone">
