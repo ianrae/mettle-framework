@@ -247,3 +247,18 @@ TO DO
 -dalgen: support <getmap key="id", value="name">options</getlist> 
 -add 2.sql that seeds db
 
+END OF SATURDAY
+-making really good progress
+-overall tasks are:
+ install - github, out-of-box-experience with zip
+ docs
+ using in a project - codegen for scaffold and dal
+ 
+ code quality 
+   -remove _ctx
+   -make play module, etc
+   
+ featues - better query? better unit testing? ?  
+ 
+
+

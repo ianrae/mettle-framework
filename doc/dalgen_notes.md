@@ -304,21 +304,3 @@ CODEGEN
  RealDAL
  
  
- 
- 
-
-+    public void setPhone(Phone val) {
- 		this.phone = val;
--		if (val != null)
--		{
--			Phone entity = PhoneDAL.createEntityFromModel(phone);
--			this.entity.phone = entity;
--		}
--		else
--		{
--			this.entity.phone = null;
--		}
-+        this.entity.phone = val;
-
- 
-
