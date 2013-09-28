@@ -1,4 +1,4 @@
-package org.mef.dalgen.codegen;
+package org.mef.dalgen.codegen.generators;
 
 import org.mef.dalgen.parser.EntityDef;
 import org.mef.dalgen.parser.FieldDef;
@@ -6,9 +6,9 @@ import org.stringtemplate.v4.ST;
 
 import sfx.SfxContext;
 
-public class MockDALCodeGen extends CodeGenBase
+public class RealDALCodeGen extends CodeGenBase
 {
-	public MockDALCodeGen(SfxContext ctx, String path, String packageName)
+	public RealDALCodeGen(SfxContext ctx, String path, String packageName)
 	{
 		super(ctx, path, packageName);
 	}
@@ -16,7 +16,7 @@ public class MockDALCodeGen extends CodeGenBase
 	@Override
 	public String generate(EntityDef def)
 	{
-		String result = genHeader(); 
+		String result = genHeader(def.name); 
 		ST st = _group.getInstanceOf("classdecl");
 		
 		st.add("name", getClassName(def));
@@ -33,10 +33,11 @@ public class MockDALCodeGen extends CodeGenBase
 	@Override
 	public String getClassName(EntityDef def)
 	{
-		String className = "Mock" + def.name + "DAL";
-		className = makeClassName(className, def.extendMock);
+		String className = def.name + "DAL";
+		className = makeClassName(className, def.extendReal);
 		return className;
 	}
+	
 	
 	protected String genQueries(EntityDef def)
 	{

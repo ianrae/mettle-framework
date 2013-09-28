@@ -1,5 +1,6 @@
 package org.mef.dalgen.codegen;
 
+import org.mef.dalgen.codegen.generators.CodeGenBase;
 import org.mef.dalgen.parser.EntityDef;
 import org.mef.dalgen.parser.FieldDef;
 import org.stringtemplate.v4.ST;

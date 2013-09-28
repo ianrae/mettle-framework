@@ -4,6 +4,11 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 
+import org.mef.dalgen.codegen.generators.CodeGenBase;
+import org.mef.dalgen.codegen.generators.DALIntefaceCodeGen;
+import org.mef.dalgen.codegen.generators.EntityCodeGen;
+import org.mef.dalgen.codegen.generators.MockDALCodeGen;
+import org.mef.dalgen.codegen.generators.ModelCodeGen;
 import org.mef.dalgen.parser.DalGenXmlParser;
 import org.mef.dalgen.parser.EntityDef;
 
@@ -17,6 +22,7 @@ public class DalCodeGenerator extends SfxBaseObj
 	private String stDir;
 	private DalGenXmlParser parser;
 	private boolean _needParentClass;
+	public boolean disableFileIO;
 	
 	public DalCodeGenerator(SfxContext ctx)
 	{
@@ -141,6 +147,11 @@ public class DalCodeGenerator extends SfxBaseObj
 
 	private boolean writeFile(String appDir, String subDir, String fileName, String code)
 	{
+		if (disableFileIO)
+		{
+			return true;
+		}
+		
 		String outPath = this.pathCombine(appDir, subDir);
 		outPath = this.pathCombine(outPath, String.format("%s.java", fileName));
 		log(fileName + ": " + outPath);

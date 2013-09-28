@@ -3,12 +3,12 @@ package unittests;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
-import org.mef.dalgen.codegen.DALIntefaceCodeGen;
 import org.mef.dalgen.codegen.DALUtilsCodeGen;
-import org.mef.dalgen.codegen.EntityCodeGen;
-import org.mef.dalgen.codegen.MockDALCodeGen;
-import org.mef.dalgen.codegen.ModelCodeGen;
-import org.mef.dalgen.codegen.RealDALCodeGen;
+import org.mef.dalgen.codegen.generators.DALIntefaceCodeGen;
+import org.mef.dalgen.codegen.generators.EntityCodeGen;
+import org.mef.dalgen.codegen.generators.MockDALCodeGen;
+import org.mef.dalgen.codegen.generators.ModelCodeGen;
+import org.mef.dalgen.codegen.generators.RealDALCodeGen;
 import org.mef.dalgen.parser.DalGenXmlParser;
 import org.mef.dalgen.parser.EntityDef;
 

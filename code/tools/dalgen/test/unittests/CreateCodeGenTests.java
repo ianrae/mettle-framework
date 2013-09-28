@@ -3,8 +3,8 @@ package unittests;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
-import org.mef.dalgen.codegen.EntityCodeGen;
 import org.mef.dalgen.codegen.PresenterCodeGen;
+import org.mef.dalgen.codegen.generators.EntityCodeGen;
 import org.mef.dalgen.parser.DalGenXmlParser;
 import org.mef.dalgen.parser.EntityDef;
 

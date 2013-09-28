@@ -1,4 +1,4 @@
-package org.mef.dalgen.codegen;
+package org.mef.dalgen.codegen.generators;
 
 import org.mef.dalgen.parser.EntityDef;
 import org.mef.dalgen.parser.FieldDef;
