@@ -30,9 +30,11 @@ public class SampleAppCodeGenTests extends BaseTest
 		
 		int n = gen.init(appDir, stDir);
 		assertEquals(3, n);
-		
+
+		boolean b = false;
 //		boolean b = gen.generate(0);
-		boolean b = gen.generate(1); //User
+		b = gen.generate(1); //User
+		b = gen.generate(2); //Phone
 		
 		if (b)
 		{}

@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import mef.core.Initializer;
 import mef.entities.User;
 import mef.mocks.MockFormBinder;
+import mef.mocks.MockPhoneDAL;
 import mef.mocks.MockTaskDAL;
 import mef.mocks.MockUserDAL;
 import mef.presenters.UserPresenter;
@@ -21,7 +22,7 @@ public class BasePresenterTest
 	
 	public void init()
 	{
-		_ctx = Initializer.createContext(new MockTaskDAL(), new MockUserDAL());
+		_ctx = Initializer.createContext(new MockTaskDAL(), new MockUserDAL(), new MockPhoneDAL());
 	}
 
 	protected void chkReplySucessful(Reply reply, int view, String flash)

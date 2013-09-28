@@ -60,6 +60,7 @@ public class UserPresenterTests extends BasePresenterTest
 		assertEquals("defaultname", reply._entity.name);
 		chkDalSize(0);
 		chkReplyWithEntity(reply, false, 0);
+		assertNotNull(reply._options);
 	}
 	
 	//--- create ---
@@ -87,6 +88,7 @@ public class UserPresenterTests extends BasePresenterTest
 		chkReplySucessful(reply, Reply.VIEW_NEW, "binding failed!");
 		chkDalSize(0);
 		chkReplyWithEntity(reply, false, 0);
+		assertNotNull(reply._options);
 	}
 	
 	//--- edit ---
@@ -99,6 +101,7 @@ public class UserPresenterTests extends BasePresenterTest
 		chkReplySucessful(reply, Reply.VIEW_EDIT, null);
 		chkDalSize(1);
 		chkReplyWithEntity(reply, false, 0);
+		assertNotNull(reply._options);
 	}
 	@Test
 	public void testEditUser_NotFound() 
@@ -143,6 +146,7 @@ public class UserPresenterTests extends BasePresenterTest
 		
 		User t2 = _dal.findById(t.id);
 		assertEquals("task2", t2.name); //unchanged (but mock dal kinda broken)
+		assertNotNull(reply._options);
 	}
 	@Test
 	public void testUpdateUser_NotFound() 

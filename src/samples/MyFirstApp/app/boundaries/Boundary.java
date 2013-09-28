@@ -4,6 +4,7 @@ import mef.core.Initializer;
 
 import org.mef.framework.sfx.SfxContext;
 
+import boundaries.dals.PhoneDAL;
 import boundaries.dals.TaskDAL;
 import boundaries.dals.UserDAL;
 
@@ -15,7 +16,7 @@ public class Boundary
 	{
 		if (theCtx == null)
 		{
-			theCtx = Initializer.createContext(new TaskDAL(), new UserDAL()); //fix later!!
+			theCtx = Initializer.createContext(new TaskDAL(), new UserDAL(), new PhoneDAL()); //fix later!!
 		}
 	}
 	

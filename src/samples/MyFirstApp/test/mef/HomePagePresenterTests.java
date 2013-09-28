@@ -15,6 +15,7 @@ import mef.core.Initializer;
 import mef.dals.ITaskDAL;
 import mef.entities.Task;
 import mef.mocks.MockFormBinder;
+import mef.mocks.MockPhoneDAL;
 import mef.mocks.MockTaskDAL;
 import mef.mocks.MockUserDAL;
 import mef.presenters.HomePagePresenter;
@@ -134,7 +135,7 @@ public class HomePagePresenterTests
 	protected SfxContext _ctx;
 	private void init()
 	{
-		_ctx = Initializer.createContext(new MockTaskDAL(), new MockUserDAL());
+		_ctx = Initializer.createContext(new MockTaskDAL(), new MockUserDAL(), new MockPhoneDAL());
 	}
 	
 	private MockTaskDAL getDAL()

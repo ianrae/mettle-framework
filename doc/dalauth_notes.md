@@ -109,7 +109,18 @@ for now, try d)
 		entity.phone = PhoneDAL.createEntityFromModel(t.getPhone());
 		
 
+DB SEED
+2.sql added records but then ebean wanted to use same ids.
+  #following screws up auto-generating of ids by ebean
+#insert into user_model  (id,name,phone_id) values (  1,'MacBook Pro 15.4 inch',1);
+
+in Global.onStart do
+  Phone phone = dal.find_by_name("apple")
+  if phone == null : phone = new Phone(), ..init fields.. dal.save()
   
+  
+
+
    
  
  

@@ -1,15 +1,15 @@
+//THIS FILE HAS BEEN AUTO-GENERATED. DO NOT MODIFY.
+
 package models;
 
-import java.util.List;
-
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Transient;
-
-import mef.entities.Phone;
-import play.data.validation.Constraints.Required;
-import play.db.ebean.Model;
-
+//import org.mef.framework.entities.Entity;
+import play.data.*;
+import java.util.*;
+import play.db.ebean.*;
+import play.data.validation.Constraints.*;
+import javax.persistence.*;
+import mef.entities.*;
+import boundaries.dals.*;
 @Entity
 public class PhoneModel extends Model
 {
@@ -37,10 +37,11 @@ public class PhoneModel extends Model
     }
     public void setId(Long val) {
 		this.id = val;
-        this.entity.id = val;
+		this.entity.id = val;
+
     }
 
-    @Required
+   @Required 
     String name;
 
     public String getName() {
@@ -48,7 +49,8 @@ public class PhoneModel extends Model
     }
     public void setName(String val) {
 		this.name = val;
-        this.entity.name = val;
+		this.entity.name = val;
+
     }
 
 }

@@ -1,6 +1,8 @@
 package mef.presenters;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mef.framework.Logger;
 import org.mef.framework.binder.IFormBinder;
@@ -17,19 +19,23 @@ import org.mef.framework.replies.Reply;
 import org.mef.framework.sfx.SfxBaseObj;
 import org.mef.framework.sfx.SfxContext;
 
+import mef.dals.IPhoneDAL;
 import mef.dals.IUserDAL;
+import mef.entities.Phone;
 import mef.entities.User;
 import mef.presenters.replies.UserReply;
 
 public class UserPresenter extends Presenter
 {
 	private IUserDAL _dal;
+	private IPhoneDAL _phoneDal;
 	private UserReply _reply;
 
 	public UserPresenter(SfxContext ctx)
 	{
 		super(ctx); 
 		_dal = (IUserDAL) getInstance(IUserDAL.class);
+		_phoneDal = (IPhoneDAL) getInstance(IPhoneDAL.class);
 	}
 	@Override
 	protected UserReply createReply()
@@ -52,9 +58,23 @@ public class UserPresenter extends Presenter
 		reply._entity = new User();
 		//default vals
 		reply._entity.name = "defaultname";
+		addPhones(reply);
 		return reply; //don't add list
 	}
 
+	private void addPhones(UserReply reply) 
+	{
+		LinkedHashMap<String,String> options = new LinkedHashMap<String,String>();
+		
+		List<Phone> L = _phoneDal.all(); //!! add sorting later
+		for(Phone ph : L)
+		{
+			options.put(ph.id.toString(), ph.name);
+		}
+		reply._options = options;
+	}	
+		
+	
 	public UserReply onCreateCommand(CreateCommand cmd)
 	{
 		UserReply reply = new UserReply();
@@ -66,6 +86,7 @@ public class UserPresenter extends Presenter
 			reply.setFlashFail("binding failed!");
 			Logger.info("BINDING failed");
 			reply._entity = (User) binder.getObject();
+			addPhones(reply);
 			return reply;
 		}
 		else
@@ -100,6 +121,7 @@ public class UserPresenter extends Presenter
 		else
 		{
 			reply._entity = user;
+			addPhones(reply);
 			return reply;
 		}
 	}
@@ -118,6 +140,7 @@ public class UserPresenter extends Presenter
 				Logger.info("failbinding null entity!");
 				reply._entity = _dal.findById(cmd.id); //fix better later!!
 			}
+			addPhones(reply);
 			return reply;
 		}
 		else
