@@ -15,6 +15,9 @@
         
         @helper.inputText(userForm("name"))
         
+@if(userForm("phone") != null) { aaa: @userForm("phone.name").value()
+                            } else { nil }
+        
         <input type="submit" value="Savex">
         
     }

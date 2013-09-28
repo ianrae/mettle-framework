@@ -3,6 +3,9 @@ package boundaries.dals;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.avaje.ebean.Ebean;
+import com.avaje.ebean.Query;
+
 import play.Logger;
 
 import boundaries.Boundary;
@@ -35,13 +38,27 @@ public class UserDAL implements IUserDAL
 	@Override
 	public User findById(long id) 
 	{
-		UserModel t = UserModel.find.byId(id);
 		Logger.info("HERE GOES:");
+//		UserModel t = UserModel.find.byId(id);
+		
+//		String oql = 
+//		        "  find  user_model "
+////		        +" fetch phone "
+//		        +" where order.id = :id";
+//		   
+//		 Query<UserModel> query = Ebean.createQuery(UserModel.class, oql);
+//		 query.setParameter("id", id);
+//		UserModel t = query.findUnique();
+		
+		//http://www.avaje.org/static/javadoc/pub/com/avaje/ebean/Query.html
+		UserModel t = Ebean.find(UserModel.class).fetch("phone").where().eq("id", id).findUnique();		
+		
 //		UserModel t = UserModel.find.fetch("phone").where(String.format("id=%d",id)).findUnique();
 		if (t == null)
 		{
 			return null;
 		}
+				
 		t.entity = createEntityFromModel(t); //create entity, set m.cc and t.entity, copy all fields from model to entity
 		return t.entity;
 	}
