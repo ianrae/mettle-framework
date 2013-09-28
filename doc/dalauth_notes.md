@@ -124,9 +124,13 @@ in Global.onStart do
 
 MASSIVE REORG OF DIRECTORY STRUCTURE
 
-resolvers += Resolver.file("my-test-repo", file("test")) transactional()
+-play run wasn't finding mef framework, since its now a separate project
+-so edited build.scala added
 
-   
+	resolvers += Resolver.file("meflib.var", file("lib")) transactional()   
+
+the export Framework to myfirstapp\lib\meflib.jar
+
  
  
 

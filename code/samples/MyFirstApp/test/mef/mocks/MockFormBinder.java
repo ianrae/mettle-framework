@@ -37,4 +37,9 @@ public class MockFormBinder implements IFormBinder
 	{
 		return null;
 	}
+	@Override
+	public Object getRawObject() 
+	{
+		return entity;
+	}
 }

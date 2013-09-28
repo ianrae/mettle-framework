@@ -145,28 +145,39 @@ public class UserPresenter extends Presenter
 		}
 		else
 		{
-			User entity = (User) binder.getObject();
-			if (entity == null)
+			//ensure id is a valid id
+			User user = _dal.findById(cmd.id);
+			if (user == null)
 			{
-				reply.setFailed(true);
+				reply.setDestination(Reply.FORWARD_NOT_FOUND);
+				return reply;
 			}
-			else
-			{
-				User user = _dal.findById(cmd.id);
-				if (user == null)
-				{
-					reply.setDestination(Reply.FORWARD_NOT_FOUND);
-					return reply;
-				}
-				else
-				{
-					user.name = entity.name;
-					Logger.info("userID: " + user.id);
-					_dal.save(user);
-					Logger.info("xsaved update: " + user.name);
-					reply.setDestination(Reply.FORWARD_INDEX);
-				}
-			}
+			_dal.updateFrom(binder);
+			Logger.info("zsaved update ");
+			reply.setDestination(Reply.FORWARD_INDEX);
+			
+//			User entity = (User) binder.getObject();
+//			if (entity == null)
+//			{
+//				reply.setFailed(true);
+//			}
+//			else
+//			{
+//				User user = _dal.findById(cmd.id);
+//				if (user == null)
+//				{
+//					reply.setDestination(Reply.FORWARD_NOT_FOUND);
+//					return reply;
+//				}
+//				else
+//				{
+//					user.name = entity.name;
+//					Logger.info("userID: " + user.id);
+//					_dal.save(user);
+//					Logger.info("zsaved update ");
+//					reply.setDestination(Reply.FORWARD_INDEX);
+////				}
+//			}
 			return fillPage(reply);
 		}
 	}

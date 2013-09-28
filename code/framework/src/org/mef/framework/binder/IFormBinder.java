@@ -9,6 +9,6 @@ public interface IFormBinder
 	boolean bind();
 
 	Object getObject();
-
+	Object getRawObject();
 	Object getValidationErrors();
 }

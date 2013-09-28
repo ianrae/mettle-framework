@@ -3,6 +3,8 @@ package boundaries.dals;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.mef.framework.binder.IFormBinder;
+
 import com.avaje.ebean.Ebean;
 import com.avaje.ebean.Query;
 
@@ -121,6 +123,14 @@ public class UserDAL implements IUserDAL
 			entityL.add(entity);
 		}
 		return entityL;
+	}
+
+
+	@Override
+	public void updateFrom(IFormBinder binder) 
+	{
+		UserModel model = (UserModel) binder.getRawObject();
+		model.update();
 	}
 
 }

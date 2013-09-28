@@ -4,6 +4,9 @@ package mef.mocks;
 
 import java.util.List;
 import java.util.ArrayList;
+
+import org.mef.framework.binder.IFormBinder;
+
 import mef.entities.*;
 import mef.dals.*;
 
@@ -52,4 +55,12 @@ public class MockUserDAL implements IUserDAL
         delete(entity.id); //remove existing
         _L.add(entity);
     }
-       }
+
+    @Override
+    public void updateFrom(IFormBinder binder) 
+    {
+    	User entity = (User) binder.getObject();
+    	save(entity);
+
+    }
+}

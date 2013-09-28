@@ -52,5 +52,10 @@ public class HomeFormBinder implements IFormBinder
 	{
 		return filledForm.errors();
 	}
+	@Override
+	public Object getRawObject() 
+	{
+		return filledForm.get();
+	}
 
 }
