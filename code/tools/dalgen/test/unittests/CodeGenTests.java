@@ -16,17 +16,12 @@ import sfx.SfxFileUtils;
 import sfx.SfxTextWriter;
 
 
-public class CodeGenTests extends BaseTest
+public class CodeGenTests extends BaseCodeGenTest
 {
-	private static boolean genFiles = false;
-	
 	@Test
 	public void testEntity() throws Exception
 	{
 		log("--testEntity--");
-		createContext();
-		EntityDef def = readEntityDef();
-		
 		for(EntityDef tmp : def.allEntityTypes)
 		{
 			log(tmp.name);
@@ -38,16 +33,12 @@ public class CodeGenTests extends BaseTest
 		String code = gen.generate(def);	
 		log(code);
 		assertEquals(true, 10 < code.length());
-		
 		writeFile("Task", code);
-		
 	}
 	@Test
 	public void testModel() throws Exception
 	{
 		log("--testModel--");
-		createContext();
-		EntityDef def = readEntityDef();
 		def.extendModel = true;
 		String path = this.getTemplateFile("model.stg");
 		String packageName = "org.mef.dalgen.unittests.gen";
@@ -64,8 +55,6 @@ public class CodeGenTests extends BaseTest
 	public void testIDAL() throws Exception
 	{
 		log("--testIDAL--");
-		createContext();
-		EntityDef def = readEntityDef();
 		def.extendInterface = true;
 		String path = this.getTemplateFile("dal_interface.stg");
 		String packageName = "org.mef.dalgen.unittests.gen";
@@ -80,8 +69,6 @@ public class CodeGenTests extends BaseTest
 	public void testMockDAL() throws Exception
 	{
 		log("--testMockDAL--");
-		createContext();
-		EntityDef def = readEntityDef();
 		def.extendMock = true;
 		String path = this.getTemplateFile("dal_mock.stg");
 		String packageName = "org.mef.dalgen.unittests.gen";
@@ -96,8 +83,6 @@ public class CodeGenTests extends BaseTest
 	public void testRealDAL() throws Exception
 	{
 		log("--testRealDAL--");
-		createContext();
-		EntityDef def = readEntityDef();
 		def.extendReal = true;
 		String path = this.getTemplateFile("dal_real.stg");
 		String packageName = "boundaries.dals";
@@ -125,23 +110,9 @@ public class CodeGenTests extends BaseTest
 //	}
 	
 	//--- helper fns ---
-	private EntityDef readEntityDef() throws Exception
-	{
-		String path = this.getTestFile("dalgen.xml");
-		DalGenXmlParser parser = new DalGenXmlParser(_ctx);
-		boolean b = parser.parse(path);
-
-		assertEquals(2, parser._entityL.size());
-		return parser._entityL.get(0);
-	}
 
 	private void writeFile(String fileName, String code)
 	{
-		if (! genFiles)
-		{
-			return;
-		}
-		
 //		String outPath = this.getUnitTestDir(String.format("gen\\%s.java", fileName));
 //		log(fileName + ": " + outPath);
 //		SfxTextWriter w = new SfxTextWriter(outPath, null);

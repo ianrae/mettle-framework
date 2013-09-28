@@ -10,7 +10,7 @@ import org.mef.dalgen.codegen.generators.ReplyCodeGen;
 import org.mef.dalgen.parser.DalGenXmlParser;
 import org.mef.dalgen.parser.EntityDef;
 
-public class CreateCodeGenTests extends BaseTest
+public class ScaffoldCodeGenTests extends BaseCodeGenTest
 {
 
 	@Test
@@ -39,23 +39,4 @@ public class CreateCodeGenTests extends BaseTest
 		
 	}
 	
-	// ----------- helper fns ---------------
-	private EntityDef readEntityDef() throws Exception
-	{
-		String path = this.getTestFile("dalgen.xml");
-		DalGenXmlParser parser = new DalGenXmlParser(_ctx);
-		boolean b = parser.parse(path);
-
-		assertEquals(2, parser._entityL.size());
-		return parser._entityL.get(0);
-	}
-
-
-	EntityDef def;
-	@Before
-	public void init() throws Exception
-	{
-		createContext();
-		def = readEntityDef();
-	}
 }

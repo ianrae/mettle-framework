@@ -5,20 +5,20 @@ package xmake;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
-import org.mef.dalgen.codegen.CreateCodeGenerator;
+import org.mef.dalgen.codegen.ScaffoldCodeGenerator;
 
 import unittests.BaseTest;
 
 //********************** CAREFUL!!! ****************************
 
-public class SampleAppCreateTests extends BaseTest
+public class ScaffoldTests extends BaseTest
 {
 	@Test
 	public void testEntity() throws Exception
 	{
 		log("--testEntity--");
 		createContext();
-		CreateCodeGenerator gen = new CreateCodeGenerator(_ctx);
+		ScaffoldCodeGenerator gen = new ScaffoldCodeGenerator(_ctx);
 		
 		gen.disableFileIO = true;
 		
