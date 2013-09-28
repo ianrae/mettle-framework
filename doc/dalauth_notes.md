@@ -118,7 +118,9 @@ in Global.onStart do
   Phone phone = dal.find_by_name("apple")
   if phone == null : phone = new Phone(), ..init fields.. dal.save()
   
-  
+  @if(userForm("phone") != null) { aaa: @userForm("phone.name").value()
+                            } else { nil }
+
 
 
    

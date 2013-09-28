@@ -113,7 +113,7 @@ public class UserC extends Controller
 			frm = boundary.makeForm(reply); 
 			errMsg = boundary.getAllValidationErrors();
 			errMsg = "some " + errMsg;
-			return ok(views.html.useredit.render(reply._allL, frm, reply._entity.id, errMsg, flashMsg));
+			return ok(views.html.useredit.render(reply._allL, frm, reply._entity.id, errMsg, flashMsg, reply._options));
 
 		case Reply.VIEW_SHOW:
 			return ok(views.html.usershow.render(reply._entity));

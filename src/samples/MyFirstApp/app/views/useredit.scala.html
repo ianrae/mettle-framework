@@ -1,4 +1,5 @@
-@(users: List[mef.entities.User], userForm: Form[UserModel], id: Long, errMsg: String, flashMsg: String)
+@(users: List[mef.entities.User], userForm: Form[UserModel], id: Long, 
+	errMsg: String, flashMsg: String, xoptions: Map[String,String])
 
 @import helper._
 
@@ -15,8 +16,12 @@
         
         @helper.inputText(userForm("name"))
         
-@if(userForm("phone") != null) { aaa: @userForm("phone.name").value()
-                            } else { nil }
+        
+ @select(       userForm("phone.id"), 
+                options(xoptions), 
+                '_label -> "Company", '_default -> "-- Choose a company --",
+                '_showConstraints -> false
+            )        
         
         <input type="submit" value="Savex">
         
