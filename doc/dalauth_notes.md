@@ -122,6 +122,9 @@ in Global.onStart do
                             } else { nil }
 
 
+MASSIVE REORG OF DIRECTORY STRUCTURE
+
+resolvers += Resolver.file("my-test-repo", file("test")) transactional()
 
    
  
