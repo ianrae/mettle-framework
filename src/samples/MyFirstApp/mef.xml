@@ -5,22 +5,28 @@
 <field>String label</field>
 <field>boolean enabled</field>
 <query>find_by_label</query>
-<interface extend="false" />
-<mock extend="false" />
-<real extend="false" />
+<codegen what="entity" extend="true" />
+<codegen what="model" extend="false" />
+<codegen what="dal_interface" extend="false" />
+<codegen what="dal_mock" extend="false" />
+<codegen what="dal_real" extend="false" />
 </entity>
 
 <entity name="User">
 <field>@Id Long id</field>
 <field>@Required String name</field>
-<field>Phone phone</field>
+<field>@ManyToOne Phone phone</field>
 
 <codegen what="entity" extend="true" />
 <codegen what="model" extend="false" />
 <codegen what="dal_interface" extend="false" />
 <codegen what="dal_mock" extend="false" />
 <codegen what="dal_real" extend="false" />
+</entity>
 
+<entity name="Phone">
+<field>@Id Long id</field>
+<field>@Required String name</field>
 </entity>
 
 </entities>

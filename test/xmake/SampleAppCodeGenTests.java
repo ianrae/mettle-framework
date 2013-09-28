@@ -16,7 +16,7 @@ public class SampleAppCodeGenTests extends BaseTest
 	@Test
 	public void testEntity() throws Exception
 	{
-		boolean genFiles = false;
+		boolean genFiles = true;
 		if (! genFiles)
 		{
 			return;
@@ -29,11 +29,13 @@ public class SampleAppCodeGenTests extends BaseTest
 		String stDir = this.getUnitTestDir("testfiles");
 		
 		int n = gen.init(appDir, stDir);
-		assertEquals(2, n);
+		assertEquals(3, n);
 		
 //		boolean b = gen.generate(0);
-		boolean b = gen.generate(1);
+		boolean b = gen.generate(1); //User
 		
+		if (b)
+		{}
 	}
 
 }

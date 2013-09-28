@@ -43,11 +43,14 @@ public class ModelCodeGen extends CodeGenBase
 	{
 		ST st = _group.getInstanceOf("fielddecl");
 		String result = "";
-		st.add("type", fdef.typeName);
+		
+		boolean isEntity = isEntity(def, fdef.typeName);
+		
+		st.add("type", (isEntity)? fdef.typeName + "Model" : fdef.typeName);
 		st.add("name", fdef.name);
 		st.add("bigName", uppify(fdef.name));
 		st.add("setName", isId(fdef.name) ? "set" : "set");
-		st.add("isEntity", isEntity(def, fdef.name));
+		st.add("isEntity", isEntity);
 		result = st.render(); 
 
 		String s = "";
@@ -73,7 +76,7 @@ public class ModelCodeGen extends CodeGenBase
 		return result;
 	}
 
-	private Object isEntity(EntityDef def, String name) 
+	private boolean isEntity(EntityDef def, String name) 
 	{
 		for(EntityDef tmp : def.allEntityTypes)
 		{
