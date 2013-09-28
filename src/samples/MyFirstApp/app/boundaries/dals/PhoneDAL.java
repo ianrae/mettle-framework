@@ -78,6 +78,10 @@ public class PhoneDAL implements IPhoneDAL
 	//create entity, set m.cc and t.entity, copy all fields from model to entity
 	public static Phone createEntityFromModel(PhoneModel t)
 	{
+		if (t == null)
+		{
+			return null;
+		}
 		if (t.entity != null && t.entity.cc != null)
 		{
 			return t.entity; //already exists

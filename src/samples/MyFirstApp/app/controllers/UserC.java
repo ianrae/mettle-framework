@@ -119,7 +119,7 @@ public class UserC extends Controller
 			return ok(views.html.usershow.render(reply._entity));
 
 		case Reply.FORWARD_INDEX:
-		case Reply.FORWARD_NOT_FOUND:
+		case Reply.FORWARD_NOT_FOUND: 
 			return Results.redirect(routes.UserC.index());
 			//		public static final int FOWARD_ERROR = 108:
 

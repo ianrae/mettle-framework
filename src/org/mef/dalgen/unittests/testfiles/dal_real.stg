@@ -90,6 +90,10 @@ public class <name> implements I<type>DAL
 	//create model, set entity, and call all setters
 	public static <type>Model createModelFromEntity(<type> entity)
 	{
+		if (entity == null)
+		{
+			return null;
+		}
 		<type>Model t = new <type>Model();
 		entity.cc = t;
 		t.entity = entity;
@@ -101,6 +105,10 @@ public class <name> implements I<type>DAL
 	//create entity, set m.cc and t.entity, copy all fields from model to entity
 	public static <type> createEntityFromModel(<type>Model t)
 	{
+		if (t == null)
+		{
+			return null;
+		}
 		if (t.entity != null && t.entity.cc != null)
 		{
 			return t.entity; //already exists
@@ -115,6 +123,10 @@ public class <name> implements I<type>DAL
 	}
 	public static List\<<type>\> createEntityFromModel(List\<<type>Model\> L)
 	{
+		if (L == null)
+		{
+			return null;
+		}
 		ArrayList\<<type>\> entityL = new ArrayList\<<type>\>();
 		for(<type>Model t : L)
 		{

@@ -1,0 +1,249 @@
+------------------------------24SepTue
+MUSIC
+https://soundcloud.com/rustyknuckles/j-b-beverley-hang-me-oh-hang -good example of voice+guitar
+
+
+PLAY
+I find it very hard to remember Angular. I am not a full time developer. I manage a team. I also do some development from time to time. I learned Angular 
+
+and used it a bit. When I came back to it a few weeks later, I found that I didn't recall how to work with it and I had to lookup almost anything I want 
+
+to do. On the other hand, I don't have the same issue with knockout. Having said that, I have used knockout for much longer and that most likely is part 
+
+of the reason (Although, I am not convinced it is the only reason). For knockout, I I plan to use DurandalJS in the future, but haven't yet.
+
+JAVA HASHMAP
+http://docs.oracle.com/javase/6/docs/api/java/util/HashMap.html
+-is thread-safe for read-only operations
+" If multiple threads access a hash map concurrently, and at least one of the threads modifies the map structurally, it must be synchronized externally."
+
+JAVA GENERICS
+http://www.javacodegeeks.com/2011/04/java-generics-quick-tutorial.html
+List<Apple> apples = new ArrayList<Apple>();
+List<? extends Fruit> fruits = apples;
+void eat(List<? extends Fruit> fruits); //will process any type of fruit
+
+CreateReply r = boundary.process(new cmd)
+
+
+--------------------------26SepThure
+MAEVE would have been 20 today
+
+HIBERNATE
+-how does it know which fields have changed?
+http://stackoverflow.com/questions/8354642/need-to-know-if-each-field-has-changed-how-should-i-model-this-in-hibernate
+ AtomicReferenceArray -thread-safe array!
+http://stackoverflow.com/questions/8817715/is-hibernate-recognizing-changes-by-the-result-of-the-getter
+Envers -wow. good! catches all changes to JPA stuff
+--see "15.6. Tracking entity changes at property level" at http://docs.jboss.org/hibernate/core/4.1/devguide/en-US/html/ch15.html#envers-tracking-
+
+properties-changes
+
+http://empire-db.apache.org/empiredb/hibernate.htm alternative to hibernate
+
+http://java.dzone.com/articles/using-a-hibernate-interceptor- -for auditing. can see all sets and saves
+http://java-success.blogspot.com/2013/01/hibernate-automatic-dirty-checking-of.html
+
+--------------------------27SepFri
+JPA ASSOCIATIONS - Relationships
+http://docs.oracle.com/javaee/6/tutorial/doc/bnbqa.html
+
+-simple list is list of non-entities, such as strings
+@Entity
+public class Person {
+    ...
+    @ElementCollection(fetch=EAGER)
+    protected Set<String> nickname = new HashSet();
+    ...
+}
+
+-one-to-one  (Husband <-> Wife)
+-one-to-many (Coach <-> Players)
+-many-to-one (Appartments <-> Landlord)
+-many-to-many (Profs <-> Students)
+
+-assocs can be uni-directional. is an "owning" side; (owning side writes the assoc to db and has the foreign key)
+-assocs can be bi-directional. is an "owning" side and an "invserse" side
+-can specify cascading deletes
+
+-note. jpa Embedded objects allow you to define a class like a C Struct and then use it in many entities.
+Embedded objects have no Id -- they are always included inside another object.
+
+http://www.javaworld.com/javaworld/jw-01-2008/jw-01-jpa2.html
+Customer
+Orders .custId
+OrderInvoice .orderId
+Products
+OrderDetail .orderId, .prodId
+
+OrderInvoice
+  @Column(name = "ORDER_ID")
+  private long orderId;
+
+  @OneToOne(optional=false)  //optional false means inner join (intersection)
+  @JoinColumn(name = "ORDER_ID") 
+  private Order order;       
+
+-optional=false when both sides MUST exist.
+-optional=true when related object may not exist
+
+  Order invoice.getOrder() does query and returns object
+
+-so this is a uni-directional relationship.  Order has no way to get its invoice.
+
+-to make it bi-directional, add this to Order. targetEntity is the "owning" class in the relationship
+  @OneToOne(optional=false,cascade=CascadeType.ALL, mappedBy="order",targetEntity=Invoice.class)
+  private Invoice invoice;    
+-so do Invoice order.GetInvoice() which does a query to find Invoice where .orderId==this.id
+
+http://www.avaje.org/doc/ebean-userguide.pdf
+
+
+-ebean transaction log
+-computer example running
+-eclipse debugging
+
+
+PLAY EBEAN assoc
+Computer many-to-one with Company. (Company means company that built the computer)
+Computer has this:
+ @ManyToOne
+ public Company company;
+-means each computer has one company, but one company can build many computers
+-db tbl: computer has company_id
+
+-and the main query includes
+ .fetch("company")  //which means include my company object
+
+-then company has no ref to computer
+-but does expose Map<String,String> options() that gets a list of all companies <id,name>
+ that can be used in forms
+
+ @select(
+                computerForm("company.id"), 
+                options(Company.options), 
+                '_label -> "Company", '_default -> "-- Choose a company --",
+                '_showConstraints -> false
+            )
+
+-since MEF uses modelforms, we don't have to do anything. options(CompanyModel.options)
+-DALGEN
+<field>@Id Long id</field>
+<field>@ManyToOne Company company</field>  --this is an assoc!
+-and company can do
+<getmap key="id", value="name">options</getlist> 
+
+-view of Computer has to handle .company may be null
+@if(computer.company == null) { <em>-</em> } else { @computer.company.name }
+
+DB LOGGING
+http://stackoverflow.com/questions/9719601/play-framework-2-0-and-ebean-sql-logging
+db.default.logStatements=true
+logger.com.jolbox=DEBUG
+
+DB SEED
+-2.sql does it!
+ -not idemptent though. only works if db is empty when runs
+
+PLAY MODULES
+http://www.playframework.com/modules
+[associations] Associations by André Pareis
+[chronostamp] Chronostamp by Wayson Clown -add dateCreated,dateModified
+[cobertura] Cobertura by Julien Bille -coverage tool!
+[featureflags] Feature Flags by Ben Verbeken
+[formee] Formee by Wayson Clown
+[paginate] paginate by Lawrence McAlpin
+[playerrors] playerrors by Marius Andra production error tracking
+[recordtracking] RecordTracking by Wayson Clown
+[scaffold] scaffold by Lawrence McAlpin -codegen tool you can call from play cmd-line
+[securepermissions] Secure Permissions Play! module by Stephane Epardaud
+
+PLAY PLUGINS
+http://www.objectify.be/wordpress/?tag=play
+-create a class. onStart,onStop,enabled
+-add to conf/play.plugins file
+
+PLAY MODULES
+http://www.objectify.be/wordpress/?p=363
+-a mini-app
+-mymodel
+  samples
+  project-code -which has app,conf, etc
+  app.conf -keep it but it should be empty. (module config should go in app conf file)
+  routes - DELETE it!
+  -then create a single class MyLogger (no parent class needed)
+  -done. publish to local repo
+
+-now in an app that wants to use the module, add it to build.scala
+
+
+ I’m just too damn old to learn these shiny new things.
+
+RALLY DISCUSSION GROUPS
+-has Notifications feature
+ -can enable rules for sending notifications
+ -in-app you have a notification viewer
+ -also is email and RSS notification
+  -email doesn't allow you to reply though
+  -all input must be in-app
+
+EBEAN
+E:\src\DownloadedStuff\PlayFramework\ebean
+-see ExpressionList.java and OrderBy.java
+LikeExpression
+
+FLUID INTERFACE
+
+String res = find().all().where("customer.id=3").sort().orderBy().asc();
+
+Qry class
+ toString returns results
+ where()
+ sort
+ orderBy
+ 
+
+find
+ Qry all()
+
+OrderBy
+ Qry asc()
+
+ 
+EXPRESSION PARSER
+http://docs.spring.io/spring/docs/3.0.x/reference/expressions.html
+Inventor tesla = new Inventor("Nikola Tesla", c.getTime(), "Serbian");
+
+ExpressionParser parser = new SpelExpressionParser();
+Expression exp = parser.parseExpression("name");
+Expression exp = parser.parseExpression("name == 'Nikola Tesla'");
+boolean result = exp.getValue(context, Boolean.class);  // evaluates to true
+
+http://code.google.com/p/jexel/
+
+PHONE to USER
+   private PhoneModel phone;    
+    
+    public Phone getPhone() {
+    	if (phone == null)
+    	{
+    		return null;
+    	}
+    	Phone entity = PhoneDAL.createEntityFromModel(phone);
+        return entity;
+    }
+    public void setPhone(PhoneModel val) {
+		this.phone = val;
+    	Phone entity = PhoneDAL.createEntityFromModel(phone);
+        this.entity.phone = entity;
+    }
+
+TO DO
+-get extend working in dalgen so don't overwrite user.validate
+-get phone added and working with dalgen
+-work on OneToOne assoc
+ -change createEntityToModel to handle null -dalgen
+-dalgen: DAL findById should include .fetch("phone") and all()
+-dalgen: support <getmap key="id", value="name">options</getlist> 
+-add 2.sql that seeds db
+

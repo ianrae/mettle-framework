@@ -18,7 +18,11 @@
         @for(user <- users) {
             <li>
 				<div>
-                @user.name  @user.id
+                @user.name  @user.id   @if(user.phone == null) {
+                                <em>---</em>
+                            } else {
+                                @user.phone.name
+                            }
 				<a href="@routes.UserC.edit(user.id)">Edit User</a>
 				<a href="@routes.UserC.show(user.id)">Show</a>
 				@form(routes.UserC.deleteUser(user.id)) {

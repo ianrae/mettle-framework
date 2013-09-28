@@ -3,6 +3,8 @@ package boundaries.dals;
 import java.util.ArrayList;
 import java.util.List;
 
+import play.Logger;
+
 import boundaries.Boundary;
 
 import models.UserModel;
@@ -34,6 +36,8 @@ public class UserDAL implements IUserDAL
 	public User findById(long id) 
 	{
 		UserModel t = UserModel.find.byId(id);
+		Logger.info("HERE GOES:");
+//		UserModel t = UserModel.find.fetch("phone").where(String.format("id=%d",id)).findUnique();
 		if (t == null)
 		{
 			return null;

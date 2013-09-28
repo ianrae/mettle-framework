@@ -7,5 +7,9 @@
     
     <h2>User</h2>
     
-       @user.name  @user.id
+       @user.name  @user.id  @if(user.phone == null) {
+                                <em>-</em>
+                            } else {
+                                @user.phone.name
+                            }
 }

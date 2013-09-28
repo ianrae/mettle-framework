@@ -9,6 +9,9 @@ import play.db.ebean.*;
 import play.data.validation.Constraints.*;
 import javax.persistence.*;
 import mef.entities.*;
+import boundaries.dals.PhoneDAL;
+
+import com.avaje.ebean.*;
 
 @Entity
 public class UserModel extends Model
@@ -51,14 +54,15 @@ public class UserModel extends Model
         this.entity.name = val;
     }
 
-    Phone phone;
+    @ManyToOne
+    PhoneModel phone;
 
-    public Phone getPhone() {
+    public PhoneModel getPhone() {
         return this.phone;
     }
-    public void setPhone(Phone val) {
+    public void setPhone(PhoneModel val) {
 		this.phone = val;
-        this.entity.phone = val;
+        this.entity.phone = PhoneDAL.createEntityFromModel(val);
     }
 
 }
