@@ -13,6 +13,6 @@ public interface IUserDAL
 	void delete(long id);
 	void save(User entity);        
     void updateFrom(IFormBinder binder);        
-    List<Task> search_by_name(String name);
+    List<User> search_by_name(String name);
 
 }

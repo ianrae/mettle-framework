@@ -61,7 +61,7 @@ public class MockUserDAL_GEN implements IUserDAL
 
     }
 
-	public List<Task> search_by_name(String name)
+	public List<User> search_by_name(String name)
 {
 	return null;
 }

@@ -15,6 +15,7 @@ import boundaries.Boundary;
 import models.UserModel;
 
 import mef.dals.IUserDAL;
+import mef.entities.Task;
 import mef.entities.User;
 
 public class UserDAL implements IUserDAL 
@@ -134,4 +135,12 @@ public class UserDAL implements IUserDAL
 		model.update();
 	}
 
+
+	@Override
+	public List<User> search_by_name(String name) 
+	{
+//		UserModel t = Ebean.find(UserModel.class).fetch("phone").where().eq("id", id).findUnique();		
+		List<User> resultsL = new ArrayList<User>(); //1!
+		return resultsL;
+	}
 }

@@ -9,9 +9,19 @@ import mef.dals.*;
 import org.mef.framework.binder.IFormBinder;
 public class MockUserDAL extends MockUserDAL_GEN
 {
-	public List<Task> search_by_name(String name)
+	@Override
+	public List<User> search_by_name(String name)
 	{
-		return null;
+		List<User> resultsL = new ArrayList<User>();
+		
+		for(User entity : resultsL)
+		{
+			if (entity.name.equals(name))
+			{
+				resultsL.add(entity);
+			}
+		}	
+		return resultsL;
 	}
 
 }
