@@ -50,4 +50,18 @@ public class BaseTest
 		return path;
 	}
 
+	protected String getTemplateFile(String filename)
+	{
+		String stDir = this.getCurrentDir("src\\org\\mef\\dalgen\\resources");
+		SfxFileUtils utils = new SfxFileUtils();
+		String path = utils.PathCombine(stDir, filename);
+		return path;
+	}
+	
+	protected String pathCombine(String path1, String path2)
+	{
+		SfxFileUtils utils = new SfxFileUtils();
+		String path = utils.PathCombine(path1, path2);
+		return path;
+	}
 }

@@ -26,7 +26,7 @@ public class SampleAppCodeGenTests extends BaseTest
 		createContext();
 		DalCodeGenerator gen = new DalCodeGenerator(_ctx);
 		String appDir = this.getCurrentDir("..\\..\\samples\\MyFirstApp");
-		String stDir = this.getUnitTestDir("testfiles");
+		String stDir = this.getCurrentDir("src\\org\\mef\\dalgen\\resources");
 log(appDir);
 log(stDir);
 		

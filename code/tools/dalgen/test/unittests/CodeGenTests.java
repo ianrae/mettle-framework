@@ -12,6 +12,7 @@ import org.mef.dalgen.codegen.RealDALCodeGen;
 import org.mef.dalgen.parser.DalGenXmlParser;
 import org.mef.dalgen.parser.EntityDef;
 
+import sfx.SfxFileUtils;
 import sfx.SfxTextWriter;
 
 
@@ -31,7 +32,7 @@ public class CodeGenTests extends BaseTest
 			log(tmp.name);
 		}
 		
-		String path = this.getTestFile("entity.stg");
+		String path = this.getTemplateFile("entity.stg");
 		String packageName = "org.mef.dalgen.unittests.gen";
 		EntityCodeGen gen = new EntityCodeGen(_ctx, path, packageName);
 		String code = gen.generate(def);	
@@ -48,7 +49,7 @@ public class CodeGenTests extends BaseTest
 		createContext();
 		EntityDef def = readEntityDef();
 		def.extendModel = true;
-		String path = this.getTestFile("model.stg");
+		String path = this.getTemplateFile("model.stg");
 		String packageName = "org.mef.dalgen.unittests.gen";
 		ModelCodeGen gen = new ModelCodeGen(_ctx, path, packageName);
 		gen.forUnitTest = true;
@@ -66,7 +67,7 @@ public class CodeGenTests extends BaseTest
 		createContext();
 		EntityDef def = readEntityDef();
 		def.extendInterface = true;
-		String path = this.getTestFile("dal_interface.stg");
+		String path = this.getTemplateFile("dal_interface.stg");
 		String packageName = "org.mef.dalgen.unittests.gen";
 		DALIntefaceCodeGen gen = new DALIntefaceCodeGen(_ctx, path, packageName);
 		String code = gen.generate(def);	
@@ -82,7 +83,7 @@ public class CodeGenTests extends BaseTest
 		createContext();
 		EntityDef def = readEntityDef();
 		def.extendMock = true;
-		String path = this.getTestFile("dal_mock.stg");
+		String path = this.getTemplateFile("dal_mock.stg");
 		String packageName = "org.mef.dalgen.unittests.gen";
 		MockDALCodeGen gen = new MockDALCodeGen(_ctx, path, packageName);
 		String code = gen.generate(def);	
@@ -98,7 +99,7 @@ public class CodeGenTests extends BaseTest
 		createContext();
 		EntityDef def = readEntityDef();
 		def.extendReal = true;
-		String path = this.getTestFile("dal_real.stg");
+		String path = this.getTemplateFile("dal_real.stg");
 		String packageName = "boundaries.dals";
 		RealDALCodeGen gen = new RealDALCodeGen(_ctx, path, packageName);
 		String code = gen.generate(def);	
