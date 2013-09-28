@@ -5,6 +5,7 @@ import java.util.List;
 
 public class EntityDef
 {
+	public boolean enabled; //whether we will generate files 
 	public String name;
 	public List<FieldDef> fieldL = new ArrayList<FieldDef>();
 	public List<String> queryL = new ArrayList<String>();

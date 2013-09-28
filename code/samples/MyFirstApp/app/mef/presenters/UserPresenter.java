@@ -58,6 +58,7 @@ public class UserPresenter extends Presenter
 		reply._entity = new User();
 		//default vals
 		reply._entity.name = "defaultname";
+		reply._entity.phone = this._phoneDal.findById(1);
 		addPhones(reply);
 		return reply; //don't add list
 	}

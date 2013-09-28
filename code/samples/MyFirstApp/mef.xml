@@ -30,4 +30,9 @@
 <codegen what="entity" extend="true" />
 </entity>
 
+<entity name="Zoo" enabled="false" >
+<field>@Id Long id</field>
+<field>@Required String name</field>
+<codegen what="entity" extend="true" />
+</entity>
 </entities>

@@ -2,6 +2,8 @@ package org.mef.dalgen.codegen;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.File;
+
 import org.mef.dalgen.parser.DalGenXmlParser;
 import org.mef.dalgen.parser.EntityDef;
 
@@ -14,6 +16,7 @@ public class DalCodeGenerator extends SfxBaseObj
 	private String appDir;
 	private String stDir;
 	private DalGenXmlParser parser;
+	private boolean _needParentClass;
 	
 	public DalCodeGenerator(SfxContext ctx)
 	{
@@ -28,6 +31,20 @@ public class DalCodeGenerator extends SfxBaseObj
 		return parser._entityL.size();
 	}
 	
+	public boolean generate(String name) throws Exception
+	{
+		int i = 0;
+		for(EntityDef def : parser._entityL)
+		{
+			if (def.name.equals(name))
+			{
+				return generate(i);
+			}
+			i++;
+		}
+		return false;
+	}
+	
 	public boolean generate(int index) throws Exception
 	{
 		EntityDef def = parser._entityL.get(index);
@@ -39,6 +56,18 @@ public class DalCodeGenerator extends SfxBaseObj
 		if (!b )
 		{
 			return false; //!!
+		}
+		if (_needParentClass)
+		{
+			path = this.pathCombine(stDir, "entity-based-on-gen.stg");
+			gen = new EntityCodeGen(_ctx, path, "mef.entities");
+			def.extendEntity = false;
+			b = generateOneFile(def, gen, "app\\mef\\entities");
+			def.extendEntity = true; //restore
+			if (!b )
+			{
+				return false; //!!
+			}			
 		}
 
 		path = this.pathCombine(stDir, "model.stg");
@@ -69,10 +98,36 @@ public class DalCodeGenerator extends SfxBaseObj
 	}
 	private boolean generateOneFile(EntityDef def, CodeGenBase gen, String relPath) throws Exception
 	{
+		if (! def.enabled)
+		{
+			log(def.name + " disabled -- no files generated.");
+			return true; //do nothing
+		}
+		
+		_needParentClass = false;
 		String code = gen.generate(def);	
 		//log(code);
 		String className = gen.getClassName(def);	
-		return writeFile(appDir, relPath, className, code);
+		boolean b = writeFile(appDir, relPath, className, code);
+		if (!b)
+		{
+			return false;
+		}
+		
+		//if _GEN and parent class doesn't exist
+		if (className.endsWith("_GEN"))
+		{
+			className = className.replace("_GEN", "");
+			String path = this.pathCombine(appDir, relPath);
+			path = this.pathCombine(path, className + ".java");
+			File f = new File(path);
+			if (! f.exists())
+			{
+				this.log("FFFFF");
+				_needParentClass = true;
+			}
+		}
+		return true;
 	}
 	private DalGenXmlParser readEntityDef(String appDir) throws Exception
 	{

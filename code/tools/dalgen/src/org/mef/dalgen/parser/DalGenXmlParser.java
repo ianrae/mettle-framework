@@ -62,6 +62,7 @@ public class DalGenXmlParser extends SfxBaseObj
 		EntityDef def = new EntityDef();
 		this._entityL.add(def);
 		def.name = getEl(entityEl, "name");
+		def.enabled = this.getBool(entityEl, "enabled", true);
 		this._currentEntityName = def.name;
 		
 		if (def.name.isEmpty())
@@ -117,16 +118,20 @@ public class DalGenXmlParser extends SfxBaseObj
 			String s = tmp.getAttribute("what");
 			if (s != null && s.equals(name))
 			{
-				return getBool(tmp, "extend");
+				return getBool(tmp, "extend", false);
 			}
 		}
 		
 		return false;
 	}
 
-	private boolean getBool(Element tmp, String name) 
+	private boolean getBool(Element tmp, String name, boolean defaultVal) 
 	{
 		String s = getEl(tmp, name);
+		if (s == null || s.isEmpty())
+		{
+			return defaultVal;
+		}
 		s = s.toLowerCase();
 		return (s.equals("true"));
 	}
