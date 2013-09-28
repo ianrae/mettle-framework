@@ -1,0 +1,61 @@
+header(package) ::= <<
+//THIS FILE HAS BEEN AUTO-GENERATED. DO NOT MODIFY.
+
+package <package>;
+
+//import org.mef.framework.entities.Entity;
+import play.data.*;
+import java.util.*;
+import play.db.ebean.*;
+import play.data.validation.Constraints.*;
+import javax.persistence.*;
+import mef.entities.*;
+import boundaries.dals.*;
+
+>>
+
+fielddecl(type, name, bigName, setName, isEntity) ::= <<
+
+    <type> <name>;
+    
+    public <type> get<bigName>() {
+        return this.<name>;
+    }
+    public void <setName><bigName>(<type> val) {
+		this.<name> = val;
+		<if(isEntity)>this.entity.<name> = <bigName>DAL.createEntityFromModel(val);
+		<else>this.entity.<name> = val;
+		<endif>
+        
+    }
+>>
+
+
+classdecl(type, name) ::= <<
+@Entity
+public class <name> extends Model
+{
+	@Transient
+    public <type> entity = new <type>(); //needed else get illegalStateException
+	
+	
+	public static Finder\<Long,<name>\> find = new Finder(
+			Long.class, <name>.class
+			);  
+	
+	public static List\<<type>Model> all() {
+		return find.all();
+	}
+	public static void delete(Long id) {
+		find.ref(id).delete();
+	}
+    
+    //getters and setters
+        
+>>
+
+endclassdecl() ::= <<
+}
+>>
+
+sampleloop(items) ::= "<items:{it|<it.id>: <it.lastName>, <it.firstName>\n}>"
