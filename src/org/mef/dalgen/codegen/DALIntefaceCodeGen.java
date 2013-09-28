@@ -57,7 +57,7 @@ public class DALIntefaceCodeGen extends CodeGenBase
 		}
 
 		@Override
-		protected String buildField(FieldDef fdef) {
+		protected String buildField(EntityDef def, FieldDef fdef) {
 			// TODO Auto-generated method stub
 			return null;
 		}

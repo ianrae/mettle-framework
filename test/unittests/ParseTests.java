@@ -27,12 +27,12 @@ public class ParseTests extends BaseTest
 		DalGenXmlParser parser = new DalGenXmlParser(_ctx);
 		boolean b = parser.parse(path);
 		
-		assertEquals(1, parser._entityL.size());
+		assertEquals(2, parser._entityL.size());
 		
 		EntityDef def = parser._entityL.get(0);
 		assertEquals("Task", def.name);
 		
-		assertEquals(3, def.fieldL.size());
+		assertEquals(4, def.fieldL.size());
 		
 		FieldDef fdef = def.fieldL.get(0);
 		assertEquals("id", fdef.name);
@@ -44,6 +44,11 @@ public class ParseTests extends BaseTest
 		assertEquals("String", fdef.typeName);
 		assertEquals(1, fdef.annotationL.size());
 		assertEquals(0, parser.getErrorCount());
+
+		fdef = def.fieldL.get(3);
+		assertEquals("note", fdef.name);
+		assertEquals("Note", fdef.typeName);
+		assertEquals(0, fdef.annotationL.size());
 		
 		assertEquals(1, def.queryL.size());
 		assertEquals("find_by_label", def.queryL.get(0));

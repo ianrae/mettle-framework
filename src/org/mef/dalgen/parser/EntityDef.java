@@ -13,4 +13,7 @@ public class EntityDef
 	public boolean extendReal;
 	public boolean extendEntity;
 	public boolean extendModel;
+	
+	
+	public List<EntityDef> allEntityTypes = new ArrayList<EntityDef>();
 }

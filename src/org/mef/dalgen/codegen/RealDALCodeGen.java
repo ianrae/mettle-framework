@@ -56,7 +56,7 @@ public class RealDALCodeGen extends CodeGenBase
 	}
 	
 	@Override
-	protected String buildField(FieldDef fdef)
+	protected String buildField(EntityDef def, FieldDef fdef)
 	{
 		return "";
 	}

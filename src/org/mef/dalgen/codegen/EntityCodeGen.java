@@ -39,7 +39,7 @@ public class EntityCodeGen extends CodeGenBase
 		
 		
 		@Override
-		protected String buildField(FieldDef fdef)
+		protected String buildField(EntityDef def, FieldDef fdef)
 		{
 			ST st = _group.getInstanceOf("fielddecl");
 			String result = "";

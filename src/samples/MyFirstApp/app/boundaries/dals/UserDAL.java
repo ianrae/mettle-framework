@@ -108,6 +108,7 @@ public class UserDAL implements IUserDAL
 		t.entity = entity;
 		entity.id = (t.getId() == null) ? 0 : t.getId();
 		entity.name	= t.getName();
+		entity.phone = PhoneDAL.createEntityFromModel(t.getPhone());
 		//!email!!
 		return entity;
 	}

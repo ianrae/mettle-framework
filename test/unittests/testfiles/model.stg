@@ -14,7 +14,7 @@ import mef.entities.*;
 
 >>
 
-fielddecl(type, name, bigName, setName) ::= <<
+fielddecl(type, name, bigName, setName, isEntity) ::= <<
 
     <type> <name>;
     
@@ -23,7 +23,10 @@ fielddecl(type, name, bigName, setName) ::= <<
     }
     public void <setName><bigName>(<type> val) {
 		this.<name> = val;
-        this.entity.<name> = val;
+		<if(isEntity)>xxxthis.entity.<name> = val;
+		<else>this.entity.<name> = val;
+		<endif>
+        
     }
 >>
 

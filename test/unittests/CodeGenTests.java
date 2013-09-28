@@ -26,6 +26,11 @@ public class CodeGenTests extends BaseTest
 		createContext();
 		EntityDef def = readEntityDef();
 		
+		for(EntityDef tmp : def.allEntityTypes)
+		{
+			log(tmp.name);
+		}
+		
 		String path = this.getTestFile("entity.stg");
 		String packageName = "org.mef.dalgen.unittests.gen";
 		EntityCodeGen gen = new EntityCodeGen(_ctx, path, packageName);
@@ -125,7 +130,7 @@ public class CodeGenTests extends BaseTest
 		DalGenXmlParser parser = new DalGenXmlParser(_ctx);
 		boolean b = parser.parse(path);
 
-		assertEquals(1, parser._entityL.size());
+		assertEquals(2, parser._entityL.size());
 		return parser._entityL.get(0);
 	}
 

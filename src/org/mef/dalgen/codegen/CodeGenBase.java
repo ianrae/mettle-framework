@@ -32,7 +32,7 @@ public abstract class CodeGenBase extends SfxBaseObj
 			String result = "";
 			for(FieldDef fdef : def.fieldL)
 			{
-				result += this.buildField(fdef);
+				result += this.buildField(def, fdef);
 				result += "\n\n";
 			}
 			return result;
@@ -40,7 +40,7 @@ public abstract class CodeGenBase extends SfxBaseObj
 		
 		public abstract String generate(EntityDef def);
 		
-		protected abstract String buildField(FieldDef fdef);
+		protected abstract String buildField(EntityDef def, FieldDef fdef);
 		public abstract String getClassName(EntityDef def);
 		
 		protected boolean isId(String name) 

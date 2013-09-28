@@ -4,9 +4,20 @@
 <field>long id</field>
 <field>@Required String label</field>
 <field>boolean enabled</field>
+<field>Note note</field>
 <query>find_by_label</query>
 
 <codegen what="entity" extend="true" />
+<codegen what="model" extend="false" />
+<codegen what="dal_interface" extend="false" />
+<codegen what="dal_mock" extend="false" />
+<codegen what="dal_real" extend="false" />
+</entity>
+<entity name="Note">
+<field>long id</field>
+<field>@Required String text</field>
+
+<codegen what="entity" extend="false" />
 <codegen what="model" extend="false" />
 <codegen what="dal_interface" extend="false" />
 <codegen what="dal_mock" extend="false" />

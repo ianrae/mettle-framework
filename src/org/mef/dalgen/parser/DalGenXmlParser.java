@@ -36,6 +36,24 @@ public class DalGenXmlParser extends SfxBaseObj
 		{
 			parseEntity(p, entityEl);
 		}
+		
+		
+		//build list of all entities
+		List<EntityDef> entityTypes = new ArrayList<EntityDef>();
+		for(EntityDef def : _entityL)
+		{
+			entityTypes.add(def);
+		}
+
+		//give each entity list of all entities
+		for(EntityDef def : _entityL)
+		{
+			List<EntityDef> copy = new ArrayList<EntityDef>();
+			copy.addAll(entityTypes);
+			def.allEntityTypes = copy;
+		}
+		
+		
 		return (this.getErrorCount() == 0);
 	}
 	

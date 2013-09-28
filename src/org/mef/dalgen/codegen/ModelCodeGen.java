@@ -39,7 +39,7 @@ public class ModelCodeGen extends CodeGenBase
 	
 	
 	@Override
-	protected String buildField(FieldDef fdef)
+	protected String buildField(EntityDef def, FieldDef fdef)
 	{
 		ST st = _group.getInstanceOf("fielddecl");
 		String result = "";
@@ -47,6 +47,7 @@ public class ModelCodeGen extends CodeGenBase
 		st.add("name", fdef.name);
 		st.add("bigName", uppify(fdef.name));
 		st.add("setName", isId(fdef.name) ? "set" : "set");
+		st.add("isEntity", isEntity(def, fdef.name));
 		result = st.render(); 
 
 		String s = "";
@@ -70,6 +71,16 @@ public class ModelCodeGen extends CodeGenBase
 		
 		result = s + result;
 		return result;
+	}
+
+	private Object isEntity(EntityDef def, String name) 
+	{
+		for(EntityDef tmp : def.allEntityTypes)
+		{
+			if (tmp.name.equals(name))
+				return true;
+		}
+		return false;
 	}
 
 }
