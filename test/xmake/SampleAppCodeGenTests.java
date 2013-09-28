@@ -1,10 +1,15 @@
-package org.mef.dalgen.unittests;
+package xmake;
+
+
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 import org.mef.dalgen.codegen.DalCodeGenerator;
 
+import unittests.BaseTest;
+
+//********************** CAREFUL!!! ****************************
 
 public class SampleAppCodeGenTests extends BaseTest
 {

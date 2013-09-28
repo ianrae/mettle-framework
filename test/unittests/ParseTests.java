@@ -1,4 +1,6 @@
-package org.mef.dalgen.unittests;
+package unittests;
+
+
 
 import static org.junit.Assert.*;
 

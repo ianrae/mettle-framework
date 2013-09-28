@@ -1,4 +1,4 @@
-package org.mef.dalgen.unittests;
+package unittests;
 
 import static org.junit.Assert.*;
 
@@ -19,12 +19,12 @@ public class BaseTest
 	{
 		System.out.println(s);
 	}
-	
+
 	protected String getTestFile(String filepath)
 	{
 		SfxFileUtils utils = new SfxFileUtils();
 		String path = utils.getCurrentDir();
-		path = utils.PathCombine(path, "src\\org\\mef\\dalgen\\unittests\\testfiles");
+		path = utils.PathCombine(path, "test\\unittests\\testfiles");
 		path = utils.PathCombine(path, filepath);
 		return path;
 	}
@@ -32,7 +32,7 @@ public class BaseTest
 	{
 		SfxFileUtils utils = new SfxFileUtils();
 		String path = utils.getCurrentDir();
-		path = utils.PathCombine(path, "src\\org\\mef\\dalgen\\unittests");
+		path = utils.PathCombine(path, "test\\unittests");
 		if (filepath != null)
 		{
 			path = utils.PathCombine(path, filepath);
