@@ -4,6 +4,7 @@ package mef.dals;
 
 import mef.entities.*;
 import java.util.List;
+import org.mef.framework.binder.IFormBinder;
 public interface IPhoneDAL
 {
 	int size();
@@ -11,4 +12,5 @@ public interface IPhoneDAL
 	List<Phone> all();
 	void delete(long id);
 	void save(Phone entity);        
-        }
+    void updateFrom(IFormBinder binder);        
+    }

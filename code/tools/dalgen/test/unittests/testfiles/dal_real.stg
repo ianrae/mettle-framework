@@ -11,6 +11,7 @@ import models.<type>Model;
 
 import mef.dals.I<type>DAL;
 import mef.entities.<type>;
+import org.mef.framework.binder.IFormBinder;
 
 >>
 
@@ -52,6 +53,12 @@ public class <name> implements I<type>DAL
 		t.save();
 	}
 	
+	@Override
+	public void updateFrom(IFormBinder binder) 
+	{
+		<type>Model model = (<type>Model) binder.getRawObject();
+		model.update();
+	}
 
 	@Override
 	public <type> findById(long id) 

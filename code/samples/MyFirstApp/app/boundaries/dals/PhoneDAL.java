@@ -3,9 +3,12 @@ package boundaries.dals;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.mef.framework.binder.IFormBinder;
+
 import boundaries.Boundary;
 
 import models.PhoneModel;
+import models.UserModel;
 
 import mef.dals.IPhoneDAL;
 import mef.entities.Phone;
@@ -103,6 +106,14 @@ public class PhoneDAL implements IPhoneDAL
 			entityL.add(entity);
 		}
 		return entityL;
+	}
+
+
+	@Override
+	public void updateFrom(IFormBinder binder) 
+	{
+		PhoneModel model = (PhoneModel) binder.getRawObject();
+		model.update();
 	}
 
 }

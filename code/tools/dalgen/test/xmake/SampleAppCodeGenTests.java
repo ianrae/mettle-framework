@@ -16,7 +16,7 @@ public class SampleAppCodeGenTests extends BaseTest
 	@Test
 	public void testEntity() throws Exception
 	{
-		boolean genFiles = false;
+		boolean genFiles = true;
 		if (! genFiles)
 		{
 			return;
@@ -25,8 +25,10 @@ public class SampleAppCodeGenTests extends BaseTest
 		log("--testEntity--");
 		createContext();
 		DalCodeGenerator gen = new DalCodeGenerator(_ctx);
-		String appDir = this.getCurrentDir("src\\samples\\MyFirstApp");
+		String appDir = this.getCurrentDir("..\\..\\samples\\MyFirstApp");
 		String stDir = this.getUnitTestDir("testfiles");
+log(appDir);
+log(stDir);
 		
 		int n = gen.init(appDir, stDir);
 		assertEquals(3, n);

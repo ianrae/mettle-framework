@@ -4,12 +4,9 @@ package mef.mocks;
 
 import java.util.List;
 import java.util.ArrayList;
-
-import org.mef.framework.binder.IFormBinder;
-
 import mef.entities.*;
 import mef.dals.*;
-
+import org.mef.framework.binder.IFormBinder;
 public class MockUserDAL implements IUserDAL
 {
     private ArrayList<User> _L = new ArrayList<User>();
@@ -63,4 +60,5 @@ public class MockUserDAL implements IUserDAL
     	save(entity);
 
     }
-}
+
+	}

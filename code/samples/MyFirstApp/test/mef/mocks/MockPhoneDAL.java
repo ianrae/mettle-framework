@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.ArrayList;
 import mef.entities.*;
 import mef.dals.*;
-
+import org.mef.framework.binder.IFormBinder;
 public class MockPhoneDAL implements IPhoneDAL
 {
     private ArrayList<Phone> _L = new ArrayList<Phone>();
@@ -52,4 +52,13 @@ public class MockPhoneDAL implements IPhoneDAL
         delete(entity.id); //remove existing
         _L.add(entity);
     }
-       }
+
+    @Override
+    public void updateFrom(IFormBinder binder) 
+    {
+    	Phone entity = (Phone) binder.getObject();
+    	save(entity);
+
+    }
+
+	}

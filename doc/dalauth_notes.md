@@ -132,5 +132,7 @@ MASSIVE REORG OF DIRECTORY STRUCTURE
 the export Framework to myfirstapp\lib\meflib.jar
 
  
+ C:\Users\ian\Documents\GitHub\dalgen\code\tools\dalgen\src\samples\MyFirstApp
  
+ C:\Users\ian\Documents\GitHub\dalgen\code\samples\MyFirstApp
 
