@@ -5,6 +5,7 @@ package <package>;
 
 import mef.entities.*;
 import java.util.List;
+import org.mef.framework.binder.IFormBinder;
 
 >>
 
@@ -17,7 +18,8 @@ public interface <name>
 	List\<<type>\> all();
 	void delete(long id);
 	void save(<type> entity);        
-        
+    void updateFrom(IFormBinder binder);        
+    
 >>
 
 endclassdecl() ::= <<
