@@ -2,6 +2,7 @@ package unittests;
 
 import static org.junit.Assert.*;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.mef.dalgen.codegen.generators.EntityCodeGen;
 import org.mef.dalgen.codegen.generators.PresenterCodeGen;
@@ -16,9 +17,6 @@ public class CreateCodeGenTests extends BaseTest
 	public void testPresenter() throws Exception
 	{
 		log("--testPresenter--");
-		createContext();
-		EntityDef def = readEntityDef();
-		
 		String path = this.getTemplateFile("presenter.stg");
 		String packageName = "mef.presenters";
 		PresenterCodeGen gen = new PresenterCodeGen(_ctx, path, packageName);
@@ -32,9 +30,6 @@ public class CreateCodeGenTests extends BaseTest
 	public void testReply() throws Exception
 	{
 		log("--testReply--");
-		createContext();
-		EntityDef def = readEntityDef();
-		
 		String path = this.getTemplateFile("reply.stg");
 		String packageName = "mef.presenters.replies";
 		ReplyCodeGen gen = new ReplyCodeGen(_ctx, path, packageName);
@@ -56,4 +51,11 @@ public class CreateCodeGenTests extends BaseTest
 	}
 
 
+	EntityDef def;
+	@Before
+	public void init() throws Exception
+	{
+		createContext();
+		def = readEntityDef();
+	}
 }
