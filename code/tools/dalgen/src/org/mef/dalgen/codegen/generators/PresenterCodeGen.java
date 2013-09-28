@@ -20,7 +20,7 @@ public class PresenterCodeGen extends CodeGenBase
 			
 			ST st = _group.getInstanceOf("classdecl");
 			st.add("type", def.name);
-			st.add("name", def.name + "Presenter");
+			st.add("name", getClassName(def));
 			result += st.render(); 
 			
 			result += genFields(def);
@@ -34,7 +34,7 @@ public class PresenterCodeGen extends CodeGenBase
 		@Override
 		public String getClassName(EntityDef def)
 		{
-			return makeClassName(def.name, def.extendEntity);
+			return  def.name + "Presenter";
 		}
 		
 		

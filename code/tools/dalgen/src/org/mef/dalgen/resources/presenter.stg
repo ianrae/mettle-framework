@@ -35,6 +35,7 @@ init(v) ::= "<if(v)> = <v><endif>"
 
 
 classdecl(type, name) ::= <<
+
 public class <name> extends Presenter
 {
 	private I<type>DAL _dal;
@@ -84,7 +85,6 @@ public class <name> extends Presenter
 		<type>Reply reply = createReply();
 		reply.setDestination(Reply.VIEW_EDIT);
 		return reply;
-		}
 	}
 	
 	

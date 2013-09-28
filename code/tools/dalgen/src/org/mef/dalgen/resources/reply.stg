@@ -18,6 +18,7 @@ fielddecl(type, name, value) ::= <<
 
 
 classdecl(type, name) ::= <<
+
 public class <name> extends Reply
 {
 	public List\<<type>\> _allL;

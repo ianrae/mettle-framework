@@ -32,7 +32,7 @@ log(stDir);
 
 		boolean b = false;
 //		boolean b = gen.generate(0);
-		b = gen.generate("User");
+//		b = gen.generate("User");
 //		b = gen.generate("Phone");
 //		b = gen.generate("Zoo");
 		if (b)
