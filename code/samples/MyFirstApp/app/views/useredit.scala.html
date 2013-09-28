@@ -1,5 +1,5 @@
 @(users: List[mef.entities.User], userForm: Form[UserModel], id: Long, 
-	errMsg: String, flashMsg: String, xoptions: Map[String,String])
+	xoptions: Map[String,String])
 
 @import helper._
 
@@ -9,8 +9,7 @@
     
     
     <h2>Edit user</h2>
-   <div>flash: @flashMsg</div>
-    <div>errors: @errMsg</div>
+ 
     
     @form(routes.UserC.updateUser(id)) {
         

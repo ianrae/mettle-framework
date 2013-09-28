@@ -1,4 +1,4 @@
-@(users: List[mef.entities.User], userForm: Form[UserModel], errMsg: String, flashMsg: String)
+@(users: List[mef.entities.User], userForm: Form[UserModel], xoptions: Map[String,String])
 
 @import helper._
 
@@ -15,12 +15,17 @@
     <div> no flash </div>
     } 
         
-    <div>flash: @flashMsg</div>
-    <div>errors: @errMsg</div>
     
     @form(routes.UserC.createUser()) {
         
         @helper.inputText(userForm("name"))
+        
+ @select(       userForm("phone.id"), 
+                options(xoptions), 
+                '_label -> "Company", '_default -> "-- Choose a company --",
+                '_showConstraints -> false
+            )    
+                    
         <input type="submit" value="Create">
         
     }

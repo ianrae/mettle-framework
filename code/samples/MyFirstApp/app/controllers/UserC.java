@@ -94,9 +94,9 @@ public class UserC extends Controller
 		}
 		
 		Form<UserModel> frm = null;
-		String errMsg = "";
-		String flashKey = reply.getFlashKey();
-		String flashMsg = (reply.getFlash() != null) ? reply.getFlash() : "";
+//		String errMsg = "";
+//		String flashKey = reply.getFlashKey();
+//		String flashMsg = (reply.getFlash() != null) ? reply.getFlash() : "";
 		switch(reply.getDestination())
 		{
 		case Reply.VIEW_INDEX:
@@ -104,16 +104,11 @@ public class UserC extends Controller
 
 		case Reply.VIEW_NEW:
 			frm = boundary.makeForm(reply); 
-			errMsg = boundary.getAllValidationErrors();
-			errMsg = "some " + errMsg;
-			
-			return ok(views.html.usernew.render(reply._allL, frm, errMsg, flashMsg));
+			return ok(views.html.usernew.render(reply._allL, frm, reply._options));
 
 		case Reply.VIEW_EDIT:
 			frm = boundary.makeForm(reply); 
-			errMsg = boundary.getAllValidationErrors();
-			errMsg = "some " + errMsg;
-			return ok(views.html.useredit.render(reply._allL, frm, reply._entity.id, errMsg, flashMsg, reply._options));
+			return ok(views.html.useredit.render(reply._allL, frm, reply._entity.id, reply._options));
 
 		case Reply.VIEW_SHOW:
 			return ok(views.html.usershow.render(reply._entity));
