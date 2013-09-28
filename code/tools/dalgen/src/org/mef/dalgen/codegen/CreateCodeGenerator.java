@@ -9,6 +9,8 @@ import org.mef.dalgen.codegen.generators.DALIntefaceCodeGen;
 import org.mef.dalgen.codegen.generators.EntityCodeGen;
 import org.mef.dalgen.codegen.generators.MockDALCodeGen;
 import org.mef.dalgen.codegen.generators.ModelCodeGen;
+import org.mef.dalgen.codegen.generators.PresenterCodeGen;
+import org.mef.dalgen.codegen.generators.ReplyCodeGen;
 import org.mef.dalgen.parser.DalGenXmlParser;
 import org.mef.dalgen.parser.EntityDef;
 
@@ -55,8 +57,16 @@ public class CreateCodeGenerator extends SfxBaseObj
 		EntityDef def = parser._entityL.get(index);
 		
 		String path = this.pathCombine(stDir, "presenter.stg");
-		EntityCodeGen gen = new EntityCodeGen(_ctx, path, "mef.presenters");
+		PresenterCodeGen gen = new PresenterCodeGen(_ctx, path, "mef.presenters");
 		boolean b = generateOneFile(def, gen, "app\\mef\\presenters");
+		if (!b )
+		{
+			return false; //!!
+		}
+		
+		path = this.pathCombine(stDir, "reply.stg");
+		ReplyCodeGen gen2 = new ReplyCodeGen(_ctx, path, "mef.presenters.replies");
+		b = generateOneFile(def, gen2, "app\\mef\\presenters\\replies");
 		if (!b )
 		{
 			return false; //!!

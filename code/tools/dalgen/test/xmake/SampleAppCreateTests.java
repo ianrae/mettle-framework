@@ -19,6 +19,7 @@ public class SampleAppCreateTests extends BaseTest
 		log("--testEntity--");
 		createContext();
 		CreateCodeGenerator gen = new CreateCodeGenerator(_ctx);
+		
 		gen.disableFileIO = true;
 		
 		String appDir = this.getCurrentDir("..\\..\\samples\\MyFirstApp");
