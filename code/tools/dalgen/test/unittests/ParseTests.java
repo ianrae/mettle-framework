@@ -64,14 +64,34 @@ public class ParseTests extends BaseTest
 	public void testBad() throws Exception
 	{
 		log("--testBad--");
-		SfxContext ctx = new SfxContext();
+		createContext();
 		String path = this.getTestFile("dalgen-bad.xml");
-		DalGenXmlParser parser = new DalGenXmlParser(ctx);
+		DalGenXmlParser parser = new DalGenXmlParser(_ctx);
 		boolean b = parser.parse(path);
 		
 		assertEquals(1, parser._entityL.size());
 		assertEquals(3, parser.getErrorCount());
 	}
+	@Test
+	
+	public void testMethod() throws Exception
+	{
+		log("--testMethod--");
+		createContext();
+		String path = this.getTestFile("dalgen.xml");
+		DalGenXmlParser parser = new DalGenXmlParser(_ctx);
+		boolean b = parser.parse(path);
+		
+		assertEquals(2, parser._entityL.size());
+		assertEquals(0, parser.getErrorCount());
+		
+		EntityDef def = parser._entityL.get(0);
+		assertEquals("Task", def.name);
+		
+		assertEquals(1, def.methodL.size());
+	}
+	
+	
 	@Test
 	public void testTwo() throws Exception
 	{

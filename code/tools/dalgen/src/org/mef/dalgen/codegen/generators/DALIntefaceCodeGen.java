@@ -24,6 +24,7 @@ public class DALIntefaceCodeGen extends CodeGenBase
 			result += st.render(); 
 			
 			result += genQueries(def);
+			result += genMethods(def);
 			
 			st = _group.getInstanceOf("endclassdecl");
 			result += st.render(); 
@@ -50,6 +51,19 @@ public class DALIntefaceCodeGen extends CodeGenBase
 				st.add("type", def.name); //getFieldType(def, fieldName));
 				st.add("fieldType", getFieldType(def, fieldName));
 				st.add("fullName", query);
+				result = st.render(); 
+				result += "\n\n";
+			}
+			return result;
+		}
+		
+		protected String genMethods(EntityDef def)
+		{
+			String result = "";
+			for(String method : def.methodL)
+			{
+				ST st = _group.getInstanceOf("methoddecl");
+				st.add("meth", method);
 				result = st.render(); 
 				result += "\n\n";
 			}

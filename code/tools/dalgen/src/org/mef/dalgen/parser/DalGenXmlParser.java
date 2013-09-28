@@ -96,6 +96,19 @@ public class DalGenXmlParser extends SfxBaseObj
 				parseQuery(def, tmp);
 			}
 		}
+		//method
+		for(int i = 0; i < 1000; i++)
+		{
+			Element tmp = p.getIthByName(entityEl, "method", i);
+			if (tmp == null)
+			{
+				break;
+			}
+			else
+			{
+				parseMethod(def, tmp);
+			}
+		}
 		
 		//more
 		def.extendEntity = getExtend(p, entityEl, "entity");
@@ -173,6 +186,12 @@ public class DalGenXmlParser extends SfxBaseObj
 		String s = getBody(tmp);
 		def.queryL.add(s);
 	}
+	private void parseMethod(EntityDef def, Element tmp)
+	{
+		String s = getBody(tmp);
+		def.methodL.add(s);
+	}
+	
 	
 	String _currentEntityName;
 	private void errorOccuredInEntity(String msg)
