@@ -91,19 +91,33 @@ public class JsonTests extends BaseTest
 		init();
 		assertEquals(0, _dal.size());
 
-		String path = this.getTestFile("json1.txt");
+		String path = this.getTestFile("json2.txt");
 		this.initFromJson(path);
-		assertEquals(1, _dal.size());
-		assertEquals(1, _dal.size()); //again - not added twice
+		assertEquals(2, _dal.size());
+		assertEquals(2, _dal.size()); //again - not added twice
 	}
 
 	private void initFromJson(String path) throws Exception
 	{
 		String json = this.readFile(path);
 		log(json);
-		Phone phone = new ObjectMapper().readValue(json, Phone.class);
-		
-		_dal.save(phone); //inserts or updates 
+		ObjectMapper x = new ObjectMapper();
+		Phone[] arPhone = x.readValue(json, Phone[].class);
+		for(int i = 0; i < arPhone.length; i++)
+		{
+			Phone phone = arPhone[i];
+			log("sv: " + phone.name);
+			Phone existing = _dal.find_by_name(phone.name);
+			if (existing != null)
+			{
+				phone.id = existing.id;
+			}
+			else
+			{
+				
+			}
+			_dal.save(phone); //inserts or updates 
+		}
 	}
 	
 	private MockPhoneDAL _dal;

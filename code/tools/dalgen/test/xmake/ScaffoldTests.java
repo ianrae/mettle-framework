@@ -20,7 +20,7 @@ public class ScaffoldTests extends BaseTest
 		createContext();
 		ScaffoldCodeGenerator gen = new ScaffoldCodeGenerator(_ctx);
 		
-		gen.disableFileIO = true;
+		gen.disableFileIO = true;  //***** WATCH OUT!11 ****
 		
 		String appDir = this.getCurrentDir("..\\..\\samples\\MyFirstApp");
 		String stDir = this.getCurrentDir("src\\org\\mef\\dalgen\\resources");

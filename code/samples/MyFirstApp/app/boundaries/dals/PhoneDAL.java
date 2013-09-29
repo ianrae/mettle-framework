@@ -116,4 +116,12 @@ public class PhoneDAL implements IPhoneDAL
 		model.update();
 	}
 
+
+	@Override
+	public Phone find_by_name(String val) 
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

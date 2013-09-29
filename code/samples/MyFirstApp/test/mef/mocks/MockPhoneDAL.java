@@ -50,14 +50,47 @@ public class MockPhoneDAL implements IPhoneDAL
     public void save(Phone entity) 
     {
         delete(entity.id); //remove existing
+        
+        if (entity.id == 0)
+        {
+        	entity.id = nextAvailIdNumber();
+        }
+        
         _L.add(entity);
     }
 
-    @Override
+    private Long nextAvailIdNumber() 
+    {
+    	long used = 0;
+        for(Phone entity : _L)
+        {
+            if (entity.id > used)
+            {
+                used = entity.id;
+            }
+        }
+        return used + 1;
+	}
+
+	@Override
     public void updateFrom(IFormBinder binder) 
     {
     	Phone entity = (Phone) binder.getObject();
     	save(entity);
+
     }
 
-	}
+	    @Override
+    public Phone find_by_name(String val) 
+    {
+        for(Phone entity : _L)
+        {
+            if (entity.name == val)
+            {
+                return entity;
+            }
+        }
+        return null; //not found
+    }
+
+}

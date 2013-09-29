@@ -13,4 +13,6 @@ public interface IPhoneDAL
 	void delete(long id);
 	void save(Phone entity);        
     void updateFrom(IFormBinder binder);        
-    }
+    public Phone find_by_name(String val);
+
+}
