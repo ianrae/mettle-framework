@@ -285,3 +285,6 @@ http://wiki.fasterxml.com/JacksonFeatureCreators
 
 MyObject foo = new ObjectMapper().readValue(request().body().asJson(), MyObject.class);
 
+------------------29SepSun
+JSON
+f you're inheriting from the Model class (as you should), it provides a save() method as well as an ID attribute. When you call save() on an object you got out of the database, it will be updated, and if you call it on a new object it will be saved to the database. It's all automagical!

@@ -85,6 +85,26 @@ public class JsonTests extends BaseTest
 		assertEquals(1, _dal.size());
 	}
 	
+	@Test
+	public void testSeed2() throws Exception
+	{
+		init();
+		assertEquals(0, _dal.size());
+
+		String path = this.getTestFile("json1.txt");
+		this.initFromJson(path);
+		assertEquals(1, _dal.size());
+		assertEquals(1, _dal.size()); //again - not added twice
+	}
+
+	private void initFromJson(String path) throws Exception
+	{
+		String json = this.readFile(path);
+		log(json);
+		Phone phone = new ObjectMapper().readValue(json, Phone.class);
+		
+		_dal.save(phone); //inserts or updates 
+	}
 	
 	private MockPhoneDAL _dal;
 	public void init()
