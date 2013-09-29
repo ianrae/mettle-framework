@@ -152,6 +152,8 @@ public class DalGenXmlParser extends SfxBaseObj
 	private void parseField(EntityDef def, Element tmp)
 	{
 		FieldDef fdef = new FieldDef();
+		fdef.isSeedField = this.getBool(tmp, "seedWith", false);
+		
 		String s = getBody(tmp);
 		String[] ar = s.split(" ");
 		if (ar.length == 0 || (ar.length == 1 && ar[0].isEmpty()))

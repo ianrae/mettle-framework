@@ -101,8 +101,8 @@ public class JsonTests extends BaseTest
 	{
 		String json = this.readFile(path);
 		log(json);
-		ObjectMapper x = new ObjectMapper();
-		Phone[] arPhone = x.readValue(json, Phone[].class);
+		ObjectMapper mapper = new ObjectMapper();
+		Phone[] arPhone = mapper.readValue(json, Phone[].class);
 		for(int i = 0; i < arPhone.length; i++)
 		{
 			Phone phone = arPhone[i];
@@ -111,10 +111,6 @@ public class JsonTests extends BaseTest
 			if (existing != null)
 			{
 				phone.id = existing.id;
-			}
-			else
-			{
-				
 			}
 			_dal.save(phone); //inserts or updates 
 		}
