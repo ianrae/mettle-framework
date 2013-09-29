@@ -67,6 +67,10 @@ public class PhoneDAL implements IPhoneDAL
 	//create model, set entity, and call all setters
 	public static PhoneModel createModelFromEntity(Phone entity)
 	{
+		if (entity == null)
+		{
+			return null;
+		}
 		PhoneModel t = new PhoneModel();
 		entity.cc = t;
 		t.entity = entity;

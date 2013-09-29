@@ -143,8 +143,7 @@ public class JsonTests extends BaseTest
 		init();
 		MockUserDAL userDal = (MockUserDAL) _ctx.getServiceLocator().getInstance(IUserDAL.class); 
 		
-		String path = this.getTestFile("json-user1.txt");
-		String json = readFile(path);
+		String json = ResourceReader.readSeedFile("json-user1.txt");
 		EntityLoader loader = new EntityLoader(_ctx);
 		loader.loadUser(json);
 		assertEquals(1, userDal.size());

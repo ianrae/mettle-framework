@@ -295,3 +295,54 @@ save()
 user u1 = new User(...)
 ..us.phone = ph
 dal.save
+
+added EntityLoader and mef/conf/user-json1.txt
+
+http://stackoverflow.com/questions/11166484/adding-apache-common-dependency-to-play-framework-2-0
+
+# --- Sample dataset
+
+# --- !Ups
+
+# insert into phone_model (id,name) values (  1,'Apple Inc.');
+# insert into phone_model (id,name) values (  2,'Samsung');
+# insert into phone_model (id,name) values (  3,'Nokia');
+# insert into phone_model (id,name) values (  4,'Blackberry');
+
+# --- !Downs
+
+# delete from phone_model;
+# delete from user_model;
+
+OFFICAL PLAY SETUP INSTRUCTIONS
+
+A. INSTALLING MEF
+-get meflib.jar
+-get tools batch files in your path: dalgen
+
+B. ADDING TO A NEW APP
+-create a lib dir and copy in meflib.jar
+-edit Build.scala and add
+    // Add your own project settings here      
+	resolvers += Resolver.file("meflib.jar", file("lib")) transactional()	
+
+-we need commons-io. add it to Build.scala
+val appDependencies = Seq(
+    // Add your project dependencies here,
+    javaCore,
+    javaJdbc,
+    javaEbean,
+    "commons-io" % "commons-io" % "2.3"	
+  )
+
+-create your mef.xml file in app root dir
+-run dalgen.bat to create: entities, dal-interface,mock, model classes
+
+-you create
+ Boundary.java
+ UserBoundary.java
+ UserController.java
+ 
+-db seed. create conf/mef/myfile.txt --json
+ 
+

@@ -1,11 +1,22 @@
 package mef.entities.utils;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class ResourceReader {
+import org.apache.commons.io.FilenameUtils;
 
+public class ResourceReader 
+{
+	public static String readSeedFile(String filename)
+	{
+		String currentDir = new File(".").getAbsolutePath();
+		String path = FilenameUtils.concat(currentDir, "conf\\mef");
+		path = FilenameUtils.concat(path, filename);
+		return readFile(path);
+	}
+	
 	public static String readFile(String path) 
 	{
 		StringBuilder sb = new StringBuilder();
