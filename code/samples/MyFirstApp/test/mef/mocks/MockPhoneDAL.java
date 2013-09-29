@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.ArrayList;
 import mef.entities.*;
 import mef.dals.*;
+
+import org.codehaus.jackson.map.ObjectMapper;
 import org.mef.framework.binder.IFormBinder;
 public class MockPhoneDAL implements IPhoneDAL
 {
@@ -91,6 +93,23 @@ public class MockPhoneDAL implements IPhoneDAL
             }
         }
         return null; //not found
+    }
+	    
+	    
+    public void initFromJson(String json) throws Exception
+    {
+    	ObjectMapper mapper = new ObjectMapper();
+    	Phone[] arPhone = mapper.readValue(json, Phone[].class);
+    	for(int i = 0; i < arPhone.length; i++)
+    	{
+    		Phone phone = arPhone[i];
+    		Phone existing = this.find_by_name(phone.name);
+    		if (existing != null)
+    		{
+    			phone.id = existing.id;
+    		}
+    		save(phone); //inserts or updates 
+    	}
     }
 
 }
