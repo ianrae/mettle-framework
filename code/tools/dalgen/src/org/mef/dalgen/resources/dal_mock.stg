@@ -14,14 +14,14 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 
 
-querydecl(type, fieldType, name) ::= <<
+querydecl(type, fieldType, name, eq) ::= <<
 //query
     @Override
     public <type> find_by_<name>(<fieldType> val) 
     {
         for(<type> entity : _L)
         {
-            if (entity.<name> == val)
+            if (entity.<name><eq>)
             {
                 return entity;
             }

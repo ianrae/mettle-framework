@@ -47,7 +47,17 @@ public class MockDALCodeGen extends CodeGenBase
 			ST st = _group.getInstanceOf("querydecl");
 			String fieldName = getFieldName(query);
 			st.add("type", def.name); //getFieldType(def, fieldName));
-			st.add("fieldType", getFieldType(def, fieldName));
+			
+			String fieldType = getFieldType(def, fieldName);
+			st.add("fieldType", fieldType);
+			if (fieldType.equals("String"))
+			{
+				st.add("eq", ".equals(val)");
+			}
+			else
+			{
+				st.add("eq", " == val");
+			}
 			st.add("name", fieldName);
 			result = st.render(); 
 			result += "\n\n";

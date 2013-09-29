@@ -104,7 +104,7 @@ public class MockUserDAL_GEN implements IUserDAL
     {
         for(User entity : _L)
         {
-            if (entity.name == val)
+            if (entity.name.equals(val))
             {
                 return entity;
             }

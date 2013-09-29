@@ -104,7 +104,7 @@ public class MockPhoneDAL implements IPhoneDAL
     {
         for(Phone entity : _L)
         {
-            if (entity.name == val)
+            if (entity.name.equals(val))
             {
                 return entity;
             }

@@ -8,9 +8,12 @@ import java.io.FileReader;
 import java.io.IOException;
 
 import mef.dals.IPhoneDAL;
+import mef.dals.IUserDAL;
 import mef.entities.Phone;
 import mef.entities.Phone_GEN;
+import mef.entities.User;
 import mef.mocks.MockPhoneDAL;
+import mef.mocks.MockUserDAL;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.node.ObjectNode;
@@ -101,6 +104,24 @@ public class JsonTests extends BaseTest
 		//mef.xml: define find_by_name
 		//set seedWith
 		//real DAL, implement find_by_name and initFromJson
+	}
+
+	@Test
+	public void testUserSeed() throws Exception
+	{
+		init();
+		assertEquals(0, _dal.size());
+		MockUserDAL userDal = (MockUserDAL) _ctx.getServiceLocator().getInstance(IUserDAL.class); 
+
+		String path = this.getTestFile("json-user1.txt");
+		String json = readFile(path);
+		userDal.initFromJson(json);
+		assertEquals(1, userDal.size());
+		assertEquals(1, userDal.size()); //again - not added twice
+		
+		User u = userDal.find_by_name("user1");
+		assertEquals("user1", u.name);
+		assertEquals("Mark", u.phone.name);
 	}
 
 	
