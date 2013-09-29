@@ -36,6 +36,7 @@ public class UserDAL implements IUserDAL
 			t.setName(entity.name);
 		}
 		t.save();
+		entity.id = t.getId(); //in case created on
 	}
 	
 

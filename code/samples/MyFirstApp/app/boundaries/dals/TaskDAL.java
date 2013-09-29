@@ -22,6 +22,7 @@ public class TaskDAL implements ITaskDAL
 			t = createModelFromEntity(entity);
 		}
 		t.save();
+		entity.id = t.getId(); //in case created on
 	}
 
 	@Override
