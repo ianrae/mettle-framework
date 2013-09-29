@@ -27,6 +27,7 @@ public class PhoneDAL implements IPhoneDAL
 			t.setName(entity.name);
 		}
 		t.save();
+		entity.id = t.getId(); //in case created on
 	}
 	
 
