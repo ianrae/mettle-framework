@@ -143,4 +143,11 @@ public class UserDAL implements IUserDAL
 		List<User> resultsL = new ArrayList<User>(); //1!
 		return resultsL;
 	}
+
+
+	@Override
+	public User find_by_name(String val) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

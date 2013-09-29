@@ -6,9 +6,8 @@ import java.util.List;
 import java.util.ArrayList;
 import mef.entities.*;
 import mef.dals.*;
-
-import org.codehaus.jackson.map.ObjectMapper;
 import org.mef.framework.binder.IFormBinder;
+import org.codehaus.jackson.map.ObjectMapper;
 public class MockPhoneDAL implements IPhoneDAL
 {
     protected ArrayList<Phone> _L = new ArrayList<Phone>();
@@ -52,14 +51,13 @@ public class MockPhoneDAL implements IPhoneDAL
     public void save(Phone entity) 
     {
         delete(entity.id); //remove existing
-        
         if (entity.id == 0)
         {
         	entity.id = nextAvailIdNumber();
         }
-        
-        _L.add(entity);
-    }
+
+         _L.add(entity);
+     }
 
     private Long nextAvailIdNumber() 
     {
@@ -74,7 +72,8 @@ public class MockPhoneDAL implements IPhoneDAL
         return used + 1;
 	}
 
-	@Override
+
+    @Override
     public void updateFrom(IFormBinder binder) 
     {
     	Phone entity = (Phone) binder.getObject();
@@ -82,7 +81,24 @@ public class MockPhoneDAL implements IPhoneDAL
 
     }
 
-	    @Override
+    public void initFromJson(String json) throws Exception
+    {
+    	ObjectMapper mapper = new ObjectMapper();
+    	Phone[] arPhone = mapper.readValue(json, Phone[].class);
+    	for(int i = 0; i < arPhone.length; i++)
+    	{
+    		Phone entity = arPhone[i];
+    		Phone existing = this.find_by_name(entity.name);
+    		if (existing != null)
+    		{
+    			entity.id = existing.id;
+    		}
+    		save(entity); //inserts or updates 
+    	}
+    }
+
+	//query
+    @Override
     public Phone find_by_name(String val) 
     {
         for(Phone entity : _L)
@@ -93,23 +109,6 @@ public class MockPhoneDAL implements IPhoneDAL
             }
         }
         return null; //not found
-    }
-	    
-	    
-    public void initFromJson(String json) throws Exception
-    {
-    	ObjectMapper mapper = new ObjectMapper();
-    	Phone[] arPhone = mapper.readValue(json, Phone[].class);
-    	for(int i = 0; i < arPhone.length; i++)
-    	{
-    		Phone phone = arPhone[i];
-    		Phone existing = this.find_by_name(phone.name);
-    		if (existing != null)
-    		{
-    			phone.id = existing.id;
-    		}
-    		save(phone); //inserts or updates 
-    	}
     }
 
 }

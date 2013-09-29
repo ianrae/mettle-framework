@@ -8,12 +8,14 @@ import java.util.ArrayList;
 import mef.entities.*;
 import mef.dals.*;
 import org.mef.framework.binder.IFormBinder;
+import org.codehaus.jackson.map.ObjectMapper;
 
 >>
 
 
 
 querydecl(type, fieldType, name) ::= <<
+//query
     @Override
     public <type> find_by_<name>(<fieldType> val) 
     {
@@ -29,6 +31,7 @@ querydecl(type, fieldType, name) ::= <<
 >>
 
 methoddecl(meth) ::= <<
+//method
 public <meth>
 {
 	return null;
@@ -80,8 +83,27 @@ public class <name> implements I<type>DAL
     public void save(<type> entity) 
     {
         delete(entity.id); //remove existing
-        _L.add(entity);
-    }
+        if (entity.id == 0)
+        {
+        	entity.id = nextAvailIdNumber();
+        }
+        
+         _L.add(entity);
+     }
+ 
+    private Long nextAvailIdNumber() 
+    {
+    	long used = 0;
+        for(<type> entity : _L)
+        {
+            if (entity.id > used)
+            {
+                used = entity.id;
+            }
+        }
+        return used + 1;
+	}
+
 
     @Override
     public void updateFrom(IFormBinder binder) 
@@ -91,6 +113,22 @@ public class <name> implements I<type>DAL
 
     }
 
+    public void initFromJson(String json) throws Exception
+    {
+    	ObjectMapper mapper = new ObjectMapper();
+    	<type>[] ar<type> = mapper.readValue(json, <type>[].class);
+    	for(int i = 0; i \< ar<type>.length; i++)
+    	{
+    		<type> entity = ar<type>[i];
+    		<type> existing = this.find_by_name(entity.name);
+    		if (existing != null)
+    		{
+    			entity.id = existing.id;
+    		}
+    		save(entity); //inserts or updates 
+    	}
+    }
+	
 	
 >>
 
