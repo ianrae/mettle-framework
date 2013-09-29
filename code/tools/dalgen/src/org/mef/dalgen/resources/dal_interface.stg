@@ -19,7 +19,7 @@ public interface <name>
 	void delete(long id);
 	void save(<type> entity);        
     void updateFrom(IFormBinder binder);        
-    void initFromJson(String json) throws Exception;
+    
     
 >>
 

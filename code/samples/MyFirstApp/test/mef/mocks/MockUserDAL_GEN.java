@@ -6,9 +6,7 @@ import java.util.List;
 import java.util.ArrayList;
 import mef.entities.*;
 import mef.dals.*;
-
 import org.mef.framework.binder.IFormBinder;
-import org.mef.framework.sfx.SfxContext;
 import org.codehaus.jackson.map.ObjectMapper;
 public class MockUserDAL_GEN implements IUserDAL
 {
@@ -82,43 +80,7 @@ public class MockUserDAL_GEN implements IUserDAL
     	save(entity);
 
     }
-    
-    public SfxContext _ctx;
 
-    @Override
-    public void initFromJson(String json) throws Exception
-    {
-		IPhoneDAL dal = (IPhoneDAL) _ctx.getServiceLocator().getInstance(IPhoneDAL.class); 
-    	
-    	ObjectMapper mapper = new ObjectMapper();
-    	User[] arUser = mapper.readValue(json, User[].class);
-    	for(int i = 0; i < arUser.length; i++)
-    	{
-    		User entity = arUser[i];
-
-    		doPhone(entity, dal);
-    		
-    		
-    		User existing = this.find_by_name(entity.name);
-    		if (existing != null)
-    		{
-    			entity.id = existing.id;
-    		}
-    		save(entity); //inserts or updates 
-    	}
-    }
-
-	private void doPhone(User entity, IPhoneDAL dal) 
-	{
-		Phone ph = dal.find_by_name(entity.phone.name);
-		
-		if (ph != null)
-		{
-			entity.phone.id = ph.id;
-		}
-		dal.save(entity.phone); //inserts or updates 
-		
-	}
 
 	//query
     @Override

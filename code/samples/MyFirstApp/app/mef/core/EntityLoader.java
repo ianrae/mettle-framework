@@ -11,43 +11,43 @@ import org.mef.framework.sfx.SfxContext;
 
 public class EntityLoader extends SfxBaseObj
 {
+	private IUserDAL userDal; 
+	private IPhoneDAL phoneDal;
+	
 	public EntityLoader(SfxContext ctx)
 	{
 		super(ctx);
+		userDal = (IUserDAL) _ctx.getServiceLocator().getInstance(IUserDAL.class); 
+		phoneDal = (IPhoneDAL) _ctx.getServiceLocator().getInstance(IPhoneDAL.class); 
 	}
 	
-    public void loadPhoneFromJson(String json) throws Exception
+    public void loadPhone(String json) throws Exception
     {
-		IPhoneDAL dal = (IPhoneDAL) _ctx.getServiceLocator().getInstance(IPhoneDAL.class); 
-    	
     	ObjectMapper mapper = new ObjectMapper();
     	Phone[] arPhone = mapper.readValue(json, Phone[].class);
     	for(int i = 0; i < arPhone.length; i++)
     	{
     		Phone entity = arPhone[i];
-    		Phone existing = dal.find_by_name(entity.name);
+    		Phone existing = phoneDal.find_by_name(entity.name); //use seedWith field
     		if (existing != null)
     		{
     			entity.id = existing.id;
     		}
-    		dal.save(entity); //inserts or updates 
+    		phoneDal.save(entity); //inserts or updates 
     	}
     }
     
     
-    public void loadUserFromJson(String json) throws Exception
+    public void loadUser(String json) throws Exception
     {
-		IUserDAL userDal = (IUserDAL) _ctx.getServiceLocator().getInstance(IUserDAL.class); 
-		IPhoneDAL phoneDal = (IPhoneDAL) _ctx.getServiceLocator().getInstance(IPhoneDAL.class); 
-    	
     	ObjectMapper mapper = new ObjectMapper();
     	User[] arUser = mapper.readValue(json, User[].class);
     	for(int i = 0; i < arUser.length; i++)
     	{
     		User entity = arUser[i];
-    		doPhone(entity, phoneDal);
+    		doPhone(entity);
     		
-    		User existing = userDal.find_by_name(entity.name);
+    		User existing = userDal.find_by_name(entity.name); //use seedWith field
     		if (existing != null)
     		{
     			entity.id = existing.id;
@@ -56,16 +56,15 @@ public class EntityLoader extends SfxBaseObj
     	}
     }
 
-	private void doPhone(User entity, IPhoneDAL dal) 
+	private void doPhone(User entity) 
 	{
-		Phone ph = dal.find_by_name(entity.phone.name);
+		Phone ph = phoneDal.find_by_name(entity.phone.name); //use seedWith field
 		
 		if (ph != null)
 		{
 			entity.phone.id = ph.id;
 		}
-		dal.save(entity.phone); //inserts or updates 
-		
+		phoneDal.save(entity.phone); //inserts or updates 
 	}
 
 }

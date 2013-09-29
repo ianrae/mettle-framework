@@ -81,22 +81,6 @@ public class MockPhoneDAL implements IPhoneDAL
 
     }
 
-    @Override
-    public void initFromJson(String json) throws Exception
-    {
-    	ObjectMapper mapper = new ObjectMapper();
-    	Phone[] arPhone = mapper.readValue(json, Phone[].class);
-    	for(int i = 0; i < arPhone.length; i++)
-    	{
-    		Phone entity = arPhone[i];
-    		Phone existing = this.find_by_name(entity.name);
-    		if (existing != null)
-    		{
-    			entity.id = existing.id;
-    		}
-    		save(entity); //inserts or updates 
-    	}
-    }
 
 	//query
     @Override

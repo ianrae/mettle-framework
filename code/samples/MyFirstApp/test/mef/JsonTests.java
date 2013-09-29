@@ -13,6 +13,7 @@ import mef.dals.IUserDAL;
 import mef.entities.Phone;
 import mef.entities.Phone_GEN;
 import mef.entities.User;
+import mef.entities.utils.ResourceReader;
 import mef.mocks.MockPhoneDAL;
 import mef.mocks.MockUserDAL;
 
@@ -99,7 +100,7 @@ public class JsonTests extends BaseTest
 		String json = readFile(path);
 		
 		EntityLoader loader = new EntityLoader(_ctx);
-		loader.loadPhoneFromJson(json);
+		loader.loadPhone(json);
 		assertEquals(2, _dal.size());
 		assertEquals(2, _dal.size()); //again - not added twice
 		
@@ -115,12 +116,11 @@ public class JsonTests extends BaseTest
 		init();
 		assertEquals(0, _dal.size());
 		MockUserDAL userDal = (MockUserDAL) _ctx.getServiceLocator().getInstance(IUserDAL.class); 
-		userDal._ctx = _ctx; //!!
 		
 		String path = this.getTestFile("json-user1.txt");
 		String json = readFile(path);
 		EntityLoader loader = new EntityLoader(_ctx);
-		loader.loadUserFromJson(json);
+		loader.loadUser(json);
 		assertEquals(1, userDal.size());
 		long id = userDal.findById(1).phone.id;
 		
@@ -137,6 +137,31 @@ public class JsonTests extends BaseTest
 		assertEquals(u.phone.id, ph.id);
 	}
 
+	@Test
+	public void testMefConfigFiles() throws Exception
+	{
+		init();
+		MockUserDAL userDal = (MockUserDAL) _ctx.getServiceLocator().getInstance(IUserDAL.class); 
+		
+		String path = this.getTestFile("json-user1.txt");
+		String json = readFile(path);
+		EntityLoader loader = new EntityLoader(_ctx);
+		loader.loadUser(json);
+		assertEquals(1, userDal.size());
+		long id = userDal.findById(1).phone.id;
+		
+		assertEquals(1, userDal.size()); //again - not added twice
+		long id2 = userDal.findById(1).phone.id;
+		assertEquals(id2, id);
+		User u = userDal.find_by_name("user1");
+		assertEquals("user1", u.name);
+		assertEquals("Mark", u.phone.name);
+		
+		assertEquals(1, _dal.size());
+		Phone ph = _dal.find_by_name("Mark");
+		assertNotNull(ph);
+		assertEquals(u.phone.id, ph.id);
+	}
 	
 	private MockPhoneDAL _dal;
 	public void init()
@@ -153,31 +178,6 @@ public class JsonTests extends BaseTest
 	//------------ helper fns ------------
 	private String readFile(String path) 
 	{
-		StringBuilder sb = new StringBuilder();
-		BufferedReader br = null;
-	    try {
-	    	br = new BufferedReader(new FileReader(path));
-	        String line = br.readLine();
-
-	        while (line != null) {
-	            sb.append(line);
-	            sb.append('\n');
-	            line = br.readLine();
-	        }
-	    } catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-	    	if (br != null)
-	    	{
-	    		try {
-					br.close();
-				} catch (IOException e) {
-//					e.printStackTrace();
-				}
-	    	}
-	    }		
-	    String everything = sb.toString();
-	    return everything;
+		return ResourceReader.readFile(path);
 	}
 }

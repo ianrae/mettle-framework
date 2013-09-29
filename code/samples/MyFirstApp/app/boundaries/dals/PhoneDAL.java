@@ -121,20 +121,4 @@ public class PhoneDAL implements IPhoneDAL
 		return null;
 	}
 
-    @Override
-    public void initFromJson(String json) throws Exception
-    {
-    	ObjectMapper mapper = new ObjectMapper();
-    	Phone[] arUser = mapper.readValue(json, Phone[].class);
-    	for(int i = 0; i < arUser.length; i++)
-    	{
-    		Phone entity = arUser[i];
-    		Phone existing = this.find_by_name(entity.name);
-    		if (existing != null)
-    		{
-    			entity.id = existing.id;
-    		}
-    		save(entity); //inserts or updates 
-    	}
-    }
 }

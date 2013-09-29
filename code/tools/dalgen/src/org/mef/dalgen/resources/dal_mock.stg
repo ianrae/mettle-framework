@@ -113,22 +113,6 @@ public class <name> implements I<type>DAL
 
     }
 
-    @Override
-    public void initFromJson(String json) throws Exception
-    {
-    	ObjectMapper mapper = new ObjectMapper();
-    	<type>[] ar<type> = mapper.readValue(json, <type>[].class);
-    	for(int i = 0; i \< ar<type>.length; i++)
-    	{
-    		<type> entity = ar<type>[i];
-    		<type> existing = this.find_by_name(entity.name);
-    		if (existing != null)
-    		{
-    			entity.id = existing.id;
-    		}
-    		save(entity); //inserts or updates 
-    	}
-    }
 	
 	
 >>
