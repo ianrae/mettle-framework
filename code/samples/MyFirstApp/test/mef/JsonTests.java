@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
+import mef.core.EntityLoader;
 import mef.dals.IPhoneDAL;
 import mef.dals.IUserDAL;
 import mef.entities.Phone;
@@ -96,7 +97,9 @@ public class JsonTests extends BaseTest
 
 		String path = this.getTestFile("json2.txt");
 		String json = readFile(path);
-		_dal.initFromJson(json);
+		
+		EntityLoader loader = new EntityLoader(_ctx);
+		loader.loadPhoneFromJson(json);
 		assertEquals(2, _dal.size());
 		assertEquals(2, _dal.size()); //again - not added twice
 		
@@ -116,7 +119,8 @@ public class JsonTests extends BaseTest
 		
 		String path = this.getTestFile("json-user1.txt");
 		String json = readFile(path);
-		userDal.initFromJson(json);
+		EntityLoader loader = new EntityLoader(_ctx);
+		loader.loadUserFromJson(json);
 		assertEquals(1, userDal.size());
 		long id = userDal.findById(1).phone.id;
 		
