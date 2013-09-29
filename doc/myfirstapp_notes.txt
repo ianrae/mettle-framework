@@ -261,4 +261,27 @@ END OF SATURDAY
  featues - better query? better unit testing? ?  
  
 
+https://code.google.com/p/mockito/ mock
+
+-bootstrap job
+@OnApplicationStart 
+public class Bootstrap extends Job { 
+
+    public void doJob() { 
+       ... 
+    } 
+
+} 
+val o=Json.parse("[1,2,3]").as[List[Int]]
+
+https://github.com/FasterXML/jackson
+JsonNode json = request().body().asJson();
+JsonNode json = request().body().asJson();
+MyClass1 obj1 = Json.fromJson(json, MyClass1.class);
+
+http://wiki.fasterxml.com/JacksonInFiveMinutes
+C:\ianTools\play\play-2.1.2\repository\local\org.codehaus.jackson\jackson-core-asl\1.9.10\jars
+http://wiki.fasterxml.com/JacksonFeatureCreators
+
+MyObject foo = new ObjectMapper().readValue(request().body().asJson(), MyObject.class);
 
