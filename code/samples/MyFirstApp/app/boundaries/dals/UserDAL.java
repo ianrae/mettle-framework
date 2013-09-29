@@ -3,6 +3,7 @@ package boundaries.dals;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.codehaus.jackson.map.ObjectMapper;
 import org.mef.framework.binder.IFormBinder;
 
 import com.avaje.ebean.Ebean;
@@ -150,4 +151,22 @@ public class UserDAL implements IUserDAL
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	
+    @Override
+    public void initFromJson(String json) throws Exception
+    {
+    	ObjectMapper mapper = new ObjectMapper();
+    	User[] arUser = mapper.readValue(json, User[].class);
+    	for(int i = 0; i < arUser.length; i++)
+    	{
+    		User entity = arUser[i];
+    		User existing = this.find_by_name(entity.name);
+    		if (existing != null)
+    		{
+    			entity.id = existing.id;
+    		}
+    		save(entity); //inserts or updates 
+    	}
+    }
 }

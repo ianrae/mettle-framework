@@ -96,6 +96,11 @@ public class JsonTests extends BaseTest
 		_dal.initFromJson(json);
 		assertEquals(2, _dal.size());
 		assertEquals(2, _dal.size()); //again - not added twice
+		
+		//steps for init from json
+		//mef.xml: define find_by_name
+		//set seedWith
+		//real DAL, implement find_by_name and initFromJson
 	}
 
 	

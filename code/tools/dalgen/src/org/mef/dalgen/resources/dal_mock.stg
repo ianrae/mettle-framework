@@ -113,6 +113,7 @@ public class <name> implements I<type>DAL
 
     }
 
+    @Override
     public void initFromJson(String json) throws Exception
     {
     	ObjectMapper mapper = new ObjectMapper();

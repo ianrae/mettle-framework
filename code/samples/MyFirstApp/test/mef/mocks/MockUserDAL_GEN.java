@@ -81,6 +81,7 @@ public class MockUserDAL_GEN implements IUserDAL
 
     }
 
+    @Override
     public void initFromJson(String json) throws Exception
     {
     	ObjectMapper mapper = new ObjectMapper();

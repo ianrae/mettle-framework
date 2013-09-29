@@ -13,6 +13,7 @@ public interface IUserDAL
 	void delete(long id);
 	void save(User entity);        
     void updateFrom(IFormBinder binder);        
+    void initFromJson(String json) throws Exception;
     public User find_by_name(String val);
 
 List<User> search_by_name(String name);
