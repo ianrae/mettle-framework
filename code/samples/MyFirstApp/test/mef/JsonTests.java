@@ -112,16 +112,25 @@ public class JsonTests extends BaseTest
 		init();
 		assertEquals(0, _dal.size());
 		MockUserDAL userDal = (MockUserDAL) _ctx.getServiceLocator().getInstance(IUserDAL.class); 
-
+		userDal._ctx = _ctx; //!!
+		
 		String path = this.getTestFile("json-user1.txt");
 		String json = readFile(path);
 		userDal.initFromJson(json);
 		assertEquals(1, userDal.size());
-		assertEquals(1, userDal.size()); //again - not added twice
+		long id = userDal.findById(1).phone.id;
 		
+		assertEquals(1, userDal.size()); //again - not added twice
+		long id2 = userDal.findById(1).phone.id;
+		assertEquals(id2, id);
 		User u = userDal.find_by_name("user1");
 		assertEquals("user1", u.name);
 		assertEquals("Mark", u.phone.name);
+		
+		assertEquals(1, _dal.size());
+		Phone ph = _dal.find_by_name("Mark");
+		assertNotNull(ph);
+		assertEquals(u.phone.id, ph.id);
 	}
 
 	
