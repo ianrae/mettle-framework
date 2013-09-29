@@ -16,15 +16,8 @@ import org.mef.framework.commands.Command;
 import org.mef.framework.replies.Reply;
 import org.mef.framework.sfx.SfxContext;
 
-public class BasePresenterTest 
+public class BasePresenterTest extends BaseTest
 {
-	protected SfxContext _ctx;
-	
-	public void init()
-	{
-		_ctx = Initializer.createContext(new MockTaskDAL(), new MockUserDAL(), new MockPhoneDAL());
-	}
-
 	protected void chkReplySucessful(Reply reply, int view, String flash)
 	{
 		assertNotNull(reply);
