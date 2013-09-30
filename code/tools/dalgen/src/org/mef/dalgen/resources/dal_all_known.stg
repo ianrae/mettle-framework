@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import org.mef.framework.dal.IDAL;
 import mef.dals.*;
+import mef.mocks.*;
+import boundaries.dals.*;
 
 >>
 
@@ -14,16 +16,22 @@ import mef.dals.*;
 classdecl(type, name) ::= <<
 public class <name>  
 {
-public List\<Class> getDALs()
+public List\<IDAL> getDALs(boolean createMocks)
 {
-	ArrayList\<Class> L = new ArrayList\<Class>();
+	ArrayList\<IDAL> L = new ArrayList\<IDAL>();
     
 >>
 
 adddal(type) ::= <<
 
-
-	L.add(I<type>DAL.class);
+if (createMocks)
+{
+	L.add(new Mock<type>DAL());
+}
+else
+{
+	L.add(new <type>DAL());
+}	
 >>
 
 endclassdecl() ::= <<

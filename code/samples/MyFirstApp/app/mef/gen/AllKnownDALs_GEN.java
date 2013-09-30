@@ -6,15 +6,38 @@ import java.util.ArrayList;
 import java.util.List;
 import org.mef.framework.dal.IDAL;
 import mef.dals.*;
+import mef.mocks.*;
+import boundaries.dals.*;
 public class AllKnownDALs_GEN  
 {
-public List<Class> getDALs()
+public List<IDAL> getDALs(boolean createMocks)
 {
-	ArrayList<Class> L = new ArrayList<Class>();
+	ArrayList<IDAL> L = new ArrayList<IDAL>();
     
-	L.add(ITaskDAL.class);
-	L.add(IUserDAL.class);
-	L.add(IPhoneDAL.class);
+if (createMocks)
+{
+	L.add(new MockTaskDAL());
+}
+else
+{
+	L.add(new TaskDAL());
+}	
+if (createMocks)
+{
+	L.add(new MockUserDAL());
+}
+else
+{
+	L.add(new UserDAL());
+}	
+if (createMocks)
+{
+	L.add(new MockPhoneDAL());
+}
+else
+{
+	L.add(new PhoneDAL());
+}	
 	return L;
 }
 }
