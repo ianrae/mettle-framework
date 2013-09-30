@@ -5,16 +5,12 @@ package mef.dals;
 import mef.entities.*;
 import java.util.List;
 import org.mef.framework.binder.IFormBinder;
-public interface IPhoneDAL
+public interface IPhoneDAL  extends IDAL
 {
-	int size();
 	Phone findById(long id);
 	List<Phone> all();
-	void delete(long id);
 	void save(Phone entity);        
 	void update(Phone entity);
-
-    void updateFrom(IFormBinder binder);        
 
     public Phone find_by_name(String val);
 

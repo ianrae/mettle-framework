@@ -45,7 +45,7 @@ public class EntityLoader extends SfxBaseObj
     	for(int i = 0; i < arUser.length; i++)
     	{
     		User entity = arUser[i];
-    		doPhone(entity);
+    		doPhone(entity.phone);
     		
     		User existing = userDal.find_by_name(entity.name); //use seedWith field
     		if (existing != null)
@@ -60,9 +60,9 @@ public class EntityLoader extends SfxBaseObj
     	}
     }
 
-	private void doPhone(User entity) 
+	private void doPhone(Phone entity) 
 	{
-		Phone ph = phoneDal.find_by_name(entity.phone.name); //use seedWith field
+		Phone ph = phoneDal.find_by_name(entity.name); //use seedWith field
 		
 		if (ph != null)
 		{
@@ -71,7 +71,7 @@ public class EntityLoader extends SfxBaseObj
 		}
 		else
 		{
-			phoneDal.save(entity.phone);
+			phoneDal.save(entity);
 		}
 		
 	}

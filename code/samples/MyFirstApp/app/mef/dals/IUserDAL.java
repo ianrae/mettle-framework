@@ -5,16 +5,12 @@ package mef.dals;
 import mef.entities.*;
 import java.util.List;
 import org.mef.framework.binder.IFormBinder;
-public interface IUserDAL
+public interface IUserDAL  extends IDAL
 {
-	int size();
 	User findById(long id);
 	List<User> all();
-	void delete(long id);
 	void save(User entity);        
 	void update(User entity);
-
-    void updateFrom(IFormBinder binder);        
 
     public User find_by_name(String val);
 

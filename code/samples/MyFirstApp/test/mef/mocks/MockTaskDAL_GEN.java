@@ -2,6 +2,9 @@ package mef.mocks;
 
 import java.util.List;
 import java.util.ArrayList;
+
+import org.mef.framework.binder.IFormBinder;
+
 import mef.entities.*;
 import mef.dals.*;
 
@@ -62,5 +65,11 @@ public class MockTaskDAL_GEN implements ITaskDAL
         }
         return null; //not found
     }
+
+		@Override
+		public void updateFrom(IFormBinder binder) {
+			// TODO Auto-generated method stub
+			
+		}
 
 }

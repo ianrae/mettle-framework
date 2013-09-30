@@ -3,6 +3,8 @@ package boundaries.dals;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.mef.framework.binder.IFormBinder;
+
 import boundaries.Boundary;
 
 import models.TaskModel;
@@ -99,6 +101,12 @@ public class TaskDAL implements ITaskDAL
 			entityL.add(entity);
 		}
 		return entityL;
+	}
+
+	@Override
+	public void updateFrom(IFormBinder binder) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

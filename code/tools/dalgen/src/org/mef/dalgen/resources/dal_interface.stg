@@ -11,16 +11,12 @@ import org.mef.framework.binder.IFormBinder;
 
 
 classdecl(type, name) ::= <<
-public interface <name>
+public interface <name>  extends IDAL
 {
-	int size();
 	<type> findById(long id);
 	List\<<type>\> all();
-	void delete(long id);
 	void save(<type> entity);        
 	void update(<type> entity);
-	
-    void updateFrom(IFormBinder binder);        
     
     
 >>

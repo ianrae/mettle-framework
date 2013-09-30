@@ -9,7 +9,7 @@ import org.mef.dalgen.codegen.DalCodeGenerator;
 
 import unittests.BaseTest;
 
-//********************** CAREFUL!!! ****************************
+//********************** DAATA!!! ****************************
 
 public class SampleAppCodeGenTests extends BaseTest
 {
