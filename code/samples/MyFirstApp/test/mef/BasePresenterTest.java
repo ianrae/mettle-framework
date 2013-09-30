@@ -3,11 +3,10 @@ package mef;
 import static org.junit.Assert.*;
 
 import mef.core.Initializer;
+import mef.dals.mocks.MockTaskDAL;
+import mef.dals.mocks.MockUserDAL;
 import mef.entities.User;
 import mef.mocks.MockFormBinder;
-import mef.mocks.MockPhoneDAL;
-import mef.mocks.MockTaskDAL;
-import mef.mocks.MockUserDAL;
 import mef.presenters.UserPresenter;
 
 import org.junit.Before;

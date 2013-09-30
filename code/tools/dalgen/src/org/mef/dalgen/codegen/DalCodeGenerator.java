@@ -94,8 +94,8 @@ public class DalCodeGenerator extends SfxBaseObj
 		}
 		
 		path = this.pathCombine(stDir, "dal_mock.stg");
-		MockDALCodeGen gen4 = new MockDALCodeGen(_ctx, path, "mef.mocks");
-		b = generateOneFile(def, gen4, "test\\mef\\mocks");
+		MockDALCodeGen gen4 = new MockDALCodeGen(_ctx, path, "mef.dals.mocks");
+		b = generateOneFile(def, gen4, "app\\mef\\dals\\mocks");
 		if (!b )
 		{
 			return false; //!!

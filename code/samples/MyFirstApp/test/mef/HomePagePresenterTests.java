@@ -13,11 +13,11 @@ import org.mef.framework.sfx.SfxContext;
 
 import mef.core.Initializer;
 import mef.dals.ITaskDAL;
+import mef.dals.mocks.MockPhoneDAL;
+import mef.dals.mocks.MockTaskDAL;
+import mef.dals.mocks.MockUserDAL;
 import mef.entities.Task;
 import mef.mocks.MockFormBinder;
-import mef.mocks.MockPhoneDAL;
-import mef.mocks.MockTaskDAL;
-import mef.mocks.MockUserDAL;
 import mef.presenters.HomePagePresenter;
 import mef.presenters.replies.HomePageReply;
 

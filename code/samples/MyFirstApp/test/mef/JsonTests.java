@@ -10,12 +10,12 @@ import java.io.IOException;
 import mef.core.EntityLoader;
 import mef.dals.IPhoneDAL;
 import mef.dals.IUserDAL;
+import mef.dals.mocks.MockPhoneDAL;
+import mef.dals.mocks.MockUserDAL;
 import mef.entities.Phone;
 import mef.entities.User;
 import mef.entities.utils.ResourceReader;
 import mef.gen.Phone_GEN;
-import mef.mocks.MockPhoneDAL;
-import mef.mocks.MockUserDAL;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.node.ObjectNode;

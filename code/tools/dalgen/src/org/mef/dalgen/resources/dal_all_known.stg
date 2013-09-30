@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.mef.framework.dal.IDAL;
 import mef.dals.*;
-import mef.mocks.*;
+import mef.dals.mocks.*;
 import boundaries.dals.*;
 
 >>
