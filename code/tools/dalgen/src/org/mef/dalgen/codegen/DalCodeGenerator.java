@@ -7,6 +7,7 @@ import java.io.File;
 import org.mef.dalgen.codegen.generators.CodeGenBase;
 import org.mef.dalgen.codegen.generators.DALIntefaceCodeGen;
 import org.mef.dalgen.codegen.generators.EntityCodeGen;
+import org.mef.dalgen.codegen.generators.KnownDALsCodeGen;
 import org.mef.dalgen.codegen.generators.MockDALCodeGen;
 import org.mef.dalgen.codegen.generators.ModelCodeGen;
 import org.mef.dalgen.parser.DalGenXmlParser;
@@ -100,6 +101,20 @@ public class DalCodeGenerator extends SfxBaseObj
 			return false; //!!
 		}
 		
+		return b;
+	}
+	public boolean generateOnce() throws Exception
+	{
+		EntityDef def = parser._entityL.get(0);
+		String name = def.name;
+
+		String path = this.pathCombine(stDir, "dal_all_known.stg");
+		KnownDALsCodeGen gen5 = new KnownDALsCodeGen(_ctx, path, "mef.gen");
+		boolean b = generateOneFile(def, gen5, "mef\\gen");
+		if (!b )
+		{
+			return false; //!!
+		}
 		return b;
 	}
 	private boolean generateOneFile(EntityDef def, CodeGenBase gen, String relPath) throws Exception

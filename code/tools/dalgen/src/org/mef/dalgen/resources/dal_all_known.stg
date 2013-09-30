@@ -1,0 +1,36 @@
+header(package) ::= <<
+//THIS FILE HAS BEEN AUTO-GENERATED. DO NOT MODIFY.
+
+package <package>;
+
+import java.util.ArrayList;
+import java.util.List;
+import org.mef.framework.dal.IDAL;
+import mef.dals.*;
+
+>>
+
+
+classdecl(type, name) ::= <<
+public class <name>  
+{
+public List\<Class> getDALs()
+{
+	ArrayList\<Class> L = new ArrayList\<Class>();
+	L.add(IPhoneDAL.class);
+	return L;
+}
+    
+>>
+
+endclassdecl() ::= <<
+}
+>>
+
+querydecl(type, fieldType, fullName) ::= <<
+public <type> <fullName>(<fieldType> val);
+>>
+
+methoddecl(meth) ::= <<
+<meth>;
+>>

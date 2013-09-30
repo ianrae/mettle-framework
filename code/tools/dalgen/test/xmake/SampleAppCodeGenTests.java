@@ -34,6 +34,7 @@ log(stDir);
 		assertEquals(4, n);
 
 		boolean b = false;
+		b = gen.generateOnce(); //allKnownDALs
 //		boolean b = gen.generate(0);
 		b = gen.generate("User");
 		b = gen.generate("Phone");

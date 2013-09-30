@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.mef.dalgen.codegen.DALUtilsCodeGen;
 import org.mef.dalgen.codegen.generators.DALIntefaceCodeGen;
 import org.mef.dalgen.codegen.generators.EntityCodeGen;
+import org.mef.dalgen.codegen.generators.KnownDALsCodeGen;
 import org.mef.dalgen.codegen.generators.MockDALCodeGen;
 import org.mef.dalgen.codegen.generators.ModelCodeGen;
 import org.mef.dalgen.codegen.generators.RealDALCodeGen;
@@ -87,6 +88,19 @@ public class CodeGenTests extends BaseCodeGenTest
 		String path = this.getTemplateFile("dal_real.stg");
 		String packageName = "boundaries.dals";
 		RealDALCodeGen gen = new RealDALCodeGen(_ctx, path, packageName);
+		String code = gen.generate(def);	
+		log(code);
+		assertEquals(true, 10 < code.length());
+		writeFile("TaskDAL", code);
+	}
+	
+	@Test
+	public void testKnownDALS() throws Exception
+	{
+		log("--testKnownDALS--");
+		String path = this.getTemplateFile("dal_all_known.stg");
+		String packageName = "mef.gen";
+		KnownDALsCodeGen gen = new KnownDALsCodeGen(_ctx, path, packageName);
 		String code = gen.generate(def);	
 		log(code);
 		assertEquals(true, 10 < code.length());

@@ -1,4 +1,4 @@
-package mef.mocks;
+package mef.gen;
 
 import java.util.List;
 import java.util.ArrayList;
