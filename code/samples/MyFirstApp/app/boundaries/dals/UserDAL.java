@@ -148,9 +148,15 @@ public class UserDAL implements IUserDAL
 
 
 	@Override
-	public User find_by_name(String val) {
-		// TODO Auto-generated method stub
-		return null;
+	public User find_by_name(String val) 
+	{
+		UserModel t = Ebean.find(UserModel.class).fetch("phone").where().eq("name", val).findUnique();
+		if (t == null)
+		{
+			return null;
+		}
+		User entity = createEntityFromModel(t);
+		return entity;
 	}
 	
 }

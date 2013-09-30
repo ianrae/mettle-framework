@@ -104,6 +104,11 @@ public class <name> implements I<type>DAL
         return used + 1;
 	}
 
+	@Override
+	public void update(<type> entity) 
+	{
+		this.save(entity);
+	}
 
     @Override
     public void updateFrom(IFormBinder binder) 

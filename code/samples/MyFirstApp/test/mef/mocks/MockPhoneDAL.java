@@ -96,4 +96,10 @@ public class MockPhoneDAL implements IPhoneDAL
         return null; //not found
     }
 
+	@Override
+	public void update(Phone entity) 
+	{
+		this.save(entity);
+	}
+
 }

@@ -10,6 +10,8 @@ import models.PhoneModel;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.mef.framework.binder.IFormBinder;
 
+import com.avaje.ebean.Ebean;
+
 public class PhoneDAL implements IPhoneDAL 
 {
 
@@ -122,8 +124,29 @@ public class PhoneDAL implements IPhoneDAL
 	@Override
 	public Phone find_by_name(String val) 
 	{
-		// TODO Auto-generated method stub
-		return null;
+		PhoneModel t = Ebean.find(PhoneModel.class).where().eq("name", val).findUnique();		
+		if (t == null)
+		{
+			return null;
+		}
+		Phone entity = createEntityFromModel(t);
+		return entity;
+	}
+
+
+	@Override
+	public void update(Phone entity) 
+	{
+		PhoneModel t = (PhoneModel)entity.cc; 
+		if (t == null) //not yet known by db? (newly created)
+		{
+			t.entity = null; //throw exception;
+		}
+		else //touch all (for ebean), except id
+		{
+//			t.setName(entity.name);
+		}
+		t.update();
 	}
 
 }

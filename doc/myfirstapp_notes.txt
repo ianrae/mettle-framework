@@ -336,13 +336,27 @@ val appDependencies = Seq(
   )
 
 -create your mef.xml file in app root dir
--run dalgen.bat to create: entities, dal-interface,mock, model classes
 
+-run app scaffold dir: 
 -you create
  Boundary.java
- UserBoundary.java
- UserController.java
+ Initializer.
  
+ 
+ 
+C. PRESENTER SCAFFOLD
+-run whenever creating a new presenter
+-creates presenter, reply, binders
+-presenter unit test
+-you create UserBoundary and add method to Boundary
+
+D. ENTITY CHANGE
+-run whenever modify an entity in mef.xml
+entities, dal-interface,mock, model classes
+
+E DB SEED 
 -db seed. create conf/mef/myfile.txt --json
- 
+- id values MUST be 0
+
+
 

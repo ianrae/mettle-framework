@@ -63,8 +63,12 @@ public class EntityLoader extends SfxBaseObj
 		if (ph != null)
 		{
 			entity.phone.id = ph.id;
+			phoneDal.update(entity.phone); //inserts
 		}
-		phoneDal.save(entity.phone); //inserts or updates
+		else
+		{
+			phoneDal.save(entity.phone);
+		}
 		
 	}
 

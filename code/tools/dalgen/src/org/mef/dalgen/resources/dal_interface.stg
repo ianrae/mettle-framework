@@ -18,6 +18,8 @@ public interface <name>
 	List\<<type>\> all();
 	void delete(long id);
 	void save(<type> entity);        
+	void update(<type> entity);
+	
     void updateFrom(IFormBinder binder);        
     
     

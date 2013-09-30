@@ -3,6 +3,7 @@
 package mef.dals;
 
 import mef.entities.*;
+
 import java.util.List;
 import org.mef.framework.binder.IFormBinder;
 public interface IPhoneDAL
@@ -15,5 +16,6 @@ public interface IPhoneDAL
     void updateFrom(IFormBinder binder);        
 
     public Phone find_by_name(String val);
+	void update(Phone phone);
 
 }
