@@ -72,6 +72,11 @@ public class MockUserDAL_GEN implements IUserDAL
         return used + 1;
 	}
 
+	@Override
+	public void update(User entity) 
+	{
+		this.save(entity);
+	}
 
     @Override
     public void updateFrom(IFormBinder binder) 

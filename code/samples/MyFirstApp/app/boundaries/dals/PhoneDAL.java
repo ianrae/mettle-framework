@@ -144,7 +144,7 @@ public class PhoneDAL implements IPhoneDAL
 		}
 		else //touch all (for ebean), except id
 		{
-//			t.setName(entity.name);
+			t.setName(entity.name);
 		}
 		t.update();
 	}

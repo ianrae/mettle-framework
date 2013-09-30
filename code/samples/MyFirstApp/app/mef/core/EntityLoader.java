@@ -50,9 +50,13 @@ public class EntityLoader extends SfxBaseObj
     		User existing = userDal.find_by_name(entity.name); //use seedWith field
     		if (existing != null)
     		{
-    			entity.id = existing.id;
+    			existing.name = entity.name; //copy all!!
+    			userDal.update(existing);
     		}
-    		userDal.save(entity); //inserts or updates 
+    		else
+    		{
+    			userDal.save(entity); //inserts or updates
+    		}
     	}
     }
 
@@ -62,8 +66,8 @@ public class EntityLoader extends SfxBaseObj
 		
 		if (ph != null)
 		{
-			entity.phone.id = ph.id;
-			phoneDal.update(entity.phone); //inserts
+			ph.name = entity.name; //!!copy all over
+			phoneDal.update(ph);
 		}
 		else
 		{

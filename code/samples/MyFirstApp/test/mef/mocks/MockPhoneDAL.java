@@ -72,6 +72,11 @@ public class MockPhoneDAL implements IPhoneDAL
         return used + 1;
 	}
 
+	@Override
+	public void update(Phone entity) 
+	{
+		this.save(entity);
+	}
 
     @Override
     public void updateFrom(IFormBinder binder) 
@@ -95,11 +100,5 @@ public class MockPhoneDAL implements IPhoneDAL
         }
         return null; //not found
     }
-
-	@Override
-	public void update(Phone entity) 
-	{
-		this.save(entity);
-	}
 
 }

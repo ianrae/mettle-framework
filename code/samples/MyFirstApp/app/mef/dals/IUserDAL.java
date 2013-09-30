@@ -12,6 +12,8 @@ public interface IUserDAL
 	List<User> all();
 	void delete(long id);
 	void save(User entity);        
+	void update(User entity);
+
     void updateFrom(IFormBinder binder);        
 
     public User find_by_name(String val);

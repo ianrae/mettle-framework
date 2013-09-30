@@ -21,8 +21,8 @@ public class Boundary
 			theCtx = Initializer.createContext(new TaskDAL(), new UserDAL(), new PhoneDAL()); //fix later!!
 			Logger.info("==seed==");
 			Initializer.loadSeedData(theCtx);
-			Logger.info("==seed!1!==");
-			Initializer.loadSeedData(theCtx);
+//			Logger.info("==seed!1!==");
+//			Initializer.loadSeedData(theCtx);
 		}
 	}
 	

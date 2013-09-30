@@ -158,5 +158,21 @@ public class UserDAL implements IUserDAL
 		User entity = createEntityFromModel(t);
 		return entity;
 	}
+
+
+	@Override
+	public void update(User entity) 
+	{
+		UserModel t = (UserModel)entity.cc; 
+		if (t == null) //not yet known by db? (newly created)
+		{
+			t.entity = null; //throw exception
+		}
+		else //touch all (for ebean), except id
+		{
+			t.setName(entity.name); //copy all!!
+		}
+		t.update();
+	}
 	
 }
