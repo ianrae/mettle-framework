@@ -17,13 +17,20 @@ public class <name>
 public List\<Class> getDALs()
 {
 	ArrayList\<Class> L = new ArrayList\<Class>();
-	L.add(IPhoneDAL.class);
-	return L;
-}
     
 >>
 
+adddal(type) ::= <<
+
+
+	L.add(I<type>DAL.class);
+>>
+
 endclassdecl() ::= <<
+
+
+	return L;
+}
 }
 >>
 

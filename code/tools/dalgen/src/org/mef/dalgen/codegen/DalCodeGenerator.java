@@ -106,7 +106,7 @@ public class DalCodeGenerator extends SfxBaseObj
 	public boolean generateOnce() throws Exception
 	{
 		EntityDef def = parser._entityL.get(0);
-		String name = def.name;
+		def.enabled = true;
 
 		String path = this.pathCombine(stDir, "dal_all_known.stg");
 		KnownDALsCodeGen gen5 = new KnownDALsCodeGen(_ctx, path, "mef.gen");

@@ -24,7 +24,15 @@ public class KnownDALsCodeGen extends CodeGenBase
 		st.add("name", getClassName(def));
 		result += st.render(); 
 		
-//		result += genFields(def);
+		for(EntityDef tmp: def.allEntityTypes)
+		{
+			if (tmp.enabled)
+			{
+				st = _group.getInstanceOf("adddal");
+				st.add("type", tmp.name);
+				result += st.render(); 
+			}
+		}
 		
 		st = _group.getInstanceOf("endclassdecl");
 		result += st.render(); 
