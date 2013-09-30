@@ -5,6 +5,7 @@ package mef.dals;
 import mef.entities.*;
 import java.util.List;
 import org.mef.framework.binder.IFormBinder;
+import org.mef.framework.dal.IDAL;
 public interface IUserDAL  extends IDAL
 {
 	User findById(long id);

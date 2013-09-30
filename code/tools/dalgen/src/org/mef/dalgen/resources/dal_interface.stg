@@ -6,6 +6,7 @@ package <package>;
 import mef.entities.*;
 import java.util.List;
 import org.mef.framework.binder.IFormBinder;
+import org.mef.framework.dal.IDAL;
 
 >>
 
