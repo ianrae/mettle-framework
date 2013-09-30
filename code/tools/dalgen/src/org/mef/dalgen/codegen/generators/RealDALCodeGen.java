@@ -16,6 +16,7 @@ public class RealDALCodeGen extends CodeGenBase
 	@Override
 	public String generate(EntityDef def)
 	{
+		this.isExtended = def.extendReal;
 		String result = genHeader(def.name); 
 		ST st = _group.getInstanceOf("classdecl");
 		

@@ -16,6 +16,7 @@ public class MockDALCodeGen extends CodeGenBase
 	@Override
 	public String generate(EntityDef def)
 	{
+		this.isExtended = def.extendMock;
 		String result = genHeader(); 
 		ST st = _group.getInstanceOf("classdecl");
 		

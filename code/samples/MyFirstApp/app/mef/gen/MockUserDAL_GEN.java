@@ -1,6 +1,6 @@
 //THIS FILE HAS BEEN AUTO-GENERATED. DO NOT MODIFY.
 
-package mef.mocks;
+package mef.gen;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -8,6 +8,7 @@ import mef.entities.*;
 import mef.dals.*;
 import org.mef.framework.binder.IFormBinder;
 import org.codehaus.jackson.map.ObjectMapper;
+import mef.gen.*;
 public class MockUserDAL_GEN implements IUserDAL
 {
     protected ArrayList<User> _L = new ArrayList<User>();

@@ -11,9 +11,9 @@ import mef.core.EntityLoader;
 import mef.dals.IPhoneDAL;
 import mef.dals.IUserDAL;
 import mef.entities.Phone;
-import mef.entities.Phone_GEN;
 import mef.entities.User;
 import mef.entities.utils.ResourceReader;
+import mef.gen.Phone_GEN;
 import mef.mocks.MockPhoneDAL;
 import mef.mocks.MockUserDAL;
 

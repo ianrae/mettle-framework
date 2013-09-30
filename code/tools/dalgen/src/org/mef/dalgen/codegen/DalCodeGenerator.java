@@ -110,8 +110,15 @@ public class DalCodeGenerator extends SfxBaseObj
 			return true; //do nothing
 		}
 		
+		String originalRelPath = relPath;
+		
 		_needParentClass = false;
 		String code = gen.generate(def);	
+		
+		if (gen.isExtended())
+		{
+			relPath = "app\\mef\\gen";			
+		}
 		//log(code);
 		String className = gen.getClassName(def);	
 		boolean b = writeFile(appDir, relPath, className, code);
@@ -124,7 +131,7 @@ public class DalCodeGenerator extends SfxBaseObj
 		if (className.endsWith("_GEN"))
 		{
 			className = className.replace("_GEN", "");
-			String path = this.pathCombine(appDir, relPath);
+			String path = this.pathCombine(appDir, originalRelPath);
 			path = this.pathCombine(path, className + ".java");
 			File f = new File(path);
 			if (! f.exists())

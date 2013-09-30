@@ -8,6 +8,7 @@ import mef.entities.*;
 import mef.dals.*;
 import org.mef.framework.binder.IFormBinder;
 import org.codehaus.jackson.map.ObjectMapper;
+import mef.gen.*;
 public class MockPhoneDAL implements IPhoneDAL
 {
     protected ArrayList<Phone> _L = new ArrayList<Phone>();

@@ -1,10 +1,11 @@
 header(package) ::= <<
-//THIS FILE HAS BEEN AUTO-GENERATED. DO NOT MODIFY.
+//THIS FILE HAS BEEN AUTO-GENERATED. DO NOT MODIFY.xx
 
 package <package>;
 
 import org.mef.framework.entities.Entity;
-
+import mef.gen.*;
+import mef.entities.*;
 
 >>
 

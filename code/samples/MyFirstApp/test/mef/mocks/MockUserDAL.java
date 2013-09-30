@@ -5,6 +5,7 @@ package mef.mocks;
 import java.util.List;
 import java.util.ArrayList;
 import mef.entities.*;
+import mef.gen.MockUserDAL_GEN;
 import mef.dals.*;
 import org.mef.framework.binder.IFormBinder;
 public class MockUserDAL extends MockUserDAL_GEN

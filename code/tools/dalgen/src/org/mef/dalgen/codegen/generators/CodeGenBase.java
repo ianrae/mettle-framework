@@ -14,7 +14,8 @@ public abstract class CodeGenBase extends SfxBaseObj
 //		private String _path;
 		protected STGroup _group;
 		public String _packageName;
-		
+		protected boolean isExtended;
+
 		public boolean forUnitTest;
 
 		public CodeGenBase(SfxContext ctx, String path, String packageName)
@@ -42,6 +43,11 @@ public abstract class CodeGenBase extends SfxBaseObj
 		
 		protected abstract String buildField(EntityDef def, FieldDef fdef);
 		public abstract String getClassName(EntityDef def);
+		
+		public boolean isExtended()
+		{
+			return isExtended; //only during generate is this valid
+		}
 		
 		protected boolean isId(String name) 
 		{
@@ -82,7 +88,16 @@ public abstract class CodeGenBase extends SfxBaseObj
 		protected String genHeader(String type)
 		{
 			ST st = _group.getInstanceOf("header");
-			st.add("package", _packageName);
+			
+			if (isExtended)
+			{
+				st.add("package", "mef.gen");
+			}
+			else
+			{
+				st.add("package", _packageName);
+			}
+			
 			if (type != null)
 			{
 				st.add("type", type);

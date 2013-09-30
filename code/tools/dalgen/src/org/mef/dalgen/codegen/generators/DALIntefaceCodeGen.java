@@ -16,6 +16,8 @@ public class DALIntefaceCodeGen extends CodeGenBase
 		@Override
 		public String generate(EntityDef def)
 		{
+			this.isExtended = def.extendInterface;
+			
 			String result = genHeader(); 
 			
 			ST st = _group.getInstanceOf("classdecl");
@@ -61,5 +63,11 @@ public class DALIntefaceCodeGen extends CodeGenBase
 		protected String buildField(EntityDef def, FieldDef fdef) {
 			// TODO Auto-generated method stub
 			return null;
+		}
+
+		@Override
+		public boolean isExtended() 
+		{
+			return isExtended;
 		}
 	}
