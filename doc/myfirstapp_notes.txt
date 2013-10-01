@@ -390,3 +390,61 @@ set Run Configurations vm setting:
 -get lots of debug info
 -doesn't like accessing this.entiy. inside setters!
 -more info here: http://www.avaje.org/doc/ebean-userguide.pdf
+
+PLAY MODULES
+https://github.com/playframework/modules.playframework.org
+http://www.playframework.com/documentation/2.0.x/Modules  here!
+http://mfizz.com/blog/2013/07/play-framework-module-maven-central
+https://github.com/mfizz-inc/play-module-twitter  
+
+also see PlayCommands.scala
+ val playCommand = Command.command("play", Help("play", ("play", "Enter the play console"), "Welcome to Play " + play.core.PlayVersion.current + """!
+ 
+ http://stackoverflow.com/questions/8833110/how-to-define-arbitrary-tasks-in-the-play-framework-like-ruby-rake
+ http://www.scala-sbt.org/release/docs/Detailed-Topics/Tasks
+ http://stackoverflow.com/questions/11368995/mixing-scala-and-java-in-play-framework
+ http://www.codecommit.com/blog/java/interop-between-java-and-scala
+ 
+ JURGEN CAMPUS TOURS
+ http://www3.algonquincollege.com/future-students/campus-tours/
+ http://www.centennialcollege.ca/campustours
+ 
+ 
+ -----------------1OctTue
+ AppTwo
+ play new AppTwo
+ cd AppTwo
+ play eclipse
+ -now the view render tests run
+ -but integration test fails:
+ java.lang.RuntimeException: java.lang.RuntimeException: java.lang.NoSuchMethodError: org.apache.http.conn.scheme.Scheme.<init>(Ljava/lang/String;ILorg/apache/http/conn/scheme/SchemeSocketFactory;)V
+
+-then in app.conf
+-setup h2 
+-uncomment ebean.default="models.*"
+
+Ah, now integration gets a bit further fails on:
+javax.persistence.PersistenceException: Error with [models.Flight] It has not been enhanced but it's superClass [class play.db.ebean.Model] is? (You are not allowed to mix enhancement in a single inheritance hierarchy) marker[play.db.ebean.Model] className[models.Flight]
+
+still getting errors after:
+-javaagent:lib/avaje-ebeanorm-agent.jar=debug=3;packages=models.*
+
+-javaagent:lib/ebean-2.7.3-agent.jar=debug=3;packages=models.*
+
+
+
+package models;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.validation.Constraint;
+
+import play.data.validation.Constraints.Required;
+import play.db.ebean.Model;
+
+good tips here:
+http://blog.matthieuguillermin.fr/2012/03/unit-testing-tricks-for-play-2-0-and-ebean/
+
+
+This works better because it now enhances Model (which is outside app.modeles)
+-javaagent:lib/ebean-2.7.3-agent.jar=debug=3
