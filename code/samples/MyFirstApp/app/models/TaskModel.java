@@ -22,7 +22,7 @@ public class TaskModel extends Model
 
     //getters and setters
            @Id 
-    Long id;
+    private Long id;
 
     public Long getId() {
         return this.id;
@@ -32,7 +32,7 @@ public class TaskModel extends Model
         this.entity.id = val;
     }
 
-    String label;
+    private String label;
 
     public String getLabel() {
         return this.label;
@@ -42,7 +42,7 @@ public class TaskModel extends Model
         this.entity.label = val;
     }
 
-    boolean enabled;
+    private boolean enabled;
 
     public boolean getEnabled() {
         return this.enabled;

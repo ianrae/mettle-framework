@@ -383,4 +383,10 @@ RUNNING INTEGRATION TESTS
  -testing real dals
  -view rendering tests
  
-Keep getting ebean errors. Ebean works fine when run app, just not when 
+Keep getting ebean errors. Ebean works fine when run app, just not when run junit tests with fakeapplication.
+set Run Configurations vm setting:
+-javaagent:lib/avaje-ebeanorm-agent.jar=debug=3;packages=models.*
+
+-get lots of debug info
+-doesn't like accessing this.entiy. inside setters!
+-more info here: http://www.avaje.org/doc/ebean-userguide.pdf
