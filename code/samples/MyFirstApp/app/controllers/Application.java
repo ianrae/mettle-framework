@@ -1,5 +1,6 @@
 package controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.mef.framework.commands.CreateCommand;
@@ -9,7 +10,10 @@ import org.mef.framework.replies.Reply;
 
 import boundaries.ApplicationBoundary;
 import boundaries.Boundary;
+import boundaries.dals.PhoneDAL;
 
+import mef.dals.IPhoneDAL;
+import mef.entities.Phone;
 import mef.entities.Task;
 import mef.presenters.replies.HomePageReply;
 import play.*;
@@ -83,7 +87,37 @@ public class Application extends Controller
 		return redirect(routes.Application.tasks());	
 	}  
 
-	public static Result logout() {
+	public static Result logout() 
+	{
 	return ok("ok...");
 	}
+	
+	public static Result runTests() 
+	{
+		ApplicationBoundary boundary = Boundary.createApplicationBoundary();
+		//I can't get integration junit tests working in Eclipse due to ebean ehancement errors,
+		//so do poor man's unit tests here
+		PhoneDAL phoneDal = (PhoneDAL) Boundary.theCtx.getServiceLocator().getInstance(IPhoneDAL.class);
+		
+		Phone ph = phoneDal.findById(1);
+		assertEqual("Mark", ph.name);
+		
+		String s = "test results: ";
+		for(String tmp : assertErrorL)
+		{
+			s += tmp + "<br/>";
+		}
+		return ok("tests: " + s);
+	}
+
+	private static List<String> assertErrorL = new ArrayList<String>();
+	private static void assertEqual(String string, String name) 
+	{
+		boolean b = string.equals(name);
+		if (!b)
+		{
+			assertErrorL.add(String.format("expected '%s' but got '%s'", string, name));
+		}
+		
+	}	
 }
