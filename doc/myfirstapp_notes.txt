@@ -360,3 +360,27 @@ E DB SEED
 
 
 
+---------------------------------30SepMon
+java.lang.RuntimeException: There is no HTTP Context available from here.
+
+java.lang.RuntimeException: java.lang.RuntimeException: javax.persistence.PersistenceException: Error with [models.UserModel] It has not been enhanced but it's superClass [class play.db.ebean.Model] is? (You are not allowed to mix enhancement in a single inheritance hierarchy) marker[play.db.ebean.Model] className[models.UserModel]
+Caused by: javax.persistence.PersistenceException: Error with [models.UserModel] It has not been enhanced but it's superClass [class play.db.ebean.Model] is? (You are not allowed to mix enhancement in a single inheritance hierarchy) marker[play.db.ebean.Model] className[models.UserModel]
+
+http://blog.matthieuguillermin.fr/2012/03/unit-testing-tricks-for-play-2-0-and-ebean/
+download ebean 2.7.3 zip
+
+
+C:\src\downloadedStuff\play\ebean-2.7.3\ebean-2.7.3\ebean-2.7.3-agent.jar
+-javaagent:C:/src/downloadedStuff/play/ebean-2.7.3/ebean-2.7.3/ebean-2.7.3-agent.jar
+
+
+Configuration error: Configuration error[Cannot register class [models.UserModel] in Ebean server]
+
+aused by: java.lang.VerifyError: (class: models/UserModel, method: setPhone signature: (Lmodels/PhoneModel;)V) Incompatible object argument for function call
+
+RUNNING INTEGRATION TESTS
+-i would like to use fake application for 
+ -testing real dals
+ -view rendering tests
+ 
+Keep getting ebean errors. Ebean works fine when run app, just not when 

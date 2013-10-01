@@ -10,9 +10,13 @@ import play.data.validation.Constraints.*;
 import javax.persistence.*;
 import mef.entities.*;
 import boundaries.dals.*;
+
 @Entity
 public class UserModel extends Model
 {
+	public UserModel()
+	{}
+	
 	@Transient
     public User entity = new User(); //needed else get illegalStateException
 
@@ -30,19 +34,19 @@ public class UserModel extends Model
 
     //getters and setters
            @Id 
-    Long id;
+           private Long id;
 
     public Long getId() {
         return this.id;
     }
-    public void setId(Long val) {
-		this.id = val;
-		this.entity.id = val;
+    public void setId(Long id) {
+		this.id = id;
+		this.entity.id = id;
 
     }
 
    @Required 
-    String name;
+   private String name;
 
     public String getName() {
         return this.name;
@@ -54,7 +58,7 @@ public class UserModel extends Model
     }
 
    @ManyToOne 
-    PhoneModel phone;
+    private PhoneModel phone;
 
     public PhoneModel getPhone() {
         return this.phone;
