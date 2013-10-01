@@ -135,7 +135,7 @@ public class HomePagePresenterTests
 	protected SfxContext _ctx;
 	private void init()
 	{
-		_ctx = Initializer.createContext(new MockTaskDAL(), new MockUserDAL(), new MockPhoneDAL());
+		_ctx = Initializer.createContext(true);
 	}
 	
 	private MockTaskDAL getDAL()

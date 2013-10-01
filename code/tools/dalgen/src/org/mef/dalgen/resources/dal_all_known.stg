@@ -9,6 +9,8 @@ import org.mef.framework.dal.IDAL;
 import mef.dals.*;
 import mef.dals.mocks.*;
 import boundaries.dals.*;
+import org.mef.framework.sfx.SfxContext;
+
 
 >>
 
@@ -16,7 +18,7 @@ import boundaries.dals.*;
 classdecl(type, name) ::= <<
 public class <name>  
 {
-public List\<IDAL> getDALs(boolean createMocks)
+public List\<IDAL> registerDALs(SfxContext ctx, boolean createMocks)
 {
 	ArrayList\<IDAL> L = new ArrayList\<IDAL>();
     
@@ -26,11 +28,15 @@ adddal(type) ::= <<
 
 if (createMocks)
 {
-	L.add(new Mock<type>DAL());
+	I<type>DAL dal = new Mock<type>DAL();
+	ctx.getServiceLocator().registerSingleton(I<type>DAL.class, dal);
+	L.add(dal);
 }
 else
 {
-	L.add(new <type>DAL());
+	I<type>DAL dal = new <type>DAL();
+	ctx.getServiceLocator().registerSingleton(I<type>DAL.class, dal);
+	L.add(dal);
 }	
 >>
 

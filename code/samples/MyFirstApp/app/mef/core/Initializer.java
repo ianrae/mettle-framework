@@ -13,20 +13,11 @@ import mef.gen.AllKnownDALs_GEN;
 
 public class Initializer 
 {
-	public static SfxContext createContext(ITaskDAL dal, IUserDAL userDAL, IPhoneDAL phoneDAL)
+	public static SfxContext createContext(boolean createMocks)
 	{
 		SfxContext ctx = new SfxContext();
-		AllKnownDALs_GEN xx = new AllKnownDALs_GEN();
-		
-//		List<IDAL> allL = xx.getDALs(createMocks);
-//
-//		for(IDAL dal : allL)
-//		{
-//			ctx.getServiceLocator().registerSingleton(dall, impl)
-//		}
-		ctx.getServiceLocator().registerSingleton(ITaskDAL.class, dal);
-		ctx.getServiceLocator().registerSingleton(IUserDAL.class, userDAL);
-		ctx.getServiceLocator().registerSingleton(IPhoneDAL.class, phoneDAL);
+		AllKnownDALs_GEN knownDALs = new AllKnownDALs_GEN();
+		knownDALs.registerDALs(ctx, createMocks);
 		return ctx;
 	}
 	

@@ -18,7 +18,7 @@ public class Boundary
 	{
 		if (theCtx == null)
 		{
-			theCtx = Initializer.createContext(new TaskDAL(), new UserDAL(), new PhoneDAL()); //fix later!!
+			theCtx = Initializer.createContext(false); //fix later!!
 			Logger.info("==seed==");
 			Initializer.loadSeedData(theCtx);
 //			Logger.info("==seed!1!==");

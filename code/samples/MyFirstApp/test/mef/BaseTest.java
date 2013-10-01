@@ -17,7 +17,7 @@ public class BaseTest
 	
 	public void init()
 	{
-		_ctx = Initializer.createContext(new MockTaskDAL(), new MockUserDAL(), new MockPhoneDAL());
+		_ctx = Initializer.createContext(true);
 	}
 
 	

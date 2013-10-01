@@ -8,32 +8,46 @@ import org.mef.framework.dal.IDAL;
 import mef.dals.*;
 import mef.dals.mocks.*;
 import boundaries.dals.*;
+import org.mef.framework.sfx.SfxContext;
+
 public class AllKnownDALs_GEN  
 {
-public List<IDAL> getDALs(boolean createMocks)
+public List<IDAL> registerDALs(SfxContext ctx, boolean createMocks)
 {
 	ArrayList<IDAL> L = new ArrayList<IDAL>();
     if (createMocks)
 {
-	L.add(new MockTaskDAL());
+	ITaskDAL dal = new MockTaskDAL();
+	ctx.getServiceLocator().registerSingleton(ITaskDAL.class, dal);
+	L.add(dal);
 }
 else
 {
-	L.add(new TaskDAL());
+	ITaskDAL dal = new TaskDAL();
+	ctx.getServiceLocator().registerSingleton(ITaskDAL.class, dal);
+	L.add(dal);
 }	if (createMocks)
 {
-	L.add(new MockUserDAL());
+	IUserDAL dal = new MockUserDAL();
+	ctx.getServiceLocator().registerSingleton(IUserDAL.class, dal);
+	L.add(dal);
 }
 else
 {
-	L.add(new UserDAL());
+	IUserDAL dal = new UserDAL();
+	ctx.getServiceLocator().registerSingleton(IUserDAL.class, dal);
+	L.add(dal);
 }	if (createMocks)
 {
-	L.add(new MockPhoneDAL());
+	IPhoneDAL dal = new MockPhoneDAL();
+	ctx.getServiceLocator().registerSingleton(IPhoneDAL.class, dal);
+	L.add(dal);
 }
 else
 {
-	L.add(new PhoneDAL());
+	IPhoneDAL dal = new PhoneDAL();
+	ctx.getServiceLocator().registerSingleton(IPhoneDAL.class, dal);
+	L.add(dal);
 }	
 	return L;
 }

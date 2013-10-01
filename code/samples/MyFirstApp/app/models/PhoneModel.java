@@ -30,26 +30,26 @@ public class PhoneModel extends Model
 
     //getters and setters
            @Id 
-    private Long id;
+    Long id;
 
     public Long getId() {
         return this.id;
     }
-    public void setId(Long id) {
-		this.id = id;
-		this.entity.id = id;
+    public void setId(Long val) {
+		this.id = val;
+		this.entity.id = val;
 
     }
 
    @Required 
-    private String name;
+    String name;
 
     public String getName() {
         return this.name;
     }
-    public void setName(String name) {
-		this.name = name;
-		this.entity.name = name;
+    public void setName(String val) {
+		this.name = val;
+		this.entity.name = val;
 
     }
 
