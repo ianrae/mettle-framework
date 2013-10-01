@@ -16,7 +16,7 @@ import boundaries.dals.*;
 
 fielddecl(type, name, bigName, setName, isEntity) ::= <<
 
-    <type> <name>;
+    private <type> <name>;
     
     public <type> get<bigName>() {
         return this.<name>;

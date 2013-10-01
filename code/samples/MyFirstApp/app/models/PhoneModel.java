@@ -30,7 +30,7 @@ public class PhoneModel extends Model
 
     //getters and setters
            @Id 
-    Long id;
+    private Long id;
 
     public Long getId() {
         return this.id;
@@ -42,7 +42,7 @@ public class PhoneModel extends Model
     }
 
    @Required 
-    String name;
+    private String name;
 
     public String getName() {
         return this.name;
