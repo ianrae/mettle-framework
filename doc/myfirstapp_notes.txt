@@ -448,3 +448,17 @@ http://blog.matthieuguillermin.fr/2012/03/unit-testing-tricks-for-play-2-0-and-e
 
 This works better because it now enhances Model (which is outside app.modeles)
 -javaagent:lib/ebean-2.7.3-agent.jar=debug=3
+
+BEANDB
+-working on a simple 'db' that is lists of pojos. Then can do queries by
+searching and then combining lists with AND,OR
+-then add order-by and group
+
+-ebean dates -- can use java.sql.Timestamp data type class.
+ @Temporal(TemporalType.TIMESTAMP)
+    @Formats.DateTime(pattern="yyyy-MM-dd HH:mm:ss")
+    @CreatedTimestamp
+    protected Date creationDate;
+
+  http://www.developerscrappad.com/228/java/java-ee/ejb3-jpa-dealing-with-date-time-and-timestamp/
+  

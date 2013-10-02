@@ -57,7 +57,7 @@ public class BeanDBTests
 			return L3;
 		}
 		
-		public boolean isMathStr(Flight obj, String fieldName, String valueToMatch) 
+		public boolean isMatchStr(Flight obj, String fieldName, String valueToMatch) 
 		{
 			if (fieldName == null)
 			{
@@ -136,7 +136,7 @@ public class BeanDBTests
 		{
 			for(Flight f : L)
 			{
-				if (isMathStr(f, fieldName, valueToMatch))
+				if (isMatchStr(f, fieldName, valueToMatch))
 				{
 					return f;
 				}
@@ -213,15 +213,15 @@ public class BeanDBTests
 		
 		Flight one = L.get(0);
 		EntityDB db = new EntityDB();
-		boolean b = db.isMathStr(one, "flight", "abc");
+		boolean b = db.isMatchStr(one, "flight", "abc");
 		assertEquals(false, b);
-		assertEquals(true, db.isMathStr(one, "flight", "UL900"));
-		assertEquals(true, db.isMathStr(one, "flight", "ul900"));
+		assertEquals(true, db.isMatchStr(one, "flight", "UL900"));
+		assertEquals(true, db.isMatchStr(one, "flight", "ul900"));
 		
-		assertEquals(false, db.isMathStr(one, "flight", ""));
-		assertEquals(false, db.isMathStr(one, "flight", null));
-		assertEquals(false, db.isMathStr(one, "", null));
-		assertEquals(false, db.isMathStr(one, null, null));
+		assertEquals(false, db.isMatchStr(one, "flight", ""));
+		assertEquals(false, db.isMatchStr(one, "flight", null));
+		assertEquals(false, db.isMatchStr(one, "", null));
+		assertEquals(false, db.isMatchStr(one, null, null));
 	}
 	
 	@Test
