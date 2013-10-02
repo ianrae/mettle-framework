@@ -9,6 +9,8 @@ import mef.dals.*;
 import org.mef.framework.binder.IFormBinder;
 import org.codehaus.jackson.map.ObjectMapper;
 import mef.gen.*;
+import org.mef.framework.entitydb.EntityDB;
+
 public class MockPhoneDAL implements IPhoneDAL
 {
     protected ArrayList<Phone> _L = new ArrayList<Phone>();
@@ -92,14 +94,9 @@ public class MockPhoneDAL implements IPhoneDAL
     @Override
     public Phone find_by_name(String val) 
     {
-        for(Phone entity : _L)
-        {
-            if (entity.name.equals(val))
-            {
-                return entity;
-            }
-        }
-        return null; //not found
+		EntityDB db = new EntityDB();
+		User user = db.findFirstMatch(_L, "name", name);
+		return user;
     }
 
 }

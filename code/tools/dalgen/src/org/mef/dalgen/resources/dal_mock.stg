@@ -10,6 +10,8 @@ import mef.dals.*;
 import org.mef.framework.binder.IFormBinder;
 import org.codehaus.jackson.map.ObjectMapper;
 import mef.gen.*;
+import org.mef.framework.entitydb.EntityDB;
+
 
 >>
 
@@ -20,14 +22,9 @@ querydecl(type, fieldType, name, eq) ::= <<
     @Override
     public <type> find_by_<name>(<fieldType> val) 
     {
-        for(<type> entity : _L)
-        {
-            if (entity.<name><eq>)
-            {
-                return entity;
-            }
-        }
-        return null; //not found
+		EntityDB<User> db = new EntityDB<User>();
+		User user = db.findFirstMatch(_L, "name", name);
+		return user;
     }
 >>
 
