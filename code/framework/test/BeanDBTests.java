@@ -1,11 +1,12 @@
 import static org.junit.Assert.*;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import org.junit.Test;
+import org.mef.framework.entitydb.DBChecker;
+import org.mef.framework.entitydb.EntityDB;
+import org.mef.framework.entitydb.Query;
 
 
 public class BeanDBTests 
@@ -27,173 +28,6 @@ public class BeanDBTests
 	}
 	
 	
-	//Whole idea is we don't need a fully emulated sql db like H2.
-	//(a)we are dealing with objects (which can be assumed to be fully eagerly loaded)
-	//(b)Mock DAL has the actual objects, and doesn't make copies, so object instances
-	//   are unique. Never would get two object with same .id.
-	
-	public static class EntityDB<T>
-	{
-		//hmm should union just work in whole objects. If same object (Flight 55) in both
-		//lists, shouldn't result only be in result once!!
-		private List<T> union(List<T> L, List<T> L2) 
-		{
-			ArrayList<T> L3 = new ArrayList<T>();
-			for(T f : L)
-			{
-				L3.add(f);
-			}
-			for(T f : L2)
-			{
-				if (! L3.contains(f))
-				{
-					L3.add(f);
-				}
-			}
-			
-			return L3;
-		}
-		
-		private List<T> intersection(List<T> L, List<T> L2) 
-		{
-			ArrayList<T> L3 = new ArrayList<T>();
-			for(T f : L)
-			{
-				if (L2.contains(f))
-				{
-					L3.add(f);
-				}
-			}
-			
-			return L3;
-		}
-		
-		public boolean isMatchStr(T obj, String fieldName, String valueToMatch) 
-		{
-			if (fieldName == null)
-			{
-				return false;
-			}
-			
-			Object value = getFieldValue(obj, fieldName);
-			if (value == null)
-			{
-				return false;
-			}
-			String s = value.toString();
-			return (s.equalsIgnoreCase(valueToMatch));
-		}
-		public boolean isMatchInt(T obj, String fieldName, Integer valueToMatch) 
-		{
-			if (fieldName == null)
-			{
-				return false;
-			}
-			
-			Object value = getFieldValue(obj, fieldName);
-			if (value == null)
-			{
-				return false;
-			}
-			
-			if (value instanceof Integer)
-			{
-				Integer n = (Integer)value;
-				return (n.compareTo(valueToMatch) == 0);
-			}
-			else
-			{
-				return false;
-			}
-		}
-
-
-		public Object getFieldValue(T obj, String fieldName) 
-		{
-			if (fieldName == null)
-			{
-				return false;
-			}
-			
-			Field field = null;
-			Object value = null;
-			try 
-			{
-				field = obj.getClass().getDeclaredField(fieldName);
-				field.setAccessible(true);
-				value = field.get(obj);
-			}
-			catch (SecurityException e) 
-			{
-				// TODO Auto-generated catch block
-//				e.printStackTrace();
-			} 
-			catch (NoSuchFieldException e) 
-			{
-				// TODO Auto-generated catch block
-//				e.printStackTrace();
-			} catch (IllegalArgumentException e) {
-				// TODO Auto-generated catch block
-//				e.printStackTrace();
-			} catch (IllegalAccessException e) {
-				// TODO Auto-generated catch block
-//				e.printStackTrace();
-			}
-
-			return value;
-		}
-		
-		public T findFirstMatch(List<T> L, String fieldName, String valueToMatch) 
-		{
-			for(T f : L)
-			{
-				if (isMatchStr(f, fieldName, valueToMatch))
-				{
-					return f;
-				}
-			}
-			return null;
-		}
-	}
-	public static class DBChecker<T>
-	{
-		public boolean ensureUnique(List<T> L)
-		{
-			HashMap<T, String> map = new HashMap<T, String>();
-			for(T f : L)
-			{
-				map.put(f, "1");
-			}
-			
-			return (L.size() == map.size());
-		}
-		
-	}
-	public static class Query<T>
-	{
-		private List<T> resultL = new ArrayList<T>();
-		EntityDB<T> db = new EntityDB<T>();
-		
-		public void add(List<T> L)
-		{
-			resultL.addAll(L);
-		}
-		
-		public int size()
-		{
-			return resultL.size();
-		}
-		
-		public void union(List<T> L)
-		{
-			resultL = db.union(resultL, L);
-		}
-
-		public void intersect(List<T> L)
-		{
-			resultL = db.intersection(resultL, L);
-		}
-	}
 	
 	@Test
 	public void testOr() 
