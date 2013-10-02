@@ -14,11 +14,15 @@ public class BeanDBTests
 	{
 		String flight;
 		String model;
+		Integer num;
+		int  nVal;
 		
-		public Flight(String flight, String model)
+		public Flight(String flight, String model, Integer num)
 		{
 			this.flight = flight;
 			this.model = model;
+			this.num = num;
+			this.nVal = num + 100;
 		}
 	}
 	
@@ -53,7 +57,47 @@ public class BeanDBTests
 			return L3;
 		}
 		
-		public boolean isMatch(Flight obj, String fieldName, String valueToMatch) 
+		public boolean isMathStr(Flight obj, String fieldName, String valueToMatch) 
+		{
+			if (fieldName == null)
+			{
+				return false;
+			}
+			
+			Object value = getFieldValue(obj, fieldName);
+			if (value == null)
+			{
+				return false;
+			}
+			String s = value.toString();
+			return (s.equalsIgnoreCase(valueToMatch));
+		}
+		public boolean isMatchInt(Flight obj, String fieldName, Integer valueToMatch) 
+		{
+			if (fieldName == null)
+			{
+				return false;
+			}
+			
+			Object value = getFieldValue(obj, fieldName);
+			if (value == null)
+			{
+				return false;
+			}
+			
+			if (value instanceof Integer)
+			{
+				Integer n = (Integer)value;
+				return (n.compareTo(valueToMatch) == 0);
+			}
+			else
+			{
+				return false;
+			}
+		}
+
+
+		public Object getFieldValue(Flight obj, String fieldName) 
 		{
 			if (fieldName == null)
 			{
@@ -84,20 +128,15 @@ public class BeanDBTests
 				// TODO Auto-generated catch block
 //				e.printStackTrace();
 			}
-			
-			if (value == null)
-			{
-				return false;
-			}
-			String s = value.toString();
-			return (s.equalsIgnoreCase(valueToMatch));
-		}
 
+			return value;
+		}
+		
 		public Flight findFirstMatch(List<Flight> L, String fieldName, String valueToMatch) 
 		{
 			for(Flight f : L)
 			{
-				if (isMatch(f, fieldName, valueToMatch))
+				if (isMathStr(f, fieldName, valueToMatch))
 				{
 					return f;
 				}
@@ -169,20 +208,40 @@ public class BeanDBTests
 	@Test
 	public void testIsMatch() throws Exception
 	{
-		log("--testFind--");
+		log("--testIsMatch--");
 		List<Flight> L = this.buildFlights();
 		
 		Flight one = L.get(0);
 		EntityDB db = new EntityDB();
-		boolean b = db.isMatch(one, "flight", "abc");
+		boolean b = db.isMathStr(one, "flight", "abc");
 		assertEquals(false, b);
-		assertEquals(true, db.isMatch(one, "flight", "UL900"));
-		assertEquals(true, db.isMatch(one, "flight", "ul900"));
+		assertEquals(true, db.isMathStr(one, "flight", "UL900"));
+		assertEquals(true, db.isMathStr(one, "flight", "ul900"));
 		
-		assertEquals(false, db.isMatch(one, "flight", ""));
-		assertEquals(false, db.isMatch(one, "flight", null));
-		assertEquals(false, db.isMatch(one, "", null));
-		assertEquals(false, db.isMatch(one, null, null));
+		assertEquals(false, db.isMathStr(one, "flight", ""));
+		assertEquals(false, db.isMathStr(one, "flight", null));
+		assertEquals(false, db.isMathStr(one, "", null));
+		assertEquals(false, db.isMathStr(one, null, null));
+	}
+	
+	@Test
+	public void testIsMatchInt() throws Exception
+	{
+		log("--testIsMatchInt--");
+		List<Flight> L = this.buildFlights();
+		
+		Flight one = L.get(0);
+		EntityDB db = new EntityDB();
+		boolean b = db.isMatchInt(one, "flight", 14);
+		assertEquals(false, b);
+		
+		//Integer
+		assertEquals(false, db.isMatchInt(one, "num", 14));
+		assertEquals(true, db.isMatchInt(one, "num", 10));
+
+		//int
+		assertEquals(false, db.isMatchInt(one, "nVal", 14));
+		assertEquals(true, db.isMatchInt(one, "nVal", 110));
 	}
 	
 	@Test
@@ -234,9 +293,9 @@ public class BeanDBTests
 	{
 		ArrayList<Flight> L = new ArrayList<BeanDBTests.Flight>();
 		
-		L.add(new Flight("UL900", "Spitfire"));
-		L.add(new Flight("AC710", "Airbus"));
-		L.add(new Flight("AC900", "Boeing"));
+		L.add(new Flight("UL900", "Spitfire", 10));
+		L.add(new Flight("AC710", "Airbus", 11));
+		L.add(new Flight("AC900", "Boeing", 12));
 		return L;
 		
 	}
