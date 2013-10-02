@@ -26,8 +26,16 @@ public class BeanDBTests
 		}
 	}
 	
+	
+	//Whole idea is we don't need a fully emulated sql db like H2.
+	//(a)we are dealing with objects (which can be assumed to be fully eagerly loaded)
+	//(b)Mock DAL has the actual objects, and doesn't make copies, so object instances
+	//   are unique. Never would get two object with same .id.
+	
 	public static class EntityDB
 	{
+		//hmm should union just work in whole objects. If same object (Flight 55) in both
+		//lists, shouldn't result only be in result once!!
 		private List<Flight> union(List<Flight> L, List<Flight> L2) 
 		{
 			ArrayList<Flight> L3 = new ArrayList<BeanDBTests.Flight>();
@@ -37,7 +45,10 @@ public class BeanDBTests
 			}
 			for(Flight f : L2)
 			{
-				L3.add(f);
+				if (! L3.contains(f))
+				{
+					L3.add(f);
+				}
 			}
 			
 			return L3;
@@ -143,7 +154,45 @@ public class BeanDBTests
 			}
 			return null;
 		}
+	}
+	public static class DBChecker
+	{
+		public boolean ensureUnique(List<Flight> L)
+		{
+			HashMap<Flight, String> map = new HashMap<BeanDBTests.Flight, String>();
+			for(Flight f : L)
+			{
+				map.put(f, "1");
+			}
+			
+			return (L.size() == map.size());
+		}
+		
+	}
+	public static class Query
+	{
+		private List<Flight> resultL = new ArrayList<BeanDBTests.Flight>();
+		EntityDB db = new EntityDB();
+		
+		public void add(List<Flight> L)
+		{
+			resultL.addAll(L);
+		}
+		
+		public int size()
+		{
+			return resultL.size();
+		}
+		
+		public void union(List<Flight> L)
+		{
+			resultL = db.union(resultL, L);
+		}
 
+		public void intersect(List<Flight> L)
+		{
+			resultL = db.intersection(resultL, L);
+		}
 	}
 	
 	@Test
@@ -178,9 +227,7 @@ public class BeanDBTests
 	{
 		log("--testIntersectionNone--");
 		List<Flight> L = this.buildFlights();
-		assertEquals(3, L.size());
 		List<Flight> L2 = this.buildFlights();
-		assertEquals(3, L2.size());
 		
 		EntityDB db = new EntityDB();
 		List<Flight> L3 = db.intersection(L, L2);
@@ -259,29 +306,48 @@ public class BeanDBTests
 		assertSame(L.get(2), db.findFirstMatch(L, "flight", "AC900"));
 	}
 	
-	private void chkAllUnique(List<Flight> L, List<Flight> L2, List<Flight> L3)
+	@Test
+	public void testQueryUnion() throws Exception
 	{
-		chkUnique(L);
-		chkUnique(L2);
-		chkUnique(L3);
-	}
-	private void chkUnique(List<Flight> L)
-	{
-		assertEquals(true, ensureUnique(L));
-	}
-	
-	
-	private boolean ensureUnique(List<Flight> L)
-	{
-		HashMap<Flight, String> map = new HashMap<BeanDBTests.Flight, String>();
-		for(Flight f : L)
-		{
-			map.put(f, "1");
-		}
+		Query q = new Query();
+		assertEquals(0, q.size());
+		List<Flight> L = this.buildFlights();
+		q.add(L);
+		assertEquals(3, q.size());
+		List<Flight> L2 = this.buildFlights();
+		q.union(L2);
 		
-		return (L.size() == map.size());
+		assertEquals(6, q.size()); //L2 has different instances (but same values)
 	}
-
+	@Test
+	public void testQueryUnionRepeatInstances() throws Exception
+	{
+		Query q = new Query();
+		assertEquals(0, q.size());
+		List<Flight> L = this.buildFlights();
+		q.add(L);
+		assertEquals(3, q.size());
+		q.union(L); //add same objects again
+		
+		assertEquals(3, q.size()); 
+	}
+	@Test
+	public void testQueryIntersection() throws Exception
+	{
+		Query q = new Query();
+		assertEquals(0, q.size());
+		List<Flight> L = this.buildFlights();
+		List<Flight> L2 = new ArrayList<Flight>();
+		L2.add(L.get(1));
+		
+		q.add(L);
+		q.intersect(L2);
+		
+		assertEquals(1, q.size()); //L2 has different instances (but same values)
+	}
+	
+	
+	
 
 	//------------- helper functions -------------
 	private void log(String s)
@@ -297,6 +363,24 @@ public class BeanDBTests
 		L.add(new Flight("AC710", "Airbus", 11));
 		L.add(new Flight("AC900", "Boeing", 12));
 		return L;
-		
 	}
+	private Object ensureUnique(List<Flight> L) 
+	{
+		DBChecker checker = new DBChecker();
+		return checker.ensureUnique(L);
+	}
+	private void chkAllUnique(List<Flight> L, List<Flight> L2, List<Flight> L3)
+	{
+		chkUnique(L);
+		chkUnique(L2);
+		chkUnique(L3);
+	}
+	private void chkUnique(List<Flight> L)
+	{
+		assertEquals(true, ensureUnique(L));
+	}
+	
+	
+	
+
 }
