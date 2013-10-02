@@ -12,6 +12,8 @@ import java.util.List;
 
 public class EntityDB<T>
 	{
+		public boolean debug = true;
+	
 		//hmm should union just work in whole objects. If same object (Flight 55) in both
 		//lists, shouldn't result only be in result once!!
 		public List<T> union(List<T> L, List<T> L2) 
@@ -97,25 +99,38 @@ public class EntityDB<T>
 			Object value = null;
 			try 
 			{
-				field = obj.getClass().getDeclaredField(fieldName);
+//				Class cz = obj.getClass();
+				
+				field = obj.getClass().getField(fieldName); //declared or inherited
 				field.setAccessible(true);
 				value = field.get(obj);
 			}
 			catch (SecurityException e) 
 			{
-				// TODO Auto-generated catch block
-//				e.printStackTrace();
+				if (debug)
+				{
+					e.printStackTrace();
+				}
 			} 
 			catch (NoSuchFieldException e) 
 			{
-				// TODO Auto-generated catch block
-//				e.printStackTrace();
-			} catch (IllegalArgumentException e) {
-				// TODO Auto-generated catch block
-//				e.printStackTrace();
-			} catch (IllegalAccessException e) {
-				// TODO Auto-generated catch block
-//				e.printStackTrace();
+				if (debug)
+				{
+					e.printStackTrace();
+				}
+			} catch (IllegalArgumentException e) 
+			{
+				if (debug)
+				{
+					e.printStackTrace();
+				}
+			} 
+			catch (IllegalAccessException e) 
+			{
+				if (debug)
+				{
+					e.printStackTrace();
+				}
 			}
 
 			return value;
@@ -131,5 +146,19 @@ public class EntityDB<T>
 				}
 			}
 			return null;
+		}
+
+		public List<T> findMatches(List<T> L, String fieldName, String valueToMatch)
+		{
+			List<T> resultL = new ArrayList<T>();
+			
+			for(T f : L)
+			{
+				if (isMatchStr(f, fieldName, valueToMatch))
+				{
+					resultL.add(f);
+				}
+			}
+			return resultL;
 		}
 	}

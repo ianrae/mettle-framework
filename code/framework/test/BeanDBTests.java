@@ -140,6 +140,20 @@ public class BeanDBTests
 	}
 	
 	@Test
+	public void testFindMatchAll() throws Exception
+	{
+		log("--testFindMatchAll--");
+		List<Flight> L = this.buildFlights();
+		
+		EntityDB<Flight> db = new EntityDB<Flight>();
+		List<Flight> resL = db.findMatches(L, "flight", "abc");
+		assertEquals(0, resL.size());
+		
+		assertSame(L.get(0), db.findFirstMatch(L, "flight", "UL900"));
+		assertSame(L.get(1), db.findFirstMatch(L, "flight", "AC710"));
+		assertSame(L.get(2), db.findFirstMatch(L, "flight", "AC900"));
+	}
+	@Test
 	public void testQueryUnion() throws Exception
 	{
 		Query<Flight> q = new Query<Flight>();

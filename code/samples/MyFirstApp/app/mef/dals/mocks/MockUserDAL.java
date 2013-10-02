@@ -8,20 +8,14 @@ import mef.entities.*;
 import mef.gen.MockUserDAL_GEN;
 import mef.dals.*;
 import org.mef.framework.binder.IFormBinder;
+import org.mef.framework.entitydb.EntityDB;
 public class MockUserDAL extends MockUserDAL_GEN
 {
 	@Override
 	public List<User> search_by_name(String name)
 	{
-		List<User> resultsL = new ArrayList<User>();
-		
-		for(User entity : resultsL)
-		{
-			if (entity.name.equals(name))
-			{
-				resultsL.add(entity);
-			}
-		}	
+		EntityDB<User> db = new EntityDB<User>();
+		List<User> resultsL = db.findMatches(_L, "name", name);
 		return resultsL;
 	}
 
