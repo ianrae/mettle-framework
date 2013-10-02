@@ -32,18 +32,18 @@ public class BeanDBTests
 	//(b)Mock DAL has the actual objects, and doesn't make copies, so object instances
 	//   are unique. Never would get two object with same .id.
 	
-	public static class EntityDB
+	public static class EntityDB<T>
 	{
 		//hmm should union just work in whole objects. If same object (Flight 55) in both
 		//lists, shouldn't result only be in result once!!
-		private List<Flight> union(List<Flight> L, List<Flight> L2) 
+		private List<T> union(List<T> L, List<T> L2) 
 		{
-			ArrayList<Flight> L3 = new ArrayList<BeanDBTests.Flight>();
-			for(Flight f : L)
+			ArrayList<T> L3 = new ArrayList<T>();
+			for(T f : L)
 			{
 				L3.add(f);
 			}
-			for(Flight f : L2)
+			for(T f : L2)
 			{
 				if (! L3.contains(f))
 				{
@@ -54,10 +54,10 @@ public class BeanDBTests
 			return L3;
 		}
 		
-		private List<Flight> intersection(List<Flight> L, List<Flight> L2) 
+		private List<T> intersection(List<T> L, List<T> L2) 
 		{
-			ArrayList<Flight> L3 = new ArrayList<BeanDBTests.Flight>();
-			for(Flight f : L)
+			ArrayList<T> L3 = new ArrayList<T>();
+			for(T f : L)
 			{
 				if (L2.contains(f))
 				{
@@ -68,7 +68,7 @@ public class BeanDBTests
 			return L3;
 		}
 		
-		public boolean isMatchStr(Flight obj, String fieldName, String valueToMatch) 
+		public boolean isMatchStr(T obj, String fieldName, String valueToMatch) 
 		{
 			if (fieldName == null)
 			{
@@ -83,7 +83,7 @@ public class BeanDBTests
 			String s = value.toString();
 			return (s.equalsIgnoreCase(valueToMatch));
 		}
-		public boolean isMatchInt(Flight obj, String fieldName, Integer valueToMatch) 
+		public boolean isMatchInt(T obj, String fieldName, Integer valueToMatch) 
 		{
 			if (fieldName == null)
 			{
@@ -108,7 +108,7 @@ public class BeanDBTests
 		}
 
 
-		public Object getFieldValue(Flight obj, String fieldName) 
+		public Object getFieldValue(T obj, String fieldName) 
 		{
 			if (fieldName == null)
 			{
@@ -143,9 +143,9 @@ public class BeanDBTests
 			return value;
 		}
 		
-		public Flight findFirstMatch(List<Flight> L, String fieldName, String valueToMatch) 
+		public T findFirstMatch(List<T> L, String fieldName, String valueToMatch) 
 		{
-			for(Flight f : L)
+			for(T f : L)
 			{
 				if (isMatchStr(f, fieldName, valueToMatch))
 				{
@@ -155,12 +155,12 @@ public class BeanDBTests
 			return null;
 		}
 	}
-	public static class DBChecker
+	public static class DBChecker<T>
 	{
-		public boolean ensureUnique(List<Flight> L)
+		public boolean ensureUnique(List<T> L)
 		{
-			HashMap<Flight, String> map = new HashMap<BeanDBTests.Flight, String>();
-			for(Flight f : L)
+			HashMap<T, String> map = new HashMap<T, String>();
+			for(T f : L)
 			{
 				map.put(f, "1");
 			}
@@ -169,12 +169,12 @@ public class BeanDBTests
 		}
 		
 	}
-	public static class Query
+	public static class Query<T>
 	{
-		private List<Flight> resultL = new ArrayList<BeanDBTests.Flight>();
-		EntityDB db = new EntityDB();
+		private List<T> resultL = new ArrayList<T>();
+		EntityDB<T> db = new EntityDB<T>();
 		
-		public void add(List<Flight> L)
+		public void add(List<T> L)
 		{
 			resultL.addAll(L);
 		}
@@ -184,12 +184,12 @@ public class BeanDBTests
 			return resultL.size();
 		}
 		
-		public void union(List<Flight> L)
+		public void union(List<T> L)
 		{
 			resultL = db.union(resultL, L);
 		}
 
-		public void intersect(List<Flight> L)
+		public void intersect(List<T> L)
 		{
 			resultL = db.intersection(resultL, L);
 		}
@@ -204,7 +204,7 @@ public class BeanDBTests
 		List<Flight> L2 = this.buildFlights();
 		assertEquals(3, L2.size());
 		
-		EntityDB db = new EntityDB();
+		EntityDB<Flight> db = new EntityDB<Flight>();
 		List<Flight> L3 = db.union(L, L2);
 		assertEquals(6, L3.size());
 		chkAllUnique(L, L2, L3);
@@ -218,7 +218,6 @@ public class BeanDBTests
 		assertEquals(3, L.size());
 		L.add(L.get(0)); //add dups
 		
-		EntityDB db = new EntityDB();
 		assertEquals(false, ensureUnique(L));
 	}
 	
@@ -229,7 +228,7 @@ public class BeanDBTests
 		List<Flight> L = this.buildFlights();
 		List<Flight> L2 = this.buildFlights();
 		
-		EntityDB db = new EntityDB();
+		EntityDB<Flight> db = new EntityDB<Flight>();
 		List<Flight> L3 = db.intersection(L, L2);
 		assertEquals(0, L3.size());
 		chkAllUnique(L, L2, L3);
@@ -245,7 +244,7 @@ public class BeanDBTests
 		assertEquals(3, L2.size());
 		L2.add(L.get(0));
 		
-		EntityDB db = new EntityDB();
+		EntityDB<Flight> db = new EntityDB<Flight>();
 		List<Flight> L3 = db.intersection(L, L2);
 		assertEquals(1, L3.size());
 		chkAllUnique(L, L2, L3);
@@ -259,7 +258,7 @@ public class BeanDBTests
 		List<Flight> L = this.buildFlights();
 		
 		Flight one = L.get(0);
-		EntityDB db = new EntityDB();
+		EntityDB<Flight> db = new EntityDB<Flight>();
 		boolean b = db.isMatchStr(one, "flight", "abc");
 		assertEquals(false, b);
 		assertEquals(true, db.isMatchStr(one, "flight", "UL900"));
@@ -278,7 +277,7 @@ public class BeanDBTests
 		List<Flight> L = this.buildFlights();
 		
 		Flight one = L.get(0);
-		EntityDB db = new EntityDB();
+		EntityDB<Flight> db = new EntityDB<Flight>();
 		boolean b = db.isMatchInt(one, "flight", 14);
 		assertEquals(false, b);
 		
@@ -297,7 +296,7 @@ public class BeanDBTests
 		log("--testFindMatch--");
 		List<Flight> L = this.buildFlights();
 		
-		EntityDB db = new EntityDB();
+		EntityDB<Flight> db = new EntityDB<Flight>();
 		Flight f = db.findFirstMatch(L, "flight", "abc");
 		assertEquals(null, f);
 		
@@ -309,7 +308,7 @@ public class BeanDBTests
 	@Test
 	public void testQueryUnion() throws Exception
 	{
-		Query q = new Query();
+		Query<Flight> q = new Query<Flight>();
 		assertEquals(0, q.size());
 		List<Flight> L = this.buildFlights();
 		q.add(L);
@@ -322,7 +321,7 @@ public class BeanDBTests
 	@Test
 	public void testQueryUnionRepeatInstances() throws Exception
 	{
-		Query q = new Query();
+		Query<Flight> q = new Query<Flight>();
 		assertEquals(0, q.size());
 		List<Flight> L = this.buildFlights();
 		q.add(L);
@@ -334,7 +333,7 @@ public class BeanDBTests
 	@Test
 	public void testQueryIntersection() throws Exception
 	{
-		Query q = new Query();
+		Query<Flight> q = new Query<Flight>();
 		assertEquals(0, q.size());
 		List<Flight> L = this.buildFlights();
 		List<Flight> L2 = new ArrayList<Flight>();
@@ -366,7 +365,7 @@ public class BeanDBTests
 	}
 	private Object ensureUnique(List<Flight> L) 
 	{
-		DBChecker checker = new DBChecker();
+		DBChecker<Flight> checker = new DBChecker<Flight>();
 		return checker.ensureUnique(L);
 	}
 	private void chkAllUnique(List<Flight> L, List<Flight> L2, List<Flight> L3)
