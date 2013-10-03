@@ -52,11 +52,17 @@ public class BaseTest
 
 	protected String getTemplateFile(String filename)
 	{
-		String stDir = this.getCurrentDir("src\\org\\mef\\dalgen\\resources");
-		SfxFileUtils utils = new SfxFileUtils();
-		String path = utils.PathCombine(stDir, filename);
+		String stDir = this.getCurrentDir("src\\org\\mef\\dalgen\\resources\\dal");
+		String path = pathCombine(stDir, filename);
 		return path;
 	}
+	protected String getPresenterTemplateFile(String filename)
+	{
+		String stDir = this.getCurrentDir("src\\org\\mef\\dalgen\\resources\\presenter");
+		String path = pathCombine(stDir, filename);
+		return path;
+	}
+	
 	
 	protected String pathCombine(String path1, String path2)
 	{

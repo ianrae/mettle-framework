@@ -17,7 +17,7 @@ public class ScaffoldCodeGenTests extends BaseCodeGenTest
 	public void testPresenter() throws Exception
 	{
 		log("--testPresenter--");
-		String path = this.getTemplateFile("presenter.stg");
+		String path = this.getPresenterTemplateFile("presenter.stg");
 		String packageName = "mef.presenters";
 		PresenterCodeGen gen = new PresenterCodeGen(_ctx, path, packageName);
 		String code = gen.generate(def);	
@@ -30,7 +30,7 @@ public class ScaffoldCodeGenTests extends BaseCodeGenTest
 	public void testReply() throws Exception
 	{
 		log("--testReply--");
-		String path = this.getTemplateFile("reply.stg");
+		String path = this.getPresenterTemplateFile("reply.stg");
 		String packageName = "mef.presenters.replies";
 		ReplyCodeGen gen = new ReplyCodeGen(_ctx, path, packageName);
 		String code = gen.generate(def);	

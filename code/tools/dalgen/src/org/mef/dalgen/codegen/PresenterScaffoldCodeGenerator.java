@@ -18,14 +18,14 @@ import sfx.SfxBaseObj;
 import sfx.SfxContext;
 import sfx.SfxTextWriter;
 
-public class ScaffoldCodeGenerator extends SfxBaseObj
+public class PresenterScaffoldCodeGenerator extends SfxBaseObj
 {
 	private String appDir;
 	private String stDir;
 	private DalGenXmlParser parser;
 	public boolean disableFileIO;
 	
-	public ScaffoldCodeGenerator(SfxContext ctx)
+	public PresenterScaffoldCodeGenerator(SfxContext ctx)
 	{
 		super(ctx);
 	}

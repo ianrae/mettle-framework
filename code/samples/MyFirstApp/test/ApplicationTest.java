@@ -38,30 +38,30 @@ public class ApplicationTest {
         assertThat(a).isEqualTo(2);
     }
     
-    @Test
-    public void renderTemplate() {
-         Form<Task> taskForm = Form.form(Task.class);  
-
-         List<Task> emptyList = new ArrayList<Task>();
-          Content html = views.html.index.render(emptyList, taskForm); //"Your new application is ready.");
-        assertThat(contentType(html)).isEqualTo("text/html");
-        assertThat(contentAsString(html)).contains("Addxxx a new task");
-    }
+//    @Test
+//    public void renderTemplate() {
+//         Form<Task> taskForm = Form.form(Task.class);  
+//
+//         List<Task> emptyList = new ArrayList<Task>();
+//          Content html = views.html.index.render(emptyList, taskForm); //"Your new application is ready.");
+//        assertThat(contentType(html)).isEqualTo("text/html");
+//        assertThat(contentAsString(html)).contains("Addxxx a new task");
+//    }
     
-    @Test
-    public void render2()
-    {
-    	   running(fakeApplication(), new Runnable() {
-    	       public void run() {
-       			Form<UserModel> taskForm = Form.form(UserModel.class);  
-
-       			List<User> emptyList = new ArrayList<User>();
-       			Content html = views.html.user.render(emptyList, taskForm); //"Your new application is ready.");
-       			assertThat(contentType(html)).isEqualTo("text/html");
-       			assertThat(contentAsString(html)).contains("Addxxx a new task");
-    	       }
-    	   });
-    	
+//    @Test
+//    public void render2()
+//    {
+//    	   running(fakeApplication(), new Runnable() {
+//    	       public void run() {
+//       			Form<UserModel> taskForm = Form.form(UserModel.class);  
+//
+//       			List<User> emptyList = new ArrayList<User>();
+//       			Content html = views.html.user.render(emptyList, taskForm); //"Your new application is ready.");
+//       			assertThat(contentType(html)).isEqualTo("text/html");
+//       			assertThat(contentAsString(html)).contains("Addxxx a new task");
+//    	       }
+//    	   });
+//    	
     	
 //    	running(testServer(3333, fakeApplication(inMemoryDatabase())), HTMLUNIT, new Callback<TestBrowser>() 
 //    			{
@@ -71,31 +71,7 @@ public class ApplicationTest {
 //    			});
 //
 
-    }
   
-    @Test
-    public void render3()
-    {
-    	   running(fakeApplication(), new Runnable() {
-    	       public void run() {
-       			Form<Task> taskForm = Form.form(Task.class);  
 
-       			List<Task> emptyList = new ArrayList<Task>();
-       			Content html = views.html.index.render(emptyList, taskForm); //"Your new application is ready.");
-       			assertThat(contentType(html)).isEqualTo("text/html");
-       			assertThat(contentAsString(html)).contains("Addxxx a new task");
-    	       }
-    	   });
-    	
-    	
-//    	running(testServer(3333, fakeApplication(inMemoryDatabase())), HTMLUNIT, new Callback<TestBrowser>() 
-//    			{
-//    		public void invoke(TestBrowser browser) 
-//    		{
-//    		}
-//    			});
-//
-
-    }
    
 }

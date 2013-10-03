@@ -11,7 +11,7 @@ import unittests.BaseTest;
 
 //********************** DAATA!!! ****************************
 
-public class SampleAppCodeGenTests extends BaseTest
+public class DALCodeGenTests extends BaseTest
 {
 	@Test
 	public void testEntity() throws Exception
