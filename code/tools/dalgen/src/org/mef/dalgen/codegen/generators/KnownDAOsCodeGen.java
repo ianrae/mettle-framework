@@ -6,9 +6,9 @@ import org.stringtemplate.v4.ST;
 
 import sfx.SfxContext;
 
-public class KnownDALsCodeGen extends CodeGenBase
+public class KnownDAOsCodeGen extends CodeGenBase
 {
-	public KnownDALsCodeGen(SfxContext ctx, String path, String packageName)
+	public KnownDAOsCodeGen(SfxContext ctx, String path, String packageName)
 	{
 		super(ctx, path, packageName);
 	}
@@ -42,7 +42,7 @@ public class KnownDALsCodeGen extends CodeGenBase
 	@Override
 	public String getClassName(EntityDef def)
 	{
-		return makeClassName("AllKnownDALs", true);
+		return makeClassName("AllKnownDAOs", true);
 	}
 	
 	

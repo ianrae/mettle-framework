@@ -5,7 +5,7 @@ import java.util.List;
 
 //Whole idea is we don't need a fully emulated sql db like H2.
 //(a)we are dealing with objects (which can be assumed to be fully eagerly loaded)
-//(b)Mock DAL has the actual objects, and doesn't make copies, so object instances
+//(b)Mock DAO has the actual objects, and doesn't make copies, so object instances
 //   are unique. Never would get two object with same .id.
 
 

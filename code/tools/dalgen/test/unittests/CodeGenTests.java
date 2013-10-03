@@ -6,7 +6,7 @@ import org.junit.Test;
 import org.mef.dalgen.codegen.DALUtilsCodeGen;
 import org.mef.dalgen.codegen.generators.DALIntefaceCodeGen;
 import org.mef.dalgen.codegen.generators.EntityCodeGen;
-import org.mef.dalgen.codegen.generators.KnownDALsCodeGen;
+import org.mef.dalgen.codegen.generators.KnownDAOsCodeGen;
 import org.mef.dalgen.codegen.generators.MockDALCodeGen;
 import org.mef.dalgen.codegen.generators.ModelCodeGen;
 import org.mef.dalgen.codegen.generators.RealDALCodeGen;
@@ -100,7 +100,7 @@ public class CodeGenTests extends BaseCodeGenTest
 		log("--testKnownDALS--");
 		String path = this.getTemplateFile("dao_all_known.stg");
 		String packageName = "mef.gen";
-		KnownDALsCodeGen gen = new KnownDALsCodeGen(_ctx, path, packageName);
+		KnownDAOsCodeGen gen = new KnownDAOsCodeGen(_ctx, path, packageName);
 		String code = gen.generate(def);	
 		log(code);
 		assertEquals(true, 10 < code.length());

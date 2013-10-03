@@ -10,7 +10,7 @@ import mef.daos.mocks.*;
 import boundaries.daos.*;
 import org.mef.framework.sfx.SfxContext;
 
-public class AllKnownDALs_GEN  
+public class AllKnownDAOs_GEN  
 {
 public List<IDAO> registerDALs(SfxContext ctx, boolean createMocks)
 {

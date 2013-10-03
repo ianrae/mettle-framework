@@ -2,17 +2,18 @@ package mef.core;
 
 import java.util.List;
 
+import mef.gen.AllKnownDAOs_GEN;
+
 import org.mef.framework.sfx.SfxContext;
 import org.mef.framework.utils.ResourceReader;
 
-import mef.gen.AllKnownDALs_GEN;
 
 public class Initializer 
 {
 	public static SfxContext createContext(boolean createMocks)
 	{
 		SfxContext ctx = new SfxContext();
-		AllKnownDALs_GEN knownDALs = new AllKnownDALs_GEN();
+		AllKnownDAOs_GEN knownDALs = new AllKnownDAOs_GEN();
 		knownDALs.registerDALs(ctx, createMocks);
 		return ctx;
 	}
