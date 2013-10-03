@@ -148,16 +148,20 @@ validates that the result.
 	@Test
 	public void indexTest() 
 	{
+		Task t = _factory.createTask("buy milk");
+		_dao.save(t);
+
 		TaskReply reply = (TaskReply) _presenter.process(new IndexCommand());
 		
 		chkReplySucessful(reply, Reply.VIEW_INDEX, null);
-		chkDalSize(0);
-		chkReplyWithoutEntity(reply, true, 0);
+		chkDalSize(1);
+		chkReplyWithoutEntity(reply, true, 1);
+		assertEquals("buy milk", _dao.all().get(0).name);
 	}
 
 The reply returns a destination which can indicate a view to render or a redirect.
 The destination is an integer so your controller can have a switch statement.
-The DAO is empty by default so its size is zero.  (See xxx for seeding data)
+  (See xxx for seeding data)
 
 
 Hooking up the Controller

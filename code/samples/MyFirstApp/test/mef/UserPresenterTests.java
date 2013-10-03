@@ -51,15 +51,14 @@ public class UserPresenterTests extends BasePresenterTest
 	@Test
 	public void indexTestOne() 
 	{
-		User u = new User();
-		u.name = "bob";
+		User u = createUser("bob");
 		_dal.save(u);
 		UserReply reply = (UserReply) _presenter.process(new IndexCommand());
 		
 		chkReplySucessful(reply, Reply.VIEW_INDEX, null);
 		chkDalSize(1);
-		assertEquals("bob", _dal.all().get(0));
-		chkReplyWithoutEntity(reply, true, 0);
+		assertEquals("bob", _dal.all().get(0).name);
+		chkReplyWithoutEntity(reply, true, 1);
 	}
 	
 	//--- new ---
@@ -87,6 +86,8 @@ public class UserPresenterTests extends BasePresenterTest
 		chkReplySucessful(reply, Reply.FORWARD_INDEX, "created user task1");
 		chkDalSize(1);
 		chkReplyWithoutEntity(reply, true, 1);
+		t = _dal.findById(1);
+		assertEquals(new Long(1L), t.id);
 	}
 	
 	@Test
@@ -251,8 +252,6 @@ public class UserPresenterTests extends BasePresenterTest
 		}
 	}
 	
-	
-	
 	private MockUserDAO _dal;
 	private UserPresenter _presenter;
 	@Before
@@ -272,7 +271,7 @@ public class UserPresenterTests extends BasePresenterTest
 	private User initUser()
 	{
 		User t = new User();
-		t.id = 46L;
+		t.id = 0L;
 		t.name = "task1";
 		assertEquals(0, _dal.size());
 		return t;
@@ -285,5 +284,12 @@ public class UserPresenterTests extends BasePresenterTest
 		assertEquals(1, _dal.size());
 		return t;
 	}
+	private User createUser(String name)
+	{
+		User u = new User();
+		u.name = name;
+		return u;
+	}
+	
 	
 }
