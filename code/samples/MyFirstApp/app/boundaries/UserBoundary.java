@@ -12,7 +12,7 @@ import play.Logger;
 import play.data.Form;
 import play.mvc.Controller;
 import boundaries.binders.UserFormBinder;
-import boundaries.dals.UserDAL;
+import boundaries.dals.UserDAO;
 
 public class UserBoundary extends BoundaryBase
 {
@@ -46,7 +46,7 @@ public class UserBoundary extends BoundaryBase
 		}
 		Logger.info("mf-make");
 		Form<UserModel> frm = Form.form(UserModel.class);
-		UserModel model = UserDAL.createModelFromEntity(reply._entity);
+		UserModel model = UserDAO.createModelFromEntity(reply._entity);
 		frm = frm.fill(model);
 		return frm;
 	}

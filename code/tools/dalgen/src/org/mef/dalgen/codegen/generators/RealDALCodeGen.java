@@ -35,7 +35,7 @@ public class RealDALCodeGen extends CodeGenBase
 	@Override
 	public String getClassName(EntityDef def)
 	{
-		String className = def.name + "DAL";
+		String className = def.name + "DAO";
 		className = makeClassName(className, def.extendReal);
 		return className;
 	}

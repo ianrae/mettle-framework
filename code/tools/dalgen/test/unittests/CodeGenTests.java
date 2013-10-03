@@ -57,7 +57,7 @@ public class CodeGenTests extends BaseCodeGenTest
 	{
 		log("--testIDAL--");
 		def.extendInterface = true;
-		String path = this.getTemplateFile("dal_interface.stg");
+		String path = this.getTemplateFile("dao_interface.stg");
 		String packageName = "org.mef.dalgen.unittests.gen";
 		DALIntefaceCodeGen gen = new DALIntefaceCodeGen(_ctx, path, packageName);
 		String code = gen.generate(def);	
@@ -71,7 +71,7 @@ public class CodeGenTests extends BaseCodeGenTest
 	{
 		log("--testMockDAL--");
 		def.extendMock = true;
-		String path = this.getTemplateFile("dal_mock.stg");
+		String path = this.getTemplateFile("dao_mock.stg");
 		String packageName = "org.mef.dalgen.unittests.gen";
 		MockDALCodeGen gen = new MockDALCodeGen(_ctx, path, packageName);
 		String code = gen.generate(def);	
@@ -85,7 +85,7 @@ public class CodeGenTests extends BaseCodeGenTest
 	{
 		log("--testRealDAL--");
 		def.extendReal = true;
-		String path = this.getTemplateFile("dal_real.stg");
+		String path = this.getTemplateFile("dao_real.stg");
 		String packageName = "boundaries.dals";
 		RealDALCodeGen gen = new RealDALCodeGen(_ctx, path, packageName);
 		String code = gen.generate(def);	
@@ -98,7 +98,7 @@ public class CodeGenTests extends BaseCodeGenTest
 	public void testKnownDALS() throws Exception
 	{
 		log("--testKnownDALS--");
-		String path = this.getTemplateFile("dal_all_known.stg");
+		String path = this.getTemplateFile("dao_all_known.stg");
 		String packageName = "mef.gen";
 		KnownDALsCodeGen gen = new KnownDALsCodeGen(_ctx, path, packageName);
 		String code = gen.generate(def);	
@@ -114,7 +114,7 @@ public class CodeGenTests extends BaseCodeGenTest
 //		createContext();
 //		EntityDef def = readEntityDef();
 //		
-//		String path = this.getTestFile("dal_utils.stg");
+//		String path = this.getTestFile("dao_utils.stg");
 //		String packageName = "org.mef.dalgen.unittests.gen";
 //		DALUtilsCodeGen gen = new DALUtilsCodeGen(_ctx, path, packageName);
 //		String code = gen.generate(def);	

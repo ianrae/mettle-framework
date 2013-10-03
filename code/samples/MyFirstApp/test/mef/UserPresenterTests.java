@@ -18,9 +18,9 @@ import org.mef.framework.replies.Reply;
 import org.mef.framework.sfx.SfxContext;
 
 import mef.core.Initializer;
-import mef.dals.IUserDAL;
-import mef.dals.mocks.MockTaskDAL;
-import mef.dals.mocks.MockUserDAL;
+import mef.dals.IUserDAO;
+import mef.dals.mocks.MockTaskDAO;
+import mef.dals.mocks.MockUserDAO;
 import mef.entities.User;
 import mef.presenters.UserPresenter;
 import mef.presenters.replies.UserReply;
@@ -240,7 +240,7 @@ public class UserPresenterTests extends BasePresenterTest
 	
 	
 	
-	private MockUserDAL _dal;
+	private MockUserDAO _dal;
 	private UserPresenter _presenter;
 	@Before
 	public void init()
@@ -250,9 +250,9 @@ public class UserPresenterTests extends BasePresenterTest
 		this._presenter = new UserPresenter(_ctx);
 	}
 	
-	private MockUserDAL getDAL()
+	private MockUserDAO getDAL()
 	{
-		MockUserDAL dal = (MockUserDAL) _ctx.getServiceLocator().getInstance(IUserDAL.class); 
+		MockUserDAO dal = (MockUserDAO) _ctx.getServiceLocator().getInstance(IUserDAO.class); 
 		return dal;
 	}
 	

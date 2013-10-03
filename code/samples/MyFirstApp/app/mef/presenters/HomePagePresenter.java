@@ -11,19 +11,19 @@ import org.mef.framework.replies.Reply;
 import org.mef.framework.sfx.SfxBaseObj;
 import org.mef.framework.sfx.SfxContext;
 
-import mef.dals.ITaskDAL;
+import mef.dals.ITaskDAO;
 import mef.entities.Task;
 import mef.presenters.replies.HomePageReply;
 
 public class HomePagePresenter extends Presenter
 {
-	private ITaskDAL _dal;
+	private ITaskDAO _dal;
 	private HomePageReply _reply;
 	
 	public HomePagePresenter(SfxContext ctx)
 	{
 		super(ctx); 
-		_dal = (ITaskDAL) getInstance(ITaskDAL.class);
+		_dal = (ITaskDAO) getInstance(ITaskDAO.class);
 	}
 	
 	@Override

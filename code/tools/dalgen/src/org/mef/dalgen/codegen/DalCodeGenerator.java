@@ -85,7 +85,7 @@ public class DalCodeGenerator extends SfxBaseObj
 			return false; //!!
 		}
 		
-		path = this.pathCombine(stDir, "dal_interface.stg");
+		path = this.pathCombine(stDir, "dao_interface.stg");
 		DALIntefaceCodeGen gen3 = new DALIntefaceCodeGen(_ctx, path, "mef.dals");
 		b = generateOneFile(def, gen3, "app\\mef\\dals");
 		if (!b )
@@ -93,7 +93,7 @@ public class DalCodeGenerator extends SfxBaseObj
 			return false; //!!
 		}
 		
-		path = this.pathCombine(stDir, "dal_mock.stg");
+		path = this.pathCombine(stDir, "dao_mock.stg");
 		MockDALCodeGen gen4 = new MockDALCodeGen(_ctx, path, "mef.dals.mocks");
 		b = generateOneFile(def, gen4, "app\\mef\\dals\\mocks");
 		if (!b )
@@ -108,7 +108,7 @@ public class DalCodeGenerator extends SfxBaseObj
 		EntityDef def = parser._entityL.get(0);
 		def.enabled = true;
 
-		String path = this.pathCombine(stDir, "dal_all_known.stg");
+		String path = this.pathCombine(stDir, "dao_all_known.stg");
 		KnownDALsCodeGen gen5 = new KnownDALsCodeGen(_ctx, path, "mef.gen");
 		boolean b = generateOneFile(def, gen5, "mef\\gen");
 		if (!b )

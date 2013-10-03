@@ -10,9 +10,9 @@ import org.mef.framework.replies.Reply;
 
 import boundaries.ApplicationBoundary;
 import boundaries.Boundary;
-import boundaries.dals.PhoneDAL;
+import boundaries.dals.PhoneDAO;
 
-import mef.dals.IPhoneDAL;
+import mef.dals.IPhoneDAO;
 import mef.entities.Phone;
 import mef.entities.Task;
 import mef.presenters.replies.HomePageReply;
@@ -97,7 +97,7 @@ public class Application extends Controller
 		ApplicationBoundary boundary = ApplicationBoundary.create();
 		//I can't get integration junit tests working in Eclipse due to ebean ehancement errors,
 		//so do poor man's unit tests here
-		PhoneDAL phoneDal = (PhoneDAL) Boundary.theCtx.getServiceLocator().getInstance(IPhoneDAL.class);
+		PhoneDAO phoneDal = (PhoneDAO) Boundary.theCtx.getServiceLocator().getInstance(IPhoneDAO.class);
 		
 		Phone ph = phoneDal.findById(1);
 		assertEqual("Mark", ph.name);

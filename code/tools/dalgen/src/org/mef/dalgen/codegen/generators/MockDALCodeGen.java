@@ -35,7 +35,7 @@ public class MockDALCodeGen extends CodeGenBase
 	@Override
 	public String getClassName(EntityDef def)
 	{
-		String className = "Mock" + def.name + "DAL";
+		String className = "Mock" + def.name + "DAO";
 		className = makeClassName(className, def.extendMock);
 		return className;
 	}

@@ -17,8 +17,8 @@ import java.util.List;
 // Part 3 - mock DAL 
 
 
-import mef.dals.mocks.MockTaskDAL;
-import mef.dals.mocks.MockUserDAL;
+import mef.dals.mocks.MockTaskDAO;
+import mef.dals.mocks.MockUserDAO;
 import mef.entities.User;
 
 import org.junit.Test;
@@ -61,7 +61,7 @@ public class FluidDALTests
 			this.val = val;
 		}
 		
-		public List<User> apply(MockUserDAL dal, List<User> L) 
+		public List<User> apply(MockUserDAO dal, List<User> L) 
 		{
 			List<User> outL = new ArrayList<User>(); 
 					
@@ -105,9 +105,9 @@ public class FluidDALTests
 	public static class DalRez
 	{
 		private ArrayList<DalExpression> opL = new ArrayList<DalExpression>();
-		MockUserDAL dal;
+		MockUserDAO dal;
 		
-		public DalRez(MockUserDAL dal)
+		public DalRez(MockUserDAO dal)
 		{
 			this.dal = dal;
 		}
@@ -142,9 +142,9 @@ public class FluidDALTests
 	}
 	public static class DalCalc
 	{
-		MockUserDAL dal;
+		MockUserDAO dal;
 		
-		public DalCalc(MockUserDAL dal)
+		public DalCalc(MockUserDAO dal)
 		{
 			this.dal = dal;
 		}
@@ -158,7 +158,7 @@ public class FluidDALTests
 	@Test
 	public void testDalCalc0() 
 	{
-		MockUserDAL dal = new MockUserDAL();
+		MockUserDAO dal = new MockUserDAO();
 		initUser(dal, 44, "bob");
 		assertEquals(1, dal.size());
 		
@@ -167,7 +167,7 @@ public class FluidDALTests
 		assertEquals(1, L.size());
 	}
 	
-	private User initUser(MockUserDAL dal, long id, String name)
+	private User initUser(MockUserDAO dal, long id, String name)
 	{
 		User t = new User();
 		t.id = id;
@@ -179,7 +179,7 @@ public class FluidDALTests
 	@Test
 	public void testDalCalc1() 
 	{
-		MockUserDAL dal = new MockUserDAL();
+		MockUserDAO dal = new MockUserDAO();
 		initUser(dal, 44, "bob");
 		initUser(dal, 45, "sob");
 		assertEquals(2, dal.size());
@@ -192,7 +192,7 @@ public class FluidDALTests
 	@Test
 	public void testDalCalc2() 
 	{
-		MockUserDAL dal = new MockUserDAL();
+		MockUserDAO dal = new MockUserDAO();
 		initUser(dal, 44, "bob");
 		initUser(dal, 45, "sob");
 		initUser(dal, 46, "bobby");
@@ -206,7 +206,7 @@ public class FluidDALTests
 	@Test
 	public void testDalCalc3() 
 	{
-		MockUserDAL dal = new MockUserDAL();
+		MockUserDAO dal = new MockUserDAO();
 		initUser(dal, 45, "sob");
 		initUser(dal, 44, "bob");
 		initUser(dal, 46, "bobby");
@@ -226,7 +226,7 @@ public class FluidDALTests
 	@Test
 	public void testDalCalc4() 
 	{
-		MockUserDAL dal = new MockUserDAL();
+		MockUserDAO dal = new MockUserDAO();
 		initUser(dal, 45, "sob");
 		initUser(dal, 44, "bob");
 		initUser(dal, 46, "bobby");

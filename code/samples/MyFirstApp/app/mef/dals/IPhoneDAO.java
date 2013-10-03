@@ -7,7 +7,7 @@ import java.util.List;
 import org.mef.framework.binder.IFormBinder;
 import org.mef.framework.dal.IDAL;
 import mef.gen.*;
-public interface IPhoneDAL  extends IDAL
+public interface IPhoneDAO  extends IDAL
 {
 	Phone findById(long id);
 	List<Phone> all();

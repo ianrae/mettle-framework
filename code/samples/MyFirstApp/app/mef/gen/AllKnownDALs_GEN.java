@@ -17,36 +17,36 @@ public List<IDAL> registerDALs(SfxContext ctx, boolean createMocks)
 	ArrayList<IDAL> L = new ArrayList<IDAL>();
     if (createMocks)
 {
-	ITaskDAL dal = new MockTaskDAL();
-	ctx.getServiceLocator().registerSingleton(ITaskDAL.class, dal);
+	ITaskDAO dal = new MockTaskDAO();
+	ctx.getServiceLocator().registerSingleton(ITaskDAO.class, dal);
 	L.add(dal);
 }
 else
 {
-	ITaskDAL dal = new TaskDAL();
-	ctx.getServiceLocator().registerSingleton(ITaskDAL.class, dal);
+	ITaskDAO dal = new TaskDAO();
+	ctx.getServiceLocator().registerSingleton(ITaskDAO.class, dal);
 	L.add(dal);
 }	if (createMocks)
 {
-	IUserDAL dal = new MockUserDAL();
-	ctx.getServiceLocator().registerSingleton(IUserDAL.class, dal);
+	IUserDAO dal = new MockUserDAO();
+	ctx.getServiceLocator().registerSingleton(IUserDAO.class, dal);
 	L.add(dal);
 }
 else
 {
-	IUserDAL dal = new UserDAL();
-	ctx.getServiceLocator().registerSingleton(IUserDAL.class, dal);
+	IUserDAO dal = new UserDAO();
+	ctx.getServiceLocator().registerSingleton(IUserDAO.class, dal);
 	L.add(dal);
 }	if (createMocks)
 {
-	IPhoneDAL dal = new MockPhoneDAL();
-	ctx.getServiceLocator().registerSingleton(IPhoneDAL.class, dal);
+	IPhoneDAO dal = new MockPhoneDAO();
+	ctx.getServiceLocator().registerSingleton(IPhoneDAO.class, dal);
 	L.add(dal);
 }
 else
 {
-	IPhoneDAL dal = new PhoneDAL();
-	ctx.getServiceLocator().registerSingleton(IPhoneDAL.class, dal);
+	IPhoneDAO dal = new PhoneDAO();
+	ctx.getServiceLocator().registerSingleton(IPhoneDAO.class, dal);
 	L.add(dal);
 }	
 	return L;

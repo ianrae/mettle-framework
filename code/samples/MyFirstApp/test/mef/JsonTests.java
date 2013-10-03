@@ -8,10 +8,10 @@ import java.io.FileReader;
 import java.io.IOException;
 
 import mef.core.EntityLoader;
-import mef.dals.IPhoneDAL;
-import mef.dals.IUserDAL;
-import mef.dals.mocks.MockPhoneDAL;
-import mef.dals.mocks.MockUserDAL;
+import mef.dals.IPhoneDAO;
+import mef.dals.IUserDAO;
+import mef.dals.mocks.MockPhoneDAO;
+import mef.dals.mocks.MockUserDAO;
 import mef.entities.Phone;
 import mef.entities.User;
 import mef.gen.Phone_GEN;
@@ -115,7 +115,7 @@ public class JsonTests extends BaseTest
 	{
 		init();
 		assertEquals(0, _dal.size());
-		MockUserDAL userDal = (MockUserDAL) _ctx.getServiceLocator().getInstance(IUserDAL.class); 
+		MockUserDAO userDal = (MockUserDAO) _ctx.getServiceLocator().getInstance(IUserDAO.class); 
 		
 		String path = this.getTestFile("json-user1.txt");
 		String json = readFile(path);
@@ -141,7 +141,7 @@ public class JsonTests extends BaseTest
 	public void testMefConfigFiles() throws Exception
 	{
 		init();
-		MockUserDAL userDal = (MockUserDAL) _ctx.getServiceLocator().getInstance(IUserDAL.class); 
+		MockUserDAO userDal = (MockUserDAO) _ctx.getServiceLocator().getInstance(IUserDAO.class); 
 		
 		String json = ResourceReader.readSeedFile("json-user1.txt");
 		EntityLoader loader = new EntityLoader(_ctx);
@@ -162,16 +162,16 @@ public class JsonTests extends BaseTest
 		assertEquals(u.phone.id, ph.id);
 	}
 	
-	private MockPhoneDAL _dal;
+	private MockPhoneDAO _dal;
 	public void init()
 	{
 		super.init();
 		_dal = getDAL();
 	}
 	
-	private MockPhoneDAL getDAL()
+	private MockPhoneDAO getDAL()
 	{
-		MockPhoneDAL dal = (MockPhoneDAL) _ctx.getServiceLocator().getInstance(IPhoneDAL.class); 
+		MockPhoneDAO dal = (MockPhoneDAO) _ctx.getServiceLocator().getInstance(IPhoneDAO.class); 
 		return dal;
 	}	
 	//------------ helper fns ------------

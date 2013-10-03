@@ -19,23 +19,23 @@ import org.mef.framework.replies.Reply;
 import org.mef.framework.sfx.SfxBaseObj;
 import org.mef.framework.sfx.SfxContext;
 
-import mef.dals.IPhoneDAL;
-import mef.dals.IUserDAL;
+import mef.dals.IPhoneDAO;
+import mef.dals.IUserDAO;
 import mef.entities.Phone;
 import mef.entities.User;
 import mef.presenters.replies.UserReply;
 
 public class UserPresenter extends Presenter
 {
-	private IUserDAL _dal;
-	private IPhoneDAL _phoneDal;
+	private IUserDAO _dal;
+	private IPhoneDAO _phoneDal;
 	private UserReply _reply;
 
 	public UserPresenter(SfxContext ctx)
 	{
 		super(ctx); 
-		_dal = (IUserDAL) getInstance(IUserDAL.class);
-		_phoneDal = (IPhoneDAL) getInstance(IPhoneDAL.class);
+		_dal = (IUserDAO) getInstance(IUserDAO.class);
+		_phoneDal = (IPhoneDAO) getInstance(IPhoneDAO.class);
 	}
 	@Override
 	protected UserReply createReply()

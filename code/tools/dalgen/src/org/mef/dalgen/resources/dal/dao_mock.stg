@@ -38,7 +38,7 @@ public <meth>
 
 
 classdecl(name, type) ::= <<
-public class <name> implements I<type>DAL
+public class <name> implements I<type>DAO
 {
     protected ArrayList\<<type>\> _L = new ArrayList\<<type>\>();
     

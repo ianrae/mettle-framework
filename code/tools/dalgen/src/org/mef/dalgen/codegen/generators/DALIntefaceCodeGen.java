@@ -38,7 +38,7 @@ public class DALIntefaceCodeGen extends CodeGenBase
 		@Override
 		public String getClassName(EntityDef def)
 		{
-			String s = "I" + uppify(def.name) + "DAL";
+			String s = "I" + uppify(def.name) + "DAO";
 			return makeClassName(s, def.extendInterface);
 		}
 		

@@ -1,7 +1,7 @@
 package mef.core;
 
-import mef.dals.IPhoneDAL;
-import mef.dals.IUserDAL;
+import mef.dals.IPhoneDAO;
+import mef.dals.IUserDAO;
 import mef.entities.Phone;
 import mef.entities.User;
 
@@ -11,14 +11,14 @@ import org.mef.framework.sfx.SfxContext;
 
 public class EntityLoader extends SfxBaseObj
 {
-	private IUserDAL userDal; 
-	private IPhoneDAL phoneDal;
+	private IUserDAO userDal; 
+	private IPhoneDAO phoneDal;
 	
 	public EntityLoader(SfxContext ctx)
 	{
 		super(ctx);
-		userDal = (IUserDAL) _ctx.getServiceLocator().getInstance(IUserDAL.class); 
-		phoneDal = (IPhoneDAL) _ctx.getServiceLocator().getInstance(IPhoneDAL.class); 
+		userDal = (IUserDAO) _ctx.getServiceLocator().getInstance(IUserDAO.class); 
+		phoneDal = (IPhoneDAO) _ctx.getServiceLocator().getInstance(IPhoneDAO.class); 
 	}
 	
     public void loadPhone(String json) throws Exception

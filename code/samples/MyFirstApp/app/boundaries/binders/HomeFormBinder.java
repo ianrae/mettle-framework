@@ -7,7 +7,7 @@ import models.TaskModel;
 
 import org.mef.framework.binder.IFormBinder;
 
-import boundaries.dals.TaskDAL;
+import boundaries.dals.TaskDAO;
 
 import play.Logger;
 import play.data.Form;
@@ -42,7 +42,7 @@ public class HomeFormBinder implements IFormBinder
 		{
 			Logger.info("55: " + model.getLabel());
 		}
-		Task entity = TaskDAL.createEntityFromModel(model);
+		Task entity = TaskDAO.createEntityFromModel(model);
 		model.entity = entity;
 		return entity;
 	}

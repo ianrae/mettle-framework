@@ -3,8 +3,8 @@ package mef;
 import static org.junit.Assert.*;
 
 import mef.core.Initializer;
-import mef.dals.mocks.MockTaskDAL;
-import mef.dals.mocks.MockUserDAL;
+import mef.dals.mocks.MockTaskDAO;
+import mef.dals.mocks.MockUserDAO;
 import mef.entities.User;
 import mef.presenters.UserPresenter;
 

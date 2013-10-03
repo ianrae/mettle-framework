@@ -11,7 +11,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import mef.gen.*;
 import org.mef.framework.entitydb.EntityDB;
 
-public class MockUserDAL_GEN implements IUserDAL
+public class MockUserDAO_GEN implements IUserDAO
 {
     protected ArrayList<User> _L = new ArrayList<User>();
 

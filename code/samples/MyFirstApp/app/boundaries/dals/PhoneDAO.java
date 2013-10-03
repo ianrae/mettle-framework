@@ -3,7 +3,7 @@ package boundaries.dals;
 import java.util.ArrayList;
 import java.util.List;
 
-import mef.dals.IPhoneDAL;
+import mef.dals.IPhoneDAO;
 import mef.entities.Phone;
 import models.PhoneModel;
 
@@ -12,7 +12,7 @@ import org.mef.framework.binder.IFormBinder;
 
 import com.avaje.ebean.Ebean;
 
-public class PhoneDAL implements IPhoneDAL 
+public class PhoneDAO implements IPhoneDAO
 {
 
 	@Override

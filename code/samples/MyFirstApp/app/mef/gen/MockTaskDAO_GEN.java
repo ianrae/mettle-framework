@@ -8,7 +8,7 @@ import org.mef.framework.binder.IFormBinder;
 import mef.entities.*;
 import mef.dals.*;
 
-public class MockTaskDAL_GEN implements ITaskDAL
+public class MockTaskDAO_GEN implements ITaskDAO
 {
     private ArrayList<Task> _L = new ArrayList<Task>();
 

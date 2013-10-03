@@ -7,7 +7,7 @@ import java.util.List;
 import org.mef.framework.binder.IFormBinder;
 import org.mef.framework.dal.IDAL;
 import mef.gen.*;
-public interface IUserDAL  extends IDAL
+public interface IUserDAO  extends IDAL
 {
 	User findById(long id);
 	List<User> all();

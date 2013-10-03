@@ -28,14 +28,14 @@ adddal(type) ::= <<
 
 if (createMocks)
 {
-	I<type>DAL dal = new Mock<type>DAL();
-	ctx.getServiceLocator().registerSingleton(I<type>DAL.class, dal);
+	I<type>DAO dal = new Mock<type>DAO();
+	ctx.getServiceLocator().registerSingleton(I<type>DAO.class, dal);
 	L.add(dal);
 }
 else
 {
-	I<type>DAL dal = new <type>DAL();
-	ctx.getServiceLocator().registerSingleton(I<type>DAL.class, dal);
+	I<type>DAO dal = new <type>DAO();
+	ctx.getServiceLocator().registerSingleton(I<type>DAO.class, dal);
 	L.add(dal);
 }	
 >>

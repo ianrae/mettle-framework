@@ -15,11 +15,11 @@ import boundaries.Boundary;
 
 import models.UserModel;
 
-import mef.dals.IUserDAL;
+import mef.dals.IUserDAO;
 import mef.entities.Task;
 import mef.entities.User;
 
-public class UserDAL implements IUserDAL 
+public class UserDAO implements IUserDAO 
 {
 
 	@Override
@@ -98,7 +98,7 @@ public class UserDAL implements IUserDAL
 		t.entity = entity;
 		t.setId(entity.id);
 		t.setName(entity.name);
-		t.setPhone(PhoneDAL.createModelFromEntity(entity.phone));
+		t.setPhone(PhoneDAO.createModelFromEntity(entity.phone));
 		//email later!!
 		return t;
 	}
@@ -114,7 +114,7 @@ public class UserDAL implements IUserDAL
 		t.entity = entity;
 		entity.id = (t.getId() == null) ? 0 : t.getId();
 		entity.name	= t.getName();
-		entity.phone = PhoneDAL.createEntityFromModel(t.getPhone());
+		entity.phone = PhoneDAO.createEntityFromModel(t.getPhone());
 		//!email!!
 		return entity;
 	}

@@ -9,10 +9,10 @@ import boundaries.Boundary;
 
 import models.TaskModel;
 
-import mef.dals.ITaskDAL;
+import mef.dals.ITaskDAO;
 import mef.entities.Task;
 
-public class TaskDAL implements ITaskDAL 
+public class TaskDAO implements ITaskDAO 
 {
 
 	@Override

@@ -6,9 +6,9 @@ import org.mef.framework.sfx.SfxContext;
 
 import play.Logger;
 
-import boundaries.dals.PhoneDAL;
-import boundaries.dals.TaskDAL;
-import boundaries.dals.UserDAL;
+import boundaries.dals.PhoneDAO;
+import boundaries.dals.TaskDAO;
+import boundaries.dals.UserDAO;
 
 public class Boundary 
 {

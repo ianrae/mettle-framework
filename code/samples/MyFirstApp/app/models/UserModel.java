@@ -61,7 +61,7 @@ public class UserModel extends Model
     }
     public void setPhone(PhoneModel val) {
 		this.phone = val;
-		this.entity.phone = PhoneDAL.createEntityFromModel(val);
+		this.entity.phone = PhoneDAO.createEntityFromModel(val);
 
     }
 

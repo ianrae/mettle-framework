@@ -7,7 +7,7 @@ import models.UserModel;
 
 import org.mef.framework.binder.IFormBinder;
 
-import boundaries.dals.UserDAL;
+import boundaries.dals.UserDAO;
 
 import play.Logger;
 import play.data.Form;
@@ -59,7 +59,7 @@ public class UserFormBinder implements IFormBinder
 		}
 		
 		Logger.info("g3");
-		User entity = UserDAL.createEntityFromModel(model);
+		User entity = UserDAO.createEntityFromModel(model);
 		return entity;
 	}
 	

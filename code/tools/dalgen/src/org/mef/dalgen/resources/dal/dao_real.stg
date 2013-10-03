@@ -9,7 +9,7 @@ import boundaries.Boundary;
 
 import models.<type>Model;
 
-import mef.dals.I<type>DAL;
+import mef.dals.I<type>DAO;
 import mef.entities.<type>;
 import org.mef.framework.binder.IFormBinder;
 
@@ -41,7 +41,7 @@ public <meth>
 
 
 classdecl(name, type) ::= <<
-public class <name> implements I<type>DAL
+public class <name> implements I<type>DAO
 {
 	@Override
 	public void save(<type> entity) 

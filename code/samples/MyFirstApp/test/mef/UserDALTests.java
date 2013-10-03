@@ -4,8 +4,8 @@ import static org.junit.Assert.*;
 
 import java.util.List;
 
-import mef.dals.IUserDAL;
-import mef.dals.mocks.MockUserDAL;
+import mef.dals.IUserDAO;
+import mef.dals.mocks.MockUserDAO;
 import mef.entities.User;
 import mef.presenters.UserPresenter;
 
@@ -45,7 +45,7 @@ public class UserDALTests extends BaseTest
 		_dal.save(u);
 	}
 	
-	private MockUserDAL _dal;
+	private MockUserDAO _dal;
 	@Before
 	public void init()
 	{
@@ -53,9 +53,9 @@ public class UserDALTests extends BaseTest
 		_dal = getDAL();
 	}
 	
-	private MockUserDAL getDAL()
+	private MockUserDAO getDAL()
 	{
-		MockUserDAL dal = (MockUserDAL) _ctx.getServiceLocator().getInstance(IUserDAL.class); 
+		MockUserDAO dal = (MockUserDAO) _ctx.getServiceLocator().getInstance(IUserDAO.class); 
 		return dal;
 	}
 

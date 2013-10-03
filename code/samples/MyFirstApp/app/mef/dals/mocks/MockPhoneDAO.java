@@ -11,7 +11,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import mef.gen.*;
 import org.mef.framework.entitydb.EntityDB;
 
-public class MockPhoneDAL implements IPhoneDAL
+public class MockPhoneDAO implements IPhoneDAO
 {
     protected ArrayList<Phone> _L = new ArrayList<Phone>();
 

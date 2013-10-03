@@ -13,10 +13,9 @@ import org.mef.framework.sfx.SfxContext;
 import org.mef.framework.test.helpers.MockFormBinder;
 
 import mef.core.Initializer;
-import mef.dals.ITaskDAL;
-import mef.dals.mocks.MockPhoneDAL;
-import mef.dals.mocks.MockTaskDAL;
-import mef.dals.mocks.MockUserDAL;
+import mef.dals.ITaskDAO;
+import mef.dals.mocks.MockTaskDAO;
+import mef.dals.mocks.MockUserDAO;
 import mef.entities.Task;
 import mef.presenters.HomePagePresenter;
 import mef.presenters.replies.HomePageReply;
@@ -43,7 +42,7 @@ public class HomePagePresenterTests
 	public void testDBDown() 
 	{
 		init();
-		MockTaskDAL dal = getDAL(); 
+		MockTaskDAO dal = getDAL(); 
 		dal._dbDown = true;
 		
 		HomePagePresenter presenter = new HomePagePresenter(_ctx);
@@ -59,7 +58,7 @@ public class HomePagePresenterTests
 	public void testDeleteTask() 
 	{
 		init();
-		MockTaskDAL dal = getDAL();
+		MockTaskDAO dal = getDAL();
 		Task t = new Task();
 		t.id = 46L;
 		t.label = "task1";
@@ -84,7 +83,7 @@ public class HomePagePresenterTests
 	public void testBadDeleteTask() 
 	{
 		init();
-		MockTaskDAL dal = getDAL();
+		MockTaskDAO dal = getDAL();
 		Task t = new Task();
 		t.id = 46L;
 		t.label = "task1";
@@ -109,7 +108,7 @@ public class HomePagePresenterTests
 	public void testCreateTask() 
 	{
 		init();
-		MockTaskDAL dal = getDAL();
+		MockTaskDAO dal = getDAL();
 		Task t = new Task();
 		t.id = 46L;
 		t.label = "task1";
@@ -138,9 +137,9 @@ public class HomePagePresenterTests
 		_ctx = Initializer.createContext(true);
 	}
 	
-	private MockTaskDAL getDAL()
+	private MockTaskDAO getDAL()
 	{
-		MockTaskDAL dal = (MockTaskDAL) _ctx.getServiceLocator().getInstance(ITaskDAL.class); 
+		MockTaskDAO dal = (MockTaskDAO) _ctx.getServiceLocator().getInstance(ITaskDAO.class); 
 		return dal;
 	}
 }

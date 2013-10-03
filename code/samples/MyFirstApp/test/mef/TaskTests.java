@@ -7,8 +7,8 @@ import java.util.List;
 
 import org.junit.Test;
 
-import mef.dals.mocks.MockTaskDAL;
-import mef.dals.mocks.MockUserDAL;
+import mef.dals.mocks.MockTaskDAO;
+import mef.dals.mocks.MockUserDAO;
 import mef.entities.Task;
 import mef.entities.User;
 
@@ -17,7 +17,7 @@ public class TaskTests {
 	@Test
 	public void test() 
 	{
-		MockTaskDAL dal = new MockTaskDAL();
+		MockTaskDAO dal = new MockTaskDAO();
 		List<Task> L = dal.all();
 		assertEquals(0, L.size());
 		
@@ -50,7 +50,7 @@ public class TaskTests {
 	@Test
 	public void testUser() 
 	{
-		MockUserDAL dal = new MockUserDAL();
+		MockUserDAO dal = new MockUserDAO();
 		List<User> L = dal.all();
 		assertEquals(0, L.size());
 		

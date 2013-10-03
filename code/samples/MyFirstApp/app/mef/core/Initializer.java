@@ -6,9 +6,6 @@ import org.mef.framework.dal.IDAL;
 import org.mef.framework.sfx.SfxContext;
 import org.mef.framework.utils.ResourceReader;
 
-import mef.dals.IPhoneDAL;
-import mef.dals.ITaskDAL;
-import mef.dals.IUserDAL;
 import mef.gen.AllKnownDALs_GEN;
 
 public class Initializer 
