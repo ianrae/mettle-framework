@@ -4,7 +4,7 @@ package mef.gen;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.mef.framework.dal.IDAL;
+import org.mef.framework.dao.IDAO;
 import mef.daos.*;
 import mef.daos.mocks.*;
 import boundaries.daos.*;
@@ -12,9 +12,9 @@ import org.mef.framework.sfx.SfxContext;
 
 public class AllKnownDALs_GEN  
 {
-public List<IDAL> registerDALs(SfxContext ctx, boolean createMocks)
+public List<IDAO> registerDALs(SfxContext ctx, boolean createMocks)
 {
-	ArrayList<IDAL> L = new ArrayList<IDAL>();
+	ArrayList<IDAO> L = new ArrayList<IDAO>();
     if (createMocks)
 {
 	ITaskDAO dal = new MockTaskDAO();

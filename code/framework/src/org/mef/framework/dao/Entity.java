@@ -1,4 +1,4 @@
-package org.mef.framework.dal;
+package org.mef.framework.dao;
 
 
 

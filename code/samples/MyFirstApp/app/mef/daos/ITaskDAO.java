@@ -3,8 +3,9 @@ package mef.daos;
 import mef.entities.*;
 import java.util.List;
 
-import org.mef.framework.dal.IDAL;
-public interface ITaskDAO extends IDAL
+import org.mef.framework.dao.IDAO;
+
+public interface ITaskDAO extends IDAO
 {
 	Task findById(long id);
 	List<Task> all();

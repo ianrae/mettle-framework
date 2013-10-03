@@ -6,14 +6,14 @@ package <package>;
 import mef.entities.*;
 import java.util.List;
 import org.mef.framework.binder.IFormBinder;
-import org.mef.framework.dal.IDAL;
+import org.mef.framework.dao.IDAO;
 import mef.gen.*;
 
 >>
 
 
 classdecl(type, name) ::= <<
-public interface <name>  extends IDAL
+public interface <name>  extends IDAO
 {
 	<type> findById(long id);
 	List\<<type>\> all();

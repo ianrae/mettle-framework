@@ -2,7 +2,6 @@ package mef.core;
 
 import java.util.List;
 
-import org.mef.framework.dal.IDAL;
 import org.mef.framework.sfx.SfxContext;
 import org.mef.framework.utils.ResourceReader;
 

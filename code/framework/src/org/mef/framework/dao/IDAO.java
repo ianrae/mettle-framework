@@ -1,9 +1,9 @@
-package org.mef.framework.dal;
+package org.mef.framework.dao;
 
 
 import org.mef.framework.binder.IFormBinder;
 
-public interface IDAL 
+public interface IDAO 
 {
 	int size();
 	void delete(long id);
