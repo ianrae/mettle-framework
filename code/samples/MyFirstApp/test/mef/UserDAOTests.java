@@ -12,7 +12,7 @@ import mef.presenters.UserPresenter;
 import org.junit.Before;
 import org.junit.Test;
 
-public class UserDALTests extends BaseTest
+public class UserDAOTests extends BaseTest
 {
 
 	@Test

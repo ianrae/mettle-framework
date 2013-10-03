@@ -52,12 +52,12 @@ public class UserPresenterTests extends BasePresenterTest
 	public void indexTestOne() 
 	{
 		User u = createUser("bob");
-		_dal.save(u);
+		_dao.save(u);
 		UserReply reply = (UserReply) _presenter.process(new IndexCommand());
 		
 		chkReplySucessful(reply, Reply.VIEW_INDEX, null);
 		chkDalSize(1);
-		assertEquals("bob", _dal.all().get(0).name);
+		assertEquals("bob", _dao.all().get(0).name);
 		chkReplyWithoutEntity(reply, true, 1);
 	}
 	
@@ -86,7 +86,7 @@ public class UserPresenterTests extends BasePresenterTest
 		chkReplySucessful(reply, Reply.FORWARD_INDEX, "created user task1");
 		chkDalSize(1);
 		chkReplyWithoutEntity(reply, true, 1);
-		t = _dal.findById(1);
+		t = _dao.findById(1);
 		assertEquals(new Long(1L), t.id);
 	}
 	
@@ -141,7 +141,7 @@ public class UserPresenterTests extends BasePresenterTest
 		chkDalSize(1);
 		chkReplyWithoutEntity(reply, true, 1);
 		
-		User t2 = _dal.findById(t.id);
+		User t2 = _dao.findById(t.id);
 		assertEquals("task2", t2.name);
 	}
 	@Test
@@ -157,7 +157,7 @@ public class UserPresenterTests extends BasePresenterTest
 		chkDalSize(1);
 		chkReplyWithEntity(reply, false, 0);
 		
-		User t2 = _dal.findById(t.id);
+		User t2 = _dao.findById(t.id);
 		assertEquals("task2", t2.name); //unchanged (but mock dal kinda broken)
 		assertNotNull(reply._options);
 	}
@@ -223,7 +223,7 @@ public class UserPresenterTests extends BasePresenterTest
 	//--------- helper fns--------------
 	protected void chkDalSize(int expected)
 	{
-		assertEquals(expected, _dal.size());
+		assertEquals(expected, _dao.size());
 	}
 	private void chkReplyWithEntity(UserReply reply, boolean listExists, int expected)
 	{
@@ -252,13 +252,13 @@ public class UserPresenterTests extends BasePresenterTest
 		}
 	}
 	
-	private MockUserDAO _dal;
+	private MockUserDAO _dao;
 	private UserPresenter _presenter;
 	@Before
 	public void init()
 	{
 		super.init();
-		_dal = getDAL();
+		_dao = getDAL();
 		this._presenter = new UserPresenter(_ctx);
 	}
 	
@@ -271,17 +271,17 @@ public class UserPresenterTests extends BasePresenterTest
 	private User initUser()
 	{
 		User t = new User();
-		t.id = 0L;
+		t.id = 0L; //dal will assign id
 		t.name = "task1";
-		assertEquals(0, _dal.size());
+		assertEquals(0, _dao.size());
 		return t;
 	}
 	
 	private User initAndSaveUser()
 	{
 		User t = initUser();
-		_dal.save(t);
-		assertEquals(1, _dal.size());
+		_dao.save(t);
+		assertEquals(1, _dao.size());
 		return t;
 	}
 	private User createUser(String name)
