@@ -12,7 +12,7 @@ import org.mef.framework.sfx.SfxContext;
 
 public class AllKnownDAOs_GEN  
 {
-public List<IDAO> registerDALs(SfxContext ctx, boolean createMocks)
+public List<IDAO> registerDAOs(SfxContext ctx, boolean createMocks)
 {
 	ArrayList<IDAO> L = new ArrayList<IDAO>();
     if (createMocks)

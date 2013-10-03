@@ -13,8 +13,8 @@ public class Initializer
 	public static SfxContext createContext(boolean createMocks)
 	{
 		SfxContext ctx = new SfxContext();
-		AllKnownDAOs_GEN knownDALs = new AllKnownDAOs_GEN();
-		knownDALs.registerDALs(ctx, createMocks);
+		AllKnownDAOs_GEN knownDAOs = new AllKnownDAOs_GEN();
+		knownDAOs.registerDAOs(ctx, createMocks);
 		return ctx;
 	}
 	

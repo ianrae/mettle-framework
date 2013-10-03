@@ -18,7 +18,7 @@ import org.mef.framework.sfx.SfxContext;
 classdecl(type, name) ::= <<
 public class <name>  
 {
-public List\<IDAO> registerDALs(SfxContext ctx, boolean createMocks)
+public List\<IDAO> registerDAOs(SfxContext ctx, boolean createMocks)
 {
 	ArrayList\<IDAO> L = new ArrayList\<IDAO>();
     

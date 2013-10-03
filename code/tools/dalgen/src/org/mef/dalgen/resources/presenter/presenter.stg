@@ -22,7 +22,7 @@ import org.mef.framework.replies.Reply;
 import org.mef.framework.sfx.SfxBaseObj;
 import org.mef.framework.sfx.SfxContext;
 
-import mef.dals.I<type>DAL;
+import mef.dals.I<type>DAO;
 import mef.entities.<type>;
 import mef.presenters.replies.<type>Reply;
 
@@ -38,13 +38,13 @@ classdecl(type, name) ::= <<
 
 public class <name> extends Presenter
 {
-	private I<type>DAL _dal;
+	private I<type>DAO _dal;
 	private <type>Reply _reply;
 
 	public <name>(SfxContext ctx)
 	{
 		super(ctx); 
-		_dal = (I<type>DAL) getInstance(I<type>DAL.class);
+		_dal = (I<type>DAO) getInstance(I<type>DAO.class);
 	}
 	@Override
 	protected <type>Reply createReply()
