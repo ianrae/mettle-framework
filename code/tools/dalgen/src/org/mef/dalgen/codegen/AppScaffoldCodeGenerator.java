@@ -39,10 +39,15 @@ public class AppScaffoldCodeGenerator extends SfxBaseObj
 	
 	public boolean generate() throws Exception
 	{
+		createDirStructure();
 		String filename = "mef.xml";
 		
 		String resDir = FilenameUtils.concat(stDir, "copy");
-		
+		return copyFile(filename, resDir, appDir);
+	}
+	
+	private boolean copyFile(String filename, String resDir, String appDir) throws Exception
+	{
 		String src = FilenameUtils.concat(resDir, filename);
 		String dest = FilenameUtils.concat(appDir, filename);
 		
@@ -60,6 +65,31 @@ public class AppScaffoldCodeGenerator extends SfxBaseObj
 		}
 		FileUtils.copyFile(new File(src), new File(dest));
 		return true;
+	}
+	private void createDirStructure()
+	{
+		createDir("app\\boundaries");
+		createDir("app\\boundaries\\binders");
+		createDir("app\\boundaries\\dals");
+		createDir("mef");
+		createDir("mef\\core");
+		createDir("mef\\dals");
+		createDir("mef\\dals\\mocks");
+		createDir("mef\\entities");
+		createDir("mef\\gen");
+		createDir("mef\\presenters");
+		createDir("mef\\presenters\\replies");
+		createDir("conf\\mef\\seed");
+		createDir("test\\mef");
+		
+	}
+
+	private void createDir(String dirName) 
+	{
+		String dest = FilenameUtils.concat(appDir, dirName);
+		log("creating dir: " + dest);
+		File f = new File(dest);
+		f.mkdirs();
 	}
 
 	private boolean writeFile(String appDir, String subDir, String fileName, String code)
