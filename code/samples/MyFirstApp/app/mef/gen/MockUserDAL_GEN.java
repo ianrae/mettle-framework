@@ -94,8 +94,8 @@ public class MockUserDAL_GEN implements IUserDAL
     @Override
     public User find_by_name(String val) 
     {
-		EntityDB db = new EntityDB();
-		User user = db.findFirstMatch(_L, "name", name);
+		EntityDB<User> db = new EntityDB<User>();
+		User user = db.findFirstMatch(_L, "name", val);
 		return user;
     }
 

@@ -14,12 +14,12 @@ import mef.dals.mocks.MockPhoneDAL;
 import mef.dals.mocks.MockUserDAL;
 import mef.entities.Phone;
 import mef.entities.User;
-import mef.entities.utils.ResourceReader;
 import mef.gen.Phone_GEN;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.node.ObjectNode;
 import org.junit.Test;
+import org.mef.framework.utils.ResourceReader;
 
 import play.libs.Json;
 

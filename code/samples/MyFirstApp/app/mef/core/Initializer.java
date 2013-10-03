@@ -4,11 +4,11 @@ import java.util.List;
 
 import org.mef.framework.dal.IDAL;
 import org.mef.framework.sfx.SfxContext;
+import org.mef.framework.utils.ResourceReader;
 
 import mef.dals.IPhoneDAL;
 import mef.dals.ITaskDAL;
 import mef.dals.IUserDAL;
-import mef.entities.utils.ResourceReader;
 import mef.gen.AllKnownDALs_GEN;
 
 public class Initializer 

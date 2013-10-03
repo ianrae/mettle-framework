@@ -461,4 +461,11 @@ searching and then combining lists with AND,OR
     protected Date creationDate;
 
   http://www.developerscrappad.com/228/java/java-ee/ejb3-jpa-dealing-with-date-time-and-timestamp/
+
+  ---------------------2OctWed
+  MORE ON INTEGRATION TESTS NOT WORKING
+  -lots of people complaining about it
+  -no reply to my post on google group :(
+  -this maybe:
+  https://groups.google.com/forum/#!searchin/play-framework/integration$20tests$20console/play-framework/fRHXLZi0J1c/A3YNH11lE_gJ
   

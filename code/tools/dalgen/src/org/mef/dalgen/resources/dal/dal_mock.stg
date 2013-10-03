@@ -22,8 +22,8 @@ querydecl(type, fieldType, name, eq) ::= <<
     @Override
     public <type> find_by_<name>(<fieldType> val) 
     {
-		EntityDB<User> db = new EntityDB<User>();
-		User user = db.findFirstMatch(_L, "name", name);
+		EntityDB\<<type>\> db = new EntityDB\<<type>\>();
+		<type> user = db.findFirstMatch(_L, "<name>", val);
 		return user;
     }
 >>

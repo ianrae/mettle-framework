@@ -1,4 +1,4 @@
-package mef.entities.utils;
+package org.mef.framework.utils;
 
 import java.io.BufferedReader;
 import java.io.File;

@@ -94,8 +94,8 @@ public class MockPhoneDAL implements IPhoneDAL
     @Override
     public Phone find_by_name(String val) 
     {
-		EntityDB db = new EntityDB();
-		User user = db.findFirstMatch(_L, "name", name);
+		EntityDB<Phone> db = new EntityDB<Phone>();
+		Phone user = db.findFirstMatch(_L, "name", val);
 		return user;
     }
 
