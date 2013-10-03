@@ -7,6 +7,7 @@ import org.mef.dalgen.codegen.DALUtilsCodeGen;
 import org.mef.dalgen.codegen.generators.BoundaryCodeGen;
 import org.mef.dalgen.codegen.generators.DAOIntefaceCodeGen;
 import org.mef.dalgen.codegen.generators.EntityCodeGen;
+import org.mef.dalgen.codegen.generators.FormBinderCodeGen;
 import org.mef.dalgen.codegen.generators.KnownDAOsCodeGen;
 import org.mef.dalgen.codegen.generators.MockDAOCodeGen;
 import org.mef.dalgen.codegen.generators.ModelCodeGen;
@@ -119,6 +120,19 @@ public class CodeGenTests extends BaseCodeGenTest
 		log(code);
 		assertEquals(true, 10 < code.length());
 		writeFile("TaskBoundary", code);
+	}
+	
+	@Test
+	public void testFormBinder() throws Exception
+	{
+		log("--testFormBinder--");
+		String path = this.getPresenterTemplateFile("formbinder.stg");
+		String packageName = "boundaries.binders";
+		FormBinderCodeGen gen = new FormBinderCodeGen(_ctx, path, packageName);
+		String code = gen.generate(def);	
+		log(code);
+		assertEquals(true, 10 < code.length());
+		writeFile("TaskFormBinder", code);
 	}
 	
 //	@Test

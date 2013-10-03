@@ -8,6 +8,7 @@ import org.mef.dalgen.codegen.generators.BoundaryCodeGen;
 import org.mef.dalgen.codegen.generators.CodeGenBase;
 import org.mef.dalgen.codegen.generators.DAOIntefaceCodeGen;
 import org.mef.dalgen.codegen.generators.EntityCodeGen;
+import org.mef.dalgen.codegen.generators.FormBinderCodeGen;
 import org.mef.dalgen.codegen.generators.MockDAOCodeGen;
 import org.mef.dalgen.codegen.generators.ModelCodeGen;
 import org.mef.dalgen.codegen.generators.PresenterCodeGen;
@@ -76,6 +77,14 @@ public class PresenterScaffoldCodeGenerator extends SfxBaseObj
 		path = this.pathCombine(stDir, "boundary.stg");
 		BoundaryCodeGen gen3 = new BoundaryCodeGen(_ctx, path, "boundaries");
 		b = generateOneFile(def, gen3, "app\\boundaries");
+		if (!b )
+		{
+			return false; //!!
+		}
+		
+		path = this.pathCombine(stDir, "formBinder.stg");
+		FormBinderCodeGen gen4 = new FormBinderCodeGen(_ctx, path, "boundaries.binders");
+		b = generateOneFile(def, gen4, "app\\boundaries\\binders");
 		if (!b )
 		{
 			return false; //!!
