@@ -75,7 +75,7 @@ public class PresenterScaffoldCodeGenerator extends SfxBaseObj
 		
 		path = this.pathCombine(stDir, "boundary.stg");
 		BoundaryCodeGen gen3 = new BoundaryCodeGen(_ctx, path, "boundaries");
-		b = generateOneFile(def, gen2, "app\\boundaries");
+		b = generateOneFile(def, gen3, "app\\boundaries");
 		if (!b )
 		{
 			return false; //!!

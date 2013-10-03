@@ -20,10 +20,10 @@ public class ScaffoldPresenterTests extends BaseTest
 		createContext();
 		PresenterScaffoldCodeGenerator gen = new PresenterScaffoldCodeGenerator(_ctx);
 		
-		gen.disableFileIO = true;  //***** WATCH OUT!11 ****
+		gen.disableFileIO = false;  //***** WATCH OUT!11 ****
 		
 		String appDir = this.getCurrentDir("..\\..\\samples\\MyFirstApp");
-		String stDir = this.getCurrentDir("src\\org\\mef\\dalgen\\resources");
+		String stDir = this.getCurrentDir("src\\org\\mef\\dalgen\\resources\\presenter");
 log(appDir);
 log(stDir);
 		
@@ -32,7 +32,7 @@ log(stDir);
 
 		boolean b = false;
 //		boolean b = gen.generate(0);
-//		b = gen.generate("User");
+		b = gen.generate("User");
 //		b = gen.generate("Phone");
 //		b = gen.generate("Zoo");
 		if (b)

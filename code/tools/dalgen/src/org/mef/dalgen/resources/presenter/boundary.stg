@@ -44,13 +44,13 @@ public class <type>Boundary extends BoundaryBase
 	
 	public <type>Reply addFormAndProcess(Command cmd)
 	{
-		Form\<<type>Model\> validationForm =  Form.form(<type>Model.class);
+		Form\<<type>Model> validationForm =  Form.form(<type>Model.class);
 		binder = new <type>FormBinder(validationForm);
 		cmd.setFormBinder(binder);
 		return process(cmd);
 	}
 	
-	public Form\<<type>Model\> makeForm(<type>Reply reply)
+	public Form\<<type>Model> makeForm(<type>Reply reply)
 	{
 		if (binder != null)
 		{
@@ -58,7 +58,7 @@ public class <type>Boundary extends BoundaryBase
 			return binder.getRawForm();
 		}
 		Logger.info("mf-make");
-		Form\<<type>Model\> frm = Form.form(<type>Model.class);
+		Form\<<type>Model> frm = Form.form(<type>Model.class);
 		<type>Model model = <type>DAO.createModelFromEntity(reply._entity);
 		frm = frm.fill(model);
 		return frm;
@@ -85,9 +85,6 @@ public class <type>Boundary extends BoundaryBase
 	{
 		return dogetAllValidationErrors(binder);
 	}
-	
-}
-}
 
 
 >>

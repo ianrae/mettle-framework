@@ -1,3 +1,5 @@
+//THIS FILE HAS BEEN AUTO-GENERATED. DO NOT MODIFY.
+
 package boundaries;
 
 import mef.presenters.UserPresenter;
@@ -13,7 +15,6 @@ import play.data.Form;
 import play.mvc.Controller;
 import boundaries.binders.UserFormBinder;
 import boundaries.daos.UserDAO;
-
 public class UserBoundary extends BoundaryBase
 {
 	public static UserBoundary create() 
@@ -21,14 +22,14 @@ public class UserBoundary extends BoundaryBase
 		Boundary.init();
 		return new UserBoundary(Boundary.theCtx);
 	}
-	
+
 	public UserFormBinder binder;
-	
+
 	public UserBoundary(SfxContext ctx)
 	{
 		super(ctx);
 	}
-	
+
 	public UserReply addFormAndProcess(Command cmd)
 	{
 		Form<UserModel> validationForm =  Form.form(UserModel.class);
@@ -36,7 +37,7 @@ public class UserBoundary extends BoundaryBase
 		cmd.setFormBinder(binder);
 		return process(cmd);
 	}
-	
+
 	public Form<UserModel> makeForm(UserReply reply)
 	{
 		if (binder != null)
@@ -50,15 +51,15 @@ public class UserBoundary extends BoundaryBase
 		frm = frm.fill(model);
 		return frm;
 	}
-	
+
 	@Override
 	public UserReply process(Command cmd)
 	{
 		begin(cmd);
 		UserPresenter presenter = new UserPresenter(_ctx);
-		
+
 		UserReply reply = (UserReply) presenter.process(cmd);
-		
+
 		String flashKey = reply.getFlashKey();
 		String flashMsg = reply.getFlash();
 		if (flashKey != null)
@@ -67,10 +68,16 @@ public class UserBoundary extends BoundaryBase
 		}
 		return reply;
 	}
-	
+
 	public String getAllValidationErrors()
 	{
 		return dogetAllValidationErrors(binder);
 	}
-	
+
+
+
+
+
+
+
 }
