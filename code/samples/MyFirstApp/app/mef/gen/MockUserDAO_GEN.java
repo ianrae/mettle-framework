@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.ArrayList;
 import mef.entities.*;
 import mef.daos.*;
-
 import org.mef.framework.binder.IFormBinder;
 import org.codehaus.jackson.map.ObjectMapper;
 import mef.gen.*;
@@ -55,10 +54,10 @@ public class MockUserDAO_GEN implements IUserDAO
     public void save(User entity) 
     {
     	if (entity.id == null)
-    	{
+		{
     		entity.id = new Long(0L);
     	}
-    	
+
         delete(entity.id); //remove existing
         if (entity.id == 0)
         {

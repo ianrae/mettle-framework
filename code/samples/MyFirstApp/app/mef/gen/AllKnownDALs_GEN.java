@@ -8,7 +8,6 @@ import org.mef.framework.dal.IDAL;
 import mef.daos.*;
 import mef.daos.mocks.*;
 import boundaries.daos.*;
-
 import org.mef.framework.sfx.SfxContext;
 
 public class AllKnownDALs_GEN  
