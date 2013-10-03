@@ -1,0 +1,15 @@
+Installing MEF
+
+for now until I make MEF a Play module
+
+ * download mef zip file
+ * put in a tools dir, add to path so batch files are avail
+ * create lib dir in project
+ * copy meflib.jar into lib
+ * Build.scala:
+     inside
+        val main = play.Project(appName, appVersion, appDependencies).settings(
+     add:
+		 resolvers += Resolver.file("meflib.jar", file("lib")) transactional()	
+
+		 

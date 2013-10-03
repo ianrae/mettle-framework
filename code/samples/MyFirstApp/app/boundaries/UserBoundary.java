@@ -16,6 +16,12 @@ import boundaries.dals.UserDAL;
 
 public class UserBoundary extends BoundaryBase
 {
+	public static UserBoundary create() 
+	{
+		Boundary.init();
+		return new UserBoundary(Boundary.theCtx);
+	}
+	
 	public UserFormBinder binder;
 	
 	public UserBoundary(SfxContext ctx)

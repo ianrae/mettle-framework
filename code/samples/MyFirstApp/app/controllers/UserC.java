@@ -35,14 +35,14 @@ public class UserC extends Controller
 	
 	public static Result index() 
     {
-		UserBoundary boundary = Boundary.createUserBoundary();
+		UserBoundary boundary = UserBoundary.create();
 		UserReply reply = boundary.process(new IndexCommand());
 		return doRenderOrForward(boundary, reply);
 	}
     
     public static Result newUser() 
     {
-		UserBoundary boundary = Boundary.createUserBoundary();
+		UserBoundary boundary = UserBoundary.create();
 		Logger.info("newuser..");
 		UserReply reply = boundary.process(new NewCommand());
 		System.out.println("xBOUND.. " + reply._entity.name);
@@ -51,7 +51,7 @@ public class UserC extends Controller
     
     public static Result createUser() 
     {
-		UserBoundary boundary = Boundary.createUserBoundary();
+		UserBoundary boundary = UserBoundary.create();
 		Logger.info("createuser..");
 		UserReply reply = boundary.addFormAndProcess(new CreateCommand());
 		return doRenderOrForward(boundary, reply);
@@ -59,27 +59,27 @@ public class UserC extends Controller
     
     public static Result deleteUser(Long id) 
     {
-		UserBoundary boundary = Boundary.createUserBoundary();
+		UserBoundary boundary = UserBoundary.create();
 		UserReply reply = boundary.process(new DeleteCommand(id));
 		return doRenderOrForward(boundary, reply);
 	}
     
     public static Result edit(Long id) 
     {
-		UserBoundary boundary = Boundary.createUserBoundary();
+		UserBoundary boundary = UserBoundary.create();
 		UserReply reply = boundary.process(new EditCommand(id));
 		return doRenderOrForward(boundary, reply);
 	}
     
     public static Result updateUser(Long id) 
     {
-		UserBoundary boundary = Boundary.createUserBoundary();
+		UserBoundary boundary = UserBoundary.create();
 		UserReply reply = (UserReply) boundary.addFormAndProcess(new UpdateCommand(id));
 		return doRenderOrForward(boundary, reply);
 	}
     public static Result show(Long id) 
     {
-		UserBoundary boundary = Boundary.createUserBoundary();
+		UserBoundary boundary = UserBoundary.create();
 		UserReply reply = boundary.process(new ShowCommand(id));
 		return doRenderOrForward(boundary, reply);
 	}

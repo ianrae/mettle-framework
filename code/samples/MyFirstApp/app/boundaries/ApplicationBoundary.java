@@ -15,6 +15,13 @@ import controllers.routes;
 
 public class ApplicationBoundary extends BoundaryBase
 {
+	public static ApplicationBoundary create()
+	{
+		Boundary.init();
+		return new ApplicationBoundary(Boundary.theCtx);
+	}
+
+	
 	public ApplicationBoundary(SfxContext ctx)
 	{
 		super(ctx);

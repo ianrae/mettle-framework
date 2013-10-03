@@ -14,7 +14,7 @@ public class Boundary
 {
 	public static SfxContext theCtx;
 	
-	private static void init()
+	static void init()
 	{
 		if (theCtx == null)
 		{
@@ -25,19 +25,5 @@ public class Boundary
 //			Initializer.loadSeedData(theCtx);
 		}
 	}
-	
-	public static ApplicationBoundary createApplicationBoundary()
-	{
-		init();
-		return new ApplicationBoundary(theCtx);
-	}
-	public static UserBoundary createUserBoundary() 
-	{
-		init();
-		return new UserBoundary(theCtx);
-	}
-	
-	
-
 	
 }

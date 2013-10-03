@@ -1,0 +1,186 @@
+
+
+Intro
+----------
+MEF is a fast TDD framework for Play Java applications.  It's based on the Robert Martin "entity-boundary-interactor" architecture described here.  
+
+http://confreaks.net/videos/759-rubymidwest2011-keynote-architecture-the-lost-years
+
+This architecture separates application code from any dependency on databases, the web, or even the Play framework.
+The core of your app is POJO.  Unit tests run extremely fast (no need for entity manager or fakeApplication).
+
+In MEF, each model class now becomes two classe: An "entity object" that contains only public fields, and a "DAO object" that manages persistence.  Entity and DAO classes are created with a code generation tool called mefgenerate.  It creates mock DAOs for unit testing, and real DALs for integration with your eBean or JPA Model object (which mefgeneration also creates).  The Model object is fully annotated with JPA and validation annotations.
+
+Terminology
+-------------
+In his talk, Robert Martin, uses a number of terms, not because they are particularly elegant, but to avoid confusion with the 
+existing model, view, controller terms.
+
+ * Entity -- data-only object that represents a domain object. like a C struct.
+ * Interactor -- contains business logic.  Receives requests and produces responses.
+ * Boundary -- sits between the app and the MEF code, managing their interaction.
+ * Gateway -- database persistence hidden behind interfaces.
+ 
+MEF uses slightly different terminology.
+
+ * Entity -- POJO class. no code. only public fields
+ * Presenter -- contains business logic. 
+ * Boundary -- same as above.
+ * DAL -- Data Access Layer. Consists of one DAO per entity. database persistence.
+ 
+Advantages
+------------------
+MEF apps are
+ * faster to develop due to better TDD experience
+ * easier to port if Play changes significantly or you want an Android version of your app
+ * less boilerplate code to write. 
+ 
+ 
+ 
+
+
+
+---------------------------------------------
+TOC
+
+Installing
+see install.txt
+
+
+Getting Started
+Create a new play app, using play new
+
+mefgenerate app
+
+This will create the mef directory structure and some intial files
+
+  app
+    boundaries     layer that sits between Play and MEF
+
+    mef
+	    core   		 initialization code
+	    dals        (daos) database persistence
+	    entities    the 'model object in MEF (POJOs)
+	    gen         codegen puts stuff here
+	    presenters  holds business logic. equivalent to a controller
+
+  conf
+    mef/seed       JSON database initialization files
+
+  test
+    mef            unit tests (no FakeApplication needed)
+
+Our app needs CRUD on a Task object, so we'll create a presenter that handles Tasks.
+
+  mefgenerate presenter:Task
+
+The following files are created
+
+  app/mef/presenters/TaskPresenter      your business logic goes here
+  app/mef/presenters/replies/TaskReply  response object
+
+The presenter contains methods for the standards RAILs actions.  You can use
+them or delete them.
+
+In MEF, each action is represented by a public method of a presenter.
+A naming convention is used; the method that processes an IndexCommand 
+request is called onIndexCommand.
+
+   Reply  onIndexCommand(IndexCommand cmd)
+
+The command contains all the input data: CGI params, forms, cookies, etc.
+The reply contains all the data needed by the view.  Reply can be considered
+a form of viewmodel, although Play's excellent type-safe Scala views reduce
+much of the need for classic viewmodels.
+
+Now that our presenter exists, lets create the Task entity.  Edit mef.xml
+in the application root directory.  You will be defining all your entities
+in here.
+
+Task will have two fields.  An id field is required by all entities.
+And a name field.  Put in the JPA annotations.
+
+<?xml version="1.0"?>
+<entities orm="ebean"> 
+
+<entity name="Task">
+	<field>@Id Long id</field>
+	<field>@Required String name</field>
+</entity>
+</entities>
+
+Now generate the DAL by running
+
+mefgenerate dal
+
+The Task class is very simple:
+
+public class Task extends Entity
+{
+    public Long id;
+    public String name;
+}
+
+A number of other classes are created.  A mock and real DAO are created, both
+implementing the DAO interface for Task:
+
+public interface ITaskDAO  extends IDAO
+{
+	Task findById(long id);
+	List<Task> all();
+	void save(Task entity);        
+	void update(Task entity);
+}
+
+This DAO is exensible. MEF will generate methods such as find_by_name automatically,
+much like RAILS ActiveRecord. (See ....)
+
+Our First Test
+--------------
+Under test/mef, a file TaskPresenterests.java has been created.
+
+It contains a single test that sends an IndexCommand to the task presenter and
+validates that the result.
+
+	@Test
+	public void indexTest() 
+	{
+		TaskReply reply = (TaskReply) _presenter.process(new IndexCommand());
+		
+		chkReplySucessful(reply, Reply.VIEW_INDEX, null);
+		chkDalSize(0);
+		chkReplyWithoutEntity(reply, true, 0);
+	}
+
+The reply returns a destination which can indicate a view to render or a redirect.
+The destination is an integer so your controller can have a switch statement.
+
+
+Hooking up the Controller
+---------------------------
+In our controller, we call the presenter
+
+	public static Result index() 
+    {
+		TaskBoundary boundary = Boundary.createTaskBoundary();
+		TaskReply reply = boundary.process(new IndexCommand());
+		return doRenderOrForward(boundary, reply);
+	}
+
+The TaskBoundary object was created by mefgenerate.
+
+
+---------------------------------
+Creating a new app
+Creating a new presenter
+Updating the DAL
+
+Controllers
+Presenters
+Database Access
+
+Unit Testing
+
+DB Seed
+
+Integration testing

@@ -37,7 +37,7 @@ public class Application extends Controller
 	
 	public static Result tasks() 
 	{
-		ApplicationBoundary boundary = Boundary.createApplicationBoundary();
+		ApplicationBoundary boundary = ApplicationBoundary.create();
 		HomePageReply reply = (HomePageReply) boundary.process(new IndexCommand());
 		
 //		List<TaskModel> L = Boundary.convertToTaskModel(reply._allL);
@@ -52,7 +52,7 @@ public class Application extends Controller
   
 	public static Result newTask() 
 	{
-		ApplicationBoundary boundary = Boundary.createApplicationBoundary();
+		ApplicationBoundary boundary = ApplicationBoundary.create();
 		HomePageReply reply = boundary.addFormAndProcess(new CreateCommand()); //taskForm.get());
 		
 		if (!reply.isForward())
@@ -82,7 +82,7 @@ public class Application extends Controller
 
 	public static Result deleteTask(Long id) 
 	{
-		ApplicationBoundary boundary = Boundary.createApplicationBoundary();
+		ApplicationBoundary boundary = ApplicationBoundary.create();
 		HomePageReply reply = (HomePageReply) boundary.process(new DeleteCommand(id));
 		return redirect(routes.Application.tasks());	
 	}  
@@ -94,7 +94,7 @@ public class Application extends Controller
 	
 	public static Result runTests() 
 	{
-		ApplicationBoundary boundary = Boundary.createApplicationBoundary();
+		ApplicationBoundary boundary = ApplicationBoundary.create();
 		//I can't get integration junit tests working in Eclipse due to ebean ehancement errors,
 		//so do poor man's unit tests here
 		PhoneDAL phoneDal = (PhoneDAL) Boundary.theCtx.getServiceLocator().getInstance(IPhoneDAL.class);
