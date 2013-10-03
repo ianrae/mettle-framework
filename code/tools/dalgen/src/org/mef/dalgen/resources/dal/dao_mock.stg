@@ -80,6 +80,11 @@ public class <name> implements I<type>DAO
     @Override
     public void save(<type> entity) 
     {
+    	if (entity.id == null)
+		{
+    		entity.id = new Long(0L);
+    	}
+		
         delete(entity.id); //remove existing
         if (entity.id == 0)
         {

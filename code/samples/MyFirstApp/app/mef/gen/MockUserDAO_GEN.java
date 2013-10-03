@@ -54,6 +54,11 @@ public class MockUserDAO_GEN implements IUserDAO
     @Override
     public void save(User entity) 
     {
+    	if (entity.id == null)
+    	{
+    		entity.id = new Long(0L);
+    	}
+    	
         delete(entity.id); //remove existing
         if (entity.id == 0)
         {

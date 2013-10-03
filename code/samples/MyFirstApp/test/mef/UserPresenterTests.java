@@ -48,6 +48,19 @@ public class UserPresenterTests extends BasePresenterTest
 		chkReplyWithoutEntity(reply, true, 0);
 	}
 
+	@Test
+	public void indexTestOne() 
+	{
+		User u = new User();
+		u.name = "bob";
+		_dal.save(u);
+		UserReply reply = (UserReply) _presenter.process(new IndexCommand());
+		
+		chkReplySucessful(reply, Reply.VIEW_INDEX, null);
+		chkDalSize(1);
+		assertEquals("bob", _dal.all().get(0));
+		chkReplyWithoutEntity(reply, true, 0);
+	}
 	
 	//--- new ---
 	@Test
