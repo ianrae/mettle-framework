@@ -10,6 +10,7 @@ import org.mef.framework.commands.IndexCommand;
 import org.mef.framework.presenters.Presenter;
 import org.mef.framework.replies.Reply;
 import org.mef.framework.sfx.SfxContext;
+import org.mef.framework.test.helpers.MockFormBinder;
 
 import mef.core.Initializer;
 import mef.dals.ITaskDAL;
@@ -17,7 +18,6 @@ import mef.dals.mocks.MockPhoneDAL;
 import mef.dals.mocks.MockTaskDAL;
 import mef.dals.mocks.MockUserDAL;
 import mef.entities.Task;
-import mef.mocks.MockFormBinder;
 import mef.presenters.HomePagePresenter;
 import mef.presenters.replies.HomePageReply;
 

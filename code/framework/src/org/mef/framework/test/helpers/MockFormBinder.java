@@ -1,9 +1,6 @@
-package mef.mocks;
-
-import mef.entities.User;
+package org.mef.framework.test.helpers;
 
 import org.mef.framework.entities.*;
-
 import org.mef.framework.binder.IFormBinder;
 
 public class MockFormBinder implements IFormBinder

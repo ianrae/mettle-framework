@@ -2,10 +2,10 @@ package mef;
 
 import static org.junit.Assert.*;
 
-import mef.mocks.MockFormBinder;
 
 import org.junit.Test;
 import org.mef.framework.entities.Entity;
+import org.mef.framework.test.helpers.MockFormBinder;
 
 public class BinderTests 
 {

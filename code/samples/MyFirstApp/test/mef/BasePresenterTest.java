@@ -6,7 +6,6 @@ import mef.core.Initializer;
 import mef.dals.mocks.MockTaskDAL;
 import mef.dals.mocks.MockUserDAL;
 import mef.entities.User;
-import mef.mocks.MockFormBinder;
 import mef.presenters.UserPresenter;
 
 import org.junit.Before;
@@ -14,6 +13,7 @@ import org.junit.Test;
 import org.mef.framework.commands.Command;
 import org.mef.framework.replies.Reply;
 import org.mef.framework.sfx.SfxContext;
+import org.mef.framework.test.helpers.MockFormBinder;
 
 public class BasePresenterTest extends BaseTest
 {

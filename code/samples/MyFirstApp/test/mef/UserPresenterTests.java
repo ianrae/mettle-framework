@@ -22,7 +22,6 @@ import mef.dals.IUserDAL;
 import mef.dals.mocks.MockTaskDAL;
 import mef.dals.mocks.MockUserDAL;
 import mef.entities.User;
-import mef.mocks.MockFormBinder;
 import mef.presenters.UserPresenter;
 import mef.presenters.replies.UserReply;
 
