@@ -11,7 +11,7 @@ import org.mef.framework.replies.Reply;
 import org.mef.framework.sfx.SfxBaseObj;
 import org.mef.framework.sfx.SfxContext;
 
-import mef.dals.ITaskDAO;
+import mef.daos.ITaskDAO;
 import mef.entities.Task;
 import mef.presenters.replies.HomePageReply;
 

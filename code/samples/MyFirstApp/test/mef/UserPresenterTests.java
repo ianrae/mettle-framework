@@ -18,9 +18,9 @@ import org.mef.framework.replies.Reply;
 import org.mef.framework.sfx.SfxContext;
 
 import mef.core.Initializer;
-import mef.dals.IUserDAO;
-import mef.dals.mocks.MockTaskDAO;
-import mef.dals.mocks.MockUserDAO;
+import mef.daos.IUserDAO;
+import mef.daos.mocks.MockTaskDAO;
+import mef.daos.mocks.MockUserDAO;
 import mef.entities.User;
 import mef.presenters.UserPresenter;
 import mef.presenters.replies.UserReply;

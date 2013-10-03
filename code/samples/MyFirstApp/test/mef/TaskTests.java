@@ -7,8 +7,8 @@ import java.util.List;
 
 import org.junit.Test;
 
-import mef.dals.mocks.MockTaskDAO;
-import mef.dals.mocks.MockUserDAO;
+import mef.daos.mocks.MockTaskDAO;
+import mef.daos.mocks.MockUserDAO;
 import mef.entities.Task;
 import mef.entities.User;
 

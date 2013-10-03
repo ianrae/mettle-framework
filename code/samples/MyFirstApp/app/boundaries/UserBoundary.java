@@ -12,7 +12,7 @@ import play.Logger;
 import play.data.Form;
 import play.mvc.Controller;
 import boundaries.binders.UserFormBinder;
-import boundaries.dals.UserDAO;
+import boundaries.daos.UserDAO;
 
 public class UserBoundary extends BoundaryBase
 {

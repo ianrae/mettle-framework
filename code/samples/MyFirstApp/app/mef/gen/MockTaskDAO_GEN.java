@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import org.mef.framework.binder.IFormBinder;
 
 import mef.entities.*;
-import mef.dals.*;
+import mef.daos.*;
 
 public class MockTaskDAO_GEN implements ITaskDAO
 {

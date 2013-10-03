@@ -1,7 +1,7 @@
 package mef.core;
 
-import mef.dals.IPhoneDAO;
-import mef.dals.IUserDAO;
+import mef.daos.IPhoneDAO;
+import mef.daos.IUserDAO;
 import mef.entities.Phone;
 import mef.entities.User;
 

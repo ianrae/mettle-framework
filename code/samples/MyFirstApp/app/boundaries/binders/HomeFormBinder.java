@@ -7,7 +7,7 @@ import models.TaskModel;
 
 import org.mef.framework.binder.IFormBinder;
 
-import boundaries.dals.TaskDAO;
+import boundaries.daos.TaskDAO;
 
 import play.Logger;
 import play.data.Form;

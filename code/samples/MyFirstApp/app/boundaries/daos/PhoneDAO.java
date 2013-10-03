@@ -1,9 +1,9 @@
-package boundaries.dals;
+package boundaries.daos;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import mef.dals.IPhoneDAO;
+import mef.daos.IPhoneDAO;
 import mef.entities.Phone;
 import models.PhoneModel;
 

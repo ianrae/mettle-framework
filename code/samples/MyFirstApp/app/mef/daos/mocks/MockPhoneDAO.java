@@ -1,11 +1,12 @@
 //THIS FILE HAS BEEN AUTO-GENERATED. DO NOT MODIFY.
 
-package mef.dals.mocks;
+package mef.daos.mocks;
 
 import java.util.List;
 import java.util.ArrayList;
 import mef.entities.*;
-import mef.dals.*;
+import mef.daos.*;
+
 import org.mef.framework.binder.IFormBinder;
 import org.codehaus.jackson.map.ObjectMapper;
 import mef.gen.*;

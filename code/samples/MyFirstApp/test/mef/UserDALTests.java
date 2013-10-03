@@ -4,8 +4,8 @@ import static org.junit.Assert.*;
 
 import java.util.List;
 
-import mef.dals.IUserDAO;
-import mef.dals.mocks.MockUserDAO;
+import mef.daos.IUserDAO;
+import mef.daos.mocks.MockUserDAO;
 import mef.entities.User;
 import mef.presenters.UserPresenter;
 

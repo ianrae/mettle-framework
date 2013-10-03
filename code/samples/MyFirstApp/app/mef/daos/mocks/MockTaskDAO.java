@@ -1,4 +1,4 @@
-package mef.dals.mocks;
+package mef.daos.mocks;
 
 import java.util.List;
 import java.util.ArrayList;

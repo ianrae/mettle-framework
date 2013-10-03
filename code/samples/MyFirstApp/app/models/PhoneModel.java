@@ -9,7 +9,7 @@ import play.db.ebean.*;
 import play.data.validation.Constraints.*;
 import javax.persistence.*;
 import mef.entities.*;
-import boundaries.dals.*;
+import boundaries.daos.*;
 @Entity
 public class PhoneModel extends Model
 {

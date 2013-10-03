@@ -1,6 +1,6 @@
 //THIS FILE HAS BEEN AUTO-GENERATED. DO NOT MODIFY.
 
-package mef.dals;
+package mef.daos;
 
 import mef.entities.*;
 import java.util.List;

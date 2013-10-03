@@ -1,4 +1,4 @@
-package mef.dals;
+package mef.daos;
 
 import mef.entities.*;
 import java.util.List;

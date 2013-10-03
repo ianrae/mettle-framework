@@ -13,9 +13,9 @@ import org.mef.framework.sfx.SfxContext;
 import org.mef.framework.test.helpers.MockFormBinder;
 
 import mef.core.Initializer;
-import mef.dals.ITaskDAO;
-import mef.dals.mocks.MockTaskDAO;
-import mef.dals.mocks.MockUserDAO;
+import mef.daos.ITaskDAO;
+import mef.daos.mocks.MockTaskDAO;
+import mef.daos.mocks.MockUserDAO;
 import mef.entities.Task;
 import mef.presenters.HomePagePresenter;
 import mef.presenters.replies.HomePageReply;

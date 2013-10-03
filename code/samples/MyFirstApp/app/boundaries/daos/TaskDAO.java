@@ -1,4 +1,4 @@
-package boundaries.dals;
+package boundaries.daos;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +9,7 @@ import boundaries.Boundary;
 
 import models.TaskModel;
 
-import mef.dals.ITaskDAO;
+import mef.daos.ITaskDAO;
 import mef.entities.Task;
 
 public class TaskDAO implements ITaskDAO 

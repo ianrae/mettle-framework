@@ -7,7 +7,7 @@ import models.UserModel;
 
 import org.mef.framework.binder.IFormBinder;
 
-import boundaries.dals.UserDAO;
+import boundaries.daos.UserDAO;
 
 import play.Logger;
 import play.data.Form;

@@ -10,9 +10,9 @@ import org.mef.framework.replies.Reply;
 
 import boundaries.ApplicationBoundary;
 import boundaries.Boundary;
-import boundaries.dals.PhoneDAO;
+import boundaries.daos.PhoneDAO;
 
-import mef.dals.IPhoneDAO;
+import mef.daos.IPhoneDAO;
 import mef.entities.Phone;
 import mef.entities.Task;
 import mef.presenters.replies.HomePageReply;

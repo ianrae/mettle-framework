@@ -3,8 +3,8 @@ package mef;
 import java.io.File;
 
 import mef.core.Initializer;
-import mef.dals.mocks.MockTaskDAO;
-import mef.dals.mocks.MockUserDAO;
+import mef.daos.mocks.MockTaskDAO;
+import mef.daos.mocks.MockUserDAO;
 
 import org.apache.commons.io.FilenameUtils;
 import org.mef.framework.sfx.SfxContext;

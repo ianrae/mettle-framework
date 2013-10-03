@@ -8,10 +8,10 @@ import java.io.FileReader;
 import java.io.IOException;
 
 import mef.core.EntityLoader;
-import mef.dals.IPhoneDAO;
-import mef.dals.IUserDAO;
-import mef.dals.mocks.MockPhoneDAO;
-import mef.dals.mocks.MockUserDAO;
+import mef.daos.IPhoneDAO;
+import mef.daos.IUserDAO;
+import mef.daos.mocks.MockPhoneDAO;
+import mef.daos.mocks.MockUserDAO;
 import mef.entities.Phone;
 import mef.entities.User;
 import mef.gen.Phone_GEN;

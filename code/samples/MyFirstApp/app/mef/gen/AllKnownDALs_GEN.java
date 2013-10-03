@@ -5,9 +5,10 @@ package mef.gen;
 import java.util.ArrayList;
 import java.util.List;
 import org.mef.framework.dal.IDAL;
-import mef.dals.*;
-import mef.dals.mocks.*;
-import boundaries.dals.*;
+import mef.daos.*;
+import mef.daos.mocks.*;
+import boundaries.daos.*;
+
 import org.mef.framework.sfx.SfxContext;
 
 public class AllKnownDALs_GEN  

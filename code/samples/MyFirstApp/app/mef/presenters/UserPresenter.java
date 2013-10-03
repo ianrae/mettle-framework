@@ -19,8 +19,8 @@ import org.mef.framework.replies.Reply;
 import org.mef.framework.sfx.SfxBaseObj;
 import org.mef.framework.sfx.SfxContext;
 
-import mef.dals.IPhoneDAO;
-import mef.dals.IUserDAO;
+import mef.daos.IPhoneDAO;
+import mef.daos.IUserDAO;
 import mef.entities.Phone;
 import mef.entities.User;
 import mef.presenters.replies.UserReply;

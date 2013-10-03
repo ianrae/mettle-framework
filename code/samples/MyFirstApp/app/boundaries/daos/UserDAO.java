@@ -1,4 +1,4 @@
-package boundaries.dals;
+package boundaries.daos;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +15,7 @@ import boundaries.Boundary;
 
 import models.UserModel;
 
-import mef.dals.IUserDAO;
+import mef.daos.IUserDAO;
 import mef.entities.Task;
 import mef.entities.User;
 

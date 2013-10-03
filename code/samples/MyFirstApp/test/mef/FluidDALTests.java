@@ -17,8 +17,8 @@ import java.util.List;
 // Part 3 - mock DAL 
 
 
-import mef.dals.mocks.MockTaskDAO;
-import mef.dals.mocks.MockUserDAO;
+import mef.daos.mocks.MockTaskDAO;
+import mef.daos.mocks.MockUserDAO;
 import mef.entities.User;
 
 import org.junit.Test;
