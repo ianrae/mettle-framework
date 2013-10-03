@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 
+import org.mef.dalgen.codegen.generators.BoundaryCodeGen;
 import org.mef.dalgen.codegen.generators.CodeGenBase;
 import org.mef.dalgen.codegen.generators.DAOIntefaceCodeGen;
 import org.mef.dalgen.codegen.generators.EntityCodeGen;
@@ -67,6 +68,14 @@ public class PresenterScaffoldCodeGenerator extends SfxBaseObj
 		path = this.pathCombine(stDir, "reply.stg");
 		ReplyCodeGen gen2 = new ReplyCodeGen(_ctx, path, "mef.presenters.replies");
 		b = generateOneFile(def, gen2, "app\\mef\\presenters\\replies");
+		if (!b )
+		{
+			return false; //!!
+		}
+		
+		path = this.pathCombine(stDir, "boundary.stg");
+		BoundaryCodeGen gen3 = new BoundaryCodeGen(_ctx, path, "boundaries");
+		b = generateOneFile(def, gen2, "app\\boundaries");
 		if (!b )
 		{
 			return false; //!!

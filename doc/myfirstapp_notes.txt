@@ -539,3 +539,11 @@ p  \myfirstApp\test\mef\UserPresenterTests.java
   \myfirstApp\test\testfiles\json2.txt
 
 
+----------------3OctThur
+avoiding File usage (won't work heroku)
+//TESTING BY USING INCLUDED KEYSTORE IN JAR FILE
+    String ksPath = "/res/devportal.jks";
+    URL jksURL = PostNvp.class.getResource(ksPath);
+    File jksStore = new File(jksURL.toURI());
+    //TESTING
+    

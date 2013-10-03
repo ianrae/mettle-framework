@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 import org.mef.dalgen.codegen.DALUtilsCodeGen;
+import org.mef.dalgen.codegen.generators.BoundaryCodeGen;
 import org.mef.dalgen.codegen.generators.DAOIntefaceCodeGen;
 import org.mef.dalgen.codegen.generators.EntityCodeGen;
 import org.mef.dalgen.codegen.generators.KnownDAOsCodeGen;
@@ -105,6 +106,19 @@ public class CodeGenTests extends BaseCodeGenTest
 		log(code);
 		assertEquals(true, 10 < code.length());
 		writeFile("TaskDAL", code);
+	}
+	
+	@Test
+	public void testBoundary() throws Exception
+	{
+		log("--testBoundary--");
+		String path = this.getPresenterTemplateFile("boundary.stg");
+		String packageName = "boundaries";
+		BoundaryCodeGen gen = new BoundaryCodeGen(_ctx, path, packageName);
+		String code = gen.generate(def);	
+		log(code);
+		assertEquals(true, 10 < code.length());
+		writeFile("TaskBoundary", code);
 	}
 	
 //	@Test
