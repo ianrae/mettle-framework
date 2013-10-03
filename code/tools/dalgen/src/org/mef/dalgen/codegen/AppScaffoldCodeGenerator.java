@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.mef.dalgen.codegen.generators.CodeGenBase;
 import org.mef.dalgen.codegen.generators.DALIntefaceCodeGen;
 import org.mef.dalgen.codegen.generators.EntityCodeGen;
@@ -22,7 +24,6 @@ public class AppScaffoldCodeGenerator extends SfxBaseObj
 {
 	private String appDir;
 	private String stDir;
-	private DalGenXmlParser parser;
 	public boolean disableFileIO;
 	
 	public AppScaffoldCodeGenerator(SfxContext ctx)
@@ -30,87 +31,35 @@ public class AppScaffoldCodeGenerator extends SfxBaseObj
 		super(ctx);
 	}
 	
-	public int init(String appDir, String stDir) throws Exception
+	public void init(String appDir, String stDir) throws Exception
 	{
 		this.appDir = appDir;
 		this.stDir = stDir;
-		parser = readEntityDef(appDir);
-		return parser._entityL.size();
 	}
 	
-	public boolean generate(String name) throws Exception
+	public boolean generate() throws Exception
 	{
-		int i = 0;
-		for(EntityDef def : parser._entityL)
-		{
-			if (def.name.equals(name))
-			{
-				return generate(i);
-			}
-			i++;
-		}
-		return false;
-	}
-	
-	public boolean generate(int index) throws Exception
-	{
-		EntityDef def = parser._entityL.get(index);
+		String filename = "mef.xml";
 		
-		String path = this.pathCombine(stDir, "presenter.stg");
-		PresenterCodeGen gen = new PresenterCodeGen(_ctx, path, "mef.presenters");
-		boolean b = generateOneFile(def, gen, "app\\mef\\presenters");
-		if (!b )
-		{
-			return false; //!!
-		}
+		String resDir = FilenameUtils.concat(stDir, "copy");
 		
-		path = this.pathCombine(stDir, "reply.stg");
-		ReplyCodeGen gen2 = new ReplyCodeGen(_ctx, path, "mef.presenters.replies");
-		b = generateOneFile(def, gen2, "app\\mef\\presenters\\replies");
-		if (!b )
-		{
-			return false; //!!
-		}
+		String src = FilenameUtils.concat(resDir, filename);
+		String dest = FilenameUtils.concat(appDir, filename);
 		
-		return b;
-	}
-	private boolean generateOneFile(EntityDef def, CodeGenBase gen, String relPath) throws Exception
-	{
-		if (! def.enabled)
+		File fdest = new File(dest);
+		if (fdest.exists())
 		{
-			log(def.name + " disabled -- no files generated.");
-			return true; //do nothing
-		}
-		
-		String code = gen.generate(def);	
-		String className = gen.getClassName(def);	
-
-		String path = this.pathCombine(appDir, relPath);
-		path = this.pathCombine(path, className + ".java");
-		File f = new File(path);
-		if (f.exists())
-		{
-			log(path);
-			this.log(def.name + ": skipping - already exists");
+			log(String.format("copy: (skipping, exists) => %s", dest));
 			return true;
 		}
 		
-		boolean b = writeFile(appDir, relPath, className, code);
-		if (!b)
+		log(String.format("copy: %s => %s", src, dest));
+		if (disableFileIO)
 		{
-			return false;
+			return true;
 		}
-		
+		FileUtils.copyFile(new File(src), new File(dest));
 		return true;
-	}
-	private DalGenXmlParser readEntityDef(String appDir) throws Exception
-	{
-		String path = this.pathCombine(appDir, "mef.xml");
-		DalGenXmlParser parser = new DalGenXmlParser(_ctx);
-		boolean b = parser.parse(path);
-
-//		return parser._entityL.get(0);
-		return parser;
 	}
 
 	private boolean writeFile(String appDir, String subDir, String fileName, String code)

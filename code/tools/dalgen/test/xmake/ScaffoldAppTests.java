@@ -21,17 +21,17 @@ public class ScaffoldAppTests extends BaseTest
 		createContext();
 		AppScaffoldCodeGenerator gen = new AppScaffoldCodeGenerator(_ctx);
 		
-		gen.disableFileIO = true;  //***** WATCH OUT!11 ****
+		gen.disableFileIO = false;  //***** WATCH OUT!11 ****
 		
 		String appDir = this.getCurrentDir("..\\..\\samples\\AppTwo");
 		String stDir = this.getCurrentDir("src\\org\\mef\\dalgen\\resources\\app");
 log(appDir);
 log(stDir);
 		
-		int n = gen.init(appDir, stDir);
-		assertEquals(4, n);
+		gen.init(appDir, stDir);
 
 		boolean b = false;
+		b = gen.generate();
 //		boolean b = gen.generate(0);
 //		b = gen.generate("User");
 //		b = gen.generate("Phone");
