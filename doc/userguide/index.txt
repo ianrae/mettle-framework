@@ -48,11 +48,11 @@ see install.txt
 
 
 Getting Started
-Create a new play app, using play new
+Create a new play app, using play new. Then run the MEF code generation tool
 
 mefgenerate app
 
-This will create the mef directory structure and some intial files
+This will create the mef directory structure and some intial files.
 
   app
     boundaries     layer that sits between Play and MEF
@@ -78,9 +78,10 @@ The following files are created
 
   app/mef/presenters/TaskPresenter      your business logic goes here
   app/mef/presenters/replies/TaskReply  response object
+  test/mef/TaskPresenterTests           unit tests
 
 The presenter contains methods for the standards RAILs actions.  You can use
-them or delete them.
+them or delete them as needed.
 
 In MEF, each action is represented by a public method of a presenter.
 A naming convention is used; the method that processes an IndexCommand 
@@ -154,6 +155,7 @@ validates that the result.
 
 The reply returns a destination which can indicate a view to render or a redirect.
 The destination is an integer so your controller can have a switch statement.
+The DAO is empty by default so its size is zero.  (See xxx for seeding data)
 
 
 Hooking up the Controller
@@ -162,25 +164,170 @@ In our controller, we call the presenter
 
 	public static Result index() 
     {
-		TaskBoundary boundary = Boundary.createTaskBoundary();
+		TaskBoundary boundary = TaskBoundary.create();
 		TaskReply reply = boundary.process(new IndexCommand());
-		return doRenderOrForward(boundary, reply);
+		return renderOrForward(boundary, reply);
 	}
 
-The TaskBoundary object was created by mefgenerate.
+The TaskBoundary object was created by mefgenerate.  It knows how to convert Play forms to MEF form-binders.
+All controller methods should call renderOrForward which handles generating a Play Result object.
+in all the actions.
+
+
+    private static Result renderOrForward(TaskBoundary boundary, TaskReply reply)
+    {
+		if (reply.failed()) //something bad happended
+		{
+			return redirect(routes.Main.errorPage());
+		}
+		
+		switch(reply.getDestination())
+		{
+		case Reply.VIEW_INDEX:
+			return ok(views.html.task.render(reply._allL, TaskForm));    	
+
+		...
+
+		case Reply.FORWARD_NOT_FOUND: 
+			return redirect(routes.Main.notFoundPage());
+
+		default:
+			return redirect(routes.Main.errorPage());
+    	}
+
+The view for 'index' is given a list of Task entities.
+
+@(tasks: List[mef.entities.Task])
+@import helper._
+
+@main("Tasks list") {
+    
+    <h1>@tasks.size() tasks(s)</h1>
+    
+    <ul>
+        @for(task <- tasks) {
+            <li>
+                @user.name  @user.id   
+            </li>
+        }
+    </ul>
+}
+
+The view receives entities, which means you can use field access, task.name, instead of getters.
+
+
 
 
 ---------------------------------
+Code Generation
+  mef.xml syntax
+  finders
+  custom methods
+  customize
+   -creates a parent class with _GEN suffix, put into mef/gen
+   -then you manually create the DAL class and derive from the corresponding _gen class
+
+   public class User extends User_GEN
+	{
+
+
 Creating a new app
+ -one-time when first starting work on a new app
+ -does not modify or overwrite any existing files
 Creating a new presenter
+ -done each time you create a new presenter
+ -does not modify or overwrite any existing files
 Updating the DAL
+ -done each time you modify mef.xml
+ -DOES overwrite existing files.  If you need to modify one of the DAL classes, use the customize option.
 
 Controllers
+-can now be as thin as possible. Business logic gets moved to the presenter
+-however, you are free to adjust which code stays in the controller and which goes into the presenter.
+
 Presenters
+-one created per request to avoid multi-threading issues
+-MEF uses reflection to call the action method for a particular command
+-MEF defines Command classes for the RAILs action.  You generally use these unless there is additional input
+  data you need to pass.  However you are free to create any type of command that you need.
+
+An action method takes a command object as input, and produces a reply object as output.
+
+Reply objects
+-failed -- if true then the rest of the reply object is undefined.  Controllers should generally route to error page when
+   failed() is true.
+
+-destination. int. Defines what the application should do: render a view, or redirect somewhere.  
+  -MEF defines some standard view and rediction values.  Define your own as needed.
+
+-each type of presenter has its own reply class.  It contains fields for all the data that the presenter will be
+returning.
+
+CRUD actions
+
+index
+ -return a list of entities to display.  pagination support will be likely.
+
+show(id)
+ -show a single entity
+
+new
+ -show a form for creating a new instance of the entity
+
+create
+ -handle the postback from new.  Create the entity in the database.
+ -if successful, create often redirects to index
+
+edit(id)
+ -show a form for editing an existing entity
+
+update
+ -handle the postback from edit. update the entity in the database
+ -if successful, update often redirects to index
+
+delete(id)
+ -delete the entity
+ -if successful, delete often redirects to index
+
+Forms
+Play has excellent forms with good validation support.  In MEF you will still
+use Play forms.  However, your presenter never directly accesses them.
+
+New
+A 'new' action displays a form where the user create a new instance of an entity.
+
+To generate a form, a presenter creates an entity object and fills in the default values
+that you want each field to have when the form is displayed.  Back in the controller, call
+the boundary's makeForm method.  This was created by mefgenerate and will create a Play
+form from your entity.
+
+		Form<TaskModel> frm = boundary.makeForm(reply); 
+
+Create
+The postback from 'new' has a the form.  In the controller, use the boundary method
+addFormAndProcess.  This will create a Play form which is hidden from the presenter 
+by a form-binder object. The presenter then does the binding via the form-binder.
+
+		IFormBinder binder = cmd.getFormBinder();
+		boolean valid = binder.bind();
+
+If binder was not successful (due to validation failure(s)), the presenter returns the
+form to the controller to render with appropriate validation messasges.
+
+
+
 Database Access
+
+
 
 Unit Testing
 
+
+
 DB Seed
 
+
+
 Integration testing
+
+
