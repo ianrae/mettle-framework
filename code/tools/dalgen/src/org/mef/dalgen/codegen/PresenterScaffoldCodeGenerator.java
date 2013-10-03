@@ -7,7 +7,7 @@ import java.io.File;
 import org.mef.dalgen.codegen.generators.CodeGenBase;
 import org.mef.dalgen.codegen.generators.DAOIntefaceCodeGen;
 import org.mef.dalgen.codegen.generators.EntityCodeGen;
-import org.mef.dalgen.codegen.generators.MockDALCodeGen;
+import org.mef.dalgen.codegen.generators.MockDAOCodeGen;
 import org.mef.dalgen.codegen.generators.ModelCodeGen;
 import org.mef.dalgen.codegen.generators.PresenterCodeGen;
 import org.mef.dalgen.codegen.generators.ReplyCodeGen;

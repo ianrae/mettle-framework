@@ -8,7 +8,7 @@ import org.mef.dalgen.codegen.generators.CodeGenBase;
 import org.mef.dalgen.codegen.generators.DAOIntefaceCodeGen;
 import org.mef.dalgen.codegen.generators.EntityCodeGen;
 import org.mef.dalgen.codegen.generators.KnownDAOsCodeGen;
-import org.mef.dalgen.codegen.generators.MockDALCodeGen;
+import org.mef.dalgen.codegen.generators.MockDAOCodeGen;
 import org.mef.dalgen.codegen.generators.ModelCodeGen;
 import org.mef.dalgen.parser.DalGenXmlParser;
 import org.mef.dalgen.parser.EntityDef;
@@ -94,7 +94,7 @@ public class DalCodeGenerator extends SfxBaseObj
 		}
 		
 		path = this.pathCombine(stDir, "dao_mock.stg");
-		MockDALCodeGen gen4 = new MockDALCodeGen(_ctx, path, "mef.daos.mocks");
+		MockDAOCodeGen gen4 = new MockDAOCodeGen(_ctx, path, "mef.daos.mocks");
 		b = generateOneFile(def, gen4, "app\\mef\\daos\\mocks");
 		if (!b )
 		{

@@ -6,9 +6,9 @@ import org.stringtemplate.v4.ST;
 
 import sfx.SfxContext;
 
-public class RealDALCodeGen extends CodeGenBase
+public class RealDAOCodeGen extends CodeGenBase
 {
-	public RealDALCodeGen(SfxContext ctx, String path, String packageName)
+	public RealDAOCodeGen(SfxContext ctx, String path, String packageName)
 	{
 		super(ctx, path, packageName);
 	}

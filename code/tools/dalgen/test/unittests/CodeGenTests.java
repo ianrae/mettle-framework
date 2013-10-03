@@ -7,9 +7,9 @@ import org.mef.dalgen.codegen.DALUtilsCodeGen;
 import org.mef.dalgen.codegen.generators.DAOIntefaceCodeGen;
 import org.mef.dalgen.codegen.generators.EntityCodeGen;
 import org.mef.dalgen.codegen.generators.KnownDAOsCodeGen;
-import org.mef.dalgen.codegen.generators.MockDALCodeGen;
+import org.mef.dalgen.codegen.generators.MockDAOCodeGen;
 import org.mef.dalgen.codegen.generators.ModelCodeGen;
-import org.mef.dalgen.codegen.generators.RealDALCodeGen;
+import org.mef.dalgen.codegen.generators.RealDAOCodeGen;
 import org.mef.dalgen.parser.DalGenXmlParser;
 import org.mef.dalgen.parser.EntityDef;
 
@@ -73,7 +73,7 @@ public class CodeGenTests extends BaseCodeGenTest
 		def.extendMock = true;
 		String path = this.getTemplateFile("dao_mock.stg");
 		String packageName = "org.mef.dalgen.unittests.gen";
-		MockDALCodeGen gen = new MockDALCodeGen(_ctx, path, packageName);
+		MockDAOCodeGen gen = new MockDAOCodeGen(_ctx, path, packageName);
 		String code = gen.generate(def);	
 		log(code);
 		assertEquals(true, 10 < code.length());
@@ -87,7 +87,7 @@ public class CodeGenTests extends BaseCodeGenTest
 		def.extendReal = true;
 		String path = this.getTemplateFile("dao_real.stg");
 		String packageName = "boundaries.dals";
-		RealDALCodeGen gen = new RealDALCodeGen(_ctx, path, packageName);
+		RealDAOCodeGen gen = new RealDAOCodeGen(_ctx, path, packageName);
 		String code = gen.generate(def);	
 		log(code);
 		assertEquals(true, 10 < code.length());

@@ -6,9 +6,9 @@ import org.stringtemplate.v4.ST;
 
 import sfx.SfxContext;
 
-public class MockDALCodeGen extends CodeGenBase
+public class MockDAOCodeGen extends CodeGenBase
 {
-	public MockDALCodeGen(SfxContext ctx, String path, String packageName)
+	public MockDAOCodeGen(SfxContext ctx, String path, String packageName)
 	{
 		super(ctx, path, packageName);
 	}
