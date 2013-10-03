@@ -42,7 +42,7 @@ public class HomePagePresenterTests
 	public void testDBDown() 
 	{
 		init();
-		MockTaskDAO dal = getDAL(); 
+		MockTaskDAO dal = getDAO(); 
 		dal._dbDown = true;
 		
 		HomePagePresenter presenter = new HomePagePresenter(_ctx);
@@ -58,7 +58,7 @@ public class HomePagePresenterTests
 	public void testDeleteTask() 
 	{
 		init();
-		MockTaskDAO dal = getDAL();
+		MockTaskDAO dal = getDAO();
 		Task t = new Task();
 		t.id = 46L;
 		t.label = "task1";
@@ -83,7 +83,7 @@ public class HomePagePresenterTests
 	public void testBadDeleteTask() 
 	{
 		init();
-		MockTaskDAO dal = getDAL();
+		MockTaskDAO dal = getDAO();
 		Task t = new Task();
 		t.id = 46L;
 		t.label = "task1";
@@ -108,7 +108,7 @@ public class HomePagePresenterTests
 	public void testCreateTask() 
 	{
 		init();
-		MockTaskDAO dal = getDAL();
+		MockTaskDAO dal = getDAO();
 		Task t = new Task();
 		t.id = 46L;
 		t.label = "task1";
@@ -137,7 +137,7 @@ public class HomePagePresenterTests
 		_ctx = Initializer.createContext(true);
 	}
 	
-	private MockTaskDAO getDAL()
+	private MockTaskDAO getDAO()
 	{
 		MockTaskDAO dal = (MockTaskDAO) _ctx.getServiceLocator().getInstance(ITaskDAO.class); 
 		return dal;

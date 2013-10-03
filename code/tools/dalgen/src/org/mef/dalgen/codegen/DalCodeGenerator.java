@@ -5,7 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.io.File;
 
 import org.mef.dalgen.codegen.generators.CodeGenBase;
-import org.mef.dalgen.codegen.generators.DALIntefaceCodeGen;
+import org.mef.dalgen.codegen.generators.DAOIntefaceCodeGen;
 import org.mef.dalgen.codegen.generators.EntityCodeGen;
 import org.mef.dalgen.codegen.generators.KnownDAOsCodeGen;
 import org.mef.dalgen.codegen.generators.MockDALCodeGen;
@@ -86,7 +86,7 @@ public class DalCodeGenerator extends SfxBaseObj
 		}
 		
 		path = this.pathCombine(stDir, "dao_interface.stg");
-		DALIntefaceCodeGen gen3 = new DALIntefaceCodeGen(_ctx, path, "mef.daos");
+		DAOIntefaceCodeGen gen3 = new DAOIntefaceCodeGen(_ctx, path, "mef.daos");
 		b = generateOneFile(def, gen3, "app\\mef\\daos");
 		if (!b )
 		{

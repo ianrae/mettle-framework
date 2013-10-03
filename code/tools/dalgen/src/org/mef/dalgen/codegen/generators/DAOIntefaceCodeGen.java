@@ -6,9 +6,9 @@ import org.stringtemplate.v4.ST;
 
 import sfx.SfxContext;
 
-public class DALIntefaceCodeGen extends CodeGenBase
+public class DAOIntefaceCodeGen extends CodeGenBase
 	{
-		public DALIntefaceCodeGen(SfxContext ctx, String path, String packageName)
+		public DAOIntefaceCodeGen(SfxContext ctx, String path, String packageName)
 		{
 			super(ctx, path, packageName);
 		}

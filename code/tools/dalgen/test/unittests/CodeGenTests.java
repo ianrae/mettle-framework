@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 import org.mef.dalgen.codegen.DALUtilsCodeGen;
-import org.mef.dalgen.codegen.generators.DALIntefaceCodeGen;
+import org.mef.dalgen.codegen.generators.DAOIntefaceCodeGen;
 import org.mef.dalgen.codegen.generators.EntityCodeGen;
 import org.mef.dalgen.codegen.generators.KnownDAOsCodeGen;
 import org.mef.dalgen.codegen.generators.MockDALCodeGen;
@@ -59,7 +59,7 @@ public class CodeGenTests extends BaseCodeGenTest
 		def.extendInterface = true;
 		String path = this.getTemplateFile("dao_interface.stg");
 		String packageName = "org.mef.dalgen.unittests.gen";
-		DALIntefaceCodeGen gen = new DALIntefaceCodeGen(_ctx, path, packageName);
+		DAOIntefaceCodeGen gen = new DAOIntefaceCodeGen(_ctx, path, packageName);
 		String code = gen.generate(def);	
 		log(code);
 		assertEquals(true, 10 < code.length());

@@ -258,11 +258,11 @@ public class UserPresenterTests extends BasePresenterTest
 	public void init()
 	{
 		super.init();
-		_dao = getDAL();
+		_dao = getDAO();
 		this._presenter = new UserPresenter(_ctx);
 	}
 	
-	private MockUserDAO getDAL()
+	private MockUserDAO getDAO()
 	{
 		MockUserDAO dal = (MockUserDAO) _ctx.getServiceLocator().getInstance(IUserDAO.class); 
 		return dal;

@@ -18,7 +18,7 @@ public class UserDAOTests extends BaseTest
 	@Test
 	public void test() 
 	{
-		buildDAL();
+		buildDAO();
 		assertEquals(2, _dal.size());
 		
 		List<User> L = _dal.search_by_name("aaaa");
@@ -29,7 +29,7 @@ public class UserDAOTests extends BaseTest
 	
 	
 	//---------- helpers ------------
-	private void buildDAL()
+	private void buildDAO()
 	{
 		User u = new User();
 		Long id = 1L;
@@ -50,10 +50,10 @@ public class UserDAOTests extends BaseTest
 	public void init()
 	{
 		super.init();
-		_dal = getDAL();
+		_dal = getDAO();
 	}
 	
-	private MockUserDAO getDAL()
+	private MockUserDAO getDAO()
 	{
 		MockUserDAO dal = (MockUserDAO) _ctx.getServiceLocator().getInstance(IUserDAO.class); 
 		return dal;

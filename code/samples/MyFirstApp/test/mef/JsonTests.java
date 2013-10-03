@@ -107,7 +107,7 @@ public class JsonTests extends BaseTest
 		//steps for init from json
 		//mef.xml: define find_by_name
 		//set seedWith
-		//real DAL, implement find_by_name and initFromJson
+		//real DAO, implement find_by_name and initFromJson
 	}
 
 	@Test
@@ -166,10 +166,10 @@ public class JsonTests extends BaseTest
 	public void init()
 	{
 		super.init();
-		_dal = getDAL();
+		_dal = getDAO();
 	}
 	
-	private MockPhoneDAO getDAL()
+	private MockPhoneDAO getDAO()
 	{
 		MockPhoneDAO dal = (MockPhoneDAO) _ctx.getServiceLocator().getInstance(IPhoneDAO.class); 
 		return dal;

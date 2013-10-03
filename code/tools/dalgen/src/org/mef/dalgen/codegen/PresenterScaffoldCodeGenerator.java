@@ -5,7 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.io.File;
 
 import org.mef.dalgen.codegen.generators.CodeGenBase;
-import org.mef.dalgen.codegen.generators.DALIntefaceCodeGen;
+import org.mef.dalgen.codegen.generators.DAOIntefaceCodeGen;
 import org.mef.dalgen.codegen.generators.EntityCodeGen;
 import org.mef.dalgen.codegen.generators.MockDALCodeGen;
 import org.mef.dalgen.codegen.generators.ModelCodeGen;
