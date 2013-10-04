@@ -2,6 +2,8 @@ package mef.core;
 
 import java.util.List;
 
+import mef.gen.AllKnownDAOs_GEN;
+
 import org.mef.framework.dao.IDAO;
 import org.mef.framework.sfx.SfxContext;
 import org.mef.framework.utils.ResourceReader;
@@ -13,8 +15,8 @@ public class Initializer
 	public static SfxContext createContext(boolean createMocks)
 	{
 		SfxContext ctx = new SfxContext();
-//		AllKnownDAOs_GEN knownDAOs = new AllKnownDAOs_GEN();
-//		knownDAOs.registerDAOs(ctx, createMocks);
+		AllKnownDAOs_GEN knownDAOs = new AllKnownDAOs_GEN();
+		knownDAOs.registerDAOs(ctx, createMocks);
 		return ctx;
 	}
 	
