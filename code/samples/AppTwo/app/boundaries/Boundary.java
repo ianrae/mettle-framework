@@ -8,7 +8,7 @@ public class Boundary
 {
 	public static SfxContext theCtx;
 	
-	private static void init()
+	public static void init()
 	{
 		if (theCtx == null)
 		{

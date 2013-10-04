@@ -16,19 +16,18 @@ public class AppTwoScaffoldPresenterTests extends BaseTest
 	@Test
 	public void testEntity() throws Exception
 	{
-		log("--testEntity--");
 		createContext();
 		PresenterScaffoldCodeGenerator gen = new PresenterScaffoldCodeGenerator(_ctx);
 		
-		gen.disableFileIO = true;  //***** WATCH OUT!11 ****
+		gen.disableFileIO = false;  //***** WATCH OUT!11 ****
 		
-		String appDir = this.getCurrentDir("..\\..\\samples\\MyFirstApp");
+		String appDir = this.getCurrentDir("..\\..\\samples\\AppTwo");
 		String stDir = this.getCurrentDir("src\\org\\mef\\dalgen\\resources\\presenter");
 log(appDir);
 log(stDir);
 		
 		int n = gen.init(appDir, stDir);
-		assertEquals(4, n);
+		assertEquals(1, n);
 
 		boolean b = false;
 //		boolean b = gen.generate(0);

@@ -1,14 +1,11 @@
 <?xml version="1.0"?>
 <entities orm="ebean"> 
 
-<!---
+
 <entity name="User">
 	<field>@Id Long id</field>
 	<field>@Required String name</field>
-	<field>@ManyToOne Phone phone</field>
 
-	<query>find_by_name</query>
-	<method><![CDATA[List<User> search_by_name(String name)]]></method>
 
 	<codegen what="entity" extend="false" />
 	<codegen what="model" extend="false" />
@@ -16,7 +13,6 @@
 	<codegen what="dal_mock" extend="false" />
 	<codegen what="dal_real" extend="false" />
 </entity>
--->
 
 
 </entities>

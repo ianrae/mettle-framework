@@ -101,15 +101,15 @@ public class AppScaffoldCodeGenerator extends SfxBaseObj
 	{
 		createDir("app\\boundaries");
 		createDir("app\\boundaries\\binders");
-		createDir("app\\boundaries\\dals");
-		createDir("mef");
-		createDir("mef\\core");
-		createDir("mef\\dals");
-		createDir("mef\\dals\\mocks");
-		createDir("mef\\entities");
-		createDir("mef\\gen");
-		createDir("mef\\presenters");
-		createDir("mef\\presenters\\replies");
+		createDir("app\\boundaries\\daos");
+		createDir("app\\mef");
+		createDir("app\\mef\\core");
+		createDir("app\\mef\\daos");
+		createDir("app\\mef\\daos\\mocks");
+		createDir("app\\mef\\entities");
+		createDir("app\\mef\\gen");
+		createDir("app\\mef\\presenters");
+		createDir("app\\mef\\presenters\\replies");
 		createDir("conf\\mef\\seed");
 		createDir("test\\mef");
 		

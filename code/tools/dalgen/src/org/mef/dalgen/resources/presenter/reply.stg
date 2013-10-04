@@ -23,13 +23,11 @@ public class <name> extends Reply
 {
 	public List\<<type>\> _allL;
 	public <type> _entity; //for New and Create
-	
-	public  Map\<String,String\> _options;
-	
+		
 	public <name>()
 	{
 	}
-}
+
 
 >>
 

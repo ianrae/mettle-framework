@@ -22,24 +22,19 @@ public class AppTwoDALCodeGenTests extends BaseTest
 			return;
 		}
 		
-		log("--testEntity--");
 		createContext();
 		DalCodeGenerator gen = new DalCodeGenerator(_ctx);
-		String appDir = this.getCurrentDir("..\\..\\samples\\MyFirstApp");
+		String appDir = this.getCurrentDir("..\\..\\samples\\AppTwo");
 		String stDir = this.getCurrentDir("src\\org\\mef\\dalgen\\resources\\dal\\");
 log(appDir);
 log(stDir);
 		
 		int n = gen.init(appDir, stDir);
-		assertEquals(4, n);
+		assertEquals(1, n);
 
 		boolean b = false;
 		b = gen.generateOnce(); //allKnownDAOs
-//		boolean b = gen.generate(0);
-		b = gen.generate("Task");
 		b = gen.generate("User");
-		b = gen.generate("Phone");
-//		b = gen.generate("Zoo");
 		if (b)
 		{}
 	}

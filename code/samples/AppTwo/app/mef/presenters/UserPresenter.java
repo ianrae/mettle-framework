@@ -1,7 +1,6 @@
-header(package,type) ::= <<
 //THIS FILE HAS BEEN AUTO-GENERATED. DO NOT MODIFY.
 
-package <package>;
+package mef.presenters;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -22,90 +21,77 @@ import org.mef.framework.replies.Reply;
 import org.mef.framework.sfx.SfxBaseObj;
 import org.mef.framework.sfx.SfxContext;
 
-import mef.daos.I<type>DAO;
-import mef.entities.<type>;
-import mef.presenters.replies.<type>Reply;
-
->>
-
-fielddecl(type, name, value) ::= <<
-    public <name> <name><init(value)>;
->>
-init(v) ::= "<if(v)> = <v><endif>"
-
-
-classdecl(type, name) ::= <<
-
-public class <name> extends Presenter
+import mef.daos.IUserDAO;
+import mef.entities.User;
+import mef.presenters.replies.UserReply;
+public class UserPresenter extends Presenter
 {
-	private I<type>DAO _dao;
-	private <type>Reply _reply;
+	private IUserDAO _dao;
+	private UserReply _reply;
 
-	public <name>(SfxContext ctx)
+	public UserPresenter(SfxContext ctx)
 	{
 		super(ctx); 
-		_dao = (I<type>DAO) getInstance(I<type>DAO.class);
+		_dao = (IUserDAO) getInstance(IUserDAO.class);
 	}
 	@Override
-	protected <type>Reply createReply()
+	protected UserReply createReply()
 	{
-		_reply = new <type>Reply();
+		_reply = new UserReply();
 		return _reply;
 	}
-	
-	public <type>Reply onIndexCommand(IndexCommand cmd)
+
+	public UserReply onIndexCommand(IndexCommand cmd)
 	{
-		<type>Reply reply = createReply(); 
+		UserReply reply = createReply(); 
 		reply.setDestination(Reply.VIEW_INDEX);
 		return reply;
 	}
 
-	public <type>Reply onNewCommand(NewCommand cmd)
+	public UserReply onNewCommand(NewCommand cmd)
 	{
-		<type>Reply reply = createReply();
+		UserReply reply = createReply();
 		reply.setDestination(Reply.VIEW_NEW);
 		return reply; 
 	}
-	
-	public <type>Reply onCreateCommand(CreateCommand cmd)
+
+	public UserReply onCreateCommand(CreateCommand cmd)
 	{
-		<type>Reply reply = createReply();
+		UserReply reply = createReply();
 		reply.setDestination(Reply.VIEW_NEW);
 		return reply;
 	}
-	
-	public <type>Reply onEditCommand(EditCommand cmd)
+
+	public UserReply onEditCommand(EditCommand cmd)
 	{
-		<type>Reply reply = createReply();
+		UserReply reply = createReply();
 		reply.setDestination(Reply.VIEW_EDIT);
 		return reply;
 	}
-	public <type>Reply onUpdateCommand(UpdateCommand cmd)
+	public UserReply onUpdateCommand(UpdateCommand cmd)
 	{
-		<type>Reply reply = createReply();
+		UserReply reply = createReply();
 		reply.setDestination(Reply.VIEW_EDIT);
 		return reply;
 	}
-	
-	
-	public <type>Reply onDeleteCommand(DeleteCommand cmd)
+
+
+	public UserReply onDeleteCommand(DeleteCommand cmd)
 	{
-		<type>Reply reply = createReply();
+		UserReply reply = createReply();
 		reply.setDestination(Reply.FORWARD_INDEX);
 		return reply;
 	}
-	
-	public <type>Reply onShowCommand(ShowCommand cmd)
+
+	public UserReply onShowCommand(ShowCommand cmd)
 	{
-		<type>Reply reply = createReply();
+		UserReply reply = createReply();
 		reply.setDestination(Reply.VIEW_SHOW);
 		return reply;
 	}
 
 
->>
 
-endclassdecl() ::= <<
+
+
 }
->>
-
