@@ -19,6 +19,9 @@ classdecl(type, name, args, inits, isNotExtended) ::= <<
 public class <name> extends Entity
 {
 <if(isNotExtended)>
+	public <name>()
+	{}
+	
 	public <name>( <args; separator=", ">)
 	{
 		<inits; separator="\n">

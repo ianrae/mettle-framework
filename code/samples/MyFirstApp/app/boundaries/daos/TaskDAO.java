@@ -104,9 +104,26 @@ public class TaskDAO implements ITaskDAO
 	}
 
 	@Override
-	public void updateFrom(IFormBinder binder) {
-		// TODO Auto-generated method stub
-		
+	public void updateFrom(IFormBinder binder) 
+	{
+		TaskModel model = (TaskModel) binder.getRawObject();
+		model.update();
+	}
+
+	@Override
+	public void update(Task entity) 
+	{
+		TaskModel t = (TaskModel)entity.cc; 
+		if (t == null) //not yet known by db? (newly created)
+		{
+			t.entity = null; //throw exception
+		}
+		else //touch all (for ebean), except id
+		{
+			t.setLabel(entity.label); //copy all!!
+			t.setEnabled(entity.enabled); //copy all!!
+		}
+		t.update();
 	}
 
 }

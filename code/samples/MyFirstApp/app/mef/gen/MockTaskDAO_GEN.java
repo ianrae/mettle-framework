@@ -72,4 +72,10 @@ public class MockTaskDAO_GEN implements ITaskDAO
 			
 		}
 
+		@Override
+		public void update(Task entity) {
+			// TODO Auto-generated method stub
+			
+		}
+
 }

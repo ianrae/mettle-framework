@@ -6,7 +6,8 @@
 	<field>String label</field>
 	<field>boolean enabled</field>
 	<query>find_by_label</query>
-	<codegen what="entity" extend="true" />
+	
+	<codegen what="entity" extend="false" />
 	<codegen what="model" extend="false" />
 	<codegen what="dal_interface" extend="false" />
 	<codegen what="dal_mock" extend="false" />
