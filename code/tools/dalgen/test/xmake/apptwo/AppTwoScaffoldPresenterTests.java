@@ -1,4 +1,4 @@
-package xmake;
+package xmake.apptwo;
 
 
 
@@ -11,7 +11,7 @@ import unittests.BaseTest;
 
 //********************** CAREFUL!!! ****************************
 
-public class ScaffoldPresenterTests extends BaseTest
+public class AppTwoScaffoldPresenterTests extends BaseTest
 {
 	@Test
 	public void testEntity() throws Exception

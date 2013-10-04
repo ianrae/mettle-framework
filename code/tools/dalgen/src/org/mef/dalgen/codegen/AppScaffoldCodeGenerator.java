@@ -43,13 +43,44 @@ public class AppScaffoldCodeGenerator extends SfxBaseObj
 		String filename = "mef.xml";
 		
 		String resDir = FilenameUtils.concat(stDir, "copy");
-		return copyFile(filename, resDir, appDir);
+		boolean b = copyFile(filename, resDir, appDir);
+		if (! b)
+		{
+			return false;
+		}
+		
+		filename = "Boundary.txt";
+		String dest = FilenameUtils.concat(appDir, "app\\boundaries");
+		b = copyFile(filename, ".java", resDir, dest);
+		if (! b)
+		{
+			return false;
+		}
+		
+		filename = "Initializer.txt";
+		dest = FilenameUtils.concat(appDir, "app\\mef\\core");
+		b = copyFile(filename, ".java", resDir, dest);
+		if (! b)
+		{
+			return false;
+		}
+		
+		return b;
 	}
 	
 	private boolean copyFile(String filename, String resDir, String appDir) throws Exception
 	{
+		return copyFile(filename, null, resDir, appDir);
+	}
+	private boolean copyFile(String filename, String newExt, String resDir, String appDir) throws Exception
+	{
 		String src = FilenameUtils.concat(resDir, filename);
 		String dest = FilenameUtils.concat(appDir, filename);
+		
+		if (newExt != null)
+		{
+			dest = FilenameUtils.removeExtension(dest) + newExt;
+		}
 		
 		File fdest = new File(dest);
 		if (fdest.exists())
