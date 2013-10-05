@@ -31,7 +31,13 @@ querydecl(type, fieldType, name) ::= <<
     @Override
     public <type> find_by_<name>(<fieldType> val) 
     {
-      return  find.where().eq("<name>", val).findUnique();
+      <type>Model model = <type>Model.find.where().eq("<name>", val).findUnique();
+	  if (model == null)
+	  {
+		return null;
+	  }
+	  <type> entity = createEntityFromModel(model);
+	  return entity;
     }
 >>
 
@@ -59,11 +65,6 @@ protected static void touchAll(<type> entity, <type>Model t)
 classdecl(name, type) ::= <<
 public class <name> implements I<type>DAO 
 {
-    /**
-     * Generic query helper for entity Computer with id Long
-     */
-    public static Finder\<Long,<type>\> find = new Finder\<Long,<type>\>(Long.class, <type>.class); 
-
 	@Override
 	public void save(<type> entity) 
 	{

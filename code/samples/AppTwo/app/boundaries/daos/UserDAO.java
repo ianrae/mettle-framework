@@ -23,11 +23,6 @@ import mef.entities.User;
 
 public class UserDAO implements IUserDAO 
 {
-    /**
-     * Generic query helper for entity Computer with id Long
-     */
-    public static Finder<Long,User> find = new Finder<Long,User>(Long.class, User.class); 
-
 	@Override
 	public void save(User entity) 
 	{

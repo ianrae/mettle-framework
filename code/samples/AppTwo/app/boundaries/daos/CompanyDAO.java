@@ -23,11 +23,6 @@ import mef.entities.Company;
 
 public class CompanyDAO implements ICompanyDAO 
 {
-    /**
-     * Generic query helper for entity Computer with id Long
-     */
-    public static Finder<Long,Company> find = new Finder<Long,Company>(Long.class, Company.class); 
-
 	@Override
 	public void save(Company entity) 
 	{
@@ -150,7 +145,13 @@ protected static void touchAll(Company entity, CompanyModel t)
     @Override
     public Company find_by_name(String val) 
     {
-      return  find.where().eq("name", val).findUnique();
+      CompanyModel model = CompanyModel.find.where().eq("name", val).findUnique();
+	  if (model == null)
+	  {
+		return null;
+	  }
+	  Company entity = createEntityFromModel(model);
+	  return entity;
     }
 
 }
