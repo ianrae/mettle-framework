@@ -19,7 +19,7 @@ public class DaoEntityLoaderCodeGen extends CodeGenBase
 	@Override
 	public String generate(EntityDef def)
 	{
-		this.isExtended = def.extendEntity;
+		this.isExtended = true; //always
 		String result = genHeader(def); 
 
 		ST st = _group.getInstanceOf("classdecl");
@@ -104,7 +104,7 @@ public class DaoEntityLoaderCodeGen extends CodeGenBase
 	@Override
 	public String getClassName(EntityDef def)
 	{
-		return this.makeClassName(def.name, def.extendEntity);
+		return this.makeClassName("DaoJsonLoader", true);
 	}
 
 

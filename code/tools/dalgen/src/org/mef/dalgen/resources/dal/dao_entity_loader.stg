@@ -31,7 +31,7 @@ loadentity(type) ::= <<
 		List\<<type>\> phoneL = new ArrayList\<<type>\>();
 		
     	JsonNode msgNode = rootNode.path("<type>");
-		Iterator<JsonNode> ite = msgNode.getElements();
+		Iterator\<JsonNode\> ite = msgNode.getElements();
 
 		int i = 0;
 		while (ite.hasNext()) {

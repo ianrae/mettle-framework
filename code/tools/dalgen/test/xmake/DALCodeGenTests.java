@@ -34,6 +34,7 @@ log(stDir);
 		assertEquals(4, n);
 
 		boolean b = false;
+		gen.genDaoLoader = true;
 		b = gen.generateOnce(); //allKnownDAOs
 		
 		gen.genRealDAO = true;

@@ -6,6 +6,7 @@ import java.io.File;
 
 import org.mef.dalgen.codegen.generators.CodeGenBase;
 import org.mef.dalgen.codegen.generators.DAOIntefaceCodeGen;
+import org.mef.dalgen.codegen.generators.DaoEntityLoaderCodeGen;
 import org.mef.dalgen.codegen.generators.EntityCodeGen;
 import org.mef.dalgen.codegen.generators.KnownDAOsCodeGen;
 import org.mef.dalgen.codegen.generators.MockDAOCodeGen;
@@ -27,6 +28,7 @@ public class DalCodeGenerator extends SfxBaseObj
 	public boolean disableFileIO;
 	
 	public boolean genRealDAO = false; //for now
+	public boolean genDaoLoader = false;
 	
 	public DalCodeGenerator(SfxContext ctx)
 	{
@@ -126,6 +128,17 @@ public class DalCodeGenerator extends SfxBaseObj
 		{
 			return false; //!!
 		}
+
+		if (genDaoLoader)
+		{
+			
+			b = doGen(def, "dao_entity_loader.stg", "mef.core", "app\\mef\\core", new DaoEntityLoaderCodeGen(_ctx));
+			if (!b )
+			{
+				return false; //!!
+			}
+		}
+		
 		return b;
 	}
 	private boolean generateOneFile(EntityDef def, CodeGenBase gen, String relPath) throws Exception
