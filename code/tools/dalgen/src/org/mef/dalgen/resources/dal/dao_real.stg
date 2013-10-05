@@ -50,6 +50,19 @@ public <meth>
 }
 >>
 
+touchall1(type, assigns) ::= <<
+protected void touchAll(<type>Model t, <type> entity)
+{
+	<assigns; separator="\n">
+}
+>>
+
+touchall2(type, assigns) ::= <<
+protected void touchAll(<type> entity, <type>Model t)
+{
+	<assigns; separator="\n">
+}
+>>
 
 classdecl(name, type) ::= <<
 public class <name> implements I<type>DAO 
