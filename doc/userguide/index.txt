@@ -345,6 +345,33 @@ DB Seed
 For dev, test, and production, MEF supports JSON-based database seed.  These are read
 in at startup time to load your database with initial data.
 
+For now, add code in Initializer to read json1.txt from conf/mef/seed.  EntityLoader.loadAll()
+
+Format of JSON (for now) is all in one file.  Ids should be 0 unless you need to reference
+the entity from another entity.  These ids are logical ids; when the entities are saved in the database
+they will get real ids (assigned by the DB)
+
+
+{
+	"Phone":
+	[
+	 { "id": "20", "name": "IPhone" }
+	 ,{ "id": "30", "name": "Samsung" }
+	],
+
+	"User":
+	[
+	 { "id": "0", "name": "user1", "phone": {"id": "20" }}
+	 ,{ "id": "0", "name": "user2", "phone": {"id": "30" }}
+	]
+
+}
+
+Notice that User which HAS-A Phone, only includes the phones id, and the id is a logical id.
+
+The loading of data is idempotent.  MEF only adds new records if they don't already exist in the DB.
+Each entity needs a field (other than Id) which is unique and can be used to query for existing record.
+
 
 
 Integration testing
