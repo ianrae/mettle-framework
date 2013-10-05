@@ -86,7 +86,7 @@ public class <name> implements I<type>DAO
 	@Override
 	public <type> findById(long id) 
 	{
-		<type>Model t = Ebean.find(<type>Model.class).where().eq("id", id).findUnique();		
+		<type>Model t = <type>Model.find.byId(id);
 		if (t == null)
 		{
 			return null;
@@ -121,6 +121,10 @@ public class <name> implements I<type>DAO
 	//create model, set entity, and call all setters
 	public static <type>Model createModelFromEntity(<type> entity)
 	{
+		if (entity == null)
+		{
+			return null;
+		}
 		<type>Model t = new <type>Model();
 		entity.cc = t;
 		t.entity = entity;
@@ -130,12 +134,18 @@ public class <name> implements I<type>DAO
 	//create entity, set m.cc and t.entity, copy all fields from model to entity
 	public static <type> createEntityFromModel(<type>Model t)
 	{
+		if (t == null)
+		{
+			return null;		
+		}
+		
 		if (t.entity != null && t.entity.cc != null)
 		{
 			return t.entity; //already exists
 		}
 		<type> entity = new <type>();
 		entity.cc = t;
+		entity.id = (t.getId() == null) ? 0 : t.getId();		
 		t.entity = entity;
 		touchAll(entity, t);
 		return entity;
@@ -146,7 +156,10 @@ public class <name> implements I<type>DAO
 		for(<type>Model t : L)
 		{
 			<type> entity = createEntityFromModel(t);
-			entityL.add(entity);
+			if (entity != null) //why??!!
+			{
+				entityL.add(entity);
+			}
 		}
 		return entityL;
 	}

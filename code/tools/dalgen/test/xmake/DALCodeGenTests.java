@@ -35,13 +35,12 @@ log(stDir);
 
 		boolean b = false;
 		b = gen.generateOnce(); //allKnownDAOs
-//		boolean b = gen.generate(0);
+		
+		gen.genRealDAO = true;
 		b = gen.generate("Task");
-		b = gen.generate("User");
 		b = gen.generate("Phone");
-//		b = gen.generate("Zoo");
-		if (b)
-		{}
+		gen.genRealDAO = false; //until get has-a assoc working
+		b = gen.generate("User");
 	}
 
 }

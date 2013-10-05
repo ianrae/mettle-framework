@@ -1,20 +1,28 @@
+//THIS FILE HAS BEEN AUTO-GENERATED. DO NOT MODIFY.
 package boundaries.daos;
+
 
 import java.util.ArrayList;
 import java.util.List;
-
-import mef.daos.IPhoneDAO;
-import mef.entities.Phone;
-import models.PhoneModel;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.mef.framework.binder.IFormBinder;
 
 import com.avaje.ebean.Ebean;
+import com.avaje.ebean.Query;
 
-public class PhoneDAO implements IPhoneDAO
+import play.Logger;
+
+import boundaries.Boundary;
+
+import models.PhoneModel;
+import play.db.ebean.Model.Finder;
+
+import mef.daos.IPhoneDAO;
+import mef.entities.Phone;
+
+public class PhoneDAO implements IPhoneDAO 
 {
-
 	@Override
 	public void save(Phone entity) 
 	{
@@ -26,12 +34,11 @@ public class PhoneDAO implements IPhoneDAO
 		}
 		else //touch all (for ebean), except id
 		{
-			t.setName(entity.name);
+			touchAll(t, entity);
 		}
 		t.save();
 		entity.id = t.getId(); //in case created on
 	}
-	
 
 	@Override
 	public Phone findById(long id) 
@@ -41,6 +48,7 @@ public class PhoneDAO implements IPhoneDAO
 		{
 			return null;
 		}
+
 		t.entity = createEntityFromModel(t); //create entity, set m.cc and t.entity, copy all fields from model to entity
 		return t.entity;
 	}
@@ -77,9 +85,7 @@ public class PhoneDAO implements IPhoneDAO
 		PhoneModel t = new PhoneModel();
 		entity.cc = t;
 		t.entity = entity;
-		t.setId(entity.id);
-		t.setName(entity.name);
-		//email later!!
+		touchAll(t, entity);
 		return t;
 	}
 	//create entity, set m.cc and t.entity, copy all fields from model to entity
@@ -87,18 +93,18 @@ public class PhoneDAO implements IPhoneDAO
 	{
 		if (t == null)
 		{
-			return null;
+			return null;		
 		}
+
 		if (t.entity != null && t.entity.cc != null)
 		{
 			return t.entity; //already exists
 		}
 		Phone entity = new Phone();
 		entity.cc = t;
+		entity.id = (t.getId() == null) ? 0 : t.getId();		
 		t.entity = entity;
-		entity.id = (t.getId() == null) ? 0 : t.getId();
-		entity.name	= t.getName();
-		//!email!!
+		touchAll(entity, t);
 		return entity;
 	}
 	public static List<Phone> createEntityFromModel(List<PhoneModel> L)
@@ -107,7 +113,10 @@ public class PhoneDAO implements IPhoneDAO
 		for(PhoneModel t : L)
 		{
 			Phone entity = createEntityFromModel(t);
-			entityL.add(entity);
+			if (entity != null) //why??!!
+			{
+				entityL.add(entity);
+			}
 		}
 		return entityL;
 	}
@@ -122,31 +131,40 @@ public class PhoneDAO implements IPhoneDAO
 
 
 	@Override
-	public Phone find_by_name(String val) 
-	{
-		PhoneModel t = Ebean.find(PhoneModel.class).where().eq("name", val).findUnique();		
-		if (t == null)
-		{
-			return null;
-		}
-		Phone entity = createEntityFromModel(t);
-		return entity;
-	}
-
-
-	@Override
 	public void update(Phone entity) 
 	{
 		PhoneModel t = (PhoneModel)entity.cc; 
 		if (t == null) //not yet known by db? (newly created)
 		{
-			t.entity = null; //throw exception;
+			t.entity = null; //throw exception
 		}
 		else //touch all (for ebean), except id
 		{
-			t.setName(entity.name);
+			touchAll(t, entity);
 		}
 		t.update();
 	}
+
+       protected static void touchAll(PhoneModel t, Phone entity)
+{
+	t.setName(entity.name);
+}
+
+protected static void touchAll(Phone entity, PhoneModel t)
+{
+	entity.name = t.getName();
+}
+
+    @Override
+    public Phone find_by_name(String val) 
+    {
+      PhoneModel model = PhoneModel.find.where().eq("name", val).findUnique();
+	  if (model == null)
+	  {
+		return null;
+	  }
+	  Phone entity = createEntityFromModel(model);
+	  return entity;
+    }
 
 }
