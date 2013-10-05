@@ -9,4 +9,13 @@ public class FieldDef
 	public String typeName;
 	public List<String> annotationL = new ArrayList<String>();
 	public boolean isSeedField;  //true means we search for records matching this field during db:seed 
+	
+	public boolean getStringType()
+	{
+		return (typeName.equals("String"));
+	}
+	public boolean getBooleanType()
+	{
+		return (typeName.equals("boolean"));
+	}
 }

@@ -1,4 +1,4 @@
-header(package,type,types) ::= <<
+header(package) ::= <<
 //THIS FILE HAS BEEN AUTO-GENERATED. DO NOT MODIFY.
 
 package <package>;
@@ -7,9 +7,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import org.codehaus.jackson.JsonNode;
-import mef.entities.<type>;
-
-<types:{t| import mef.entities.<t>;}; separator="\n">
+import mef.entities.*;
 
 
 
@@ -24,8 +22,13 @@ readentity(type, fields) ::= <<
 		obj.id = jj.asLong();
 
 		<fields:{t| 
-		jj = node.get("<t>");
-		obj.<t> = jj.getTextValue();
+		jj = node.get("<t.name>");
+		<if(t.stringType)>
+		obj.<t.name> = jj.getTextValue();
+		<endif>
+		<if(t.booleanType)>
+		obj.<t.name> = jj.asBoolean();
+		<endif>
 		}; separator="\n">
 
 		
@@ -57,7 +60,7 @@ loadentity(type) ::= <<
 >>
 
 findwithidentity(type) ::= <<
-	private <type> find<type>WithId(long id, List\<<type>\> phoneL) 
+	protected <type> find<type>WithId(long id, List\<<type>\> phoneL) 
 	{
 		for (<type> ph : phoneL)
 		{

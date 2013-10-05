@@ -25,9 +25,17 @@ public class DaoEntityLoaderCodeGen extends CodeGenBase
 		ST st = _group.getInstanceOf("classdecl");
 		st.add("name", this.getClassName(def));
 		result += st.render(); 
-		result += genReadEntity(def);
-		result += genLoadEntity(def);
-		result += genFindWithIdEntity(def);
+		
+		for(EntityDef tmp: def.allEntityTypes)
+		{
+			if (tmp.enabled)
+			{
+				result += genReadEntity(tmp);
+				result += genLoadEntity(tmp);
+				result += genFindWithIdEntity(tmp);
+			}
+		}
+		
 
 		st = _group.getInstanceOf("endclassdecl");
 		result += st.render(); 
@@ -48,17 +56,17 @@ public class DaoEntityLoaderCodeGen extends CodeGenBase
 			st.add("package", _packageName);
 		}
 
-		st.add("type", def.name);
+//		st.add("type", def.name);
 		
-		List<String> daoTypeL = new ArrayList<String>();
-		for(FieldDef fdef : def.fieldL)
-		{
-			if (! isStandardJavaType(fdef.typeName ))
-			{
-				daoTypeL.add(fdef.typeName);
-			}
-		}
-		st.add("types", daoTypeL);
+//		List<String> daoTypeL = new ArrayList<String>();
+//		for(FieldDef fdef : def.fieldL)
+//		{
+//			if (! isStandardJavaType(fdef.typeName ))
+//			{
+//				daoTypeL.add(fdef.typeName);
+//			}
+//		}
+//		st.add("types", daoTypeL);
 		String result = st.render(); 
 		return result;
 	}
@@ -87,14 +95,14 @@ public class DaoEntityLoaderCodeGen extends CodeGenBase
 	}
 	private Object buildFieldsList(EntityDef def) 
 	{
-		ArrayList<String> L = new ArrayList<String>();
+		ArrayList<FieldDef> L = new ArrayList<FieldDef>();
 		for(FieldDef fdef : def.fieldL)
 		{
 			if (fdef.name.equals("id"))
 			{}
 			else
 			{
-				L.add(fdef.name);
+				L.add(fdef);
 			}
 		}
 		return L;
