@@ -43,7 +43,7 @@ public class CompanyDAO implements ICompanyDAO
 	@Override
 	public Company findById(long id) 
 	{
-		CompanyModel t = Ebean.find(CompanyModel.class).where().eq("id", id).findUnique();		
+		CompanyModel t = CompanyModel.find.byId(id);
 		if (t == null)
 		{
 			return null;
@@ -78,6 +78,10 @@ public class CompanyDAO implements ICompanyDAO
 	//create model, set entity, and call all setters
 	public static CompanyModel createModelFromEntity(Company entity)
 	{
+		if (entity == null)
+		{
+			return null;
+		}
 		CompanyModel t = new CompanyModel();
 		entity.cc = t;
 		t.entity = entity;
@@ -87,12 +91,18 @@ public class CompanyDAO implements ICompanyDAO
 	//create entity, set m.cc and t.entity, copy all fields from model to entity
 	public static Company createEntityFromModel(CompanyModel t)
 	{
+		if (t == null)
+		{
+			return null;		
+		}
+
 		if (t.entity != null && t.entity.cc != null)
 		{
 			return t.entity; //already exists
 		}
 		Company entity = new Company();
 		entity.cc = t;
+		entity.id = (t.getId() == null) ? 0 : t.getId();		
 		t.entity = entity;
 		touchAll(entity, t);
 		return entity;
@@ -103,7 +113,10 @@ public class CompanyDAO implements ICompanyDAO
 		for(CompanyModel t : L)
 		{
 			Company entity = createEntityFromModel(t);
-			entityL.add(entity);
+			if (entity != null) //why??!!
+			{
+				entityL.add(entity);
+			}
 		}
 		return entityL;
 	}

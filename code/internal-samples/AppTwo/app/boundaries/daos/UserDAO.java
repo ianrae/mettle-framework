@@ -43,7 +43,7 @@ public class UserDAO implements IUserDAO
 	@Override
 	public User findById(long id) 
 	{
-		UserModel t = Ebean.find(UserModel.class).where().eq("id", id).findUnique();		
+		UserModel t = UserModel.find.byId(id);
 		if (t == null)
 		{
 			return null;
@@ -78,6 +78,10 @@ public class UserDAO implements IUserDAO
 	//create model, set entity, and call all setters
 	public static UserModel createModelFromEntity(User entity)
 	{
+		if (entity == null)
+		{
+			return null;
+		}
 		UserModel t = new UserModel();
 		entity.cc = t;
 		t.entity = entity;
@@ -87,12 +91,18 @@ public class UserDAO implements IUserDAO
 	//create entity, set m.cc and t.entity, copy all fields from model to entity
 	public static User createEntityFromModel(UserModel t)
 	{
+		if (t == null)
+		{
+			return null;		
+		}
+
 		if (t.entity != null && t.entity.cc != null)
 		{
 			return t.entity; //already exists
 		}
 		User entity = new User();
 		entity.cc = t;
+		entity.id = (t.getId() == null) ? 0 : t.getId();		
 		t.entity = entity;
 		touchAll(entity, t);
 		return entity;
@@ -103,7 +113,10 @@ public class UserDAO implements IUserDAO
 		for(UserModel t : L)
 		{
 			User entity = createEntityFromModel(t);
-			entityL.add(entity);
+			if (entity != null) //why??!!
+			{
+				entityL.add(entity);
+			}
 		}
 		return entityL;
 	}
