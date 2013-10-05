@@ -22,10 +22,10 @@ public class Initializer
 	
 	public static void loadSeedData(SfxContext ctx)
 	{
-		String json = ResourceReader.readSeedFile("json-company.txt");
+		String json = ResourceReader.readSeedFile("json1.txt");
 		EntityLoader loader = new EntityLoader(ctx);
 		try {
-			loader.loadCompany(json);
+			loader.loadAll(json);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

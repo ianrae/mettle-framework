@@ -35,6 +35,7 @@ log(stDir);
 		assertEquals(2, n);
 
 		boolean b = false;
+		gen.genDaoLoader = true;
 		b = gen.generateOnce(); //allKnownDAOs
 		b = gen.generate("User");
 		b = gen.generate("Company");

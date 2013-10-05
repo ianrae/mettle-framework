@@ -17,9 +17,9 @@ public class JsonTests extends BaseTest
 	{
 		this.init();
 
-		String json = ResourceReader.readSeedFile("json-company.txt");
+		String json = ResourceReader.readSeedFile("json1.txt");
 		EntityLoader loader = new EntityLoader(_ctx);
-		loader.loadCompany(json);
+		loader.loadAll(json);
 		
 		assertEquals(3, getDAO().size());
 	}
