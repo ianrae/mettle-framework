@@ -6,10 +6,12 @@ package models;
 import play.data.*;
 import java.util.*;
 import play.db.ebean.*;
+import play.data.format.*;
 import play.data.validation.Constraints.*;
 import javax.persistence.*;
 import mef.entities.*;
 import boundaries.daos.*;
+import java.util.Date;
 @Entity
 public class ComputerModel extends Model
 {
@@ -50,6 +52,18 @@ public class ComputerModel extends Model
     public void setName(String val) {
 		this.name = val;
 		this.entity.name = val;
+
+    }
+
+   @Formats.DateTime(pattern="yyyy-MM-dd") 
+    private Date introduced;
+
+    public Date getIntroduced() {
+        return this.introduced;
+    }
+    public void setIntroduced(Date val) {
+		this.introduced = val;
+		this.entity.introduced = val;
 
     }
 

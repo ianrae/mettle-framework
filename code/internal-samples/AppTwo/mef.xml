@@ -24,6 +24,7 @@
 <entity name="Computer">
 	<field>@Id Long id</field>
 	<field>@Required String name</field>
+	<field>@Formats.DateTime(pattern="yyyy-MM-dd") Date introduced</field>
 
 	<query>find_by_name</query>
 </entity>

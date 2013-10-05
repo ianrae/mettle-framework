@@ -5,6 +5,7 @@ package mef.entities;
 import org.mef.framework.entities.Entity;
 import mef.gen.*;
 import mef.entities.*;
+import java.util.Date;
 public class Company extends Entity
 {
 	public Company()

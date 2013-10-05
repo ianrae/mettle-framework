@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import org.codehaus.jackson.JsonNode;
 import mef.entities.*;
+import java.util.Date;
 
 
 
@@ -106,6 +107,8 @@ public class DaoJsonLoader_GEN
 
 				jj = node.get("name");
 				obj.name = jj.getTextValue();
+
+				jj = node.get("introduced");
 
 
 

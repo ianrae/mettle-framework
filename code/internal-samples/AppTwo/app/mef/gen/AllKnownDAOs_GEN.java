@@ -9,6 +9,7 @@ import mef.daos.*;
 import mef.daos.mocks.*;
 import boundaries.daos.*;
 import org.mef.framework.sfx.SfxContext;
+import java.util.Date;
 
 public class AllKnownDAOs_GEN  
 {

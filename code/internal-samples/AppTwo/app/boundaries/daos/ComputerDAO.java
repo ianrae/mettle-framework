@@ -12,6 +12,7 @@ import com.avaje.ebean.Ebean;
 import com.avaje.ebean.Query;
 
 import play.Logger;
+import java.util.Date;
 
 import boundaries.Boundary;
 
@@ -148,11 +149,13 @@ public class ComputerDAO implements IComputerDAO
        protected static void touchAll(ComputerModel t, Computer entity)
 {
 	t.setName(entity.name);
+	t.setIntroduced(entity.introduced);
 }
 
 protected static void touchAll(Computer entity, ComputerModel t)
 {
 	entity.name = t.getName();
+	entity.introduced = t.getIntroduced();
 }
 
     @Override

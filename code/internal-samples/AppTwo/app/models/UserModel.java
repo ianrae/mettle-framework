@@ -6,10 +6,12 @@ package models;
 import play.data.*;
 import java.util.*;
 import play.db.ebean.*;
+import play.data.format.*;
 import play.data.validation.Constraints.*;
 import javax.persistence.*;
 import mef.entities.*;
 import boundaries.daos.*;
+import java.util.Date;
 @Entity
 public class UserModel extends Model
 {

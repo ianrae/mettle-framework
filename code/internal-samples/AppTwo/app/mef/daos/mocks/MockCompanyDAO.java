@@ -10,6 +10,7 @@ import org.mef.framework.binder.IFormBinder;
 import org.codehaus.jackson.map.ObjectMapper;
 import mef.gen.*;
 import org.mef.framework.entitydb.EntityDB;
+import java.util.Date;
 
 public class MockCompanyDAO implements ICompanyDAO
 {
