@@ -24,7 +24,7 @@ public class JsonMoreTests extends BaseTest
 	{
 		this.init();
 
-		String json = ResourceReader.readSeedFile("json-user1.txt");
+		String json = loadJson("json-user1.txt");
 		EntityLoader loader = new EntityLoader(_ctx);
 		loader.loadUser(json);
 		
@@ -35,8 +35,7 @@ public class JsonMoreTests extends BaseTest
 	public void testTree() throws Exception
 	{
 		init();
-		String dir = this.getTestFile("seed");
-		String json = ResourceReader.readSeedFile("json-user2.txt", dir);
+		String json = loadJson("json-user2.txt");
     	ObjectMapper mapper = new ObjectMapper();
     	JsonNode rootNode = mapper.readTree(json);
     	
@@ -61,8 +60,7 @@ public class JsonMoreTests extends BaseTest
 	public void testTree2() throws Exception
 	{
 		init();
-		String dir = this.getTestFile("seed");
-		String json = ResourceReader.readSeedFile("json-user3.txt", dir);
+		String json = loadJson("json-user3.txt");
     	ObjectMapper mapper = new ObjectMapper();
     	JsonNode rootNode = mapper.readTree(json);
     	
@@ -122,6 +120,14 @@ public class JsonMoreTests extends BaseTest
 	{
 		MockUserDAO dal = (MockUserDAO) _ctx.getServiceLocator().getInstance(IUserDAO.class); 
 		return dal;
+	}
+	
+	private String loadJson(String filename)
+	{
+		String dir = this.getTestFile("seed");
+		String json = ResourceReader.readSeedFile(filename, dir);
+		return json;
+		
 	}
 }
 
