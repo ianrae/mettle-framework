@@ -110,6 +110,8 @@ public class DaoJsonLoader_GEN
 
 				jj = node.get("introduced");
 
+				jj = node.get("discontinued");
+
 
 
 		return obj;

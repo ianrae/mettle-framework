@@ -67,4 +67,16 @@ public class ComputerModel extends Model
 
     }
 
+   @Formats.DateTime(pattern="yyyy-MM-dd") 
+    private Date discontinued;
+
+    public Date getDiscontinued() {
+        return this.discontinued;
+    }
+    public void setDiscontinued(Date val) {
+		this.discontinued = val;
+		this.entity.discontinued = val;
+
+    }
+
 }

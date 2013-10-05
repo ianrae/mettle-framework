@@ -11,15 +11,18 @@ public class Computer extends Entity
 	public Computer()
 	{}
 
-	public Computer( String name, Date introduced)
+	public Computer( String name, Date introduced, Date discontinued)
 	{
 		this.name = name;
 		this.introduced = introduced;
+		this.discontinued = discontinued;
 	}
     public Long id;
 
     public String name;
 
     public Date introduced;
+
+    public Date discontinued;
 
 }

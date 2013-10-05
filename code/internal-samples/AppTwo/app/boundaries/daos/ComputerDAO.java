@@ -150,12 +150,14 @@ public class ComputerDAO implements IComputerDAO
 {
 	t.setName(entity.name);
 	t.setIntroduced(entity.introduced);
+	t.setDiscontinued(entity.discontinued);
 }
 
 protected static void touchAll(Computer entity, ComputerModel t)
 {
 	entity.name = t.getName();
 	entity.introduced = t.getIntroduced();
+	entity.discontinued = t.getDiscontinued();
 }
 
     @Override
