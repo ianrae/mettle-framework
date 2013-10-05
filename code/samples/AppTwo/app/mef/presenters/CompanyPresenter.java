@@ -46,7 +46,7 @@ public class CompanyPresenter extends Presenter
 	{
 		CompanyReply reply = createReply(); 
 		reply.setDestination(Reply.VIEW_INDEX);
-		reply._allL = new ArrayList<Company>();
+		reply._allL = _dao.all();
 		return reply;
 	}
 

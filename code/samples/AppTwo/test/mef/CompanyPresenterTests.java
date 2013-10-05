@@ -47,19 +47,17 @@ public class CompanyPresenterTests extends BasePresenterTest
 		chkReplyWithoutEntity(reply, true, 0);
 	}
 
-//	@Test
-//	public void indexTestOne() 
-//	{
-//		Company u = createCompany("bob");
-//		_dao.save(u);
-//		CompanyReply reply = (CompanyReply) _presenter.process(new IndexCommand());
-//		
-//		chkReplySucessful(reply, Reply.VIEW_INDEX, null);
-//		chkDalSize(1);
-//		assertEquals("bob", _dao.all().get(0).name);
-//		chkReplyWithoutEntity(reply, true, 1);
-//	}
-//	
+	@Test
+	public void indexTestOne() 
+	{
+		Initializer.loadSeedData(_ctx);
+		CompanyReply reply = (CompanyReply) _presenter.process(new IndexCommand());
+		
+		chkReplySucessful(reply, Reply.VIEW_INDEX, null);
+		assertEquals("Apple Computer Inc", _dao.all().get(0).name);
+		chkReplyWithoutEntity(reply, true, 3);
+	}
+	
 	
 	//--------- helper fns--------------
 	protected void chkDalSize(int expected)

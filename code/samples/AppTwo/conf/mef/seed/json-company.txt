@@ -1,15 +1,15 @@
 [
  {
  "id": "0", 
- "name": "Apple Computer Inc", 
+ "name": "Apple Computer Inc"
  },
  {
  "id": "0", 
- "name": "IBM", 
+ "name": "IBM"
  },
   {
  "id": "0", 
- "name": "Gencorp", 
+ "name": "Gencorp"
  }
 
  
