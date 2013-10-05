@@ -55,16 +55,13 @@ public class DalCodeGenerator extends SfxBaseObj
 	public boolean generate(int index) throws Exception
 	{
 		EntityDef def = parser._entityL.get(index);
-		String name = def.name;
 		
-		String path = this.pathCombine(stDir, "entity.stg");
-		EntityCodeGen gen = new EntityCodeGen(_ctx);
-		gen.init(path, "mef.entities");
-		boolean b = generateOneFile(def, gen, "app\\mef\\entities");
+		boolean b = doGen(def, "entity.stg", "mef.entities", "app\\mef\\entities", new EntityCodeGen(_ctx));
 		if (!b )
 		{
 			return false; //!!
 		}
+		
 		if (_needParentClass)
 		{
 			def.extendEntity = false;
@@ -74,7 +71,6 @@ public class DalCodeGenerator extends SfxBaseObj
 				return false; //!!
 			}
 		}
-
 		
 		b = doGen(def, "model.stg", "models", "app\\models", new ModelCodeGen(_ctx));
 		if (!b )
