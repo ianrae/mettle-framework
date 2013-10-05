@@ -23,7 +23,7 @@ public class Initializer
 		String json = ResourceReader.readSeedFile("json1.txt");
 		EntityLoader loader = new EntityLoader(ctx);
 		try {
-			loader.loadUser(json);
+			loader.loadAll(json);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

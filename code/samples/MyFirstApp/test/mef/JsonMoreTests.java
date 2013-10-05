@@ -130,6 +130,7 @@ public class JsonMoreTests extends BaseTest
 		loader.loadAll(json);
 
 		assertEquals(4, phoneDAO.size());
+		assertEquals(3, userDAO.size());
 		
 		for(Phone ph : phoneDAO.all())
 		{
