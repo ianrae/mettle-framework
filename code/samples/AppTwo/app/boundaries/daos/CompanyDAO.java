@@ -14,9 +14,11 @@ import play.Logger;
 import boundaries.Boundary;
 
 import models.CompanyModel;
+import models.UserModel;
 
 import mef.daos.ICompanyDAO;
 import mef.entities.Company;
+import mef.entities.User;
 
 public class CompanyDAO implements ICompanyDAO 
 {
@@ -148,6 +150,19 @@ public class CompanyDAO implements ICompanyDAO
 			t.setName(entity.name); //copy all!!
 		}
 		t.update();
+	}
+
+
+	@Override
+	public Company find_by_name(String val) 
+	{
+		CompanyModel t = Ebean.find(CompanyModel.class).where().eq("name", val).findUnique();
+		if (t == null)
+		{
+			return null;
+		}
+		Company entity = createEntityFromModel(t);
+		return entity;
 	}
 	
 }

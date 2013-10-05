@@ -14,4 +14,6 @@ public interface ICompanyDAO  extends IDAO
 	void save(Company entity);        
 	void update(Company entity);
 
-    }
+    public Company find_by_name(String val);
+
+}

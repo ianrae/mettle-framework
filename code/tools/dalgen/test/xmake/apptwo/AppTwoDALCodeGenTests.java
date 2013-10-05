@@ -30,11 +30,12 @@ log(appDir);
 log(stDir);
 		
 		int n = gen.init(appDir, stDir);
-		assertEquals(1, n);
+		assertEquals(2, n);
 
 		boolean b = false;
 		b = gen.generateOnce(); //allKnownDAOs
 		b = gen.generate("User");
+		b = gen.generate("Company");
 		if (b)
 		{}
 	}

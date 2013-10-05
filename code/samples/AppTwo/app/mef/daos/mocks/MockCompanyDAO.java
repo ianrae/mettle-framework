@@ -95,4 +95,13 @@ public class MockCompanyDAO implements ICompanyDAO
     }
 
 
-	}
+	//query
+    @Override
+    public Company find_by_name(String val) 
+    {
+		EntityDB<Company> db = new EntityDB<Company>();
+		Company user = db.findFirstMatch(_L, "name", val);
+		return user;
+    }
+
+}
