@@ -3,9 +3,11 @@ package org.mef.dalgen.codegen.generators;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import org.mef.dalgen.parser.EntityDef;
 import org.mef.dalgen.parser.FieldDef;
 import org.stringtemplate.v4.ST;
+
 
 import sfx.SfxContext;
 
@@ -50,8 +52,18 @@ public class RealDAOCodeGen extends CodeGenBase
 			{
 				continue;
 			}
-			
-			String s = String.format("t.set%s(entity.%s);", uppify(fdef.name), fdef.name);
+
+			boolean isEntity = isEntity(def, fdef.typeName);
+			String s;
+			if (isEntity)
+			{
+				s = createDAOString(fdef);
+				s += String.format("t.set%s(%sDAO.createModelFromEntity(entity.%s));", uppify(fdef.name), fdef.name, fdef.name);
+			}
+			else
+			{
+				s = String.format("t.set%s(entity.%s);", uppify(fdef.name), fdef.name);
+			}
 			assignsL.add(s);
 		}
 		st.add("assigns", assignsL);
@@ -60,6 +72,16 @@ public class RealDAOCodeGen extends CodeGenBase
 		result += "\n\n";
 		return result;
 	}
+	
+	private String createDAOString(FieldDef fdef)
+	{
+		String name = fdef.name;
+		String upname = uppify(fdef.name);
+		String s = String.format("%sDAO %sDAO = (%sDAO)Boundary.theCtx.getServiceLocator().getInstance(I%sDAO.class);\n",
+				upname, name, upname, upname);
+		return s;
+	}
+	
 	private String genTouchAll2(EntityDef def) 
 	{
 		String result = "";
@@ -74,7 +96,17 @@ public class RealDAOCodeGen extends CodeGenBase
 				continue;
 			}
 			
-			String s = String.format("entity.%s = t.get%s();", fdef.name, uppify(fdef.name));
+			boolean isEntity = isEntity(def, fdef.typeName);
+			String s;
+			if (isEntity)
+			{
+				s = createDAOString(fdef);
+				s += String.format("entity.%s = %sDAO.createEntityFromModel(t.get%s());", fdef.name, fdef.name, uppify(fdef.name));
+			}
+			else
+			{
+				s = String.format("entity.%s = t.get%s();", fdef.name, uppify(fdef.name));
+			}
 			assignsL.add(s);
 		}
 		st.add("assigns", assignsL);

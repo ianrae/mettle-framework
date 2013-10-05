@@ -112,6 +112,8 @@ public class DaoJsonLoader_GEN
 
 				jj = node.get("discontinued");
 
+				jj = node.get("company");
+
 
 
 		return obj;

@@ -63,9 +63,17 @@ public abstract class CodeGenBase extends SfxBaseObj
 			return (name.equals("id"));
 		}
 
-		protected Object uppify(String name) 
+		protected String uppify(String name) 
 		{
 			String upper = name.toUpperCase();
+			String s = upper.substring(0, 1);
+			s += name.substring(1);
+			return s;
+		}
+		
+		protected Object lowify(String name) 
+		{
+			String upper = name.toLowerCase();
 			String s = upper.substring(0, 1);
 			s += name.substring(1);
 			return s;
@@ -137,5 +145,16 @@ public abstract class CodeGenBase extends SfxBaseObj
 				result += "\n\n";
 			}
 			return result;
+		}
+		
+		
+		protected boolean isEntity(EntityDef def, String name) 
+		{
+			for(EntityDef tmp : def.allEntityTypes)
+			{
+				if (tmp.name.equals(name))
+					return true;
+			}
+			return false;
 		}
 	}

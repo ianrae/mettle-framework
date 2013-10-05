@@ -79,4 +79,16 @@ public class ComputerModel extends Model
 
     }
 
+   @ManyToOne 
+    private CompanyModel company;
+
+    public CompanyModel getCompany() {
+        return this.company;
+    }
+    public void setCompany(CompanyModel val) {
+		this.company = val;
+		this.entity.company = CompanyDAO.createEntityFromModel(val);
+
+    }
+
 }

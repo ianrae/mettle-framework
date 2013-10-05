@@ -11,11 +11,12 @@ public class Computer extends Entity
 	public Computer()
 	{}
 
-	public Computer( String name, Date introduced, Date discontinued)
+	public Computer( String name, Date introduced, Date discontinued, Company company)
 	{
 		this.name = name;
 		this.introduced = introduced;
 		this.discontinued = discontinued;
+		this.company = company;
 	}
     public Long id;
 
@@ -24,5 +25,7 @@ public class Computer extends Entity
     public Date introduced;
 
     public Date discontinued;
+
+    public Company company;
 
 }

@@ -19,7 +19,7 @@ import boundaries.Boundary;
 import models.CompanyModel;
 import play.db.ebean.Model.Finder;
 
-import mef.daos.ICompanyDAO;
+import mef.daos.*;
 import mef.entities.Company;
 
 public class CompanyDAO implements ICompanyDAO 

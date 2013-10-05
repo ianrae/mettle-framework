@@ -77,14 +77,5 @@ public class ModelCodeGen extends CodeGenBase
 		return result;
 	}
 
-	private boolean isEntity(EntityDef def, String name) 
-	{
-		for(EntityDef tmp : def.allEntityTypes)
-		{
-			if (tmp.name.equals(name))
-				return true;
-		}
-		return false;
-	}
 
 }

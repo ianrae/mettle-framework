@@ -155,3 +155,9 @@ Then somehow load Computer
 http://wiki.fasterxml.com/JacksonInFiveMinutes json tutorial
       User[] arUser = mapper.readValue(json, User[].class);
 -fails if don't have complete User with embedded phone
+
+
+    entity.phone = PhoneDAO.createEntityFromModel(t.getPhone());
+
+        t.setPhone(PhoneDAO.createModelFromEntity(entity.phone));
+

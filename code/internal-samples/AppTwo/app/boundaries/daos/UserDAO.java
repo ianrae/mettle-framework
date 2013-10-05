@@ -19,7 +19,7 @@ import boundaries.Boundary;
 import models.UserModel;
 import play.db.ebean.Model.Finder;
 
-import mef.daos.IUserDAO;
+import mef.daos.*;
 import mef.entities.User;
 
 public class UserDAO implements IUserDAO 
