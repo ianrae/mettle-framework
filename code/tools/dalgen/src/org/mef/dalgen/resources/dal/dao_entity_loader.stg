@@ -1,0 +1,35 @@
+header(package,types) ::= <<
+//THIS FILE HAS BEEN AUTO-GENERATED. DO NOT MODIFY.
+
+package <package>;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+<types:{t| import mef.entities.$t$}; separator="\n">
+
+
+//import mef.entities.Phone;
+//import mef.entities.User;
+
+import org.codehaus.jackson.JsonNode;
+
+
+>>
+
+	
+
+classdecl() ::= <<
+public class DaoJsonLoader
+{
+
+	
+
+
+>>
+
+endclassdecl() ::= <<
+}
+>>
+

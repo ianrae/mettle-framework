@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.mef.dalgen.codegen.DALUtilsCodeGen;
 import org.mef.dalgen.codegen.generators.BoundaryCodeGen;
 import org.mef.dalgen.codegen.generators.DAOIntefaceCodeGen;
+import org.mef.dalgen.codegen.generators.DaoEntityLoaderCodeGen;
 import org.mef.dalgen.codegen.generators.EntityCodeGen;
 import org.mef.dalgen.codegen.generators.FormBinderCodeGen;
 import org.mef.dalgen.codegen.generators.KnownDAOsCodeGen;
@@ -140,6 +141,20 @@ public class CodeGenTests extends BaseCodeGenTest
 		writeFile("TaskFormBinder", code);
 	}
 	
+	@Test
+	public void testDaoLoader() throws Exception
+	{
+		log("--testDaoLoader--");
+		
+		String path = this.getTemplateFile("dao_entity_loader.stg");
+		String packageName = "mef.core";
+		DaoEntityLoaderCodeGen gen = new DaoEntityLoaderCodeGen(_ctx);
+		gen.init(path, packageName);
+		String code = gen.generate(def);	
+		log(code);
+		assertEquals(true, 10 < code.length());
+		writeFile("Task", code);
+	}
 	
 //	@Test
 //	public void testDALUtils() throws Exception
