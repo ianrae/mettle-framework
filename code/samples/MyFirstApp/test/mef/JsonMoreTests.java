@@ -66,6 +66,7 @@ public class JsonMoreTests extends BaseTest
     	ObjectMapper mapper = new ObjectMapper();
     	JsonNode rootNode = mapper.readTree(json);
     	
+//    	List<Phone> phoneL = new ArrayList<Phone>(); //parsePhones(rootNode);
     	List<Phone> phoneL = parsePhones(rootNode);
     	
     	JsonNode msgNode = rootNode.path("User");
@@ -75,6 +76,7 @@ public class JsonMoreTests extends BaseTest
 		Long[] phoneIds = new Long[]{ 20L, 30L, 40L };
 		
 		int i = 0;
+		List<User> userL = new ArrayList<User>();
 		
 		while (ite.hasNext()) {
 			JsonNode temp = ite.next();
@@ -83,10 +85,45 @@ public class JsonMoreTests extends BaseTest
 			assertEquals(names[i], u.name);
 			assertEquals(phoneIds[i], u.phone.id);
 			
+			userL.add(u);
 			i++;
 		}    	
+		
+		resolveIds(userL, phoneL);
+		
+		for(User u : userL)
+		{
+			log(String.format("%s : %s", u.name, u.phone.name));
+		}
 	}
 	
+	private void resolveIds(List<User> userL, List<Phone> phoneL) 
+	{
+		for(User u : userL)
+		{
+			Phone ph = findPhoneWithId(u.phone.id, phoneL);
+			if (ph == null)
+			{
+				//err
+			}
+			else
+			{
+				u.phone = ph;
+			}
+		}
+	}
+	private Phone findPhoneWithId(long id, List<Phone> phoneL) 
+	{
+		for (Phone ph : phoneL)
+		{
+			if (ph.id == id)
+			{
+				return ph;
+			}
+		}
+		return null;
+	}
+
 	private List<Phone> parsePhones(JsonNode rootNode) 
 	{
 		List<Phone> phoneL = new ArrayList<Phone>();
@@ -102,7 +139,7 @@ public class JsonMoreTests extends BaseTest
 		while (ite.hasNext()) {
 			JsonNode temp = ite.next();
 			Phone ph = readPhone(temp);
-			assertEquals(0L, ph.id.longValue());
+			assertEquals(phoneIds[i].longValue(), ph.id.longValue());
 			assertEquals(names[i], ph.name);
 			
 			phoneL.add(ph);
@@ -114,31 +151,31 @@ public class JsonMoreTests extends BaseTest
 
 	private Phone readPhone(JsonNode node)
 	{
-		Phone ph = new Phone();
+		Phone obj = new Phone();
 		JsonNode jj = node.get("id");
-		ph.id = jj.asLong();
+		obj.id = jj.asLong();
 
 		jj = node.get("name");
-		ph.name = jj.getTextValue();
+		obj.name = jj.getTextValue();
 		
-		return ph;
+		return obj;
 	}
 
 	private User readUser(JsonNode node)
 	{
-		User u = new User();
+		User obj = new User();
 		JsonNode jj = node.get("id");
-		u.id = jj.asLong();
+		obj.id = jj.asLong();
 
 		jj = node.get("name");
-		u.name = jj.getTextValue();
+		obj.name = jj.getTextValue();
 		
 		jj = node.get("phone");
 		jj = jj.get("id");
-		u.phone = new Phone();
-		u.phone.id = jj.asLong();
+		obj.phone = new Phone();
+		obj.phone.id = jj.asLong();
 
-		return u;
+		return obj;
 	}
 	
 	

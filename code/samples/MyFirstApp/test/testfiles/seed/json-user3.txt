@@ -1,5 +1,5 @@
 {
-	"Phone:":
+	"Phone":
 	[
 	 { "id": "20", "name": "phone1" }
 	 ,{ "id": "30", "name": "phone2" }
@@ -7,7 +7,7 @@
 	 ,{ "id": "50", "name": "phone4" }
 	],
 
-	"User:":
+	"User":
 	[
 	 { "id": "0", "name": "user1", "phone": {"id": "20" }}
 	 ,{ "id": "0", "name": "user2", "phone": {"id": "30" }}
