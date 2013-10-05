@@ -23,6 +23,7 @@ public class DaoEntityLoaderCodeGen extends CodeGenBase
 		String result = genHeader(def); 
 
 		ST st = _group.getInstanceOf("classdecl");
+		st.add("name", this.getClassName(def));
 		result += st.render(); 
 		result += genReadEntity(def);
 		result += genLoadEntity(def);
@@ -47,6 +48,8 @@ public class DaoEntityLoaderCodeGen extends CodeGenBase
 			st.add("package", _packageName);
 		}
 
+		st.add("type", def.name);
+		
 		List<String> daoTypeL = new ArrayList<String>();
 		for(FieldDef fdef : def.fieldL)
 		{

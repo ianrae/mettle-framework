@@ -1,4 +1,4 @@
-header(package,types) ::= <<
+header(package,type,types) ::= <<
 //THIS FILE HAS BEEN AUTO-GENERATED. DO NOT MODIFY.
 
 package <package>;
@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import org.codehaus.jackson.JsonNode;
+import mef.entities.<type>;
 
 <types:{t| import mef.entities.<t>;}; separator="\n">
 
@@ -31,7 +32,7 @@ loadentity(type) ::= <<
 		List\<<type>\> phoneL = new ArrayList\<<type>\>();
 		
     	JsonNode msgNode = rootNode.path("<type>");
-		Iterator\<JsonNode\> ite = msgNode.getElements();
+		Iterator\<JsonNode> ite = msgNode.getElements();
 
 		int i = 0;
 		while (ite.hasNext()) {
@@ -81,8 +82,8 @@ resolve2(type1, type2) ::= <<
 
 >>
 
-classdecl() ::= <<
-public class DaoJsonLoader
+classdecl(name) ::= <<
+public class <name>
 {
 
 	

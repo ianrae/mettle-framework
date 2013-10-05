@@ -6,11 +6,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import org.codehaus.jackson.JsonNode;
+import mef.entities.Task;
 
 
 
 
-public class DaoJsonLoader
+public class DaoJsonLoader_GEN
 {
 
 
@@ -25,7 +26,7 @@ public class DaoJsonLoader
 		List<Task> phoneL = new ArrayList<Task>();
 
     	JsonNode msgNode = rootNode.path("Task");
-		Iterator<JsonNode\> ite = msgNode.getElements();
+		Iterator<JsonNode> ite = msgNode.getElements();
 
 		int i = 0;
 		while (ite.hasNext()) {
