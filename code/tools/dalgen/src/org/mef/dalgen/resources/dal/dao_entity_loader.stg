@@ -6,19 +6,80 @@ package <package>;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
-<types:{t| import mef.entities.$t$}; separator="\n">
-
-
-//import mef.entities.Phone;
-//import mef.entities.User;
-
 import org.codehaus.jackson.JsonNode;
+
+<types:{t| import mef.entities.<t>;}; separator="\n">
+
+
 
 
 >>
 
+readentity(type) ::= <<
+	public <type> read<type>(JsonNode node)
+	{
+		<type> obj = new <type>();
+		
+		return obj;
+	}
+
+>>
 	
+loadentity(type) ::= <<
+	public List\<<type>\> load<type>s(JsonNode rootNode) 
+	{
+		List\<<type>\> phoneL = new ArrayList\<<type>\>();
+		
+    	JsonNode msgNode = rootNode.path("<type>");
+		Iterator<JsonNode> ite = msgNode.getElements();
+
+		int i = 0;
+		while (ite.hasNext()) {
+			JsonNode temp = ite.next();
+			<type> ph = read<type>(temp);
+			
+			phoneL.add(ph);
+			i++;
+		}    	
+		
+		return phoneL;
+	}
+
+>>
+
+findwithidentity(type) ::= <<
+	private <type> find<type>WithId(long id, List\<<type>\> phoneL) 
+	{
+		for (<type> ph : phoneL)
+		{
+			if (ph.id == id)
+			{
+				return ph;
+			}
+		}
+		return null;
+	}
+
+>>
+	
+resolve2(type1, type2) ::= <<
+	public void resolveIds(List\<<type1>\> userL, List\<<type2>\> phoneL) 
+	{
+		for(<type1> u : userL)
+		{
+			<type2> ph = find<type2>WithId(u.phone.id, phoneL);
+			if (ph == null)
+			{
+				//err!!
+			}
+			else
+			{
+				u.phone = ph;
+			}
+		}
+	}
+
+>>
 
 classdecl() ::= <<
 public class DaoJsonLoader
