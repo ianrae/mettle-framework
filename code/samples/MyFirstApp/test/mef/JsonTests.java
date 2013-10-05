@@ -146,17 +146,17 @@ public class JsonTests extends BaseTest
 		String json = ResourceReader.readSeedFile("json-user1.txt");
 		EntityLoader loader = new EntityLoader(_ctx);
 		loader.loadUser(json);
-		assertEquals(1, userDal.size());
+		assertEquals(3, userDal.size());
 		long id = userDal.findById(1).phone.id;
 		
-		assertEquals(1, userDal.size()); //again - not added twice
+		assertEquals(3, userDal.size()); //again - not added twice
 		long id2 = userDal.findById(1).phone.id;
 		assertEquals(id2, id);
 		User u = userDal.find_by_name("user1");
 		assertEquals("user1", u.name);
 		assertEquals("Mark", u.phone.name);
 		
-		assertEquals(1, _dal.size());
+		assertEquals(3, _dal.size());
 		Phone ph = _dal.find_by_name("Mark");
 		assertNotNull(ph);
 		assertEquals(u.phone.id, ph.id);
