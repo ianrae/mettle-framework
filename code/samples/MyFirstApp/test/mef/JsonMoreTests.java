@@ -19,6 +19,103 @@ import org.mef.framework.utils.ResourceReader;
 
 public class JsonMoreTests extends BaseTest
 {
+	public static class DaoJsonLoader
+	{
+		public Phone readPhone(JsonNode node)
+		{
+			Phone obj = new Phone();
+			JsonNode jj = node.get("id");
+			obj.id = jj.asLong();
+
+			jj = node.get("name");
+			obj.name = jj.getTextValue();
+			
+			return obj;
+		}
+
+		public User readUser(JsonNode node)
+		{
+			User obj = new User();
+			JsonNode jj = node.get("id");
+			obj.id = jj.asLong();
+
+			jj = node.get("name");
+			obj.name = jj.getTextValue();
+			
+			jj = node.get("phone");
+			jj = jj.get("id");
+			obj.phone = new Phone();
+			obj.phone.id = jj.asLong();
+
+			return obj;
+		}
+
+		private List<Phone> loadPhones(JsonNode rootNode) 
+		{
+			List<Phone> phoneL = new ArrayList<Phone>();
+			
+	    	JsonNode msgNode = rootNode.path("Phone");
+			Iterator<JsonNode> ite = msgNode.getElements();
+
+			int i = 0;
+			while (ite.hasNext()) {
+				JsonNode temp = ite.next();
+				Phone ph = readPhone(temp);
+				
+				phoneL.add(ph);
+				i++;
+			}    	
+			
+			return phoneL;
+		}
+		
+		private List<User> loadUsers(JsonNode rootNode) 
+		{
+			List<User> userL = new ArrayList<User>();
+			
+	    	JsonNode msgNode = rootNode.path("User");
+			Iterator<JsonNode> ite = msgNode.getElements();
+
+			int i = 0;
+			while (ite.hasNext()) {
+				JsonNode temp = ite.next();
+				User ph = readUser(temp);
+				
+				userL.add(ph);
+				i++;
+			}    	
+			
+			return userL;
+		}
+		
+		public void resolveIds(List<User> userL, List<Phone> phoneL) 
+		{
+			for(User u : userL)
+			{
+				Phone ph = findPhoneWithId(u.phone.id, phoneL);
+				if (ph == null)
+				{
+					//err
+				}
+				else
+				{
+					u.phone = ph;
+				}
+			}
+		}
+		private Phone findPhoneWithId(long id, List<Phone> phoneL) 
+		{
+			for (Phone ph : phoneL)
+			{
+				if (ph.id == id)
+				{
+					return ph;
+				}
+			}
+			return null;
+		}
+	}
+	
 
 	@Test
 	public void test() throws Exception
@@ -66,8 +163,9 @@ public class JsonMoreTests extends BaseTest
     	ObjectMapper mapper = new ObjectMapper();
     	JsonNode rootNode = mapper.readTree(json);
     	
+    	DaoJsonLoader loader = new DaoJsonLoader();
 //    	List<Phone> phoneL = new ArrayList<Phone>(); //parsePhones(rootNode);
-    	List<Phone> phoneL = parsePhones(rootNode);
+    	List<Phone> phoneL = parsePhones(loader, rootNode);
     	
     	JsonNode msgNode = rootNode.path("User");
 		Iterator<JsonNode> ite = msgNode.getElements();
@@ -75,21 +173,19 @@ public class JsonMoreTests extends BaseTest
 		String[] names = new String[]{ "user1", "user2", "user3" };
 		Long[] phoneIds = new Long[]{ 20L, 30L, 40L };
 		
+		List<User> userL = loader.loadUsers(rootNode);
 		int i = 0;
-		List<User> userL = new ArrayList<User>();
 		
-		while (ite.hasNext()) {
-			JsonNode temp = ite.next();
-			User u = this.readUser(temp);
+		for(User u : userL)
+		{
 			assertEquals(0L, u.id.longValue());
 			assertEquals(names[i], u.name);
 			assertEquals(phoneIds[i], u.phone.id);
 			
-			userL.add(u);
 			i++;
 		}    	
 		
-		resolveIds(userL, phoneL);
+		loader.resolveIds(userL, phoneL);
 		
 		for(User u : userL)
 		{
@@ -97,86 +193,25 @@ public class JsonMoreTests extends BaseTest
 		}
 	}
 	
-	private void resolveIds(List<User> userL, List<Phone> phoneL) 
-	{
-		for(User u : userL)
-		{
-			Phone ph = findPhoneWithId(u.phone.id, phoneL);
-			if (ph == null)
-			{
-				//err
-			}
-			else
-			{
-				u.phone = ph;
-			}
-		}
-	}
-	private Phone findPhoneWithId(long id, List<Phone> phoneL) 
-	{
-		for (Phone ph : phoneL)
-		{
-			if (ph.id == id)
-			{
-				return ph;
-			}
-		}
-		return null;
-	}
 
-	private List<Phone> parsePhones(JsonNode rootNode) 
+	private List<Phone> parsePhones(DaoJsonLoader loader, JsonNode rootNode) 
 	{
-		List<Phone> phoneL = new ArrayList<Phone>();
+		List<Phone> phoneL = loader.loadPhones(rootNode);
 		
-    	JsonNode msgNode = rootNode.path("Phone");
-		Iterator<JsonNode> ite = msgNode.getElements();
-
 		String[] names = new String[]{ "phone1", "phone2", "phone3", "phone4" };
 		Long[] phoneIds = new Long[]{ 20L, 30L, 40L, 50L };
 		
 		int i = 0;
-		
-		while (ite.hasNext()) {
-			JsonNode temp = ite.next();
-			Phone ph = readPhone(temp);
+		for(Phone ph : phoneL) 
+		{
 			assertEquals(phoneIds[i].longValue(), ph.id.longValue());
 			assertEquals(names[i], ph.name);
-			
-			phoneL.add(ph);
 			i++;
 		}    	
 		
 		return phoneL;
 	}
 
-	private Phone readPhone(JsonNode node)
-	{
-		Phone obj = new Phone();
-		JsonNode jj = node.get("id");
-		obj.id = jj.asLong();
-
-		jj = node.get("name");
-		obj.name = jj.getTextValue();
-		
-		return obj;
-	}
-
-	private User readUser(JsonNode node)
-	{
-		User obj = new User();
-		JsonNode jj = node.get("id");
-		obj.id = jj.asLong();
-
-		jj = node.get("name");
-		obj.name = jj.getTextValue();
-		
-		jj = node.get("phone");
-		jj = jj.get("id");
-		obj.phone = new Phone();
-		obj.phone.id = jj.asLong();
-
-		return obj;
-	}
 	
 	
 	//------------ helpers ----------------
