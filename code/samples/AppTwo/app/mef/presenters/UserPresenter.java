@@ -2,6 +2,7 @@
 
 package mef.presenters;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,6 +46,7 @@ public class UserPresenter extends Presenter
 	{
 		UserReply reply = createReply(); 
 		reply.setDestination(Reply.VIEW_INDEX);
+		reply._allL = new ArrayList<User>();
 		return reply;
 	}
 

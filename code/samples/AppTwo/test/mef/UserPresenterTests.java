@@ -44,7 +44,7 @@ public class UserPresenterTests extends BasePresenterTest
 		
 		chkReplySucessful(reply, Reply.VIEW_INDEX, null);
 		chkDalSize(0);
-		chkReplyWithoutEntity(reply, false, 0);
+		chkReplyWithoutEntity(reply, true, 0);
 	}
 
 //	@Test

@@ -1,0 +1,28 @@
+@(users: List[mef.entities.User])
+
+@import helper._
+
+@main("Users list") {
+    
+ @if(flash.containsKey("success")) {
+        <div 
+        <strong>Done!</strong> @flash.get("success")
+        </div>
+    }  else {
+    <div> no flash </div>
+    } 
+    
+    <h1>@users.size() users(s)</h1>
+    
+    <ul>
+        @for(user <- users) {
+            <li>
+				<div>
+                @user.name  @user.id   
+                </div>
+				<br/>
+				
+            </li>
+        }
+    </ul>
+}
