@@ -54,8 +54,8 @@ public class CompanyPresenterTests extends BasePresenterTest
 		CompanyReply reply = (CompanyReply) _presenter.process(new IndexCommand());
 		
 		chkReplySucessful(reply, Reply.VIEW_INDEX, null);
-		assertEquals("Apple Computer Inc", _dao.all().get(0).name);
-		chkReplyWithoutEntity(reply, true, 3);
+		assertEquals("Apple Inc.", _dao.all().get(0).name);
+		chkReplyWithoutEntity(reply, true, 42);
 	}
 	
 	

@@ -3,6 +3,7 @@ package org.mef.dalgen.codegen;
 import static org.junit.Assert.assertEquals;
 
 import java.io.File;
+import java.util.HashMap;
 
 import org.mef.dalgen.codegen.generators.CodeGenBase;
 import org.mef.dalgen.codegen.generators.DAOIntefaceCodeGen;
@@ -17,6 +18,7 @@ import org.mef.dalgen.parser.EntityDef;
 
 import sfx.SfxBaseObj;
 import sfx.SfxContext;
+import sfx.SfxErrorTracker;
 import sfx.SfxTextWriter;
 
 public class DalCodeGenerator extends SfxBaseObj
@@ -29,10 +31,12 @@ public class DalCodeGenerator extends SfxBaseObj
 	
 	public boolean genRealDAO = false; //for now
 	public boolean genDaoLoader = false;
+	private SfxErrorTracker _tracker;
 	
 	public DalCodeGenerator(SfxContext ctx)
 	{
 		super(ctx);
+		_tracker = (SfxErrorTracker) _ctx.getServiceLocator().getInstance(SfxErrorTracker.class);
 	}
 	
 	public int init(String appDir, String stDir) throws Exception
@@ -40,6 +44,22 @@ public class DalCodeGenerator extends SfxBaseObj
 		this.appDir = appDir;
 		this.stDir = stDir;
 		parser = readEntityDef(appDir);
+		
+		//check for duplicates
+		HashMap<String, String> map = new HashMap<String, String>();
+		for(EntityDef def : parser._entityL)
+		{
+			String existing = map.get(def.name);
+			
+			if (existing != null && (existing.equals(def.name)))
+			{
+				_tracker.errorOccurred("duplicate entity - more than one of: " + def.name);
+				return 0;
+			}
+			map.put(def.name, def.name);
+		}
+		
+		
 		return parser._entityL.size();
 	}
 	
