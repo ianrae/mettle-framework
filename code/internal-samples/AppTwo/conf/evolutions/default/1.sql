@@ -14,6 +14,7 @@ create table computer_model (
   name                      varchar(255),
   introduced                timestamp,
   discontinued              timestamp,
+  company_id                bigint,
   constraint pk_computer_model primary key (id))
 ;
 
@@ -37,6 +38,8 @@ create sequence flight_seq;
 
 create sequence user_model_seq;
 
+alter table computer_model add constraint fk_computer_model_company_1 foreign key (company_id) references company_model (id) on delete restrict on update restrict;
+create index ix_computer_model_company_1 on computer_model (company_id);
 
 
 

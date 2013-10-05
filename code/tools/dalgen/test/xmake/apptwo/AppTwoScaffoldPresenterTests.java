@@ -21,19 +21,19 @@ public class AppTwoScaffoldPresenterTests extends BaseTest
 		
 		gen.disableFileIO = false;  //***** WATCH OUT!11 ****
 		
-		String appDir = this.getCurrentDir("..\\..\\samples\\AppTwo");
+		String appDir = this.getCurrentDir("..\\..\\internal-samples\\AppTwo");
 		String stDir = this.getCurrentDir("src\\org\\mef\\dalgen\\resources\\presenter");
 log(appDir);
 log(stDir);
 		
 		int n = gen.init(appDir, stDir);
-		assertEquals(2, n);
+		assertEquals(3, n);
 
 		boolean b = false;
 //		boolean b = gen.generate(0);
 		b = gen.generate("User");
 		b = gen.generate("Company");
-//		b = gen.generate("Zoo");
+		b = gen.generate("Computer");
 		if (b)
 		{}
 	}
