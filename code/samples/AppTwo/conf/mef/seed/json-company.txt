@@ -1,16 +1,7 @@
 [
- {
- "id": "0", 
- "name": "Apple Computer Inc"
- },
- {
- "id": "0", 
- "name": "IBM"
- },
-  {
- "id": "0", 
- "name": "Gencorp"
- }
+  {  "id": "0", "name": "Apple Computer Inc" }
+ ,{  "id": "0", "name": "IBM" }
+ ,{  "id": "0", "name": "Gencorp" }
 
  
 ]

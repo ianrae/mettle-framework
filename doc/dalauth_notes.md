@@ -136,3 +136,18 @@ the export Framework to myfirstapp\lib\meflib.jar
  
  C:\Users\ian\Documents\GitHub\dalgen\code\samples\MyFirstApp
 
+------------------------4OctFri
+loading has-a
+
+  {  "id": "2", "name": "Apple Computer Inc" }
+ ,{  "id": "3", "name": "IBM" }
+ ,{  "id": "4", "name": "Gencorp" }
+
+When load set save id and set to 0.
+then create map knownObj<id, obj>
+
+Then somehow load Computer
+
+  {  "id": "0", "name": "CanadianTire" "company": "2"}
+
+-when read comany="2", look it up in knowObj 
