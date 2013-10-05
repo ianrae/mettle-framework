@@ -11,8 +11,21 @@ public class ResourceReader
 {
 	public static String readSeedFile(String filename)
 	{
-		String currentDir = new File(".").getAbsolutePath();
-		String path = FilenameUtils.concat(currentDir, "conf\\mef\\seed");
+		return readSeedFile(filename, null);
+	}
+	public static String readSeedFile(String filename, String dir)
+	{
+		String path;
+		if (dir == null)
+		{
+			String currentDir = new File(".").getAbsolutePath();
+			path = FilenameUtils.concat(currentDir, "conf\\mef\\seed");
+		}
+		else
+		{
+			path = dir;
+		}
+		
 		path = FilenameUtils.concat(path, filename);
 		return readFile(path);
 	}

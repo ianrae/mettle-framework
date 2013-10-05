@@ -2,7 +2,9 @@ package mef;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import mef.core.EntityLoader;
 import mef.daos.IUserDAO;
@@ -59,9 +61,12 @@ public class JsonMoreTests extends BaseTest
 	public void testTree2() throws Exception
 	{
 		init();
-		String json = ResourceReader.readSeedFile("json-user3.txt");
+		String dir = this.getTestFile("seed");
+		String json = ResourceReader.readSeedFile("json-user3.txt", dir);
     	ObjectMapper mapper = new ObjectMapper();
     	JsonNode rootNode = mapper.readTree(json);
+    	
+    	List<Phone> phoneL = parsePhones(rootNode);
     	
     	JsonNode msgNode = rootNode.path("User");
 		Iterator<JsonNode> ite = msgNode.getElements();
@@ -73,7 +78,7 @@ public class JsonMoreTests extends BaseTest
 		
 		while (ite.hasNext()) {
 			JsonNode temp = ite.next();
-			User u = this.readFields(temp);
+			User u = this.readUser(temp);
 			assertEquals(0L, u.id.longValue());
 			assertEquals(names[i], u.name);
 			assertEquals(phoneIds[i], u.phone.id);
@@ -82,7 +87,44 @@ public class JsonMoreTests extends BaseTest
 		}    	
 	}
 	
-	private User readFields(JsonNode node)
+	private List<Phone> parsePhones(JsonNode rootNode) 
+	{
+		List<Phone> phoneL = new ArrayList<Phone>();
+		
+    	JsonNode msgNode = rootNode.path("Phone");
+		Iterator<JsonNode> ite = msgNode.getElements();
+
+		String[] names = new String[]{ "phone1", "phone2", "phone3", "phone4" };
+		Long[] phoneIds = new Long[]{ 20L, 30L, 40L, 50L };
+		
+		int i = 0;
+		
+		while (ite.hasNext()) {
+			JsonNode temp = ite.next();
+			Phone ph = readPhone(temp);
+			assertEquals(0L, ph.id.longValue());
+			assertEquals(names[i], ph.name);
+			
+			phoneL.add(ph);
+			i++;
+		}    	
+		
+		return phoneL;
+	}
+
+	private Phone readPhone(JsonNode node)
+	{
+		Phone ph = new Phone();
+		JsonNode jj = node.get("id");
+		ph.id = jj.asLong();
+
+		jj = node.get("name");
+		ph.name = jj.getTextValue();
+		
+		return ph;
+	}
+
+	private User readUser(JsonNode node)
 	{
 		User u = new User();
 		JsonNode jj = node.get("id");
