@@ -151,3 +151,7 @@ Then somehow load Computer
   {  "id": "0", "name": "CanadianTire" "company": "2"}
 
 -when read comany="2", look it up in knowObj 
+
+http://wiki.fasterxml.com/JacksonInFiveMinutes json tutorial
+      User[] arUser = mapper.readValue(json, User[].class);
+-fails if don't have complete User with embedded phone

@@ -1,4 +1,4 @@
-{ "messages":
+{ "User":
 [
  { "id": "0", "name": "user1", "phone": {"id": "0", "name": "Mark"} }
  ,{ "id": "0", "name": "user2", "phone": {"id": "0", "name": "Phil"} }
