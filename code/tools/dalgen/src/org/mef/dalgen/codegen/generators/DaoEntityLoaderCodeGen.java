@@ -79,11 +79,28 @@ public class DaoEntityLoaderCodeGen extends CodeGenBase
 	protected String genReadEntity(EntityDef def)
 	{
 		ST st = _group.getInstanceOf("readentity");
-		
 		st.add("type", def.name);
+		st.add("fields", this.buildFieldsList(def));
+		
 		String result = st.render(); 
 		return result;
 	}
+	private Object buildFieldsList(EntityDef def) 
+	{
+		ArrayList<String> L = new ArrayList<String>();
+		for(FieldDef fdef : def.fieldL)
+		{
+			if (fdef.name.equals("id"))
+			{}
+			else
+			{
+				L.add(fdef.name);
+			}
+		}
+		return L;
+	}
+	
+	
 	protected String genLoadEntity(EntityDef def)
 	{
 		ST st = _group.getInstanceOf("loadentity");

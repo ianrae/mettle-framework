@@ -16,10 +16,18 @@ import mef.entities.<type>;
 
 >>
 
-readentity(type) ::= <<
+readentity(type, fields) ::= <<
 	public <type> read<type>(JsonNode node)
 	{
 		<type> obj = new <type>();
+		JsonNode jj = node.get("id");
+		obj.id = jj.asLong();
+
+		<fields:{t| 
+		jj = node.get("<t>");
+		obj.<t> = jj.getTextValue();
+		}; separator="\n">
+
 		
 		return obj;
 	}
