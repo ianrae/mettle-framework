@@ -1,4 +1,6 @@
+//THIS FILE HAS BEEN AUTO-GENERATED. DO NOT MODIFY.
 package boundaries.daos;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,14 +16,17 @@ import play.Logger;
 import boundaries.Boundary;
 
 import models.CompanyModel;
-import models.UserModel;
+import play.db.ebean.Model.Finder;
 
 import mef.daos.ICompanyDAO;
 import mef.entities.Company;
-import mef.entities.User;
 
 public class CompanyDAO implements ICompanyDAO 
 {
+    /**
+     * Generic query helper for entity Computer with id Long
+     */
+    public static Finder<Long,Company> find = new Finder<Long,Company>(Long.class, Company.class); 
 
 	@Override
 	public void save(Company entity) 
@@ -34,37 +39,21 @@ public class CompanyDAO implements ICompanyDAO
 		}
 		else //touch all (for ebean), except id
 		{
-			t.setName(entity.name);
+			touchAll(t, entity);
 		}
 		t.save();
 		entity.id = t.getId(); //in case created on
 	}
-	
 
 	@Override
 	public Company findById(long id) 
 	{
-		Logger.info("HERE GOES:");
-//		CompanyModel t = CompanyModel.find.byId(id);
-		
-//		String oql = 
-//		        "  find  user_model "
-////		        +" fetch phone "
-//		        +" where order.id = :id";
-//		   
-//		 Query<CompanyModel> query = Ebean.createQuery(CompanyModel.class, oql);
-//		 query.setParameter("id", id);
-//		CompanyModel t = query.findUnique();
-		
-		//http://www.avaje.org/static/javadoc/pub/com/avaje/ebean/Query.html
-		CompanyModel t = Ebean.find(CompanyModel.class).fetch("phone").where().eq("id", id).findUnique();		
-		
-//		CompanyModel t = CompanyModel.find.fetch("phone").where(String.format("id=%d",id)).findUnique();
+		CompanyModel t = Ebean.find(CompanyModel.class).where().eq("id", id).findUnique();		
 		if (t == null)
 		{
 			return null;
 		}
-				
+
 		t.entity = createEntityFromModel(t); //create entity, set m.cc and t.entity, copy all fields from model to entity
 		return t.entity;
 	}
@@ -97,9 +86,7 @@ public class CompanyDAO implements ICompanyDAO
 		CompanyModel t = new CompanyModel();
 		entity.cc = t;
 		t.entity = entity;
-		t.setId(entity.id);
-		t.setName(entity.name);
-		//email later!!
+		touchAll(t, entity);
 		return t;
 	}
 	//create entity, set m.cc and t.entity, copy all fields from model to entity
@@ -112,9 +99,7 @@ public class CompanyDAO implements ICompanyDAO
 		Company entity = new Company();
 		entity.cc = t;
 		t.entity = entity;
-		entity.id = (t.getId() == null) ? 0 : t.getId();
-		entity.name	= t.getName();
-		//!email!!
+		touchAll(entity, t);
 		return entity;
 	}
 	public static List<Company> createEntityFromModel(List<CompanyModel> L)
@@ -147,22 +132,25 @@ public class CompanyDAO implements ICompanyDAO
 		}
 		else //touch all (for ebean), except id
 		{
-			t.setName(entity.name); //copy all!!
+			touchAll(t, entity);
 		}
 		t.update();
 	}
 
+       protected static void touchAll(CompanyModel t, Company entity)
+{
+	t.setName(entity.name);
+}
 
-	@Override
-	public Company find_by_name(String val) 
-	{
-		CompanyModel t = Ebean.find(CompanyModel.class).where().eq("name", val).findUnique();
-		if (t == null)
-		{
-			return null;
-		}
-		Company entity = createEntityFromModel(t);
-		return entity;
-	}
-	
+protected static void touchAll(Company entity, CompanyModel t)
+{
+	entity.name = t.getName();
+}
+
+    @Override
+    public Company find_by_name(String val) 
+    {
+      return  find.where().eq("name", val).findUnique();
+    }
+
 }

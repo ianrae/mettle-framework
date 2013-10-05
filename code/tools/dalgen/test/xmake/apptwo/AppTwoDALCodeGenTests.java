@@ -37,7 +37,7 @@ log(stDir);
 		boolean b = false;
 		b = gen.generateOnce(); //allKnownDAOs
 		b = gen.generate("User");
-//		b = gen.generate("Company");
+		b = gen.generate("Company");
 		if (b)
 		{}
 	}

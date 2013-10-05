@@ -17,6 +17,7 @@ import play.Logger;
 import boundaries.Boundary;
 
 import models.<type>Model;
+import play.db.ebean.Model.Finder;
 
 import mef.daos.I<type>DAO;
 import mef.entities.<type>;
@@ -30,14 +31,7 @@ querydecl(type, fieldType, name) ::= <<
     @Override
     public <type> find_by_<name>(<fieldType> val) 
     {
-        for(<type> entity : _L)
-        {
-            if (entity.<name> == val)
-            {
-                return entity;
-            }
-        }
-        return null; //not found
+      return  find.where().eq("<name>", val).findUnique();
     }
 >>
 
@@ -65,6 +59,11 @@ protected static void touchAll(<type> entity, <type>Model t)
 classdecl(name, type) ::= <<
 public class <name> implements I<type>DAO 
 {
+    /**
+     * Generic query helper for entity Computer with id Long
+     */
+    public static Finder\<Long,<type>\> find = new Finder\<Long,<type>\>(Long.class, <type>.class); 
+
 	@Override
 	public void save(<type> entity) 
 	{
