@@ -21,7 +21,7 @@ public class JsonTests extends BaseTest
 		EntityLoader loader = new EntityLoader(_ctx);
 		loader.loadAll(json);
 		
-		assertEquals(3, getDAO().size());
+		assertEquals(42, getDAO().size());
 	}
 	
 	private ICompanyDAO getDAO()
