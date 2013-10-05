@@ -8,9 +8,9 @@ import sfx.SfxContext;
 
 public class MockDAOCodeGen extends CodeGenBase
 {
-	public MockDAOCodeGen(SfxContext ctx, String path, String packageName)
+	public MockDAOCodeGen(SfxContext ctx)
 	{
-		super(ctx, path, packageName);
+		super(ctx);
 	}
 	
 	@Override

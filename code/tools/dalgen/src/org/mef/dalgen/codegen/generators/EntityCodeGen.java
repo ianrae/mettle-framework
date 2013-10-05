@@ -11,9 +11,9 @@ import sfx.SfxContext;
 
 public class EntityCodeGen extends CodeGenBase
 	{
-		public EntityCodeGen(SfxContext ctx, String path, String packageName)
+		public EntityCodeGen(SfxContext ctx)
 		{
-			super(ctx, path, packageName);
+			super(ctx);
 		}
 		
 		@Override

@@ -8,9 +8,9 @@ import sfx.SfxContext;
 
 public class ModelCodeGen extends CodeGenBase
 {
-	public ModelCodeGen(SfxContext ctx, String path, String packageName)
+	public ModelCodeGen(SfxContext ctx)
 	{
-		super(ctx, path, packageName);
+		super(ctx);
 	}
 	
 	@Override

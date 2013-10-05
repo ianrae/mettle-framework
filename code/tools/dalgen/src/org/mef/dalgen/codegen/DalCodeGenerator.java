@@ -58,7 +58,8 @@ public class DalCodeGenerator extends SfxBaseObj
 		String name = def.name;
 		
 		String path = this.pathCombine(stDir, "entity.stg");
-		EntityCodeGen gen = new EntityCodeGen(_ctx, path, "mef.entities");
+		EntityCodeGen gen = new EntityCodeGen(_ctx);
+		gen.init(path, "mef.entities");
 		boolean b = generateOneFile(def, gen, "app\\mef\\entities");
 		if (!b )
 		{
@@ -66,36 +67,28 @@ public class DalCodeGenerator extends SfxBaseObj
 		}
 		if (_needParentClass)
 		{
-			path = this.pathCombine(stDir, "entity-based-on-gen.stg");
-			gen = new EntityCodeGen(_ctx, path, "mef.entities");
 			def.extendEntity = false;
-			b = generateOneFile(def, gen, "app\\mef\\entities");
-			def.extendEntity = true; //restore
+			b = doGen(def, "entity-based-on-gen.stg", "mef.entities", "app\\mef\\entities", new EntityCodeGen(_ctx));
 			if (!b )
 			{
 				return false; //!!
-			}			
+			}
 		}
 
-		path = this.pathCombine(stDir, "model.stg");
-		ModelCodeGen gen2 = new ModelCodeGen(_ctx, path, "models");
-		b = generateOneFile(def, gen2, "app\\models");
+		
+		b = doGen(def, "model.stg", "models", "app\\models", new ModelCodeGen(_ctx));
 		if (!b )
 		{
 			return false; //!!
 		}
 		
-		path = this.pathCombine(stDir, "dao_interface.stg");
-		DAOIntefaceCodeGen gen3 = new DAOIntefaceCodeGen(_ctx, path, "mef.daos");
-		b = generateOneFile(def, gen3, "app\\mef\\daos");
+		b = doGen(def, "dao_interface.stg", "mef.daos", "app\\mef\\daos", new DAOIntefaceCodeGen(_ctx));
 		if (!b )
 		{
 			return false; //!!
 		}
 		
-		path = this.pathCombine(stDir, "dao_mock.stg");
-		MockDAOCodeGen gen4 = new MockDAOCodeGen(_ctx, path, "mef.daos.mocks");
-		b = generateOneFile(def, gen4, "app\\mef\\daos\\mocks");
+		b = doGen(def, "dao_mock.stg", "mef.daos.mocks", "app\\mef\\daos\\mocks", new MockDAOCodeGen(_ctx));
 		if (!b )
 		{
 			return false; //!!
@@ -103,6 +96,16 @@ public class DalCodeGenerator extends SfxBaseObj
 		
 		return b;
 	}
+
+	private boolean doGen(EntityDef def, String stgFilename, String packageName, 
+			String relPath, CodeGenBase gen) throws Exception
+	{
+		String path = this.pathCombine(stDir, stgFilename);
+		gen.init(path, packageName);
+		boolean b = generateOneFile(def, gen, relPath);
+		return b;
+	}
+	
 	public boolean generateOnce() throws Exception
 	{
 		EntityDef def = parser._entityL.get(0);

@@ -8,9 +8,9 @@ import sfx.SfxContext;
 
 public class DAOIntefaceCodeGen extends CodeGenBase
 	{
-		public DAOIntefaceCodeGen(SfxContext ctx, String path, String packageName)
+		public DAOIntefaceCodeGen(SfxContext ctx)
 		{
-			super(ctx, path, packageName);
+			super(ctx);
 		}
 		
 		@Override

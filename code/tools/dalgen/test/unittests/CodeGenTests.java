@@ -32,7 +32,8 @@ public class CodeGenTests extends BaseCodeGenTest
 		
 		String path = this.getTemplateFile("entity.stg");
 		String packageName = "org.mef.dalgen.unittests.gen";
-		EntityCodeGen gen = new EntityCodeGen(_ctx, path, packageName);
+		EntityCodeGen gen = new EntityCodeGen(_ctx);
+		gen.init(path, packageName);
 		String code = gen.generate(def);	
 		log(code);
 		assertEquals(true, 10 < code.length());
@@ -45,7 +46,8 @@ public class CodeGenTests extends BaseCodeGenTest
 		def.extendModel = true;
 		String path = this.getTemplateFile("model.stg");
 		String packageName = "org.mef.dalgen.unittests.gen";
-		ModelCodeGen gen = new ModelCodeGen(_ctx, path, packageName);
+		ModelCodeGen gen = new ModelCodeGen(_ctx);
+		gen.init(path, packageName);
 		gen.forUnitTest = true;
 		String code = gen.generate(def);	
 		log(code);
@@ -61,7 +63,8 @@ public class CodeGenTests extends BaseCodeGenTest
 		def.extendInterface = true;
 		String path = this.getTemplateFile("dao_interface.stg");
 		String packageName = "org.mef.dalgen.unittests.gen";
-		DAOIntefaceCodeGen gen = new DAOIntefaceCodeGen(_ctx, path, packageName);
+		DAOIntefaceCodeGen gen = new DAOIntefaceCodeGen(_ctx);
+		gen.init(path, packageName);
 		String code = gen.generate(def);	
 		log(code);
 		assertEquals(true, 10 < code.length());
@@ -75,7 +78,8 @@ public class CodeGenTests extends BaseCodeGenTest
 		def.extendMock = true;
 		String path = this.getTemplateFile("dao_mock.stg");
 		String packageName = "org.mef.dalgen.unittests.gen";
-		MockDAOCodeGen gen = new MockDAOCodeGen(_ctx, path, packageName);
+		MockDAOCodeGen gen = new MockDAOCodeGen(_ctx);
+		gen.init(path, packageName);
 		String code = gen.generate(def);	
 		log(code);
 		assertEquals(true, 10 < code.length());

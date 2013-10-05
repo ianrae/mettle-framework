@@ -25,7 +25,16 @@ public abstract class CodeGenBase extends SfxBaseObj
 			_group = new STGroupFile(path);
 			_packageName = packageName;
 		}
+		public CodeGenBase(SfxContext ctx)
+		{
+			super(ctx);
+		}
 		
+		public void init(String path, String packageName)
+		{
+			_group = new STGroupFile(path);
+			_packageName = packageName;
+		}
 		
 		protected String genFields(EntityDef def)
 		{
