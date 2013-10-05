@@ -27,12 +27,12 @@ log(appDir);
 log(stDir);
 		
 		int n = gen.init(appDir, stDir);
-		assertEquals(1, n);
+		assertEquals(2, n);
 
 		boolean b = false;
 //		boolean b = gen.generate(0);
 		b = gen.generate("User");
-//		b = gen.generate("Phone");
+		b = gen.generate("Company");
 //		b = gen.generate("Zoo");
 		if (b)
 		{}

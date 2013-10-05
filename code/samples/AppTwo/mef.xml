@@ -14,5 +14,11 @@
 	<codegen what="dal_real" extend="false" />
 </entity>
 
+<entity name="Company">
+	<field>@Id Long id</field>
+	<field>@Required String name</field>
+
+</entity>
+
 
 </entities>
