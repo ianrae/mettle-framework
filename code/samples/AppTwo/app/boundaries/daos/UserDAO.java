@@ -1,4 +1,6 @@
+//THIS FILE HAS BEEN AUTO-GENERATED. DO NOT MODIFY.
 package boundaries.daos;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +22,6 @@ import mef.entities.User;
 
 public class UserDAO implements IUserDAO 
 {
-
 	@Override
 	public void save(User entity) 
 	{
@@ -32,37 +33,21 @@ public class UserDAO implements IUserDAO
 		}
 		else //touch all (for ebean), except id
 		{
-			t.setName(entity.name);
+			touchAll(t, entity);
 		}
 		t.save();
 		entity.id = t.getId(); //in case created on
 	}
-	
 
 	@Override
 	public User findById(long id) 
 	{
-		Logger.info("HERE GOES:");
-//		UserModel t = UserModel.find.byId(id);
-		
-//		String oql = 
-//		        "  find  user_model "
-////		        +" fetch phone "
-//		        +" where order.id = :id";
-//		   
-//		 Query<UserModel> query = Ebean.createQuery(UserModel.class, oql);
-//		 query.setParameter("id", id);
-//		UserModel t = query.findUnique();
-		
-		//http://www.avaje.org/static/javadoc/pub/com/avaje/ebean/Query.html
-		UserModel t = Ebean.find(UserModel.class).fetch("phone").where().eq("id", id).findUnique();		
-		
-//		UserModel t = UserModel.find.fetch("phone").where(String.format("id=%d",id)).findUnique();
+		UserModel t = Ebean.find(UserModel.class).where().eq("id", id).findUnique();		
 		if (t == null)
 		{
 			return null;
 		}
-				
+
 		t.entity = createEntityFromModel(t); //create entity, set m.cc and t.entity, copy all fields from model to entity
 		return t.entity;
 	}
@@ -95,9 +80,7 @@ public class UserDAO implements IUserDAO
 		UserModel t = new UserModel();
 		entity.cc = t;
 		t.entity = entity;
-		t.setId(entity.id);
-		t.setName(entity.name);
-		//email later!!
+		touchAll(t, entity);
 		return t;
 	}
 	//create entity, set m.cc and t.entity, copy all fields from model to entity
@@ -110,9 +93,7 @@ public class UserDAO implements IUserDAO
 		User entity = new User();
 		entity.cc = t;
 		t.entity = entity;
-		entity.id = (t.getId() == null) ? 0 : t.getId();
-		entity.name	= t.getName();
-		//!email!!
+		touchAll(entity, t);
 		return entity;
 	}
 	public static List<User> createEntityFromModel(List<UserModel> L)
@@ -145,9 +126,19 @@ public class UserDAO implements IUserDAO
 		}
 		else //touch all (for ebean), except id
 		{
-			t.setName(entity.name); //copy all!!
+			touchAll(t, entity);
 		}
 		t.update();
 	}
-	
+
+       protected static void touchAll(UserModel t, User entity)
+{
+	t.setName(entity.name);
+}
+
+protected static void touchAll(User entity, UserModel t)
+{
+	entity.name = t.getName();
+}
+
 }

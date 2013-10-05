@@ -10,6 +10,7 @@ import org.mef.dalgen.codegen.generators.EntityCodeGen;
 import org.mef.dalgen.codegen.generators.KnownDAOsCodeGen;
 import org.mef.dalgen.codegen.generators.MockDAOCodeGen;
 import org.mef.dalgen.codegen.generators.ModelCodeGen;
+import org.mef.dalgen.codegen.generators.RealDAOCodeGen;
 import org.mef.dalgen.parser.DalGenXmlParser;
 import org.mef.dalgen.parser.EntityDef;
 
@@ -24,6 +25,8 @@ public class DalCodeGenerator extends SfxBaseObj
 	private DalGenXmlParser parser;
 	private boolean _needParentClass;
 	public boolean disableFileIO;
+	
+	public boolean genRealDAO = false; //for now
 	
 	public DalCodeGenerator(SfxContext ctx)
 	{
@@ -88,6 +91,15 @@ public class DalCodeGenerator extends SfxBaseObj
 		if (!b )
 		{
 			return false; //!!
+		}
+		
+		if (genRealDAO)
+		{
+			b = doGen(def, "dao_real.stg", "boundaries.daos", "app\\boundaries\\daos", new RealDAOCodeGen(_ctx));
+			if (!b )
+			{
+				return false; //!!
+			}
 		}
 		
 		return b;

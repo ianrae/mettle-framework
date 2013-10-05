@@ -11,9 +11,9 @@ import sfx.SfxContext;
 
 public class RealDAOCodeGen extends CodeGenBase
 {
-	public RealDAOCodeGen(SfxContext ctx, String path, String packageName)
+	public RealDAOCodeGen(SfxContext ctx)
 	{
-		super(ctx, path, packageName);
+		super(ctx);
 	}
 	
 	@Override
@@ -41,6 +41,7 @@ public class RealDAOCodeGen extends CodeGenBase
 	{
 		String result = "";
 		ST st = _group.getInstanceOf("touchall1");
+		st.add("type", def.name);
 		
 		List<String> assignsL = new ArrayList<String>();
 		for(FieldDef fdef : def.fieldL)
@@ -63,6 +64,7 @@ public class RealDAOCodeGen extends CodeGenBase
 	{
 		String result = "";
 		ST st = _group.getInstanceOf("touchall2");
+		st.add("type", def.name);
 		
 		List<String> assignsL = new ArrayList<String>();
 		for(FieldDef fdef : def.fieldL)

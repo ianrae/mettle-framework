@@ -2,7 +2,6 @@ header(package, type) ::= <<
 //THIS FILE HAS BEEN AUTO-GENERATED. DO NOT MODIFY.
 package <package>;
 
-package boundaries.daos;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +19,6 @@ import boundaries.Boundary;
 import models.<type>Model;
 
 import mef.daos.I<type>DAO;
-import mef.entities.Task;
 import mef.entities.<type>;
 
 
@@ -51,14 +49,14 @@ public <meth>
 >>
 
 touchall1(type, assigns) ::= <<
-protected void touchAll(<type>Model t, <type> entity)
+protected static void touchAll(<type>Model t, <type> entity)
 {
 	<assigns; separator="\n">
 }
 >>
 
 touchall2(type, assigns) ::= <<
-protected void touchAll(<type> entity, <type>Model t)
+protected static void touchAll(<type> entity, <type>Model t)
 {
 	<assigns; separator="\n">
 }

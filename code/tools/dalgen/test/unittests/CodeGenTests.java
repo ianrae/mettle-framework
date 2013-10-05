@@ -93,7 +93,8 @@ public class CodeGenTests extends BaseCodeGenTest
 		def.extendReal = true;
 		String path = this.getTemplateFile("dao_real.stg");
 		String packageName = "boundaries.dals";
-		RealDAOCodeGen gen = new RealDAOCodeGen(_ctx, path, packageName);
+		RealDAOCodeGen gen = new RealDAOCodeGen(_ctx);
+		gen.init(path, packageName);
 		String code = gen.generate(def);	
 		log(code);
 		assertEquals(true, 10 < code.length());

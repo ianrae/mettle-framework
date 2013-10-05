@@ -28,6 +28,8 @@ public class AppTwoDALCodeGenTests extends BaseTest
 		String stDir = this.getCurrentDir("src\\org\\mef\\dalgen\\resources\\dal\\");
 log(appDir);
 log(stDir);
+
+		gen.genRealDAO = true;
 		
 		int n = gen.init(appDir, stDir);
 		assertEquals(2, n);
@@ -35,7 +37,7 @@ log(stDir);
 		boolean b = false;
 		b = gen.generateOnce(); //allKnownDAOs
 		b = gen.generate("User");
-		b = gen.generate("Company");
+//		b = gen.generate("Company");
 		if (b)
 		{}
 	}
