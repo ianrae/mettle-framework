@@ -103,7 +103,7 @@ public class CompanyPresenterTests extends BasePresenterTest
 	
 	private MockCompanyDAO getDAO()
 	{
-		MockCompanyDAO dal = (MockCompanyDAO) _ctx.getServiceLocator().getInstance(ICompanyDAO.class); 
+		MockCompanyDAO dal = (MockCompanyDAO) Initializer.getDAO(ICompanyDAO.class); 
 		return dal;
 	}
 	

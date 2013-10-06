@@ -26,9 +26,9 @@ public class EntityLoader extends SfxBaseObj
 	public EntityLoader(SfxContext ctx)
 	{
 		super(ctx);
-		userDal = (IUserDAO) _ctx.getServiceLocator().getInstance(IUserDAO.class); 
-		companyDal = (ICompanyDAO) _ctx.getServiceLocator().getInstance(ICompanyDAO.class); 
-		computerDal = (IComputerDAO) _ctx.getServiceLocator().getInstance(IComputerDAO.class); 
+		userDal = (IUserDAO) Initializer.getDAO(IUserDAO.class); 
+		companyDal = (ICompanyDAO) Initializer.getDAO(ICompanyDAO.class); 
+		computerDal = (IComputerDAO) Initializer.getDAO(IComputerDAO.class); 
 	}
 	
     public void loadCompany(String json) throws Exception

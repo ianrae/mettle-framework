@@ -259,7 +259,7 @@ public class UserPresenterTests extends BasePresenterTest
 	
 	private MockUserDAO getDAO()
 	{
-		MockUserDAO dal = (MockUserDAO) _ctx.getServiceLocator().getInstance(IUserDAO.class); 
+		MockUserDAO dal = (MockUserDAO) Initializer.getDAO(IUserDAO.class); 
 		return dal;
 	}
 	

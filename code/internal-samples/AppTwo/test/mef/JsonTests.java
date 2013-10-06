@@ -3,6 +3,7 @@ package mef;
 import static org.junit.Assert.*;
 
 import mef.core.EntityLoader;
+import mef.core.Initializer;
 import mef.daos.ICompanyDAO;
 import mef.daos.IComputerDAO;
 import mef.daos.mocks.MockCompanyDAO;
@@ -37,13 +38,13 @@ public class JsonTests extends BaseTest
 	
 	private ICompanyDAO getDAO()
 	{
-		MockCompanyDAO dal = (MockCompanyDAO) _ctx.getServiceLocator().getInstance(ICompanyDAO.class); 
+		MockCompanyDAO dal = (MockCompanyDAO) Initializer.getDAO(ICompanyDAO.class); 
 		return dal;
 	}
 	
 	private IComputerDAO getComputerDAO()
 	{
-		MockComputerDAO dal = (MockComputerDAO) _ctx.getServiceLocator().getInstance(IComputerDAO.class); 
+		MockComputerDAO dal = (MockComputerDAO) Initializer.getDAO(IComputerDAO.class); 
 		return dal;
 	}
 

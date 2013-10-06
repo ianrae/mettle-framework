@@ -2,11 +2,14 @@ package mef.core;
 
 import java.util.List;
 
+import mef.daos.ICompanyDAO;
 import mef.gen.AllKnownDAOs_GEN;
 
 import org.mef.framework.dao.IDAO;
 import org.mef.framework.sfx.SfxContext;
 import org.mef.framework.utils.ResourceReader;
+
+import boundaries.daos.CompanyDAO;
 
 import play.Logger;
 
@@ -44,6 +47,12 @@ public class Initializer
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public static IDAO getDAO(Class clazz)
+	{
+		IDAO dao = (IDAO) theCtx.getServiceLocator().getInstance(clazz);
+		return dao;
 	}
 
 }
