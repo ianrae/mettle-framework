@@ -1,31 +1,22 @@
 package mef;
 
-import static org.junit.Assert.*;
-
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import mef.core.Initializer;
+import mef.daos.IComputerDAO;
+import mef.daos.mocks.MockComputerDAO;
+import mef.entities.Computer;
+import mef.presenters.ComputerPresenter;
+import mef.presenters.commands.IndexComputerCommand;
+import mef.presenters.replies.ComputerReply;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mef.framework.commands.Command;
-import org.mef.framework.commands.CreateCommand;
-import org.mef.framework.commands.DeleteCommand;
-import org.mef.framework.commands.EditCommand;
 import org.mef.framework.commands.IndexCommand;
-import org.mef.framework.commands.NewCommand;
-import org.mef.framework.commands.ShowCommand;
-import org.mef.framework.commands.UpdateCommand;
-import org.mef.framework.presenters.Presenter;
 import org.mef.framework.replies.Reply;
-import org.mef.framework.sfx.SfxContext;
 
-import mef.core.Initializer;
-import mef.daos.ICompanyDAO;
-import mef.daos.mocks.MockCompanyDAO;
-import mef.entities.Company;
-import mef.presenters.CompanyPresenter;
-import mef.presenters.commands.IndexComputerCommand;
-import mef.presenters.replies.CompanyReply;
-
-public class CompanyPresenterTests extends BasePresenterTest
+public class ComputerPresenterTests extends BasePresenterTest
 {
 
 	//HTTP  URL             ACTION  FRM    VIEW/REDIR     
@@ -41,7 +32,7 @@ public class CompanyPresenterTests extends BasePresenterTest
 	@Test
 	public void indexTest() 
 	{
-		CompanyReply reply = (CompanyReply) _presenter.process(new IndexCommand());
+		ComputerReply reply = (ComputerReply) _presenter.process(new IndexComputerCommand());
 		
 		chkReplySucessful(reply, Reply.VIEW_INDEX, null);
 		chkDalSize(0);
@@ -52,11 +43,11 @@ public class CompanyPresenterTests extends BasePresenterTest
 	public void indexTestOne() 
 	{
 		Initializer.loadSeedData(_ctx);
-		CompanyReply reply = (CompanyReply) _presenter.process(new IndexCommand());
+		ComputerReply reply = (ComputerReply) _presenter.process(new IndexComputerCommand());
 		
 		chkReplySucessful(reply, Reply.VIEW_INDEX, null);
-		assertEquals("Apple Inc.", _dao.all().get(0).name);
-		chkReplyWithoutEntity(reply, true, 42);
+		assertEquals("MacBook Pro 15.4 inch", _dao.all().get(0).name);
+		chkReplyWithoutEntity(reply, true, 4);
 	}
 	
 	
@@ -65,7 +56,7 @@ public class CompanyPresenterTests extends BasePresenterTest
 	{
 		assertEquals(expected, _dao.size());
 	}
-	private void chkReplyWithEntity(CompanyReply reply, boolean listExists, int expected)
+	private void chkReplyWithEntity(ComputerReply reply, boolean listExists, int expected)
 	{
 		assertNotNull(reply._entity);
 		if (listExists)
@@ -78,7 +69,7 @@ public class CompanyPresenterTests extends BasePresenterTest
 			assertNull(reply._allL);
 		}
 	}
-	private void chkReplyWithoutEntity(CompanyReply reply, boolean listExists, int expected)
+	private void chkReplyWithoutEntity(ComputerReply reply, boolean listExists, int expected)
 	{
 		assertEquals(null, reply._entity);
 		if (listExists)
@@ -92,41 +83,41 @@ public class CompanyPresenterTests extends BasePresenterTest
 		}
 	}
 	
-	private MockCompanyDAO _dao;
-	private CompanyPresenter _presenter;
+	private MockComputerDAO _dao;
+	private ComputerPresenter _presenter;
 	@Before
 	public void init()
 	{
 		super.init();
 		_dao = getDAO();
-		this._presenter = new CompanyPresenter(_ctx);
+		this._presenter = new ComputerPresenter(_ctx);
 	}
 	
-	private MockCompanyDAO getDAO()
+	private MockComputerDAO getDAO()
 	{
-		MockCompanyDAO dal = (MockCompanyDAO) Initializer.getDAO(ICompanyDAO.class); 
+		MockComputerDAO dal = (MockComputerDAO) Initializer.getDAO(IComputerDAO.class); 
 		return dal;
 	}
 	
-	private Company initCompany()
+	private Computer initComputer()
 	{
-		Company t = new Company();
+		Computer t = new Computer();
 		t.id = 0L; //dal will assign id
 		t.name = "task1";
 		assertEquals(0, _dao.size());
 		return t;
 	}
 	
-	private Company initAndSaveCompany()
+	private Computer initAndSaveComputer()
 	{
-		Company t = initCompany();
+		Computer t = initComputer();
 		_dao.save(t);
 		assertEquals(1, _dao.size());
 		return t;
 	}
-	private Company createCompany(String name)
+	private Computer createComputer(String name)
 	{
-		Company u = new Company();
+		Computer u = new Computer();
 		u.name = name;
 		return u;
 	}
