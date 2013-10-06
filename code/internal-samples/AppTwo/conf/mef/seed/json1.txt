@@ -49,7 +49,7 @@
 
 	"Computer":
 	[
-    { "id": "0", "name": "MacBook Pro 15.4 inch" }
+    { "id": "0", "name": "MacBook Pro 15.4 inch",  "company": {"id": "1" } }
 	]
 	
 	

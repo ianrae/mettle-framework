@@ -7,6 +7,7 @@ import mef.daos.ICompanyDAO;
 import mef.daos.IComputerDAO;
 import mef.daos.mocks.MockCompanyDAO;
 import mef.daos.mocks.MockComputerDAO;
+import mef.entities.Company;
 import mef.entities.Computer;
 
 import org.junit.Test;
@@ -29,6 +30,9 @@ public class JsonTests extends BaseTest
 		
 		Computer computer = getComputerDAO().all().get(0);
 		assertEquals("MacBook Pro 15.4 inch", computer.name);
+		
+		Company company = computer.company;
+		assertEquals("Apple Inc.", company.name);
 	}
 	
 	private ICompanyDAO getDAO()

@@ -116,6 +116,16 @@ public class EntityLoader extends SfxBaseObj
 	{
     	for(Computer computer : computerL)
     	{
+			String phKey = makeKey(computer.company, computer.company.id);
+			Long companyId = map.get(phKey);
+			if (companyId != 0L)
+			{
+	    		Company existing = companyDal.findById(companyId);
+				computer.company = existing;
+			}
+    		
+    		
+    		
     		Computer existing = computerDal.find_by_name(computer.name); //use seedWith field
     		if (existing != null)
     		{
@@ -130,10 +140,13 @@ public class EntityLoader extends SfxBaseObj
     			map.put(s, computer.id);
     		}
     	}
+    	
+    	
+    	
 	}
 	private String makeKey(Entity entity, Long id)
 	{
-		String s = entity.getClass().getName();
+		String s = entity.getClass().getSimpleName();
 		s = String.format("%s.%d", s, id);
 		return s;
 	}
