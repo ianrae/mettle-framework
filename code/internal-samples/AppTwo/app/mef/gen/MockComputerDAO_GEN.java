@@ -106,7 +106,7 @@ public class MockComputerDAO_GEN implements IComputerDAO
     }
 
 //method
-public Page<Computer> page(int page, int pageSize)
+public Page<Computer> page(int page, int pageSize,String orderBy)
 {
 	return null;
 }

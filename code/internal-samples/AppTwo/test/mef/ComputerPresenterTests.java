@@ -79,6 +79,16 @@ public class ComputerPresenterTests extends BasePresenterTest
 		chkReplyWithoutEntity(reply, true, 0);
 	}
 	
+	@Test
+	public void indexTestOrderBy() 
+	{
+		Initializer.loadSeedData(_ctx);
+		ComputerReply reply = (ComputerReply) _presenter.process(new IndexComputerCommand(4, 1, "id"));
+		
+		chkReplySucessful(reply, Reply.VIEW_INDEX, null);
+		assertEquals("xxMacBook Pro 15.4 inch", _dao.all().get(0).name);
+		chkReplyWithoutEntity(reply, true, 4);
+	}
 	
 	//--------- helper fns--------------
 	protected void chkDalSize(int expected)

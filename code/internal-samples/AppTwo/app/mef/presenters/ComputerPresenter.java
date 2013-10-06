@@ -49,7 +49,7 @@ public class ComputerPresenter extends Presenter
 		ComputerReply reply = createReply(); 
 		reply.setDestination(Reply.VIEW_INDEX);
 		
-		Page<Computer> pg = _dao.page(cmd.pageNum, cmd.pageSize);
+		Page<Computer> pg = _dao.page(cmd.pageNum, cmd.pageSize, "name");
 		reply._page = pg;
 		return reply;
 	}

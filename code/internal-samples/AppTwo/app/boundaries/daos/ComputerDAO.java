@@ -14,19 +14,19 @@ import com.avaje.ebean.Page;
 public class ComputerDAO extends ComputerDAO_GEN
 {
 
-
-	public Page<Computer> page(int page, int pageSize)
+	@Override
+	public Page<Computer> page(int page, int pageSize, String orderBy)
 	{
 		String filter = "";
 		String sortBy = "name";
 		String order = "asc";
-		
+
 		List<ComputerModel> list = 
-	            ComputerModel.find.where()
-	                .ilike("name", "%" + filter + "%")
-	                .orderBy(sortBy + " " + order)
-	                .fetch("company").findList();
-		
+				ComputerModel.find.where()
+				.ilike("name", "%" + filter + "%")
+				.orderBy(sortBy + " " + order)
+				.fetch("company").findList();
+
 		List<Computer> L = createEntityFromModel(list);
 		Page<Computer> resultPage = new MyPage<Computer>(L, pageSize, page);
 		return resultPage;

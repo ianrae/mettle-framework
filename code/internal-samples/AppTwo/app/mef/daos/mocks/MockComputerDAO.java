@@ -11,7 +11,8 @@ public class MockComputerDAO extends MockComputerDAO_GEN
 {
 
 	//method
-	public Page<Computer> page(int page, int pageSize)
+	@Override
+	public Page<Computer> page(int page, int pageSize, String orderBy)
 	{
 		MyPage<Computer> pg = new MyPage<Computer>(all(), pageSize, page); //page is 1-based
 		return pg;
