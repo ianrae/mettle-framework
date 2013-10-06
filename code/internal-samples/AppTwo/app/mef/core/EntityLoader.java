@@ -116,15 +116,17 @@ public class EntityLoader extends SfxBaseObj
 	{
     	for(Computer computer : computerL)
     	{
-			String phKey = makeKey(computer.company, computer.company.id);
-			Long companyId = map.get(phKey);
-			if (companyId != 0L)
-			{
-	    		Company existing = companyDal.findById(companyId);
-				computer.company = existing;
-			}
+    		if (computer.company != null)
+    		{
+				String phKey = makeKey(computer.company, computer.company.id);
+				Long companyId = map.get(phKey);
+				if (companyId != 0L)
+				{
+		    		Company existing = companyDal.findById(companyId);
+					computer.company = existing;
+				}
     		
-    		
+    		}    		
     		
     		Computer existing = computerDal.find_by_name(computer.name); //use seedWith field
     		if (existing != null)

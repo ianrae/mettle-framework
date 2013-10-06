@@ -13,10 +13,15 @@ public class DaoJsonLoader extends DaoJsonLoader_GEN
 	{
 		Computer obj = super.readComputer(node);
 		JsonNode jj = node.get("company");
-		jj = jj.get("id");
-		obj.company = new Company();
-		obj.company.id = jj.asLong();
-
+		if (jj != null)
+		{
+			jj = jj.get("id");
+			if (jj != null)
+			{
+				obj.company = new Company();
+				obj.company.id = jj.asLong();
+			}
+		}
 		return obj;
 	}
 }

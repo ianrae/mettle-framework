@@ -27,7 +27,7 @@ public class JsonTests extends BaseTest
 		loader.loadAll(json);
 		
 		assertEquals(42, getDAO().size());
-		assertEquals(1, getComputerDAO().size());
+		assertEquals(13, getComputerDAO().size());
 		
 		Computer computer = getComputerDAO().all().get(0);
 		assertEquals("MacBook Pro 15.4 inch", computer.name);
