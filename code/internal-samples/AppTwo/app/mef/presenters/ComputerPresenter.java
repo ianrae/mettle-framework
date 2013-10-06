@@ -21,6 +21,8 @@ import org.mef.framework.replies.Reply;
 import org.mef.framework.sfx.SfxBaseObj;
 import org.mef.framework.sfx.SfxContext;
 
+import com.avaje.ebean.Page;
+
 import mef.daos.IComputerDAO;
 import mef.entities.Computer;
 import mef.presenters.commands.IndexComputerCommand;
@@ -47,8 +49,7 @@ public class ComputerPresenter extends Presenter
 		ComputerReply reply = createReply(); 
 		reply.setDestination(Reply.VIEW_INDEX);
 		
-		MyPage<Computer> pg = new MyPage<Computer>(_dao.all(), cmd.pageSize, cmd.pageNum);
-		
+		Page<Computer> pg = _dao.page(cmd.pageNum, cmd.pageSize);
 		reply._page = pg;
 		return reply;
 	}

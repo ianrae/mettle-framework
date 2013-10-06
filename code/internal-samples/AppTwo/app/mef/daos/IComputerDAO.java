@@ -8,6 +8,7 @@ import org.mef.framework.binder.IFormBinder;
 import org.mef.framework.dao.IDAO;
 import mef.gen.*;
 import java.util.Date;
+import com.avaje.ebean.Page;
 public interface IComputerDAO  extends IDAO
 {
 	Computer findById(long id);
@@ -16,5 +17,7 @@ public interface IComputerDAO  extends IDAO
 	void update(Computer entity);
 
     public Computer find_by_name(String val);
+
+Page<Computer> page(int page, int pageSize);
 
 }

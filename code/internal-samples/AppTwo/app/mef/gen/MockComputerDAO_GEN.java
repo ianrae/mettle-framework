@@ -1,7 +1,6 @@
-header(package) ::= <<
 //THIS FILE HAS BEEN AUTO-GENERATED. DO NOT MODIFY.
 
-package <package>;
+package mef.gen;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -13,36 +12,10 @@ import mef.gen.*;
 import org.mef.framework.entitydb.EntityDB;
 import java.util.Date;
 import com.avaje.ebean.Page;
-
->>
-
-
-
-querydecl(type, fieldType, name, eq) ::= <<
-//query
-    @Override
-    public <type> find_by_<name>(<fieldType> val) 
-    {
-		EntityDB\<<type>\> db = new EntityDB\<<type>\>();
-		<type> user = db.findFirstMatch(_L, "<name>", val);
-		return user;
-    }
->>
-
-methoddecl(meth) ::= <<
-//method
-public <meth>
+public class MockComputerDAO_GEN implements IComputerDAO
 {
-	return null;
-}
->>
+    protected ArrayList<Computer> _L = new ArrayList<Computer>();
 
-
-classdecl(name, type) ::= <<
-public class <name> implements I<type>DAO
-{
-    protected ArrayList\<<type>\> _L = new ArrayList\<<type>\>();
-    
     @Override
     public int size() 
     {
@@ -50,9 +23,9 @@ public class <name> implements I<type>DAO
     }
 
     @Override
-    public <type> findById(long id) 
+    public Computer findById(long id) 
     {
-        for(<type> entity : _L)
+        for(Computer entity : _L)
         {
             if (entity.id == id)
             {
@@ -63,7 +36,7 @@ public class <name> implements I<type>DAO
     }
 
     @Override
-    public List\<<type>\> all() 
+    public List<Computer> all() 
     {
         return _L; //ret copy??!!
     }
@@ -71,7 +44,7 @@ public class <name> implements I<type>DAO
     @Override
     public void delete(long id) 
     {
-        <type> entity = this.findById(id);
+        Computer entity = this.findById(id);
         if (entity != null)
         {
             _L.remove(entity);
@@ -79,26 +52,26 @@ public class <name> implements I<type>DAO
     }
 
     @Override
-    public void save(<type> entity) 
+    public void save(Computer entity) 
     {
     	if (entity.id == null)
 		{
     		entity.id = new Long(0L);
     	}
-		
+
         delete(entity.id); //remove existing
         if (entity.id == 0)
         {
         	entity.id = nextAvailIdNumber();
         }
-        
+
          _L.add(entity);
      }
- 
+
     private Long nextAvailIdNumber() 
     {
     	long used = 0;
-        for(<type> entity : _L)
+        for(Computer entity : _L)
         {
             if (entity.id > used)
             {
@@ -109,7 +82,7 @@ public class <name> implements I<type>DAO
 	}
 
 	@Override
-	public void update(<type> entity) 
+	public void update(Computer entity) 
 	{
 		this.save(entity);
 	}
@@ -117,17 +90,25 @@ public class <name> implements I<type>DAO
     @Override
     public void updateFrom(IFormBinder binder) 
     {
-    	<type> entity = (<type>) binder.getObject();
+    	Computer entity = (Computer) binder.getObject();
     	save(entity);
 
     }
 
-	
-	
->>
 
-endclassdecl() ::= <<
+	//query
+    @Override
+    public Computer find_by_name(String val) 
+    {
+		EntityDB<Computer> db = new EntityDB<Computer>();
+		Computer user = db.findFirstMatch(_L, "name", val);
+		return user;
+    }
+
+//method
+public Page<Computer> page(int page, int pageSize)
+{
+	return null;
 }
->>
 
-sampleloop(items) ::= "<items:{it|<it.id>: <it.lastName>, <it.firstName>\n}>"
+}

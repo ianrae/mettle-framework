@@ -11,7 +11,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import mef.gen.*;
 import org.mef.framework.entitydb.EntityDB;
 import java.util.Date;
-
+import com.avaje.ebean.Page;
 public class MockCompanyDAO implements ICompanyDAO
 {
     protected ArrayList<Company> _L = new ArrayList<Company>();

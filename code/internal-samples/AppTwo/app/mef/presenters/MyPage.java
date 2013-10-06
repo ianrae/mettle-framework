@@ -39,15 +39,18 @@ public class MyPage<Computer> implements Page<Computer>
 	}
 
 	@Override
-	public int getPageIndex() {
-		// TODO Auto-generated method stub
-		return 0;
+	public int getPageIndex() 
+	{
+		return this.pageNum - 1; //0-based
 	}
 
 	@Override
-	public int getTotalPageCount() {
-		// TODO Auto-generated method stub
-		return 0;
+	public int getTotalPageCount() 
+	{
+		int n = L.size() / this.pageSize;
+		int rem = L.size() % this.pageSize;
+		
+		return (rem > 0) ? n + 1 : n;
 	}
 
 	@Override
@@ -57,27 +60,29 @@ public class MyPage<Computer> implements Page<Computer>
 	}
 
 	@Override
-	public boolean hasNext() {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean hasNext() 
+	{
+		return (this.pageNum < this.getTotalPageCount());
 	}
 
 	@Override
-	public boolean hasPrev() {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean hasPrev() 
+	{
+		return (this.pageNum > 1);
 	}
 
 	@Override
-	public Page<Computer> next() {
-		// TODO Auto-generated method stub
-		return null;
+	public Page<Computer> next() 
+	{
+		Page<Computer> pg = new MyPage<Computer>(L, pageSize, pageNum + 1);
+		return pg;
 	}
 
 	@Override
-	public Page<Computer> prev() {
-		// TODO Auto-generated method stub
-		return null;
+	public Page<Computer> prev() 
+	{
+		Page<Computer> pg = new MyPage<Computer>(L, pageSize, pageNum - 1);
+		return pg;
 	}
 
 }

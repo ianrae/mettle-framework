@@ -2,6 +2,19 @@
 
 @import helper._
 
+
+@****************************************
+* Helper generating navigation links    *
+****************************************@
+@link(newPage:Int, newSortBy:String) = @{
+    
+    
+    // Generate the link
+//    routes.ComputerC.index(newPage, sortBy, order, currentFilter)
+    routes.ComputerC.index(newPage + 1)
+    
+}
+
 @main("Computer list") {
     
  @if(flash.containsKey("success")) {
@@ -30,5 +43,33 @@
         <a class="brand" href="@routes.ComputerC.index(3)">page 3</a>
         <a class="brand" href="@routes.ComputerC.index(4)">page 4</a>
         <a class="brand" href="@routes.ComputerC.index(5)">page 5</a>
+        
+        <br/>
+        
+        <div id="pagination" class="pagination">
+            <ul>
+                @if(currentPage.hasPrev) {
+                    <li class="prev">
+                        <a href="@link(currentPage.getPageIndex - 1, null)">&larr; Previous</a>
+                    </li>
+                } else {
+                    <li class="prev disabled">
+                        <a>&larr; Previous</a>
+                    </li>
+                }
+                <li class="current">
+                    <a>Displaying @currentPage.getDisplayXtoYofZ(" to "," of ")</a>
+                </li>
+                @if(currentPage.hasNext) {
+                    <li class="next">
+                        <a href="@link(currentPage.getPageIndex + 1, null)">Next &rarr;</a>
+                    </li>
+                } else {
+                    <li class="next disabled">
+                        <a>Next &rarr;</a>
+                    </li>
+                }
+            </ul>
+        </div>
     
 }
