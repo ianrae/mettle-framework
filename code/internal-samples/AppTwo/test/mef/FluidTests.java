@@ -17,7 +17,10 @@ import java.util.List;
 // Part 3 - mock DAL
 
 import mef.daos.mocks.MockCompanyDAO;
+import mef.daos.mocks.MockComputerDAO;
 import mef.daos.mocks.MockUserDAO;
+import mef.entities.Company;
+import mef.entities.Computer;
 import mef.entities.User;
 
 import org.junit.Test;
@@ -149,12 +152,12 @@ public class FluidTests
     {
         private ArrayList<DalExpression> opL = new ArrayList<DalExpression>();
         MockUserDAO dal;
-        private MockCompanyDAO detailsDal;
+        private MockCompanyDAO companyDAO;
        
-        public DalRez(MockUserDAO dal, MockCompanyDAO detailsDal)
+        public DalRez(MockUserDAO dal, MockCompanyDAO companyDAO)
         {
             this.dal = dal;
-            this.detailsDal = detailsDal;
+            this.companyDAO = companyDAO;
         }
        
         public List<User> findAll()
@@ -238,41 +241,41 @@ public class FluidTests
     public static class DalCalc
     {
         MockUserDAO dal;
-        MockCompanyDAO detailsDal;
+        MockCompanyDAO companyDAO;
        
-        public DalCalc(MockUserDAO dal, MockCompanyDAO detailsDal)
+        public DalCalc(MockUserDAO dal, MockCompanyDAO companyDAO)
         {
             this.dal = dal;
-            this.detailsDal = detailsDal;
+            this.companyDAO = companyDAO;
         }
 
         public List<User> findAll()
         {
-            DalRez rez = new DalRez(dal, detailsDal);
+            DalRez rez = new DalRez(dal, companyDAO);
             rez = rez.all();
             return rez.findAll();
         }
         public DalRez like(String colName, String val)
         {
-            DalRez rez = new DalRez(dal, detailsDal);
+            DalRez rez = new DalRez(dal, companyDAO);
             rez = rez.like(colName, val);
             return rez;
         }
         public DalRez where(String colName, String val)
         {
-            DalRez rez = new DalRez(dal, detailsDal);
+            DalRez rez = new DalRez(dal, companyDAO);
             rez = rez.where(colName, val);
             return rez;
         }
         public DalRez where(String colName)
         {
-            DalRez rez = new DalRez(dal, detailsDal);
+            DalRez rez = new DalRez(dal, companyDAO);
             rez = rez.where(colName, "");
             return rez;
         }
         public DalRez fetch(String colName)
         {
-            DalRez rez = new DalRez(dal, detailsDal);
+            DalRez rez = new DalRez(dal, companyDAO);
             rez = rez.fetch(colName);
             return rez;
         }
@@ -290,11 +293,11 @@ public class FluidTests
     public void testDalCalc0()
     {
         MockUserDAO dal = new MockUserDAO();
-        MockCompanyDAO detailsDal = new MockCompanyDAO();
+        MockCompanyDAO companyDAO = new MockCompanyDAO();
         initUser(dal, 44, "bob");
         assertEquals(1, dal.size());
        
-        DalCalc calc = new DalCalc(dal, detailsDal);
+        DalCalc calc = new DalCalc(dal, companyDAO);
         List<User>L = calc.findAll();
         assertEquals(1, L.size());
     }
@@ -303,12 +306,12 @@ public class FluidTests
     public void testDalCalc1()
     {
         MockUserDAO dal = new MockUserDAO();
-        MockCompanyDAO detailsDal = new MockCompanyDAO();
+        MockCompanyDAO companyDAO = new MockCompanyDAO();
         initUser(dal, 44, "bob");
         initUser(dal, 45, "sob");
         assertEquals(2, dal.size());
        
-        DalCalc calc = new DalCalc(dal, detailsDal);
+        DalCalc calc = new DalCalc(dal, companyDAO);
         List<User>L = calc.like("name", "bob").findAll();
         assertEquals(1, L.size());
         L = calc.like("name", "ob").findAll();
@@ -330,12 +333,12 @@ public class FluidTests
     public void testDalCalcWhere()
     {
         MockUserDAO dal = new MockUserDAO();
-        MockCompanyDAO detailsDal = new MockCompanyDAO();
+        MockCompanyDAO companyDAO = new MockCompanyDAO();
         initUser(dal, 44, "bob");
         initUser(dal, 45, "sob");
         assertEquals(2, dal.size());
        
-        DalCalc calc = new DalCalc(dal, detailsDal);
+        DalCalc calc = new DalCalc(dal, companyDAO);
         List<User>L = calc.where("name", "bob").findAll();
         assertEquals(1, L.size());
         L = calc.where("name", "ob").findAll();
@@ -348,12 +351,12 @@ public class FluidTests
     public void testDalCalcWhere2()
     {
         MockUserDAO dal = new MockUserDAO();
-        MockCompanyDAO detailsDal = new MockCompanyDAO();
+        MockCompanyDAO companyDAO = new MockCompanyDAO();
         initUser(dal, 44, "bob");
         initUser(dal, 45, "sob");
         assertEquals(2, dal.size());
        
-        DalCalc calc = new DalCalc(dal, detailsDal);
+        DalCalc calc = new DalCalc(dal, companyDAO);
         List<User>L = calc.where("name").gt("bob").findAll();
         assertEquals(1, L.size());
         assertEquals("sob", L.get(0).name);
@@ -369,13 +372,13 @@ public class FluidTests
     public void testDalCalc3()
     {
         MockUserDAO dal = new MockUserDAO();
-        MockCompanyDAO detailsDal = new MockCompanyDAO();
+        MockCompanyDAO companyDAO = new MockCompanyDAO();
         initUser(dal, 45, "sob");
         initUser(dal, 44, "bob");
         initUser(dal, 46, "bobby");
         assertEquals(3, dal.size());
        
-        DalCalc calc = new DalCalc(dal, detailsDal);
+        DalCalc calc = new DalCalc(dal, companyDAO);
         List<User>L = calc.like("name", "ob").orderBy("asc").findAll();
         assertEquals(3, L.size());
         chkL(L, "bob", "bobby", "sob");
@@ -391,16 +394,21 @@ public class FluidTests
     @Test
     public void testDalCalcFetch()
     {
-        MockUserDAO dal = new MockUserDAO();
-        MockCompanyDAO detailsDal = new MockCompanyDAO();
-        initUser(dal, 44, "bob");
-        initUser(dal, 45, "sob");
+        MockComputerDAO dal = new MockComputerDAO();
+        MockCompanyDAO companyDAO = new MockCompanyDAO();
+        
+        initCompany(companyDAO, 10, "abc");
+        initCompany(companyDAO, 11, "def");
+        assertEquals(2, companyDAO.size());
+        
+        initComputer(dal, 1, "andy", companyDAO.findById(10));
+        initComputer(dal, 2, "bob", companyDAO.findById(11));
         assertEquals(2, dal.size());
        
-        DalCalc calc = new DalCalc(dal, detailsDal);
-        List<User>L = calc.where("name", "bob").fetch("company").findAll();
-        assertEquals(1, L.size());
-        assertEquals("sob", L.get(0).name);
+//        DalCalc calc = new DalCalc(dal, companyDAO);
+//        List<User>L = calc.where("name", "bob").fetch("company").findAll();
+//        assertEquals(1, L.size());
+//        assertEquals("sob", L.get(0).name);
        
        
     }
@@ -436,5 +444,21 @@ public class FluidTests
         dal.save(t);
         return t;
     }
-   
+    
+    private Company initCompany(MockCompanyDAO dal, long id, String name)
+    {
+    	Company t = new Company(name);
+        t.id = id;
+        dal.save(t);
+        return t;
+    }
+
+    private Computer initComputer(MockComputerDAO dal, long id, String name, Company company)
+    {
+    	Computer t = new Computer(name, null, null, company);
+        t.id = id;
+        dal.save(t);
+        return t;
+    }
+ 
 }
