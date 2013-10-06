@@ -21,16 +21,13 @@ public class ComputerDAO extends ComputerDAO_GEN
 		String sortBy = "name";
 		String order = "asc";
 		
-		Page<ComputerModel> pagex = 
+		List<ComputerModel> list = 
 	            ComputerModel.find.where()
 	                .ilike("name", "%" + filter + "%")
 	                .orderBy(sortBy + " " + order)
-	                
-	                .fetch("company")
-	                .findPagingList(pageSize)
-	                .getPage(page - 1); //convert to 0-based
+	                .fetch("company").findList();
 		
-		List<Computer> L = createEntityFromModel(pagex.getList());
+		List<Computer> L = createEntityFromModel(list);
 		Page<Computer> resultPage = new MyPage<Computer>(L, pageSize, page);
 		return resultPage;
 	}
