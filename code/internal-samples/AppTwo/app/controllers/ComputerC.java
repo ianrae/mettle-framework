@@ -31,7 +31,8 @@ public class ComputerC extends Controller
 		switch(reply.getDestination())
 		{
 		case Reply.VIEW_INDEX:
-			return ok(views.html.computer.render(reply._allL));    	
+//			return ok(views.html.computer.render(reply._allL));    	
+			return ok(views.html.computer.render(reply._page));    	
 
 
 		default:

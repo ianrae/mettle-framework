@@ -166,3 +166,9 @@ boundary
 init
 appboundarie
 dao
+
+public com.avaje.ebean.PagingList<T> findPagingList(int pageSize)
+
+If you are building a stateless web application and not keeping the PagingList over multiple requests then there is not much to be gained in using PagingList. Instead you can just use Query.setFirstRow(int) and Query.setMaxRows(int).
+
+I

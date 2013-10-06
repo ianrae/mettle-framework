@@ -61,12 +61,12 @@ public class ComputerPresenterTests extends BasePresenterTest
 		assertNotNull(reply._entity);
 		if (listExists)
 		{
-			assertNotNull(reply._allL);
-			assertEquals(expected, reply._allL.size());
+			assertNotNull(reply._page);
+			assertEquals(expected, reply._page.getList().size());
 		}
 		else
 		{
-			assertNull(reply._allL);
+			assertNull(reply._page);
 		}
 	}
 	private void chkReplyWithoutEntity(ComputerReply reply, boolean listExists, int expected)
@@ -74,12 +74,12 @@ public class ComputerPresenterTests extends BasePresenterTest
 		assertEquals(null, reply._entity);
 		if (listExists)
 		{
-			assertNotNull(reply._allL);
-			assertEquals(expected, reply._allL.size());
+			assertNotNull(reply._page);
+			assertEquals(expected, reply._page.getList().size());
 		}
 		else
 		{
-			assertNull(reply._allL);
+			assertNull(reply._page);
 		}
 	}
 	
