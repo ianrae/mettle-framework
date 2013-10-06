@@ -50,6 +50,35 @@ public class ComputerPresenterTests extends BasePresenterTest
 		chkReplyWithoutEntity(reply, true, 4);
 	}
 	
+	@Test
+	public void indexTestPageTwo() 
+	{
+		Initializer.loadSeedData(_ctx);
+		ComputerReply reply = (ComputerReply) _presenter.process(new IndexComputerCommand(4, 1));
+		reply = (ComputerReply) _presenter.process(new IndexComputerCommand(4, 2));
+		
+		chkReplySucessful(reply, Reply.VIEW_INDEX, null);
+		assertEquals("CM-5", reply._page.getList().get(0).name);
+		chkReplyWithoutEntity(reply, true, 4);
+	}
+	@Test
+	public void indexTestBigPage() 
+	{
+		Initializer.loadSeedData(_ctx);
+		ComputerReply reply = (ComputerReply) _presenter.process(new IndexComputerCommand(100, 1));
+		
+		chkReplySucessful(reply, Reply.VIEW_INDEX, null);
+		assertEquals("MacBook Pro 15.4 inch", reply._page.getList().get(0).name);
+		chkReplyWithoutEntity(reply, true, 13);
+
+		//next page
+		log("next page..");
+		reply = (ComputerReply) _presenter.process(new IndexComputerCommand(100, 2));
+		
+		chkReplySucessful(reply, Reply.VIEW_INDEX, null);
+		chkReplyWithoutEntity(reply, true, 0);
+	}
+	
 	
 	//--------- helper fns--------------
 	protected void chkDalSize(int expected)

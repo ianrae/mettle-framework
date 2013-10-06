@@ -13,7 +13,7 @@ import com.avaje.ebean.Page;
 public class ComputerReply extends Reply
 {
 	//public List<Computer> _allL;
-	public Page _page;
+	public Page<Computer> _page;
 	public Computer _entity; //for New and Create
 
 	public ComputerReply()

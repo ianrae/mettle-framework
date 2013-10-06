@@ -1,6 +1,7 @@
 package controllers;
 
 
+import mef.presenters.commands.IndexComputerCommand;
 import mef.presenters.replies.ComputerReply;
 
 import org.mef.framework.commands.IndexCommand;
@@ -13,10 +14,10 @@ import boundaries.ComputerBoundary;
 
 public class ComputerC extends Controller
 {
-	public static Result index() 
+	public static Result index(int pageNum) 
     {
 		ComputerBoundary boundary = ComputerBoundary.create();
-		ComputerReply reply = boundary.process(new IndexCommand());
+		ComputerReply reply = boundary.process(new IndexComputerCommand(4, pageNum));
 		return renderOrForward(boundary, reply);
 	}
 	

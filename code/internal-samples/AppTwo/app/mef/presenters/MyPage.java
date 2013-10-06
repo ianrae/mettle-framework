@@ -1,5 +1,6 @@
 package mef.presenters;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.avaje.ebean.Page;
@@ -26,8 +27,13 @@ public class MyPage<Computer> implements Page<Computer>
 	@Override
 	public List<Computer> getList() 
 	{
-		int start = 0;
+		int start = (pageNum - 1) * pageSize;
 		int end = (start + pageSize <= L.size()) ? start + pageSize : L.size();
+		
+		if (start < 0 || start > (L.size() - 1) || end > L.size())
+		{
+			return new ArrayList<Computer>(); //empty
+		}
 		List<Computer> someL = L.subList(start, end);
 		return someL;
 	}
@@ -45,9 +51,9 @@ public class MyPage<Computer> implements Page<Computer>
 	}
 
 	@Override
-	public int getTotalRowCount() {
-		// TODO Auto-generated method stub
-		return 0;
+	public int getTotalRowCount() 
+	{
+		return L.size();
 	}
 
 	@Override

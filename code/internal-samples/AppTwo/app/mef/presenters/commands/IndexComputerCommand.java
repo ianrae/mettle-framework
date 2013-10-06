@@ -13,4 +13,9 @@ public class IndexComputerCommand extends IndexCommand
 		pageNum = 1;
 	}
 
+	public IndexComputerCommand(int pageSize, int pageNum)
+	{
+		this.pageSize = pageSize;
+		this.pageNum = pageNum;
+	}
 }

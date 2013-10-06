@@ -1,4 +1,4 @@
-@(currentPage: com.avaje.ebean.Page[Computer])
+@(currentPage: com.avaje.ebean.Page[mef.entities.Computer])
 
 @import helper._
 
@@ -25,4 +25,10 @@
             </li>
         }
     </ul>
+    
+        <a class="brand" href="@routes.ComputerC.index(2)">page 2</a>
+        <a class="brand" href="@routes.ComputerC.index(3)">page 3</a>
+        <a class="brand" href="@routes.ComputerC.index(4)">page 4</a>
+        <a class="brand" href="@routes.ComputerC.index(5)">page 5</a>
+    
 }
