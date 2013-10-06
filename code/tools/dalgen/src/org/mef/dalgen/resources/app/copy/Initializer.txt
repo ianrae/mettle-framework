@@ -41,5 +41,10 @@ public class Initializer
 //			e.printStackTrace();
 //		}
 	}
-
+	
+	public static IDAO getDAO(Class clazz)
+	{
+		IDAO dao = (IDAO) theCtx.getServiceLocator().getInstance(clazz);
+		return dao;
+	}
 }
