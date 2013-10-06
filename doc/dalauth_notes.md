@@ -171,4 +171,22 @@ public com.avaje.ebean.PagingList<T> findPagingList(int pageSize)
 
 If you are building a stateless web application and not keeping the PagingList over multiple requests then there is not much to be gained in using PagingList. Instead you can just use Query.setFirstRow(int) and Query.setMaxRows(int).
 
-I
+IPLAY MOCKING DB
+http://blog.jooq.org/2013/02/20/easy-mocking-of-your-database/
+http://stackoverflow.com/questions/1151550/is-there-a-set-of-stubs-mocks-for-jdbc-available-anywhere
+
+https://github.com/Lugribossk/play-rest-experiment/blob/master/test/controllers/api/PersonControllerInMemTest.java
+http://eng.42go.com/speed-up-play-tests-direct/ a competitor but is Scala!
+
+http://stackoverflow.com/questions/19089412/reading-from-a-file-in-play-on-heroku how to read files as resources
+https://groups.google.com/forum/#!searchin/play-framework/h2$20database$20test/play-framework/jjZuwIHNMIk/WBRq6e57NC4J using H2
+https://groups.google.com/forum/#!searchin/play-framework/h2$20database$20test/play-framework/NeOuWOXYTNs/zFMlEpBsTXwJ critic of Play for TDD
+http://hsqldb.org/doc/2.0/guide/index.html
+and H2
+http://java-success.blogspot.com/2012/10/sql-tutorial-with-hsqldb.html
+http://www.javaworkspace.com/connectdatabase/connectHSQLDB.do
+
+PLAY
+http://twitter.github.io/scala_school/sbt.html
+
+
