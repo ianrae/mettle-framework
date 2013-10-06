@@ -45,6 +45,7 @@ public class ComputerPresenter extends Presenter
 	{
 		ComputerReply reply = createReply(); 
 		reply.setDestination(Reply.VIEW_INDEX);
+		reply._allL = _dao.all();
 		return reply;
 	}
 

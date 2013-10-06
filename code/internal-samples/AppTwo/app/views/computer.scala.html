@@ -1,0 +1,28 @@
+@(computers: List[mef.entities.Computer])
+
+@import helper._
+
+@main("Computer list") {
+    
+ @if(flash.containsKey("success")) {
+        <div 
+        <strong>Done!</strong> @flash.get("success")
+        </div>
+    }  else {
+    <div> no flash </div>
+    } 
+    
+    <h1>@computers.size() computers(s)</h1>
+    
+    <ul>
+        @for(cc <- computers) {
+            <li>
+				<div>
+                @cc.name  @cc.id   
+                </div>
+				<br/>
+				
+            </li>
+        }
+    </ul>
+}

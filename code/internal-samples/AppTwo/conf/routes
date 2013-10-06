@@ -8,10 +8,10 @@ GET     /                           controllers.Application.index()
 # Error
 GET 	/logout                 controllers.ErrorC.logout()
 
-# Users          
-GET     /users                  controllers.UserC.index()
+# Computers          
+GET     /computers                  controllers.ComputerC.index()
 
-# Users          
+# Companyies          
 GET     /companies                  controllers.CompanyC.index()
 
 
