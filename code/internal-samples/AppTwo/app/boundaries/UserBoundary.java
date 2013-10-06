@@ -2,6 +2,7 @@
 
 package boundaries;
 
+import mef.core.Initializer;
 import mef.presenters.UserPresenter;
 import mef.presenters.replies.UserReply;
 import models.UserModel;
@@ -20,7 +21,7 @@ public class UserBoundary extends BoundaryBase
 	public static UserBoundary create() 
 	{
 		Boundary.init();
-		return new UserBoundary(Boundary.theCtx);
+		return new UserBoundary(Initializer.theCtx);
 	}
 
 	public UserFormBinder binder;

@@ -2,6 +2,7 @@
 
 package boundaries;
 
+import mef.core.Initializer;
 import mef.presenters.ComputerPresenter;
 import mef.presenters.replies.ComputerReply;
 import models.ComputerModel;
@@ -20,7 +21,7 @@ public class ComputerBoundary extends BoundaryBase
 	public static ComputerBoundary create() 
 	{
 		Boundary.init();
-		return new ComputerBoundary(Boundary.theCtx);
+		return new ComputerBoundary(Initializer.theCtx);
 	}
 
 	public ComputerFormBinder binder;

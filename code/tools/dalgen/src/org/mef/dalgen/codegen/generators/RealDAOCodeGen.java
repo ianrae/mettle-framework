@@ -77,7 +77,7 @@ public class RealDAOCodeGen extends CodeGenBase
 	{
 		String name = fdef.name;
 		String upname = uppify(fdef.name);
-		String s = String.format("%sDAO %sDAO = (%sDAO)Boundary.theCtx.getServiceLocator().getInstance(I%sDAO.class);\n",
+		String s = String.format("%sDAO %sDAO = (%sDAO)Initializer.theCtx.getServiceLocator().getInstance(I%sDAO.class);\n",
 				upname, name, upname, upname);
 		return s;
 	}

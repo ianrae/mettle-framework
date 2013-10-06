@@ -19,6 +19,7 @@ import boundaries.Boundary;
 import models.ComputerModel;
 import play.db.ebean.Model.Finder;
 
+import mef.core.Initializer;
 import mef.daos.*;
 import mef.entities.Computer;
 
@@ -151,7 +152,7 @@ public class ComputerDAO implements IComputerDAO
 	t.setName(entity.name);
 	t.setIntroduced(entity.introduced);
 	t.setDiscontinued(entity.discontinued);
-	CompanyDAO companyDAO = (CompanyDAO)Boundary.theCtx.getServiceLocator().getInstance(ICompanyDAO.class);
+	CompanyDAO companyDAO = (CompanyDAO)Initializer.theCtx.getServiceLocator().getInstance(ICompanyDAO.class);
 	t.setCompany(companyDAO.createModelFromEntity(entity.company));
 }
 
@@ -160,7 +161,7 @@ protected static void touchAll(Computer entity, ComputerModel t)
 	entity.name = t.getName();
 	entity.introduced = t.getIntroduced();
 	entity.discontinued = t.getDiscontinued();
-	CompanyDAO companyDAO = (CompanyDAO)Boundary.theCtx.getServiceLocator().getInstance(ICompanyDAO.class);
+	CompanyDAO companyDAO = (CompanyDAO)Initializer.theCtx.getServiceLocator().getInstance(ICompanyDAO.class);
 	entity.company = companyDAO.createEntityFromModel(t.getCompany());
 }
 

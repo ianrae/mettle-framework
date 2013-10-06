@@ -8,10 +8,24 @@ import org.mef.framework.dao.IDAO;
 import org.mef.framework.sfx.SfxContext;
 import org.mef.framework.utils.ResourceReader;
 
+import play.Logger;
+
 //import mef.gen.AllKnownDAOs_GEN;
 
 public class Initializer 
 {
+	public static SfxContext theCtx;
+
+	public static void init()
+	{
+		if (theCtx == null)
+		{
+			theCtx = createContext(false); //fix later!! not thread-safe
+			Logger.info("==seed==");
+			Initializer.loadSeedData(theCtx);
+		}
+	}
+	
 	public static SfxContext createContext(boolean createMocks)
 	{
 		SfxContext ctx = new SfxContext();

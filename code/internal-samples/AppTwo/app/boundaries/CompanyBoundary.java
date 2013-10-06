@@ -2,6 +2,7 @@
 
 package boundaries;
 
+import mef.core.Initializer;
 import mef.presenters.CompanyPresenter;
 import mef.presenters.replies.CompanyReply;
 import models.CompanyModel;
@@ -20,7 +21,7 @@ public class CompanyBoundary extends BoundaryBase
 	public static CompanyBoundary create() 
 	{
 		Boundary.init();
-		return new CompanyBoundary(Boundary.theCtx);
+		return new CompanyBoundary(Initializer.theCtx);
 	}
 
 	public CompanyFormBinder binder;

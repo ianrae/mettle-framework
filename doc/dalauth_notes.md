@@ -161,3 +161,8 @@ http://wiki.fasterxml.com/JacksonInFiveMinutes json tutorial
 
         t.setPhone(PhoneDAO.createModelFromEntity(entity.phone));
 
+-------------
+boundary
+init
+appboundarie
+dao
