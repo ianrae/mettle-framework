@@ -5,8 +5,10 @@ import java.util.List;
 import java.util.Set;
 
 import mef.daos.ICompanyDAO;
+import mef.daos.IComputerDAO;
 import mef.daos.IUserDAO;
 import mef.entities.Company;
+import mef.entities.Computer;
 import mef.entities.User;
 
 import org.codehaus.jackson.JsonNode;
@@ -19,12 +21,14 @@ public class EntityLoader extends SfxBaseObj
 {
 	private IUserDAO userDal; 
 	private ICompanyDAO companyDal;
+	private IComputerDAO computerDal;
 	
 	public EntityLoader(SfxContext ctx)
 	{
 		super(ctx);
 		userDal = (IUserDAO) _ctx.getServiceLocator().getInstance(IUserDAO.class); 
 		companyDal = (ICompanyDAO) _ctx.getServiceLocator().getInstance(ICompanyDAO.class); 
+		computerDal = (IComputerDAO) _ctx.getServiceLocator().getInstance(IComputerDAO.class); 
 	}
 	
     public void loadCompany(String json) throws Exception
@@ -74,7 +78,7 @@ public class EntityLoader extends SfxBaseObj
     	HashMap<String, Long> map = new HashMap<String, Long>();
     	
     	List<Company> phoneL = loader.loadCompanys(rootNode);
-    	saveCompanys(phoneL, map);
+    	saveCompanies(phoneL, map);
     	
     	log("map:");
     	for(String key : map.keySet())
@@ -82,10 +86,13 @@ public class EntityLoader extends SfxBaseObj
     		Long val = map.get(key);
     		log(String.format("%s -> %d", key, val));
     	}
+    	
+    	List<Computer> computerL = loader.loadComputers(rootNode);
+    	saveComputers(computerL, map);
  	}
 
 
-	private void saveCompanys(List<Company> phoneL, HashMap<String, Long> map) 
+	private void saveCompanies(List<Company> phoneL, HashMap<String, Long> map) 
 	{
     	for(Company ph : phoneL)
     	{
@@ -105,6 +112,25 @@ public class EntityLoader extends SfxBaseObj
     	}
 	}
 	
+	private void saveComputers(List<Computer> computerL, HashMap<String, Long> map) 
+	{
+    	for(Computer computer : computerL)
+    	{
+    		Computer existing = computerDal.find_by_name(computer.name); //use seedWith field
+    		if (existing != null)
+    		{
+    			computer.id = existing.id;
+    			computerDal.save(computer); //inserts or updates 
+    		}
+    		else
+    		{
+    			String s = makeKey(computer, computer.id);
+    			computer.id = 0L;
+    			computerDal.save(computer); //inserts or updates 
+    			map.put(s, computer.id);
+    		}
+    	}
+	}
 	private String makeKey(Entity entity, Long id)
 	{
 		String s = entity.getClass().getName();

@@ -45,5 +45,12 @@
    ,{ "id": "41", "name": "HTC Corporation" }
    ,{ "id": "42", "name": "Research In Motion" }
    ,{ "id": "43", "name": "Samsung Electronics" }
+	],
+
+	"Computer":
+	[
+    { "id": "0", "name": "MacBook Pro 15.4 inch" }
 	]
+	
+	
 }
