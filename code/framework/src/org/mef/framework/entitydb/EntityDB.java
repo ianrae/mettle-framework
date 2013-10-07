@@ -86,6 +86,30 @@ public class EntityDB<T>
 				return false;
 			}
 		}
+		public boolean isMatchLong(T obj, String fieldName, Long valueToMatch) 
+		{
+			if (fieldName == null)
+			{
+				return false;
+			}
+			
+			Object value = getFieldValue(obj, fieldName);
+			if (value == null)
+			{
+				return false;
+			}
+			
+			if (value instanceof Long)
+			{
+				Long n = (Long)value;
+				return (n.compareTo(valueToMatch) == 0);
+			}
+			else
+			{
+				return false;
+			}
+		}
+
 
 
 		public Object getFieldValue(T obj, String fieldName) 
@@ -199,6 +223,30 @@ public class EntityDB<T>
 			return null;
 		}
 
+		public T findFirstMatch(List<T> L, String fieldName, Integer valueToMatch) 
+		{
+			for(T f : L)
+			{
+				if (isMatchInt(f, fieldName, valueToMatch))
+				{
+					return f;
+				}
+			}
+			return null;
+		}
+
+		public T findFirstMatch(List<T> L, String fieldName, Long valueToMatch) 
+		{
+			for(T f : L)
+			{
+				if (isMatchLong(f, fieldName, valueToMatch))
+				{
+					return f;
+				}
+			}
+			return null;
+		}
+
 		public List<T> findMatches(List<T> L, String fieldName, String valueToMatch)
 		{
 			List<T> resultL = new ArrayList<T>();
@@ -206,6 +254,32 @@ public class EntityDB<T>
 			for(T f : L)
 			{
 				if (isMatchStr(f, fieldName, valueToMatch))
+				{
+					resultL.add(f);
+				}
+			}
+			return resultL;
+		}
+		public List<T> findMatches(List<T> L, String fieldName, Integer valueToMatch)
+		{
+			List<T> resultL = new ArrayList<T>();
+			
+			for(T f : L)
+			{
+				if (isMatchInt(f, fieldName, valueToMatch))
+				{
+					resultL.add(f);
+				}
+			}
+			return resultL;
+		}
+		public List<T> findMatches(List<T> L, String fieldName, Long valueToMatch)
+		{
+			List<T> resultL = new ArrayList<T>();
+			
+			for(T f : L)
+			{
+				if (isMatchLong(f, fieldName, valueToMatch))
 				{
 					resultL.add(f);
 				}
