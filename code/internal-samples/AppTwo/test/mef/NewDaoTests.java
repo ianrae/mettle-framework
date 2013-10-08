@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mef.entities.Company;
+import mef.entities.Computer;
 
 import org.junit.Test;
 import org.mef.framework.entitydb.EntityDB;
@@ -226,6 +227,11 @@ public class NewDaoTests extends BaseTest
 		List<Company> list1 = dao.all_order_by("name", "asc");
 		assertEquals(3, list1.size());
 		assertEquals("AC710", list1.get(0).name);
+		chkL(list1, "AC710", "AC900", "UL900");
+
+		list1 = dao.all_order_by("name", "desc");
+		assertEquals(3, list1.size());
+		chkL(list1, "UL900", "AC900", "AC710");
 	}
 	
 	
@@ -240,5 +246,10 @@ public class NewDaoTests extends BaseTest
 		return L;
 	}
 	
-
+	private void chkL(List<Company> L, String val0, String val1, String val2)
+	{
+		assertEquals(val0, L.get(0).name);
+		assertEquals(val1, L.get(1).name);
+		assertEquals(val2, L.get(2).name);
+	}
 }

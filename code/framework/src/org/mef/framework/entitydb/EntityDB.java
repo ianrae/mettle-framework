@@ -275,7 +275,7 @@ public class EntityDB<T>
 		
 		private boolean isAscending(String orderBy)
 		{
-			return orderBy.equalsIgnoreCase(orderBy);
+			return orderBy.equalsIgnoreCase("asc");
 		}
 		
 		public List<T> orderBy(List<T> L, String fieldName, String orderBy, Class clazz)
