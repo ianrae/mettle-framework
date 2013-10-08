@@ -187,6 +187,12 @@ public class NewDaoTests extends BaseTest
 		assertEquals("AC710", cc.name);
 		cc = dao.find_like_name("ac%");
 		assertEquals(null, cc);
+		
+		cc = dao.find_like_name("%710");
+		assertEquals("AC710", cc.name);
+		
+		cc = dao.find_like_name("%C7%");
+		assertEquals("AC710", cc.name);
 	}
 	@Test
 	public void testFindILike()
@@ -197,6 +203,9 @@ public class NewDaoTests extends BaseTest
 		Company cc = dao.find_ilike_name("AC%");
 		assertEquals("AC710", cc.name);
 		cc = dao.find_ilike_name("ac%");
+		assertEquals("AC710", cc.name);
+		
+		cc = dao.find_ilike_name("%c710");
 		assertEquals("AC710", cc.name);
 	}
 	

@@ -83,11 +83,8 @@ public class EntityDB<T>
 			{
 				throw new NotImplementedException();
 			}
-			
 		}
 		
-
-
 
 		public Object getFieldValue(T obj, String fieldName) 
 		{

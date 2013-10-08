@@ -34,8 +34,22 @@ public class StringValueMatcher implements IValueMatcher
 		int pos = s2.indexOf('%');
 		if (pos > 0)
 		{
-			String sub = s1.substring(0, pos);
-			return s2.startsWith(sub);
+			String sub = s2.substring(0, pos);
+			return s1.startsWith(sub);
+		}
+		else if (pos == 0)
+		{
+			int pos2 = s2.indexOf('%', pos + 1);
+			if (pos2 < 0)
+			{
+				String sub = s2.substring(pos + 1);
+				return s1.endsWith(sub);
+			}
+			else
+			{
+				String sub = s2.substring(pos + 1, pos2);
+				return s1.contains(sub);
+			}
 		}
 		else
 		{
