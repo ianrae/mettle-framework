@@ -1,6 +1,8 @@
 package org.mef.framework.entitydb;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
@@ -74,10 +76,16 @@ public class EntityDB<T>
 				return false;
 			}
 			
+			IValueMatcher matcher = this.getMatcher(clazz);
+			return matcher.isMatch(value, valueToMatch, matchType);
+		}
+		
+		private IValueMatcher getMatcher(Class clazz)
+		{
 			IValueMatcher matcher = matcherMap.get(clazz);
 			if (matcher != null)
 			{
-				return matcher.isMatch(value, valueToMatch, matchType);
+				return matcher;
 			}
 			else
 			{
@@ -263,5 +271,19 @@ public class EntityDB<T>
 				}
 			}
 			return resultL;
+		}
+		
+		private boolean isAscending(String orderBy)
+		{
+			return orderBy.equalsIgnoreCase(orderBy);
+		}
+		
+		public List<T> orderBy(List<T> L, String fieldName, String orderBy, Class clazz)
+		{
+			boolean ascending = isAscending(orderBy);
+			IValueMatcher matcher = this.getMatcher(clazz);
+			ValueComparator<T> comparator = new ValueComparator<T>(this, fieldName, ascending, matcher, IValueMatcher.EXACT);
+            Collections.sort(L, comparator);
+			return L;
 		}
 	}

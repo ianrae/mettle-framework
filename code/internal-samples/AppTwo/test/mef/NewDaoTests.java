@@ -131,6 +131,14 @@ public class NewDaoTests extends BaseTest
 			Company entity = _entityDB.findFirstMatch(_L, "name", name, IValueMatcher.ILIKE);
 			return entity;
 		}
+		public List<Company> all_order_by(String fieldName, String orderBy)
+		{
+			ArrayList<Company> tmpL = new ArrayList<Company>();
+			tmpL.addAll(_L);
+			List<Company> list1 = tmpL;
+			_entityDB.orderBy(list1, fieldName, orderBy, String.class);
+			return list1;
+		}
 	}
 	
 	
@@ -207,6 +215,17 @@ public class NewDaoTests extends BaseTest
 		
 		cc = dao.find_ilike_name("%c710");
 		assertEquals("AC710", cc.name);
+	}
+	
+	@Test
+	public void testFindAllOrderBy()
+	{
+		NewDao dao = new NewDao(buildCompanies());
+		assertEquals(3, dao.size());
+
+		List<Company> list1 = dao.all_order_by("name", "asc");
+		assertEquals(3, list1.size());
+		assertEquals("AC710", list1.get(0).name);
 	}
 	
 	

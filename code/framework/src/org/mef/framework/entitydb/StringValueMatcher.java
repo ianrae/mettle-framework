@@ -29,6 +29,7 @@ public class StringValueMatcher implements IValueMatcher
 		}
 	}
 
+	//support %zzz, zzz%, %zzz% only for now
 	private boolean like(String s1, String s2) 
 	{
 		int pos = s2.indexOf('%');
@@ -63,4 +64,12 @@ public class StringValueMatcher implements IValueMatcher
 		s2 = s2.toLowerCase();
 		return like(s1, s2);
 	}
+	
+	@Override
+	public int compare(Object value, Object valueToMatch, int matchType) 
+	{
+		String s1 = (String)value;
+		String s2 = (String) valueToMatch;
+		return s1.compareTo(s2);
+	}	
 }
