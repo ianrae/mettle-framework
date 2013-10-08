@@ -1,7 +1,10 @@
 package org.mef.framework.entitydb;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+
+import org.apache.commons.lang.NotImplementedException;
 
 //Whole idea is we don't need a fully emulated sql db like H2.
 //(a)we are dealing with objects (which can be assumed to be fully eagerly loaded)
@@ -14,6 +17,16 @@ public class EntityDB<T>
 	{
 		public boolean debug = false;
 	
+		HashMap<Class, IValueMatcher> matcherMap = new HashMap<Class, IValueMatcher>();
+		
+		
+		public EntityDB()
+		{
+			matcherMap.put(String.class, new StringValueMatcher());
+			matcherMap.put(Integer.class, new IntegerValueMatcher());
+			matcherMap.put(Long.class, new LongValueMatcher());
+			
+		}
 		//hmm should union just work in whole objects. If same object (Flight 55) in both
 		//lists, shouldn't result only be in result once!!
 		public List<T> union(List<T> L, List<T> L2) 
@@ -46,6 +59,31 @@ public class EntityDB<T>
 			}
 			
 			return L3;
+		}
+		
+		public boolean isMatchz(T obj, String fieldName, Object valueToMatch, Class clazz)
+		{
+			if (fieldName == null)
+			{
+				return false;
+			}
+			
+			Object value = getFieldValue(obj, fieldName);
+			if (value == null)
+			{
+				return false;
+			}
+			
+			IValueMatcher matcher = matcherMap.get(clazz);
+			if (matcher != null)
+			{
+				return matcher.isMatch(value, valueToMatch);
+			}
+			else
+			{
+				throw new NotImplementedException();
+			}
+			
 		}
 		
 		public boolean isMatchStr(T obj, String fieldName, String valueToMatch) 
@@ -234,7 +272,7 @@ public class EntityDB<T>
 		{
 			for(T f : L)
 			{
-				if (isMatchStr(f, fieldName, valueToMatch))
+				if (isMatchz(f, fieldName, valueToMatch, String.class))
 				{
 					return f;
 				}
@@ -246,7 +284,7 @@ public class EntityDB<T>
 		{
 			for(T f : L)
 			{
-				if (isMatchInt(f, fieldName, valueToMatch))
+				if (isMatchz(f, fieldName, valueToMatch, Integer.class))
 				{
 					return f;
 				}
@@ -258,7 +296,7 @@ public class EntityDB<T>
 		{
 			for(T f : L)
 			{
-				if (isMatchLong(f, fieldName, valueToMatch))
+				if (isMatchz(f, fieldName, valueToMatch, Long.class))
 				{
 					return f;
 				}
