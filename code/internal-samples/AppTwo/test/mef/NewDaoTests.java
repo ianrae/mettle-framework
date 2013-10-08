@@ -9,6 +9,7 @@ import mef.entities.Company;
 
 import org.junit.Test;
 import org.mef.framework.entitydb.EntityDB;
+import org.mef.framework.entitydb.IValueMatcher;
 
 
 public class NewDaoTests extends BaseTest
@@ -122,7 +123,12 @@ public class NewDaoTests extends BaseTest
 		}
 		public Company find_like_name(String name)
 		{
-			Company entity = _entityDB.findFirstMatch(_L, "name", name);
+			Company entity = _entityDB.findFirstMatch(_L, "name", name, IValueMatcher.LIKE);
+			return entity;
+		}
+		public Company find_ilike_name(String name)
+		{
+			Company entity = _entityDB.findFirstMatch(_L, "name", name, IValueMatcher.ILIKE);
 			return entity;
 		}
 	}
@@ -177,9 +183,23 @@ public class NewDaoTests extends BaseTest
 		NewDao dao = new NewDao(buildCompanies());
 		assertEquals(3, dao.size());
 
-//		Company cc = dao.find_like_name("AC%");
-//		assertEquals("AC710", cc.name);
+		Company cc = dao.find_like_name("AC%");
+		assertEquals("AC710", cc.name);
+		cc = dao.find_like_name("ac%");
+		assertEquals(null, cc);
 	}
+	@Test
+	public void testFindILike()
+	{
+		NewDao dao = new NewDao(buildCompanies());
+		assertEquals(3, dao.size());
+
+		Company cc = dao.find_ilike_name("AC%");
+		assertEquals("AC710", cc.name);
+		cc = dao.find_ilike_name("ac%");
+		assertEquals("AC710", cc.name);
+	}
+	
 	
 	//------------ helper -------------
 	List<Company> buildCompanies()

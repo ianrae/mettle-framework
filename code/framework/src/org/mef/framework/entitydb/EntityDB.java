@@ -190,9 +190,13 @@ public class EntityDB<T>
 		
 		public T findFirstMatch(List<T> L, String fieldName, String valueToMatch) 
 		{
+			return findFirstMatch(L, fieldName, valueToMatch, IValueMatcher.EXACT);
+		}
+		public T findFirstMatch(List<T> L, String fieldName, String valueToMatch, int matchType) 
+		{
 			for(T f : L)
 			{
-				if (isMatchObject(f, fieldName, valueToMatch, String.class, IValueMatcher.EXACT))
+				if (isMatchObject(f, fieldName, valueToMatch, String.class, matchType))
 				{
 					return f;
 				}
