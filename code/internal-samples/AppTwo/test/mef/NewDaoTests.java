@@ -95,6 +95,11 @@ public class NewDaoTests extends BaseTest
 			Company entity = _entityDB.findFirstMatch(_L, "name", name);
 			return entity;
 		}
+		public List<Company> find_all_by_name(String name)
+		{
+			List<Company> list1 = _entityDB.findMatches(_L, "name", name);
+			return list1;
+		}
 		public Company find_by_id(Long id)
 		{
 			Company entity = _entityDB.findFirstMatch(_L, "id", id);
@@ -114,6 +119,11 @@ public class NewDaoTests extends BaseTest
 			{
 				return list3.get(0);
 			}
+		}
+		public Company find_like_name(String name)
+		{
+			Company entity = _entityDB.findFirstMatch(_L, "name", name);
+			return entity;
 		}
 	}
 	
@@ -150,7 +160,26 @@ public class NewDaoTests extends BaseTest
 		assertEquals(1L, cc.id.longValue());
 	}
 	
+	@Test
+	public void testFindAll()
+	{
+		NewDao dao = new NewDao(buildCompanies());
+		assertEquals(3, dao.size());
+
+		List<Company> list1 = dao.find_all_by_name("AC710");
+		assertEquals(1, list1.size());
+		assertEquals("AC710", list1.get(0).name);
+	}
 	
+	@Test
+	public void testFindLike()
+	{
+		NewDao dao = new NewDao(buildCompanies());
+		assertEquals(3, dao.size());
+
+//		Company cc = dao.find_like_name("AC%");
+//		assertEquals("AC710", cc.name);
+	}
 	
 	//------------ helper -------------
 	List<Company> buildCompanies()

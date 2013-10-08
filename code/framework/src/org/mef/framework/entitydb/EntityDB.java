@@ -63,6 +63,25 @@ public class EntityDB<T>
 			String s = value.toString();
 			return (s.equalsIgnoreCase(valueToMatch));
 		}
+		public boolean isMatchLike(T obj, String fieldName, String valueToMatch) 
+		{
+			if (fieldName == null)
+			{
+				return false;
+			}
+			
+			Object value = getFieldValue(obj, fieldName);
+			if (value == null)
+			{
+				return false;
+			}
+			String s = value.toString();
+			
+			String target = valueToMatch.replace("%", "");
+			return (s.indexOf(target) >= 0);
+		}
+		
+		
 		public boolean isMatchInt(T obj, String fieldName, Integer valueToMatch) 
 		{
 			if (fieldName == null)
