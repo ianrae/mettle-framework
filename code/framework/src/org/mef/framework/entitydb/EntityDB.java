@@ -61,7 +61,7 @@ public class EntityDB<T>
 			return L3;
 		}
 		
-		public boolean isMatchz(T obj, String fieldName, Object valueToMatch, Class clazz)
+		public boolean isMatchObject(T obj, String fieldName, Object valueToMatch, Class clazz, int matchType)
 		{
 			if (fieldName == null)
 			{
@@ -77,7 +77,7 @@ public class EntityDB<T>
 			IValueMatcher matcher = matcherMap.get(clazz);
 			if (matcher != null)
 			{
-				return matcher.isMatch(value, valueToMatch);
+				return matcher.isMatch(value, valueToMatch, matchType);
 			}
 			else
 			{
@@ -86,86 +86,6 @@ public class EntityDB<T>
 			
 		}
 		
-		public boolean isMatchStr(T obj, String fieldName, String valueToMatch) 
-		{
-			if (fieldName == null)
-			{
-				return false;
-			}
-			
-			Object value = getFieldValue(obj, fieldName);
-			if (value == null)
-			{
-				return false;
-			}
-			String s = value.toString();
-			return (s.equalsIgnoreCase(valueToMatch));
-		}
-		public boolean isMatchLike(T obj, String fieldName, String valueToMatch) 
-		{
-			if (fieldName == null)
-			{
-				return false;
-			}
-			
-			Object value = getFieldValue(obj, fieldName);
-			if (value == null)
-			{
-				return false;
-			}
-			String s = value.toString();
-			
-			String target = valueToMatch.replace("%", "");
-			return (s.indexOf(target) >= 0);
-		}
-		
-		
-		public boolean isMatchInt(T obj, String fieldName, Integer valueToMatch) 
-		{
-			if (fieldName == null)
-			{
-				return false;
-			}
-			
-			Object value = getFieldValue(obj, fieldName);
-			if (value == null)
-			{
-				return false;
-			}
-			
-			if (value instanceof Integer)
-			{
-				Integer n = (Integer)value;
-				return (n.compareTo(valueToMatch) == 0);
-			}
-			else
-			{
-				return false;
-			}
-		}
-		public boolean isMatchLong(T obj, String fieldName, Long valueToMatch) 
-		{
-			if (fieldName == null)
-			{
-				return false;
-			}
-			
-			Object value = getFieldValue(obj, fieldName);
-			if (value == null)
-			{
-				return false;
-			}
-			
-			if (value instanceof Long)
-			{
-				Long n = (Long)value;
-				return (n.compareTo(valueToMatch) == 0);
-			}
-			else
-			{
-				return false;
-			}
-		}
 
 
 
@@ -272,7 +192,7 @@ public class EntityDB<T>
 		{
 			for(T f : L)
 			{
-				if (isMatchz(f, fieldName, valueToMatch, String.class))
+				if (isMatchObject(f, fieldName, valueToMatch, String.class, IValueMatcher.EXACT))
 				{
 					return f;
 				}
@@ -284,7 +204,7 @@ public class EntityDB<T>
 		{
 			for(T f : L)
 			{
-				if (isMatchz(f, fieldName, valueToMatch, Integer.class))
+				if (isMatchObject(f, fieldName, valueToMatch, Integer.class, IValueMatcher.EXACT))
 				{
 					return f;
 				}
@@ -296,7 +216,7 @@ public class EntityDB<T>
 		{
 			for(T f : L)
 			{
-				if (isMatchz(f, fieldName, valueToMatch, Long.class))
+				if (isMatchObject(f, fieldName, valueToMatch, Long.class, IValueMatcher.EXACT))
 				{
 					return f;
 				}
@@ -310,7 +230,7 @@ public class EntityDB<T>
 			
 			for(T f : L)
 			{
-				if (isMatchStr(f, fieldName, valueToMatch))
+				if (isMatchObject(f, fieldName, valueToMatch, String.class, IValueMatcher.EXACT))
 				{
 					resultL.add(f);
 				}
@@ -323,7 +243,7 @@ public class EntityDB<T>
 			
 			for(T f : L)
 			{
-				if (isMatchInt(f, fieldName, valueToMatch))
+				if (isMatchObject(f, fieldName, valueToMatch, Integer.class, IValueMatcher.EXACT))
 				{
 					resultL.add(f);
 				}
@@ -336,7 +256,7 @@ public class EntityDB<T>
 			
 			for(T f : L)
 			{
-				if (isMatchLong(f, fieldName, valueToMatch))
+				if (isMatchObject(f, fieldName, valueToMatch, Long.class, IValueMatcher.EXACT))
 				{
 					resultL.add(f);
 				}

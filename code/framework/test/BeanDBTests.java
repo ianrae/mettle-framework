@@ -6,6 +6,7 @@ import java.util.List;
 import org.junit.Test;
 import org.mef.framework.entitydb.DBChecker;
 import org.mef.framework.entitydb.EntityDB;
+import org.mef.framework.entitydb.IValueMatcher;
 import org.mef.framework.entitydb.Query;
 
 
@@ -93,15 +94,16 @@ public class BeanDBTests
 		
 		Flight one = L.get(0);
 		EntityDB<Flight> db = new EntityDB<Flight>();
-		boolean b = db.isMatchStr(one, "flight", "abc");
+		boolean b = db.isMatchObject(one, "flight", "abc", String.class, IValueMatcher.EXACT);
 		assertEquals(false, b);
-		assertEquals(true, db.isMatchStr(one, "flight", "UL900"));
-		assertEquals(true, db.isMatchStr(one, "flight", "ul900"));
+		assertEquals(true, db.isMatchObject(one, "flight", "UL900", String.class, IValueMatcher.EXACT));
+		assertEquals(false, db.isMatchObject(one, "flight", "ul900", String.class, IValueMatcher.EXACT));
+		assertEquals(true, db.isMatchObject(one, "flight", "ul900", String.class, IValueMatcher.CASE_INSENSITIVE));
 		
-		assertEquals(false, db.isMatchStr(one, "flight", ""));
-		assertEquals(false, db.isMatchStr(one, "flight", null));
-		assertEquals(false, db.isMatchStr(one, "", null));
-		assertEquals(false, db.isMatchStr(one, null, null));
+		assertEquals(false, db.isMatchObject(one, "flight", "", String.class, IValueMatcher.EXACT));
+		assertEquals(false, db.isMatchObject(one, "flight", null, String.class, IValueMatcher.EXACT));
+		assertEquals(false, db.isMatchObject(one, "", null, String.class, IValueMatcher.EXACT));
+		assertEquals(false, db.isMatchObject(one, null, null, String.class, IValueMatcher.EXACT));
 	}
 	
 	@Test
@@ -112,16 +114,16 @@ public class BeanDBTests
 		
 		Flight one = L.get(0);
 		EntityDB<Flight> db = new EntityDB<Flight>();
-		boolean b = db.isMatchInt(one, "flight", 14);
+		boolean b = db.isMatchObject(one, "num", 14, Integer.class, IValueMatcher.EXACT);
 		assertEquals(false, b);
 		
 		//Integer
-		assertEquals(false, db.isMatchInt(one, "num", 14));
-		assertEquals(true, db.isMatchInt(one, "num", 10));
+		assertEquals(false, db.isMatchObject(one, "num", 14, Integer.class, IValueMatcher.EXACT));
+		assertEquals(true, db.isMatchObject(one, "num", 10, Integer.class, IValueMatcher.EXACT));
 
 		//int
-		assertEquals(false, db.isMatchInt(one, "nVal", 14));
-		assertEquals(true, db.isMatchInt(one, "nVal", 110));
+		assertEquals(false, db.isMatchObject(one, "nVal", 14, Integer.class, IValueMatcher.EXACT));
+		assertEquals(true, db.isMatchObject(one, "nVal", 110, Integer.class, IValueMatcher.EXACT));
 	}
 	
 	@Test
