@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mef.entities.Company;
-import mef.entities.Computer;
-
 import org.junit.Test;
 import org.mef.framework.entitydb.EntityDB;
 import org.mef.framework.entitydb.IValueMatcher;
