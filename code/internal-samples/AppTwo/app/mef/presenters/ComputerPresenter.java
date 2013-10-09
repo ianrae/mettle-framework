@@ -49,7 +49,8 @@ public class ComputerPresenter extends Presenter
 		ComputerReply reply = createReply(); 
 		reply.setDestination(Reply.VIEW_INDEX);
 		
-		Page<Computer> pg = _dao.page(cmd.pageNum, cmd.pageSize, "name");
+		String filter = "%" + cmd.filter + "%";
+		Page<Computer> pg = _dao.page(cmd.pageNum, cmd.pageSize, "name", filter);
 		reply._page = pg;
 		return reply;
 	}

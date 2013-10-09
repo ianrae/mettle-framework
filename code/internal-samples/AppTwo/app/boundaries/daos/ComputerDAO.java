@@ -15,9 +15,8 @@ public class ComputerDAO extends ComputerDAO_GEN
 {
 
 	@Override
-	public Page<Computer> page(int page, int pageSize, String orderBy)
+	public Page<Computer> page(int page, int pageSize, String orderBy, String filter)
 	{
-		String filter = "";
 		String sortBy = "name";
 		String order = "asc";
 

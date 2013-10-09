@@ -83,7 +83,7 @@ public class ComputerPresenterTests extends BasePresenterTest
 	public void indexTestOrderBy() 
 	{
 		Initializer.loadSeedData(_ctx);
-		ComputerReply reply = (ComputerReply) _presenter.process(new IndexComputerCommand(4, 1, "id"));
+		ComputerReply reply = (ComputerReply) _presenter.process(new IndexComputerCommand(4, 1, "id", ""));
 		
 		chkReplySucessful(reply, Reply.VIEW_INDEX, null);
 	//	assertEquals("xxMacBook Pro 15.4 inch", _dao.all().get(0).name); //fix this!!

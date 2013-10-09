@@ -235,11 +235,16 @@ public class EntityDB<T>
 
 		public List<T> findMatches(List<T> L, String fieldName, String valueToMatch)
 		{
+			return findMatches(L, fieldName, valueToMatch, IValueMatcher.EXACT);
+		}
+		
+		public List<T> findMatches(List<T> L, String fieldName, String valueToMatch, int matchType)
+		{
 			List<T> resultL = new ArrayList<T>();
 			
 			for(T f : L)
 			{
-				if (isMatchObject(f, fieldName, valueToMatch, String.class, IValueMatcher.EXACT))
+				if (isMatchObject(f, fieldName, valueToMatch, String.class, matchType))
 				{
 					resultL.add(f);
 				}

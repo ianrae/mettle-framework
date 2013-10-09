@@ -178,7 +178,7 @@ protected static void touchAll(Computer entity, ComputerModel t)
 	  return entity;
     }
 
-public Page<Computer> page(int page, int pageSize,String orderBy)
+public Page<Computer> page(int page, int pageSize,String orderBy, String filter)
 {
 	return null;
 }

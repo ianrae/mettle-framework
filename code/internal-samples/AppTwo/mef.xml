@@ -29,7 +29,7 @@
 	<field>@ManyToOne Company company</field>
 	
 	<query>find_by_name</query>
-	<method><![CDATA[Page<Computer> page(int page, int pageSize,String orderBy)]]></method>
+	<method><![CDATA[Page<Computer> page(int page, int pageSize,String orderBy, String filter)]]></method>
 
 	<codegen what="dal_mock" extend="true" />
 	<codegen what="dal_real" extend="true" />

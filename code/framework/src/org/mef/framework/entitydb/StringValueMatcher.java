@@ -32,6 +32,11 @@ public class StringValueMatcher implements IValueMatcher
 	//support %zzz, zzz%, %zzz% only for now
 	private boolean like(String s1, String s2) 
 	{
+		if (s2.equals("%%"))
+		{
+			return true;
+		}
+		
 		int pos = s2.indexOf('%');
 		if (pos > 0)
 		{
