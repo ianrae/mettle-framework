@@ -14,9 +14,9 @@ import java.util.Date;
 import com.avaje.ebean.Page;
 public class MockUserDAO implements IUserDAO
 {
-    protected ArrayList<User> _L = new ArrayList<User>();
+    protected List<User> _L = new ArrayList<User>();
     protected EntityDB<User> _entityDB = new EntityDB<User>();
-    
+
     @Override
     public int size() 
     {

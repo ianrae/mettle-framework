@@ -23,8 +23,7 @@ querydecl(type, fieldType, name, eq) ::= <<
     @Override
     public <type> find_by_<name>(<fieldType> val) 
     {
-		EntityDB\<<type>\> db = new EntityDB\<<type>\>();
-		<type> user = db.findFirstMatch(_L, "<name>", val);
+		<type> user = _entityDB.findFirstMatch(_L, "<name>", val);
 		return user;
     }
 >>
@@ -41,7 +40,8 @@ public <meth>
 classdecl(name, type) ::= <<
 public class <name> implements I<type>DAO
 {
-    protected ArrayList\<<type>\> _L = new ArrayList\<<type>\>();
+    protected List\<<type>\> _L = new ArrayList\<<type>\>();
+    protected EntityDB\<<type>\> _entityDB = new EntityDB\<<type>\>();
     
     @Override
     public int size() 

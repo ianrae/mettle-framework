@@ -14,7 +14,7 @@ import java.util.Date;
 import com.avaje.ebean.Page;
 public class MockComputerDAO_GEN implements IComputerDAO
 {
-    protected ArrayList<Computer> _L = new ArrayList<Computer>();
+    protected List<Computer> _L = new ArrayList<Computer>();
     protected EntityDB<Computer> _entityDB = new EntityDB<Computer>();
 
     @Override
