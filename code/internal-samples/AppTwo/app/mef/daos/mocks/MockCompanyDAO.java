@@ -14,7 +14,9 @@ import java.util.Date;
 import com.avaje.ebean.Page;
 public class MockCompanyDAO implements ICompanyDAO
 {
-    protected ArrayList<Company> _L = new ArrayList<Company>();
+//    protected ArrayList<Company> _L = new ArrayList<Company>();
+    protected List<Company> _L = new ArrayList<Company>();
+    protected EntityDB<Company> _entityDB = new EntityDB<Company>();
 
     @Override
     public int size() 
@@ -100,8 +102,7 @@ public class MockCompanyDAO implements ICompanyDAO
     @Override
     public Company find_by_name(String val) 
     {
-		EntityDB<Company> db = new EntityDB<Company>();
-		Company user = db.findFirstMatch(_L, "name", val);
+		Company user = this._entityDB.findFirstMatch(_L, "name", val);
 		return user;
     }
 

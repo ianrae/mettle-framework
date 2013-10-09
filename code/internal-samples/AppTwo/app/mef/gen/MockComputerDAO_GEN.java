@@ -15,6 +15,7 @@ import com.avaje.ebean.Page;
 public class MockComputerDAO_GEN implements IComputerDAO
 {
     protected ArrayList<Computer> _L = new ArrayList<Computer>();
+    protected EntityDB<Computer> _entityDB = new EntityDB<Computer>();
 
     @Override
     public int size() 
@@ -100,8 +101,7 @@ public class MockComputerDAO_GEN implements IComputerDAO
     @Override
     public Computer find_by_name(String val) 
     {
-		EntityDB<Computer> db = new EntityDB<Computer>();
-		Computer user = db.findFirstMatch(_L, "name", val);
+		Computer user = _entityDB.findFirstMatch(_L, "name", val);
 		return user;
     }
 
