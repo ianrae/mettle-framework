@@ -27,7 +27,7 @@ public class OtherTests extends BaseTest
 	
 		ArrayList<CC> L = new ArrayList<OtherTests.CC>();
 		String[] ar = all.split("\n");
-		for(int i = 0; i < 60; i++)
+		for(int i = 0; i < ar.length; i++)
 		{
 			String line = ar[i];
 			

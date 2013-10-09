@@ -14,10 +14,10 @@ import boundaries.ComputerBoundary;
 
 public class ComputerC extends Controller
 {
-	public static Result index(int pageNum) 
+	public static Result index(int pageNum, String fieldName, String orderBy, String filter) 
     {
 		ComputerBoundary boundary = ComputerBoundary.create();
-		ComputerReply reply = boundary.process(new IndexComputerCommand(4, pageNum));
+		ComputerReply reply = boundary.process(new IndexComputerCommand(4, pageNum, orderBy, filter));
 		return renderOrForward(boundary, reply);
 	}
 	

@@ -22,7 +22,7 @@ public class ComputerDAO extends ComputerDAO_GEN
 
 		List<ComputerModel> list = 
 				ComputerModel.find.where()
-				.ilike("name", "%" + filter + "%")
+				.ilike("name",  filter )
 				.orderBy(sortBy + " " + order)
 				.fetch("company").findList();
 

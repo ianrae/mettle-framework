@@ -62,6 +62,567 @@
 ,{ "id": "0", "name": "Apple II Plus" }
 ,{ "id": "0", "name": "Apple III",  "company": {"id": "1" } }
 ,{ "id": "0", "name": "Apple Lisa",  "company": {"id": "1" } }
+,{ "id": "0", "name": "CM-2",  "company": {"id": "2" } }
+,{ "id": "0", "name": "Connection Machine",  "company": {"id": "2" } }
+,{ "id": "0", "name": "Apple II",  "company": {"id": "1" } }
+,{ "id": "0", "name": "Apple III Plus",  "company": {"id": "1" } }
+,{ "id": "0", "name": "COSMAC ELF",  "company": {"id": "3" } }
+,{ "id": "0", "name": "COSMAC VIP",  "company": {"id": "3" } }
+,{ "id": "0", "name": "ELF II",  "company": {"id": "4" } }
+,{ "id": "0", "name": "Macintosh",  "company": {"id": "1" } }
+,{ "id": "0", "name": "Macintosh II" }
+,{ "id": "0", "name": "Macintosh Plus",  "company": {"id": "1" } }
+,{ "id": "0", "name": "Macintosh IIfx" }
+,{ "id": "0", "name": "iMac",  "company": {"id": "1" } }
+,{ "id": "0", "name": "Mac Mini",  "company": {"id": "1" } }
+,{ "id": "0", "name": "Mac Pro",  "company": {"id": "1" } }
+,{ "id": "0", "name": "Power Macintosh",  "company": {"id": "1" } }
+,{ "id": "0", "name": "PowerBook",  "company": {"id": "1" } }
+,{ "id": "0", "name": "Xserve" }
+,{ "id": "0", "name": "Powerbook 100" }
+,{ "id": "0", "name": "Powerbook 140" }
+,{ "id": "0", "name": "Powerbook 170" }
+,{ "id": "0", "name": "PowerBook Duo" }
+,{ "id": "0", "name": "PowerBook 190" }
+,{ "id": "0", "name": "Macintosh Quadra",  "company": {"id": "1" } }
+,{ "id": "0", "name": "Macintosh Quadra 900" }
+,{ "id": "0", "name": "Macintosh Quadra 700" }
+,{ "id": "0", "name": "Macintosh LC",  "company": {"id": "1" } }
+,{ "id": "0", "name": "Macintosh LC II",  "company": {"id": "1" } }
+,{ "id": "0", "name": "Macintosh LC III",  "company": {"id": "1" } }
+,{ "id": "0", "name": "Macintosh LC III+" }
+,{ "id": "0", "name": "Macintosh Quadra 605",  "company": {"id": "1" } }
+,{ "id": "0", "name": "Macintosh LC 500 series" }
+,{ "id": "0", "name": "TRS-80 Color Computer",  "company": {"id": "5" } }
+,{ "id": "0", "name": "Acorn System 2" }
+,{ "id": "0", "name": "Dragon 32/64" }
+,{ "id": "0", "name": "MEK6800D2" }
+,{ "id": "0", "name": "Newbear 77/68" }
+,{ "id": "0", "name": "Commodore PET",  "company": {"id": "6" } }
+,{ "id": "0", "name": "Commodore 64",  "company": {"id": "6" } }
+,{ "id": "0", "name": "Commodore 64C" }
+,{ "id": "0", "name": "Commodore SX-64",  "company": {"id": "6" } }
+,{ "id": "0", "name": "Commodore 128",  "company": {"id": "6" } }
+,{ "id": "0", "name": "Apple I",  "company": {"id": "1" } }
+,{ "id": "0", "name": "KIM-1",  "company": {"id": "7" } }
+,{ "id": "0", "name": "Altair 8800",  "company": {"id": "8" } }
+,{ "id": "0", "name": "IMSAI 8080",  "company": {"id": "9" } }
+,{ "id": "0", "name": "IMSAI Series Two" }
+,{ "id": "0", "name": "VAX",  "company": {"id": "10" } }
+,{ "id": "0", "name": "VAX 11/780",  "company": {"id": "10" } }
+,{ "id": "0", "name": "VAX 11/750",  "company": {"id": "10" } }
+,{ "id": "0", "name": "TX-2",  "company": {"id": "11" } }
+,{ "id": "0", "name": "TX-0",  "company": {"id": "11" } }
+,{ "id": "0", "name": "Whirlwind",  "company": {"id": "11" } }
+,{ "id": "0", "name": "ENIAC",  "company": {"id": "12" } }
+,{ "id": "0", "name": "IBM PC",  "company": {"id": "13" } }
+,{ "id": "0", "name": "Macintosh Classic" }
+,{ "id": "0", "name": "Macintosh Classic II",  "company": {"id": "1" } }
+,{ "id": "0", "name": "Amiga",  "company": {"id": "14" } }
+,{ "id": "0", "name": "Amiga 1000",  "company": {"id": "6" } }
+,{ "id": "0", "name": "Amiga 500",  "company": {"id": "6" } }
+,{ "id": "0", "name": "Amiga 500+" }
+,{ "id": "0", "name": "Amiga 2000",  "company": {"id": "6" } }
+,{ "id": "0", "name": "Amiga 3000",  "company": {"id": "6" } }
+,{ "id": "0", "name": "Amiga 600",  "company": {"id": "6" } }
+,{ "id": "0", "name": "Macintosh 128K",  "company": {"id": "1" } }
+,{ "id": "0", "name": "Macintosh 512K",  "company": {"id": "1" } }
+,{ "id": "0", "name": "Macintosh SE",  "company": {"id": "1" } }
+,{ "id": "0", "name": "Macintosh SE/30",  "company": {"id": "1" } }
+,{ "id": "0", "name": "Canon Cat",  "company": {"id": "15" } }
+,{ "id": "0", "name": "Nokia 770",  "company": {"id": "16" } }
+,{ "id": "0", "name": "Nokia N800",  "company": {"id": "16" } }
+,{ "id": "0", "name": "Mylo",  "company": {"id": "17" } }
+,{ "id": "0", "name": "OQO 02",  "company": {"id": "18" } }
+,{ "id": "0", "name": "OQO 01+" }
+,{ "id": "0", "name": "Pinwheel calculator" }
+,{ "id": "0", "name": "iBook",  "company": {"id": "1" } }
+,{ "id": "0", "name": "MacBook",  "company": {"id": "1" } }
+,{ "id": "0", "name": "NeXTstation",  "company": {"id": "19" } }
+,{ "id": "0", "name": "NeXTcube",  "company": {"id": "19" } }
+,{ "id": "0", "name": "NeXTstation Color Turbo" }
+,{ "id": "0", "name": "NeXTstation Color" }
+,{ "id": "0", "name": "NeXTstation Turbo" }
+,{ "id": "0", "name": "NeXTcube Turbo",  "company": {"id": "19" } }
+,{ "id": "0", "name": "NeXTcube 040",  "company": {"id": "19" } }
+,{ "id": "0", "name": "NeXTcube 030",  "company": {"id": "19" } }
+,{ "id": "0", "name": "Tinkertoy Tic-Tac-Toe Computer" }
+,{ "id": "0", "name": "Z3" }
+,{ "id": "0", "name": "Z4" }
+,{ "id": "0", "name": "Z1" }
+,{ "id": "0", "name": "Z2" }
+,{ "id": "0", "name": "Wang 2200" }
+,{ "id": "0", "name": "Wang VS" }
+,{ "id": "0", "name": "Wang OIS" }
+,{ "id": "0", "name": "BBC Micro",  "company": {"id": "22" } }
+,{ "id": "0", "name": "IBM 650",  "company": {"id": "13" } }
+,{ "id": "0", "name": "Cray-1" }
+,{ "id": "0", "name": "Cray-3" }
+,{ "id": "0", "name": "Cray-2" }
+,{ "id": "0", "name": "Cray-4" }
+,{ "id": "0", "name": "Cray X1" }
+,{ "id": "0", "name": "Cray XD1" }
+,{ "id": "0", "name": "Cray T3D" }
+,{ "id": "0", "name": "Cray T3E" }
+,{ "id": "0", "name": "Cray C90" }
+,{ "id": "0", "name": "Cray T90" }
+,{ "id": "0", "name": "Cray SV1" }
+,{ "id": "0", "name": "Cray J90" }
+,{ "id": "0", "name": "Cray XT3" }
+,{ "id": "0", "name": "Cray CS6400" }
+,{ "id": "0", "name": "Atari ST",  "company": {"id": "20" } }
+,{ "id": "0", "name": "Amiga 2500" }
+,{ "id": "0", "name": "Amiga 2500",  "company": {"id": "6" } }
+,{ "id": "0", "name": "Amiga 4000",  "company": {"id": "6" } }
+,{ "id": "0", "name": "Amiga 3000UX",  "company": {"id": "6" } }
+,{ "id": "0", "name": "Amiga 3000T",  "company": {"id": "6" } }
+,{ "id": "0", "name": "Amiga 4000T",  "company": {"id": "6" } }
+,{ "id": "0", "name": "Amiga 1200",  "company": {"id": "6" } }
+,{ "id": "0", "name": "Atari 1040 STf" }
+,{ "id": "0", "name": "Atari 520 ST" }
+,{ "id": "0", "name": "Atari 520 STfm" }
+,{ "id": "0", "name": "Atari 1040 STe" }
+,{ "id": "0", "name": "Atari MEGA STe" }
+,{ "id": "0", "name": "Atari 520 ST+" }
+,{ "id": "0", "name": "Atari 520 STm" }
+,{ "id": "0", "name": "Atari 130 ST" }
+,{ "id": "0", "name": "Atari 260 ST" }
+,{ "id": "0", "name": "Atari MEGA ST" }
+,{ "id": "0", "name": "Atari 520 STf" }
+,{ "id": "0", "name": "Atari 1040 STfm" }
+,{ "id": "0", "name": "Atari 2080 ST" }
+,{ "id": "0", "name": "Atari 260 ST+" }
+,{ "id": "0", "name": "Atari 4160 STe" }
+,{ "id": "0", "name": "TRS-80 Color Computer 2" }
+,{ "id": "0", "name": "TRS-80 Color Computer 3" }
+,{ "id": "0", "name": "TRS-80 Model 1",  "company": {"id": "5" } }
+,{ "id": "0", "name": "Timex Sinclair 2068",  "company": {"id": "23" } }
+,{ "id": "0", "name": "ZX Spectrum",  "company": {"id": "25" } }
+,{ "id": "0", "name": "Xerox Star",  "company": {"id": "26" } }
+,{ "id": "0", "name": "Xerox Alto" }
+,{ "id": "0", "name": "Acorn Archimedes",  "company": {"id": "22" } }
+,{ "id": "0", "name": "Nintendo Entertainment System",  "company": {"id": "24" } }
+,{ "id": "0", "name": "Super Nintendo Entertainment System",  "company": {"id": "24" } }
+,{ "id": "0", "name": "Super Famicom" }
+,{ "id": "0", "name": "Nintendo GameCube",  "company": {"id": "24" } }
+,{ "id": "0", "name": "Game Boy line" }
+,{ "id": "0", "name": "PlayStation",  "company": {"id": "17" } }
+,{ "id": "0", "name": "PlayStation 2",  "company": {"id": "17" } }
+,{ "id": "0", "name": "Game & Watch",  "company": {"id": "24" } }
+,{ "id": "0", "name": "EDSAC" }
+,{ "id": "0", "name": "IBM System/4 Pi" }
+,{ "id": "0", "name": "IBM AP-101" }
+,{ "id": "0", "name": "IBM TC-1" }
+,{ "id": "0", "name": "IBM AP-101B" }
+,{ "id": "0", "name": "IBM AP-101S",  "company": {"id": "13" } }
+,{ "id": "0", "name": "ProLiant",  "company": {"id": "27" } }
+,{ "id": "0", "name": "Http://nepomuk.semanticdesktop.org/xwiki/" }
+,{ "id": "0", "name": "Sinclair QL",  "company": {"id": "25" } }
+,{ "id": "0", "name": "Sinclair ZX81",  "company": {"id": "25" } }
+,{ "id": "0", "name": "Sinclair ZX80",  "company": {"id": "25" } }
+,{ "id": "0", "name": "Atari 65XE",  "company": {"id": "20" } }
+,{ "id": "0", "name": "Deep Blue" }
+,{ "id": "0", "name": "Macintosh Quadra 650" }
+,{ "id": "0", "name": "Macintosh Quadra 610" }
+,{ "id": "0", "name": "Macintosh Quadra 800" }
+,{ "id": "0", "name": "Macintosh Quadra 950" }
+,{ "id": "0", "name": "PowerBook 160" }
+,{ "id": "0", "name": "PowerBook 145B" }
+,{ "id": "0", "name": "PowerBook 170" }
+,{ "id": "0", "name": "PowerBook 145" }
+,{ "id": "0", "name": "PowerBook G3" }
+,{ "id": "0", "name": "PowerBook 140" }
+,{ "id": "0", "name": "Macintosh IIcx" }
+,{ "id": "0", "name": "Powerbook 180" }
+,{ "id": "0", "name": "PowerBook G4" }
+,{ "id": "0", "name": "Macintosh XL" }
+,{ "id": "0", "name": "PowerBook 100" }
+,{ "id": "0", "name": "PowerBook 2400c" }
+,{ "id": "0", "name": "PowerBook 1400" }
+,{ "id": "0", "name": "Macintosh Quadra 630" }
+,{ "id": "0", "name": "Macintosh Quadra 660AV" }
+,{ "id": "0", "name": "Macintosh Quadra 840AV" }
+,{ "id": "0", "name": "PowerBook 5300" }
+,{ "id": "0", "name": "PowerBook 3400c" }
+,{ "id": "0", "name": "Macintosh Color Classic" }
+,{ "id": "0", "name": "Macintosh 512Ke" }
+,{ "id": "0", "name": "Macintosh IIsi" }
+,{ "id": "0", "name": "Macintosh IIx" }
+,{ "id": "0", "name": "PowerBook 500 series" }
+,{ "id": "0", "name": "Power Macintosh G3" }
+,{ "id": "0", "name": "Macintosh IIci" }
+,{ "id": "0", "name": "iMac G5",  "company": {"id": "1" } }
+,{ "id": "0", "name": "Power Mac G4" }
+,{ "id": "0", "name": "Power Macintosh 7100" }
+,{ "id": "0", "name": "Power Macintosh 9600" }
+,{ "id": "0", "name": "Power Macintosh 7200" }
+,{ "id": "0", "name": "Power Macintosh 7300" }
+,{ "id": "0", "name": "Power Macintosh 8600" }
+,{ "id": "0", "name": "Power Macintosh 6200" }
+,{ "id": "0", "name": "Power Macintosh 8100" }
+,{ "id": "0", "name": "Compact Macintosh" }
+,{ "id": "0", "name": "Power Macintosh 4400" }
+,{ "id": "0", "name": "Power Macintosh 9500" }
+,{ "id": "0", "name": "Macintosh Portable" }
+,{ "id": "0", "name": "EMac" }
+,{ "id": "0", "name": "Power Macintosh 7600" }
+,{ "id": "0", "name": "Power Mac G5" }
+,{ "id": "0", "name": "Power Macintosh 7500" }
+,{ "id": "0", "name": "Power Macintosh 6100" }
+,{ "id": "0", "name": "Power Macintosh 8500" }
+,{ "id": "0", "name": "Macintosh IIvi" }
+,{ "id": "0", "name": "Macintosh IIvx" }
+,{ "id": "0", "name": "IMac G3" }
+,{ "id": "0", "name": "IMac G4" }
+,{ "id": "0", "name": "Power Mac G4 Cube",  "company": {"id": "1" } }
+,{ "id": "0", "name": "Intel iMac" }
+,{ "id": "0", "name": "Deep Thought",  "company": {"id": "13" } }
+,{ "id": "0", "name": "Wii",  "company": {"id": "24" } }
+,{ "id": "0", "name": "IBM System x" }
+,{ "id": "0", "name": "IBM System i",  "company": {"id": "13" } }
+,{ "id": "0", "name": "IBM System z",  "company": {"id": "13" } }
+,{ "id": "0", "name": "IBM System p",  "company": {"id": "13" } }
+,{ "id": "0", "name": "LC 575" }
+,{ "id": "0", "name": "Macintosh TV" }
+,{ "id": "0", "name": "Macintosh Performa" }
+,{ "id": "0", "name": "Macintosh II series" }
+,{ "id": "0", "name": "Power Macintosh 6400" }
+,{ "id": "0", "name": "Power Macintosh 6500" }
+,{ "id": "0", "name": "Apple PenLite" }
+,{ "id": "0", "name": "Wallstreet" }
+,{ "id": "0", "name": "Twentieth Anniversary Macintosh" }
+,{ "id": "0", "name": "Power Macintosh 5500" }
+,{ "id": "0", "name": "iBook G3",  "company": {"id": "1" } }
+,{ "id": "0", "name": "Power Macintosh 5200 LC" }
+,{ "id": "0", "name": "Power Macintosh 5400" }
+,{ "id": "0", "name": "CM-1" }
+,{ "id": "0", "name": "MSX",  "company": {"id": "28" } }
+,{ "id": "0", "name": "PlayStation 3",  "company": {"id": "17" } }
+,{ "id": "0", "name": "MSX2",  "company": {"id": "29" } }
+,{ "id": "0", "name": "MSX2+",  "company": {"id": "30" } }
+,{ "id": "0", "name": "MSX turbo R" }
+,{ "id": "0", "name": "Panasonic FS A1GT" }
+,{ "id": "0", "name": "Panasonic FS A1ST" }
+,{ "id": "0", "name": "PDP-11",  "company": {"id": "10" } }
+,{ "id": "0", "name": "PDP-1",  "company": {"id": "10" } }
+,{ "id": "0", "name": "PDP-10",  "company": {"id": "10" } }
+,{ "id": "0", "name": "PDP-8",  "company": {"id": "10" } }
+,{ "id": "0", "name": "PDP-6",  "company": {"id": "10" } }
+,{ "id": "0", "name": "DECSYSTEM-20",  "company": {"id": "10" } }
+,{ "id": "0", "name": "PDP-7",  "company": {"id": "10" } }
+,{ "id": "0", "name": "PDP-5",  "company": {"id": "10" } }
+,{ "id": "0", "name": "PDP-12",  "company": {"id": "10" } }
+,{ "id": "0", "name": "LINC",  "company": {"id": "10" } }
+,{ "id": "0", "name": "PDP-14",  "company": {"id": "10" } }
+,{ "id": "0", "name": "PDP-15",  "company": {"id": "10" } }
+,{ "id": "0", "name": "PDP-16",  "company": {"id": "10" } }
+,{ "id": "0", "name": "Cray X2",  "company": {"id": "31" } }
+,{ "id": "0", "name": "Cray X-MP",  "company": {"id": "31" } }
+,{ "id": "0", "name": "Evans & Sutherland ES-1",  "company": {"id": "32" } }
+,{ "id": "0", "name": "Commodore VIC-20",  "company": {"id": "6" } }
+,{ "id": "0", "name": "PowerBook 150" }
+,{ "id": "0", "name": "MacBook Air",  "company": {"id": "1" } }
+,{ "id": "0", "name": "Digi-Comp I",  "company": {"id": "33" } }
+,{ "id": "0", "name": "Digi-Comp" }
+,{ "id": "0", "name": "Digi-Comp II",  "company": {"id": "33" } }
+,{ "id": "0", "name": "Manchester Mark I" }
+,{ "id": "0", "name": "Small-Scale Experimental Machine" }
+,{ "id": "0", "name": "Nintendo 64",  "company": {"id": "24" } }
+,{ "id": "0", "name": "Game Boy Advance",  "company": {"id": "24" } }
+,{ "id": "0", "name": "Game Boy",  "company": {"id": "24" } }
+,{ "id": "0", "name": "Nintendo DS Lite",  "company": {"id": "24" } }
+,{ "id": "0", "name": "Nintendo DS",  "company": {"id": "24" } }
+,{ "id": "0", "name": "Game Boy Color",  "company": {"id": "24" } }
+,{ "id": "0", "name": "Game Boy Advance SP",  "company": {"id": "24" } }
+,{ "id": "0", "name": "Virtual Boy",  "company": {"id": "24" } }
+,{ "id": "0", "name": "Game Boy Micro",  "company": {"id": "24" } }
+,{ "id": "0", "name": "Roadrunner",  "company": {"id": "13" } }
+,{ "id": "0", "name": "HP 9000" }
+,{ "id": "0", "name": "OMRON Luna-88K2" }
+,{ "id": "0", "name": "OMRON Luna-88K",  "company": {"id": "34" } }
+,{ "id": "0", "name": "Motorola series 900" }
+,{ "id": "0", "name": "Motorola M8120" }
+,{ "id": "0", "name": "Triton Dolphin System 100" }
+,{ "id": "0", "name": "BBN TC2000",  "company": {"id": "35" } }
+,{ "id": "0", "name": "WRT54G" }
+,{ "id": "0", "name": "ThinkPad",  "company": {"id": "36" } }
+,{ "id": "0", "name": "Apple Newton",  "company": {"id": "1" } }
+,{ "id": "0", "name": "Atanasoff-Berry Computer" }
+,{ "id": "0", "name": "Atlas Computer" }
+,{ "id": "0", "name": "ASUS Eee PC 901",  "company": {"id": "37" } }
+,{ "id": "0", "name": "ASUS Eee PC 701" }
+,{ "id": "0", "name": "IBM 7030",  "company": {"id": "13" } }
+,{ "id": "0", "name": "System/38",  "company": {"id": "13" } }
+,{ "id": "0", "name": "System/36",  "company": {"id": "13" } }
+,{ "id": "0", "name": "IBM 7090",  "company": {"id": "13" } }
+,{ "id": "0", "name": "IBM RT",  "company": {"id": "13" } }
+,{ "id": "0", "name": "System/360",  "company": {"id": "13" } }
+,{ "id": "0", "name": "IBM 801",  "company": {"id": "13" } }
+,{ "id": "0", "name": "IBM 1401",  "company": {"id": "13" } }
+,{ "id": "0", "name": "ASCI White",  "company": {"id": "13" } }
+,{ "id": "0", "name": "Blue Gene",  "company": {"id": "13" } }
+,{ "id": "0", "name": "ASCI Blue Pacific",  "company": {"id": "13" } }
+,{ "id": "0", "name": "iPhone",  "company": {"id": "1" } }
+,{ "id": "0", "name": "Nokia N810",  "company": {"id": "16" } }
+,{ "id": "0", "name": "EDSAC 2" }
+,{ "id": "0", "name": "Titan" }
+,{ "id": "0", "name": "Pilot ACE" }
+,{ "id": "0", "name": "HP Mini 1000",  "company": {"id": "27" } }
+,{ "id": "0", "name": "HP 2133 Mini-Note PC",  "company": {"id": "27" } }
+,{ "id": "0", "name": "Kogan Agora Pro" }
+,{ "id": "0", "name": "D-Series Machines" }
+,{ "id": "0", "name": "ZX Spectrum 48K",  "company": {"id": "25" } }
+,{ "id": "0", "name": "ZX Spectrum 16K",  "company": {"id": "25" } }
+,{ "id": "0", "name": "ZX Spectrum 128",  "company": {"id": "25" } }
+,{ "id": "0", "name": "ZX Spectrum +3",  "company": {"id": "38" } }
+,{ "id": "0", "name": "ZX Spectrum +2",  "company": {"id": "38" } }
+,{ "id": "0", "name": "ZX Spectrum +2A",  "company": {"id": "38" } }
+,{ "id": "0", "name": "ZX Spectrum +",  "company": {"id": "25" } }
+,{ "id": "0", "name": "Acer Extensa" }
+,{ "id": "0", "name": "Acer Extensa 5220" }
+,{ "id": "0", "name": "Dell Latitude" }
+,{ "id": "0", "name": "Toshiba Satellite" }
+,{ "id": "0", "name": "Timex Sinclair 2048",  "company": {"id": "23" } }
+,{ "id": "0", "name": "Sprinter" }
+,{ "id": "0", "name": "Timex Computer 2048" }
+,{ "id": "0", "name": "Pentagon" }
+,{ "id": "0", "name": "Belle" }
+,{ "id": "0", "name": "Loki",  "company": {"id": "25" } }
+,{ "id": "0", "name": "Hobbit" }
+,{ "id": "0", "name": "NeXT Computer",  "company": {"id": "19" } }
+,{ "id": "0", "name": "TRS-80" }
+,{ "id": "0", "name": "TRS-80 Model 2",  "company": {"id": "5" } }
+,{ "id": "0", "name": "TRS-80 Model 3",  "company": {"id": "5" } }
+,{ "id": "0", "name": "STacy" }
+,{ "id": "0", "name": "ST BOOK" }
+,{ "id": "0", "name": "Atari 520 STE" }
+,{ "id": "0", "name": "Amiga 2000 Model A" }
+,{ "id": "0", "name": "Amiga 2000 Model B" }
+,{ "id": "0", "name": "Amiga 2000 Model C" }
+,{ "id": "0", "name": "IBM 3270" }
+,{ "id": "0", "name": "CALDIC" }
+,{ "id": "0", "name": "Modbook" }
+,{ "id": "0", "name": "Compaq SystemPro" }
+,{ "id": "0", "name": "ARRA" }
+,{ "id": "0", "name": "IBM System Cluster 1350" }
+,{ "id": "0", "name": "Finite element machine" }
+,{ "id": "0", "name": "ES7000" }
+,{ "id": "0", "name": "HP MediaSmart Server" }
+,{ "id": "0", "name": "HP Superdome" }
+,{ "id": "0", "name": "IBM Power Systems",  "company": {"id": "13" } }
+,{ "id": "0", "name": "Oslo Analyzer" }
+,{ "id": "0", "name": "Microsoft Softcard" }
+,{ "id": "0", "name": "WITCH" }
+,{ "id": "0", "name": "Analytical engine" }
+,{ "id": "0", "name": "EDVAC" }
+,{ "id": "0", "name": "BINAC" }
+,{ "id": "0", "name": "Earth Simulator" }
+,{ "id": "0", "name": "BARK" }
+,{ "id": "0", "name": "Harvard Mark I",  "company": {"id": "13" } }
+,{ "id": "0", "name": "ILLIAC IV" }
+,{ "id": "0", "name": "ILLIAC II" }
+,{ "id": "0", "name": "ILLIAC III" }
+,{ "id": "0", "name": "Water integrator" }
+,{ "id": "0", "name": "CSIRAC" }
+,{ "id": "0", "name": "System X" }
+,{ "id": "0", "name": "Harvest" }
+,{ "id": "0", "name": "ChipTest" }
+,{ "id": "0", "name": "HiTech" }
+,{ "id": "0", "name": "Bomba" }
+,{ "id": "0", "name": "ACE" }
+,{ "id": "0", "name": "ASCI Red" }
+,{ "id": "0", "name": "ASCI Thors Hammer" }
+,{ "id": "0", "name": "ASCI Purple",  "company": {"id": "13" } }
+,{ "id": "0", "name": "ASCI Blue Mountain" }
+,{ "id": "0", "name": "Columbia" }
+,{ "id": "0", "name": "HP Integrity" }
+,{ "id": "0", "name": "APEXC" }
+,{ "id": "0", "name": "Datasaab D2" }
+,{ "id": "0", "name": "BRLESC" }
+,{ "id": "0", "name": "DYSEAC" }
+,{ "id": "0", "name": "SSEC",  "company": {"id": "13" } }
+,{ "id": "0", "name": "Hydra" }
+,{ "id": "0", "name": "FUJIC" }
+,{ "id": "0", "name": "RAYDAC" }
+,{ "id": "0", "name": "Harvard Mark III" }
+,{ "id": "0", "name": "DATAR" }
+,{ "id": "0", "name": "ReserVec" }
+,{ "id": "0", "name": "DASK" }
+,{ "id": "0", "name": "UTEC" }
+,{ "id": "0", "name": "DRTE Computer" }
+,{ "id": "0", "name": "PowerEdge" }
+,{ "id": "0", "name": "Apple Network Server" }
+,{ "id": "0", "name": "Goodyear MPP" }
+,{ "id": "0", "name": "Macintosh 128K technical details" }
+,{ "id": "0", "name": "Power Macintosh G3" }
+,{ "id": "0", "name": "CER-10" }
+,{ "id": "0", "name": "CER-20" }
+,{ "id": "0", "name": "IBM BladeCenter",  "company": {"id": "13" } }
+,{ "id": "0", "name": "Wisconsin Integrally Synchronized Computer" }
+,{ "id": "0", "name": "Amstrad CPC",  "company": {"id": "38" } }
+,{ "id": "0", "name": "Amstrad CPC 6128",  "company": {"id": "38" } }
+,{ "id": "0", "name": "Amstrad CPC 664",  "company": {"id": "38" } }
+,{ "id": "0", "name": "Amstrad CPC 464",  "company": {"id": "38" } }
+,{ "id": "0", "name": "Intergraph" }
+,{ "id": "0", "name": "Enterprise" }
+,{ "id": "0", "name": "MTX500" }
+,{ "id": "0", "name": "Acorn Electron" }
+,{ "id": "0", "name": "Sony Vaio P",  "company": {"id": "17" } }
+,{ "id": "0", "name": "VAIO",  "company": {"id": "17" } }
+,{ "id": "0", "name": "Sony Vaio P VGN-P588E/Q" }
+,{ "id": "0", "name": "Sony Vaio P VGN-P530H/G" }
+,{ "id": "0", "name": "Sony Vaio P VGN-P530H/W" }
+,{ "id": "0", "name": "Sony Vaio P VGN-P530H/Q" }
+,{ "id": "0", "name": "Sony Vaio P VGN-P530H/R" }
+,{ "id": "0", "name": "Sony Vaio P VGN-P588E/R" }
+,{ "id": "0", "name": "Sony Vaio P VGN-P598E/Q" }
+,{ "id": "0", "name": "Timex Sinclair 1000",  "company": {"id": "23" } }
+,{ "id": "0", "name": "Komputer 2086" }
+,{ "id": "0", "name": "Galaksija" }
+,{ "id": "0", "name": "Vector-06C" }
+,{ "id": "0", "name": "Elektronika BK" }
+,{ "id": "0", "name": "Sun386i",  "company": {"id": "39" } }
+,{ "id": "0", "name": "Xerox Daybreak" }
+,{ "id": "0", "name": "Xerox NoteTaker",  "company": {"id": "26" } }
+,{ "id": "0", "name": "D4a" }
+,{ "id": "0", "name": "LGP-30" }
+,{ "id": "0", "name": "LGP-21" }
+,{ "id": "0", "name": "ASUS Eee PC 900",  "company": {"id": "37" } }
+,{ "id": "0", "name": "Atari TT030" }
+,{ "id": "0", "name": "Bi Am ZX-Spectrum 48/64" }
+,{ "id": "0", "name": "Bi Am ZX-Spectrum 128" }
+,{ "id": "0", "name": "PlayStation Portable" }
+,{ "id": "0", "name": "MSI Wind Netbook" }
+,{ "id": "0", "name": "Sharp Mebius NJ70A" }
+,{ "id": "0", "name": "HTC Snap",  "company": {"id": "41" } }
+,{ "id": "0", "name": "Commodore Educator 64",  "company": {"id": "6" } }
+,{ "id": "0", "name": "Amiga 1500",  "company": {"id": "6" } }
+,{ "id": "0", "name": "Commodore 65",  "company": {"id": "6" } }
+,{ "id": "0", "name": "Commodore 16",  "company": {"id": "6" } }
+,{ "id": "0", "name": "Commodore CBM-II",  "company": {"id": "6" } }
+,{ "id": "0", "name": "Commodore Plus/4",  "company": {"id": "6" } }
+,{ "id": "0", "name": "Commodore LCD",  "company": {"id": "6" } }
+,{ "id": "0", "name": "Commodore MAX Machine",  "company": {"id": "6" } }
+,{ "id": "0", "name": "Aster CT-80" }
+,{ "id": "0", "name": "Test" }
+,{ "id": "0", "name": "MSI GX723" }
+,{ "id": "0", "name": "Eee PC 1000HV" }
+,{ "id": "0", "name": "VTech Laser 200" }
+,{ "id": "0", "name": "CrunchPad" }
+,{ "id": "0", "name": "Neo Geo" }
+,{ "id": "0", "name": "Sega Mega Drive" }
+,{ "id": "0", "name": "Sega Master System" }
+,{ "id": "0", "name": "TurboGrafx-16" }
+,{ "id": "0", "name": "Sun-3",  "company": {"id": "39" } }
+,{ "id": "0", "name": "Pleiades" }
+,{ "id": "0", "name": "IBM Sequoia" }
+,{ "id": "0", "name": "Inves Spectrum 48k plus" }
+,{ "id": "0", "name": "iPhone 3G" }
+,{ "id": "0", "name": "iPhone 3GS" }
+,{ "id": "0", "name": "Beagle Board",  "company": {"id": "40" } }
+,{ "id": "0", "name": "HP nPar" }
+,{ "id": "0", "name": "MacBook Family" }
+,{ "id": "0", "name": "Reservisor" }
+,{ "id": "0", "name": "BladeSystem" }
+,{ "id": "0", "name": "lenovo thinkpad t60p" }
+,{ "id": "0", "name": "lenovo thinkpad x200",  "company": {"id": "36" } }
+,{ "id": "0", "name": "lenovo thinkpad t60" }
+,{ "id": "0", "name": "lenovo thinkpad w700" }
+,{ "id": "0", "name": "lenovo thinkpad t41" }
+,{ "id": "0", "name": "lenovo thinkpad z61p" }
+,{ "id": "0", "name": "lenovo thinkpad x61s" }
+,{ "id": "0", "name": "lenovo thinkpad t43" }
+,{ "id": "0", "name": "lenovo thinkpad r400" }
+,{ "id": "0", "name": "lenovo thinkpad x60s" }
+,{ "id": "0", "name": "lenovo thinkpad x301" }
+,{ "id": "0", "name": "lenovo thinkpad t42" }
+,{ "id": "0", "name": "lenovo thinkpad r61" }
+,{ "id": "0", "name": "lenovo thinkpad w500" }
+,{ "id": "0", "name": "lenovo thinkpad sl400" }
+,{ "id": "0", "name": "lenovo thinkpad x40" }
+,{ "id": "0", "name": "lenovo thinkpad x200 tablet",  "company": {"id": "36" } }
+,{ "id": "0", "name": "lenovo thinkpad t400s" }
+,{ "id": "0", "name": "Nokia N900",  "company": {"id": "16" } }
+,{ "id": "0", "name": "Internet Tablet" }
+,{ "id": "0", "name": "Meiko Computing Surface" }
+,{ "id": "0", "name": "CS-2" }
+,{ "id": "0", "name": "IBM 701",  "company": {"id": "13" } }
+,{ "id": "0", "name": "IBM 5100",  "company": {"id": "13" } }
+,{ "id": "0", "name": "AN/FSQ-7",  "company": {"id": "13" } }
+,{ "id": "0", "name": "AN/FSQ-32",  "company": {"id": "13" } }
+,{ "id": "0", "name": "IBM CPC",  "company": {"id": "13" } }
+,{ "id": "0", "name": "System/34",  "company": {"id": "13" } }
+,{ "id": "0", "name": "System/32",  "company": {"id": "13" } }
+,{ "id": "0", "name": "System/3",  "company": {"id": "13" } }
+,{ "id": "0", "name": "IBM 305",  "company": {"id": "13" } }
+,{ "id": "0", "name": "English Electric DEUCE" }
+,{ "id": "0", "name": "CER-203" }
+,{ "id": "0", "name": "CER-22" }
+,{ "id": "0", "name": "Kentucky Linux Athlon Testbed" }
+,{ "id": "0", "name": "QNAP TS-101" }
+,{ "id": "0", "name": "iPad",  "company": {"id": "1" } }
+,{ "id": "0", "name": "iPhone 2G" }
+,{ "id": "0", "name": "Inslaw" }
+,{ "id": "0", "name": "WePad" }
+,{ "id": "0", "name": "MacBook Parts",  "company": {"id": "1" } }
+,{ "id": "0", "name": "MacBook 13-inch Core 2 Duo 2.13GHz (MC240LL/A) DDR2 Model",  "company": {"id": "1" } }
+,{ "id": "0", "name": "MacBook 13-inch Core 2 Duo 2.13GHz (MC240T/A) DDR2 Model" }
+,{ "id": "0", "name": "MacBook 13-inch Core 2 Duo 2.13GHz (MC240X/A) DDR2 Model" }
+,{ "id": "0", "name": "MacBook 13-inch Core 2 Duo 2.26GHz (Unibody MC207LL/A) DDR3 Model" }
+,{ "id": "0", "name": "MC240LL/A" }
+,{ "id": "0", "name": "D.K.COMMUNICATION" }
+,{ "id": "0", "name": "iPhone 4",  "company": {"id": "1" } }
+,{ "id": "0", "name": "Nintendo 3DS",  "company": {"id": "24" } }
+,{ "id": "0", "name": "ASUS Eee PC 1005PE",  "company": {"id": "37" } }
+,{ "id": "0", "name": "National Law Enforcement System" }
+,{ "id": "0", "name": "BlackBerry PlayBook",  "company": {"id": "42" } }
+,{ "id": "0", "name": "Barnes & Noble nook" }
+,{ "id": "0", "name": "SAM Coupé" }
+,{ "id": "0", "name": "HTC Dream",  "company": {"id": "41" } }
+,{ "id": "0", "name": "Samsung Galaxy Tab",  "company": {"id": "43" } }
+,{ "id": "0", "name": "BlackBerry PlayBook",  "company": {"id": "42" } }
+,{ "id": "0", "name": "Tianhe-I" }
+,{ "id": "0", "name": "Kno" }
+,{ "id": "0", "name": "ThinkPad 701 C" }
+,{ "id": "0", "name": "ThinkPad 340 CSE" }
+,{ "id": "0", "name": "ThinkPad 755 CX" }
+,{ "id": "0", "name": "ThinkPad 755 CE" }
+,{ "id": "0", "name": "ThinkPad 370 C" }
+,{ "id": "0", "name": "Coleco Adam" }
+,{ "id": "0", "name": "Nebulae" }
+,{ "id": "0", "name": "Alex eReader" }
+,{ "id": "0", "name": "Acer Iconia" }
+,{ "id": "0", "name": "Archos 101" }
+,{ "id": "0", "name": "Fujitsu Lifebook T900" }
+,{ "id": "0", "name": "Motorola Xoom" }
+,{ "id": "0", "name": "ViewSonic G Tablet" }
+,{ "id": "0", "name": "DEC Professional",  "company": {"id": "10" } }
+,{ "id": "0", "name": "DEC Multia",  "company": {"id": "10" } }
+,{ "id": "0", "name": "DEC Firefly",  "company": {"id": "10" } }
+,{ "id": "0", "name": "DEC 3000 AXP",  "company": {"id": "10" } }
+,{ "id": "0", "name": "DEC 2000 AXP",  "company": {"id": "10" } }
+,{ "id": "0", "name": "DEC 4000 AXP",  "company": {"id": "10" } }
+,{ "id": "0", "name": "DEC 7000/10000 AXP",  "company": {"id": "10" } }
+,{ "id": "0", "name": "DEC Professional 350" }
+,{ "id": "0", "name": "DEC Rainbow 100" }
+,{ "id": "0", "name": "DEC Professional 325" }
+,{ "id": "0", "name": "DECmate II",  "company": {"id": "10" } }
+,{ "id": "0", "name": "DECmate",  "company": {"id": "10" } }
+,{ "id": "0", "name": "DECsystem",  "company": {"id": "10" } }
+,{ "id": "0", "name": "NetApp Filer" }
+,{ "id": "0", "name": "DEC GT40",  "company": {"id": "10" } }
+,{ "id": "0", "name": "ecoATM" }
+,{ "id": "0", "name": "MindWave BrainCubed Education Bundle" }
+,{ "id": "0", "name": "PalmPilot" }
+,{ "id": "0", "name": "Upcoming iPhone 5",  "company": {"id": "1" } }
+,{ "id": "0", "name": "Dell Inspiron 560 Desktop Computer" }
+,{ "id": "0", "name": "IPad 2",  "company": {"id": "1" } }
+,{ "id": "0", "name": "HP TouchPad",  "company": {"id": "27" } }
+,{ "id": "0", "name": "HP Veer",  "company": {"id": "27" } }
+,{ "id": "0", "name": "Lenovo Thinkpad Edge 11",  "company": {"id": "36" } }
+,{ "id": "0", "name": "Dell Vostro" }
+,{ "id": "0", "name": "Gateway LT3103U" }
+,{ "id": "0", "name": "iPhone 4S",  "company": {"id": "1" } }
 	
 	]
 	

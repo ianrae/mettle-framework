@@ -9,7 +9,7 @@ GET     /                           controllers.Application.index()
 GET 	/logout                 controllers.ErrorC.logout()
 
 # Computers          
-GET     /computers                  controllers.ComputerC.index(p:Int ?= 1)
+GET     /computers                  controllers.ComputerC.index(p:Int ?= 1, s ?= "name", o ?= "asc", f ?= "")
 
 # Companies          
 GET     /companies                  controllers.CompanyC.index()
