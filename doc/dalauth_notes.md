@@ -193,5 +193,36 @@ http://twitter.github.io/scala_school/sbt.html
 -------------------------10OctTue
 HEROKU
 -AppTwo
--shrouded-headland-5083.herokuapp.com
+-stark-shelf-1549.herokuapp.com
 
+http://stark-shelf-1549.herokuapp.com
+-works!
+-copied in Computer example.
+ -deleted one of the views (not needed)
+ -edit build.scala
+addSbtPlugin("play" % "sbt-plugin" % Option(System.getProperty("play.version")).getOrElse("2.1.3"))
+ -works!
+-play eclipse
+
+STEPS TO ADD MEF
+-gen:app to create mef.xml and copy in some files
+-add lib/mef.jar
+-test/mef/OtherTests.java - Initializer.init()
+-modify build.scala
+-create an entity: gen:entity
+-write some entity tests
+-create a presenter: gen:presenter
+-write presenter tests
+-uncomment stuff in Initializer!!
+-YIKES
+ -EntityLoader and Dal..Loader not created by codegen
+ -EntityLoader is all entangled. can't create just Company
+ -first test must do Initializer.createContext not init
+
+-use presenter in Controller
+-update view
+-deploy to heroku
+
+
+ 
+ 

@@ -42,7 +42,8 @@ public class AppScaffoldCodeGenerator extends SfxBaseObj
 		createDirStructure();
 		String filename = "mef.xml";
 		
-		String resDir = FilenameUtils.concat(stDir, "copy");
+//		String resDir = FilenameUtils.concat(stDir, "copy");
+		String resDir = pathCombine(stDir, "copy");
 		boolean b = copyFile(filename, resDir, appDir);
 		if (! b)
 		{
@@ -50,7 +51,7 @@ public class AppScaffoldCodeGenerator extends SfxBaseObj
 		}
 		
 		filename = "Boundary.txt";
-		String dest = FilenameUtils.concat(appDir, "app\\boundaries");
+		String dest = pathCombine(appDir, "app\\boundaries");
 		b = copyFile(filename, ".java", resDir, dest);
 		if (! b)
 		{
@@ -58,7 +59,7 @@ public class AppScaffoldCodeGenerator extends SfxBaseObj
 		}
 		
 		filename = "Initializer.txt";
-		dest = FilenameUtils.concat(appDir, "app\\mef\\core");
+		dest = pathCombine(appDir, "app\\mef\\core");
 		b = copyFile(filename, ".java", resDir, dest);
 		if (! b)
 		{
@@ -74,8 +75,8 @@ public class AppScaffoldCodeGenerator extends SfxBaseObj
 	}
 	private boolean copyFile(String filename, String newExt, String resDir, String appDir) throws Exception
 	{
-		String src = FilenameUtils.concat(resDir, filename);
-		String dest = FilenameUtils.concat(appDir, filename);
+		String src = pathCombine(resDir, filename);
+		String dest = pathCombine(appDir, filename);
 		
 		if (newExt != null)
 		{
@@ -117,7 +118,7 @@ public class AppScaffoldCodeGenerator extends SfxBaseObj
 
 	private void createDir(String dirName) 
 	{
-		String dest = FilenameUtils.concat(appDir, dirName);
+		String dest = pathCombine(appDir, dirName);
 		log("creating dir: " + dest);
 		File f = new File(dest);
 		f.mkdirs();
