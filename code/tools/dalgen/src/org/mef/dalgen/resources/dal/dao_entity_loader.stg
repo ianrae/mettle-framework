@@ -9,6 +9,7 @@ import java.util.List;
 import org.codehaus.jackson.JsonNode;
 import mef.entities.*;
 import java.util.Date;
+import org.mef.framework.loaders.BaseDaoJsonLoader;
 
 
 
@@ -95,7 +96,7 @@ resolve2(type1, type2) ::= <<
 >>
 
 classdecl(name) ::= <<
-public class <name>
+public class <name> extends BaseDaoJsonLoader
 {
 
 	
