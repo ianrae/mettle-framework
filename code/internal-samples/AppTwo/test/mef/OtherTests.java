@@ -81,7 +81,20 @@ public class OtherTests extends BaseTest
 	
 			if (! cc.compId.equals("null"))
 			{
-			    String s = String.format(",{ \"id\": \"0\", \"name\": \"%s\",  \"company\": {\"id\": \"%s\" } }", cc.name, cc.compId);
+				String tmp = "";
+				if (cc.date1 != null && ! cc.date1.equals("null"))
+				{
+					tmp = String.format(" \"introduced\": \"%s\",", cc.date1 );
+				}
+				
+				String tmp2 = "";
+				if (cc.date2 != null && ! cc.date2.equals("null"))
+				{
+					tmp = String.format(" \"discontinued\": \"%s\",", cc.date2 );
+				}
+				
+			    String s = String.format(",{ \"id\": \"0\", \"name\": \"%s\", %s %s \"company\": {\"id\": \"%s\" } }", 
+			    		cc.name, tmp, tmp2, cc.compId);
 			    log(s);
 			}
 			else
