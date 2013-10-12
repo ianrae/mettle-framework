@@ -31,6 +31,9 @@ readentity(type, fields) ::= <<
 		<if(t.booleanType)>
 		obj.<t.name> = jj.asBoolean();
 		<endif>
+		<if(t.dateType)>
+		obj.<t.name> = readDate(jj, "yyyy-MM-dd");
+		<endif>
 		}; separator="\n">
 
 		
