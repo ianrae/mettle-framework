@@ -4,6 +4,8 @@ package unittests;
 
 import static org.junit.Assert.*;
 
+import java.util.Locale;
+
 import org.junit.Test;
 import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.STGroup;
@@ -13,7 +15,12 @@ import sfx.SfxFileUtils;
 
 public class OtherTests extends BaseTest
 {
-
+//	@Test
+//	public void testDates()
+//	{
+//		Locale loc = Locale.getDefault();
+//		Formats.DateFormatter fmt 
+//	}
 	@Test
 	public void test() 
 	{

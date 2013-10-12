@@ -23,10 +23,11 @@ public class MComputerPresenterGenerateScaffold extends BaseTest
 	log(stDir);
 			
 			int n = gen.init(appDir, stDir);
-			assertEquals(1, n);
+			assertEquals(2, n);
 
 			boolean b = false;
 			b = gen.generate("Company");
+			b = gen.generate("Computer");
 			if (b)
 			{}
 		}

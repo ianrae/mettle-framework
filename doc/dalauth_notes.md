@@ -223,6 +223,16 @@ STEPS TO ADD MEF
 -update view
 -deploy to heroku
 
+--------------------12OctSat
+MORE STEPS TO ADD MEF TO COMPUTER SAMPLE
+-add line in 1.sql so EBean will generate it (since table now called computer_model, not computer)
+-add common-io to build.scala
+-add ErrorC
+-add all routes to routes
+
+
+
+
 
  
  
