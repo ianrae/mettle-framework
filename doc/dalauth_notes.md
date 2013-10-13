@@ -230,6 +230,13 @@ MORE STEPS TO ADD MEF TO COMPUTER SAMPLE
 -add ErrorC
 -add all routes to routes
 
+-Computer works, can see 571 computers with paging and sorting
+-? should reply contain orderBy, etc
+-get filter working
+-get Company showing
+-Add
+-Delete
+-Edit
 
 
 
