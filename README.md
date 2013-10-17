@@ -44,5 +44,8 @@ Sample Application
 -------------------
 Mettle comes with several samples.  
 
-A MEF implementation of the Computer-Database sample is [here](https://github.com/ianrae/mcomputer) that has . A version of it is running at [Heroku](http://stark-shelf-1549.herokuapp.com)
+A MEF implementation of the Computer-Database sample is [here](https://github.com/ianrae/mcomputer). A version of this app
+ is [running on Heroku](http://stark-shelf-1549.herokuapp.com).
+ 
+ 
  
