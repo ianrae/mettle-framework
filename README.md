@@ -40,5 +40,9 @@ MEF apps are
  * easier to port if Play changes significantly or you want an Android version of your app
  * less boilerplate code to write. 
  
- 
+Sample Application
+-------------------
+Mettle comes with several samples.  
+
+A MEF implementation of the Computer-Database sample is [here](https://github.com/ianrae/mcomputer) that has . A version of it is running at [Heroku](http://stark-shelf-1549.herokuapp.com)
  
