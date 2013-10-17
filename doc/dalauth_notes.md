@@ -261,6 +261,22 @@ http://localhost:9000/users/update?id=1
 
 -here id does get parsed
 
+-deployed to heroku
+-added meflib.jar to build.scala
+http://stark-shelf-1549.herokuapp.com
+-app error: says i should set -DapplyEvolutions.default=true
+
+heroku pg:reset DATABASE --confirm stark-shelf-1549   sleepy-hollows-7957
+-twice!
+heroku restart
+heroku ps
+-but only 123 computers should be 571
+
+-here's the problem:
+update computer_model set company_id=43
+where id=529 and name='Samsung Galaxy Tab' and introduced=2010-09-02 00:00:00.0
+and discontinued is null and company_id=42
+
 
  
  
