@@ -9,10 +9,12 @@ MEF is a fast TDD framework for Play Java applications.  It's based on the Rober
 
 http://confreaks.net/videos/759-rubymidwest2011-keynote-architecture-the-lost-years
 
-This architecture separates application code from any dependency on databases, the web, or even the Play framework.
+The goal of this architecture is to remove platform dependencies from application code.  That is, remove dependencies on databases and the web.
 The core of your app is POJO.  Unit tests run extremely fast (no need for entity manager or fakeApplication).
 
-In MEF, each model class now becomes two classe: An "entity object" that contains only public fields, and a "DAO object" that manages persistence.  Entity and DAO classes are created with a code generation tool called mefgenerate.  It creates mock DAOs for unit testing, and real DALs for integration with your eBean or JPA Model object (which mefgeneration also creates).  The Model object is fully annotated with JPA and validation annotations.
+In MEF, each model class now becomes two classe: An *entity* that contains only public fields, and a *DAO* that manages persistence.  
+Entity and DAO classes are created with a code generation tool called MGEN.  MGEN creates mock DAOs for unit testing, and real DALs for integration with your 
+eBean or JPA Model object (which mefgeneration also creates).  The Model object is fully annotated with JPA and validation annotations.
 
 Terminology
 -------------
