@@ -232,13 +232,34 @@ MORE STEPS TO ADD MEF TO COMPUTER SAMPLE
 
 -Computer works, can see 571 computers with paging and sorting
 -? should reply contain orderBy, etc
--get filter working
--get Company showing
--Add
--Delete
--Edit
+-DONE get filter working
+-DONE get Company showing
+-DONE Add
+-DONE Delete
+-DONE Edit
 
+what about ds.createQuery(Person.class).filter("id >", 950).filter("id <", 960).asList() ?
 
+update not working
+http://stackoverflow.com/questions/12881576/ebean-2-7-3-play-framework-2-0-4-optimisticlockexception-nullpointerexcept
+
+http://blog.matthieuguillermin.fr/2012/11/ebean-and-the-optimisticlockexception/
+
+performance = Double.valueOf(String.format("%.10f", performance).replace(",", "."));
+
+------------------------------17OctThur
+https://groups.google.com/forum/#!topic/play-framework/F72DYs2MPsA Rails-Play comparison
+http://typesafe.com/blog/introducing-slick Slick
+https://github.com/freekh/play-slick
+https://github.com/rails/arel like slik but for rails
+
+MCOMPUTER - UPDATE NOT WORKING
+-can see that id is null, and fiddler shows id is in the url but doesn't end up being parsed by form binder
+-MyFirst app uses different way:
+POST    /users/update           controllers.UserC.updateUser(id: Long)
+http://localhost:9000/users/update?id=1
+
+-here id does get parsed
 
 
  

@@ -54,6 +54,7 @@ public <meth>
 touchall1(type, assigns) ::= <<
 protected static void touchAll(<type>Model t, <type> entity)
 {
+	t.setId(entity.id);
 	<assigns; separator="\n">
 }
 >>
