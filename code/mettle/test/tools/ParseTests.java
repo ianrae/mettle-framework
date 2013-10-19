@@ -6,9 +6,9 @@ import static org.junit.Assert.*;
 
 
 import org.junit.Test;
-import org.mef.tools.dalgen.parser.DalGenXmlParser;
-import org.mef.tools.dalgen.parser.EntityDef;
-import org.mef.tools.dalgen.parser.FieldDef;
+import org.mef.tools.mgen.parser.DalGenXmlParser;
+import org.mef.tools.mgen.parser.EntityDef;
+import org.mef.tools.mgen.parser.FieldDef;
 import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.STGroup;
 import org.stringtemplate.v4.STGroupFile;

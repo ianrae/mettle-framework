@@ -3,16 +3,16 @@ package tools;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
-import org.mef.tools.dalgen.codegen.generators.BoundaryCodeGen;
-import org.mef.tools.dalgen.codegen.generators.DAOIntefaceCodeGen;
-import org.mef.tools.dalgen.codegen.generators.DaoEntityLoaderCodeGen;
-import org.mef.tools.dalgen.codegen.generators.EntityCodeGen;
-import org.mef.tools.dalgen.codegen.generators.FormBinderCodeGen;
-import org.mef.tools.dalgen.codegen.generators.KnownDAOsCodeGen;
-import org.mef.tools.dalgen.codegen.generators.MockDAOCodeGen;
-import org.mef.tools.dalgen.codegen.generators.ModelCodeGen;
-import org.mef.tools.dalgen.codegen.generators.RealDAOCodeGen;
-import org.mef.tools.dalgen.parser.EntityDef;
+import org.mef.tools.mgen.codegen.generators.BoundaryCodeGen;
+import org.mef.tools.mgen.codegen.generators.DAOIntefaceCodeGen;
+import org.mef.tools.mgen.codegen.generators.DaoEntityLoaderCodeGen;
+import org.mef.tools.mgen.codegen.generators.EntityCodeGen;
+import org.mef.tools.mgen.codegen.generators.FormBinderCodeGen;
+import org.mef.tools.mgen.codegen.generators.KnownDAOsCodeGen;
+import org.mef.tools.mgen.codegen.generators.MockDAOCodeGen;
+import org.mef.tools.mgen.codegen.generators.ModelCodeGen;
+import org.mef.tools.mgen.codegen.generators.RealDAOCodeGen;
+import org.mef.tools.mgen.parser.EntityDef;
 
 import sfx.SfxFileUtils;
 import sfx.SfxTextWriter;

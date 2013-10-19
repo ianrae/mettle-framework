@@ -4,8 +4,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mef.tools.dalgen.codegen.generators.PresenterCodeGen;
-import org.mef.tools.dalgen.codegen.generators.ReplyCodeGen;
+import org.mef.tools.mgen.codegen.generators.PresenterCodeGen;
+import org.mef.tools.mgen.codegen.generators.ReplyCodeGen;
 
 public class ScaffoldCodeGenTests extends BaseCodeGenTest
 {

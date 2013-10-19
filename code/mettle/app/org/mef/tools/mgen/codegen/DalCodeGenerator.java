@@ -1,20 +1,20 @@
-package org.mef.tools.dalgen.codegen;
+package org.mef.tools.mgen.codegen;
 
 import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 import java.util.HashMap;
 
-import org.mef.tools.dalgen.codegen.generators.CodeGenBase;
-import org.mef.tools.dalgen.codegen.generators.DAOIntefaceCodeGen;
-import org.mef.tools.dalgen.codegen.generators.DaoEntityLoaderCodeGen;
-import org.mef.tools.dalgen.codegen.generators.EntityCodeGen;
-import org.mef.tools.dalgen.codegen.generators.KnownDAOsCodeGen;
-import org.mef.tools.dalgen.codegen.generators.MockDAOCodeGen;
-import org.mef.tools.dalgen.codegen.generators.ModelCodeGen;
-import org.mef.tools.dalgen.codegen.generators.RealDAOCodeGen;
-import org.mef.tools.dalgen.parser.DalGenXmlParser;
-import org.mef.tools.dalgen.parser.EntityDef;
+import org.mef.tools.mgen.codegen.generators.CodeGenBase;
+import org.mef.tools.mgen.codegen.generators.DAOIntefaceCodeGen;
+import org.mef.tools.mgen.codegen.generators.DaoEntityLoaderCodeGen;
+import org.mef.tools.mgen.codegen.generators.EntityCodeGen;
+import org.mef.tools.mgen.codegen.generators.KnownDAOsCodeGen;
+import org.mef.tools.mgen.codegen.generators.MockDAOCodeGen;
+import org.mef.tools.mgen.codegen.generators.ModelCodeGen;
+import org.mef.tools.mgen.codegen.generators.RealDAOCodeGen;
+import org.mef.tools.mgen.parser.DalGenXmlParser;
+import org.mef.tools.mgen.parser.EntityDef;
 
 
 import sfx.SfxBaseObj;

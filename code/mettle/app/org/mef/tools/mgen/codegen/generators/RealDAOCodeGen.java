@@ -1,11 +1,11 @@
-package org.mef.tools.dalgen.codegen.generators;
+package org.mef.tools.mgen.codegen.generators;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-import org.mef.tools.dalgen.parser.EntityDef;
-import org.mef.tools.dalgen.parser.FieldDef;
+import org.mef.tools.mgen.parser.EntityDef;
+import org.mef.tools.mgen.parser.FieldDef;
 import org.stringtemplate.v4.ST;
 
 

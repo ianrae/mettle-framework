@@ -1,17 +1,17 @@
-package org.mef.tools.dalgen.codegen;
+package org.mef.tools.mgen.codegen;
 
 import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 
-import org.mef.tools.dalgen.codegen.generators.BoundaryCodeGen;
-import org.mef.tools.dalgen.codegen.generators.CodeGenBase;
-import org.mef.tools.dalgen.codegen.generators.FormBinderCodeGen;
-import org.mef.tools.dalgen.codegen.generators.PresenterCodeGen;
-import org.mef.tools.dalgen.codegen.generators.ReplyCodeGen;
-import org.mef.tools.dalgen.parser.DalGenXmlParser;
-import org.mef.tools.dalgen.parser.EntityDef;
-import org.mef.tools.dalgen.parser.FieldDef;
+import org.mef.tools.mgen.codegen.generators.BoundaryCodeGen;
+import org.mef.tools.mgen.codegen.generators.CodeGenBase;
+import org.mef.tools.mgen.codegen.generators.FormBinderCodeGen;
+import org.mef.tools.mgen.codegen.generators.PresenterCodeGen;
+import org.mef.tools.mgen.codegen.generators.ReplyCodeGen;
+import org.mef.tools.mgen.parser.DalGenXmlParser;
+import org.mef.tools.mgen.parser.EntityDef;
+import org.mef.tools.mgen.parser.FieldDef;
 
 import sfx.SfxBaseObj;
 import sfx.SfxContext;

@@ -52,13 +52,13 @@ public class BaseTest
 
 	protected String getTemplateFile(String filename)
 	{
-		String stDir = this.getCurrentDir("app\\org\\mef\\tools\\dalgen\\resources\\dal");
+		String stDir = this.getCurrentDir("app\\org\\mef\\tools\\mgen\\resources\\dal");
 		String path = pathCombine(stDir, filename);
 		return path;
 	}
 	protected String getPresenterTemplateFile(String filename)
 	{
-		String stDir = this.getCurrentDir("app\\org\\mef\\tools\\dalgen\\resources\\presenter");
+		String stDir = this.getCurrentDir("app\\org\\mef\\tools\\mgen\\resources\\presenter");
 		String path = pathCombine(stDir, filename);
 		return path;
 	}

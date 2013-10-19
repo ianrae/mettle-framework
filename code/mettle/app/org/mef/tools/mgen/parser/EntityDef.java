@@ -1,4 +1,4 @@
-package org.mef.tools.dalgen.parser;
+package org.mef.tools.mgen.parser;
 
 import java.util.ArrayList;
 import java.util.List;

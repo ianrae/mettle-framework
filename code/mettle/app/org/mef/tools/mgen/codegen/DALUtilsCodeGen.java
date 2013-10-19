@@ -1,22 +1,23 @@
-package org.mef.tools.dalgen.codegen.generators;
+package org.mef.tools.mgen.codegen;
 
-import org.mef.tools.dalgen.parser.EntityDef;
-import org.mef.tools.dalgen.parser.FieldDef;
+
+import org.mef.tools.mgen.codegen.generators.CodeGenBase;
+import org.mef.tools.mgen.parser.EntityDef;
+import org.mef.tools.mgen.parser.FieldDef;
 import org.stringtemplate.v4.ST;
 
 import sfx.SfxContext;
 
-public class MockDAOCodeGen extends CodeGenBase
+public class DALUtilsCodeGen extends CodeGenBase
 {
-	public MockDAOCodeGen(SfxContext ctx)
+	public DALUtilsCodeGen(SfxContext ctx, String path, String packageName)
 	{
-		super(ctx);
+		super(ctx, path, packageName);
 	}
 	
 	@Override
 	public String generate(EntityDef def)
 	{
-		this.isExtended = def.extendMock;
 		String result = genHeader(); 
 		ST st = _group.getInstanceOf("classdecl");
 		
@@ -24,20 +25,10 @@ public class MockDAOCodeGen extends CodeGenBase
 		st.add("type", def.name);
 		result += st.render(); 
 		
-		result += genQueries(def);
-		result += genMethods(def);
 		st = _group.getInstanceOf("endclassdecl");
 		result += st.render(); 
 		
 		return result;
-	}
-	
-	@Override
-	public String getClassName(EntityDef def)
-	{
-		String className = "Mock" + def.name + "DAO";
-		className = makeClassName(className, def.extendMock);
-		return className;
 	}
 	
 	protected String genQueries(EntityDef def)
@@ -48,17 +39,7 @@ public class MockDAOCodeGen extends CodeGenBase
 			ST st = _group.getInstanceOf("querydecl");
 			String fieldName = getFieldName(query);
 			st.add("type", def.name); //getFieldType(def, fieldName));
-			
-			String fieldType = getFieldType(def, fieldName);
-			st.add("fieldType", fieldType);
-			if (fieldType.equals("String"))
-			{
-				st.add("eq", ".equals(val)");
-			}
-			else
-			{
-				st.add("eq", " == val");
-			}
+			st.add("fieldType", getFieldType(def, fieldName));
 			st.add("name", fieldName);
 			result = st.render(); 
 			result += "\n\n";
@@ -66,12 +47,16 @@ public class MockDAOCodeGen extends CodeGenBase
 		return result;
 	}
 	
-
-	
 	@Override
 	protected String buildField(EntityDef def, FieldDef fdef)
 	{
 		return "";
+	}
+
+	@Override
+	public String getClassName(EntityDef def) 
+	{
+		return def.name + "DALUtils";
 	}
 
 }

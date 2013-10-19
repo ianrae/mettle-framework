@@ -4,8 +4,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mef.tools.dalgen.parser.DalGenXmlParser;
-import org.mef.tools.dalgen.parser.EntityDef;
+import org.mef.tools.mgen.parser.DalGenXmlParser;
+import org.mef.tools.mgen.parser.EntityDef;
 
 public class BaseCodeGenTest extends BaseTest
 {

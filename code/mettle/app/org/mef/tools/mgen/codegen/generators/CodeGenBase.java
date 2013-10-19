@@ -1,7 +1,7 @@
-package org.mef.tools.dalgen.codegen.generators;
+package org.mef.tools.mgen.codegen.generators;
 
-import org.mef.tools.dalgen.parser.EntityDef;
-import org.mef.tools.dalgen.parser.FieldDef;
+import org.mef.tools.mgen.parser.EntityDef;
+import org.mef.tools.mgen.parser.FieldDef;
 import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.STGroup;
 import org.stringtemplate.v4.STGroupFile;

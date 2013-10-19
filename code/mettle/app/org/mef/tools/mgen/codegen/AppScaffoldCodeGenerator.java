@@ -1,4 +1,4 @@
-package org.mef.tools.dalgen.codegen;
+package org.mef.tools.mgen.codegen;
 
 import static org.junit.Assert.assertEquals;
 
