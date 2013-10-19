@@ -9,7 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
+import org.mef.framework.sfx.SfxContext;
 import org.mef.framework.utils.ResourceReader;
+import org.mef.tools.mgen.codegen.AppScaffoldCodeGenerator;
 
 import play.Play;
 
@@ -40,6 +42,19 @@ public class OtherTests extends BaseTest
 		{
 			log(s);
 		}
+	}
+	
+	@Test
+	public void testMGENResourceRead() throws Exception
+	{
+		SfxContext ctx = new SfxContext();
+		AppScaffoldCodeGenerator gen = new AppScaffoldCodeGenerator(ctx);
+		assertNotNull(gen);
+		
+		//C:\Users\ian\Documents\GitHub\dalgen\code\mettle\.target\org\mef\tools\mgen\resources\dal
+		
+		InputStream stream = gen.getClass().getResourceAsStream("/org/mef/tools/mgen/resources/dal/entity.stg");
+		assertNotNull(stream);
 	}
 	
 	List<String> readInputStream(InputStream stream) throws Exception
