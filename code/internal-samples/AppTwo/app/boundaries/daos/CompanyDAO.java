@@ -150,6 +150,7 @@ public class CompanyDAO implements ICompanyDAO
 
        protected static void touchAll(CompanyModel t, Company entity)
 {
+	t.setId(entity.id);
 	t.setName(entity.name);
 }
 

@@ -8,10 +8,11 @@ import java.util.List;
 import org.codehaus.jackson.JsonNode;
 import mef.entities.*;
 import java.util.Date;
+import org.mef.framework.loaders.BaseDaoJsonLoader;
 
 
 
-public class DaoJsonLoader_GEN
+public class DaoJsonLoader_GEN extends BaseDaoJsonLoader
 {
 
 
@@ -109,8 +110,10 @@ public class DaoJsonLoader_GEN
 				obj.name = jj.getTextValue();
 
 				jj = node.get("introduced");
+				obj.introduced = readDate(jj, "yyyy-MM-dd");
 
 				jj = node.get("discontinued");
+				obj.discontinued = readDate(jj, "yyyy-MM-dd");
 
 				jj = node.get("company");
 

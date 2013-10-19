@@ -15,7 +15,7 @@ public class MGEN_Daos extends BaseTest
 	@Test
 	public void testEntity() throws Exception
 	{
-		boolean genFiles = false;
+		boolean genFiles = true;
 		if (! genFiles)
 		{
 			return;

@@ -150,6 +150,7 @@ public class ComputerDAO_GEN implements IComputerDAO
 
        protected static void touchAll(ComputerModel t, Computer entity)
 {
+	t.setId(entity.id);
 	t.setName(entity.name);
 	t.setIntroduced(entity.introduced);
 	t.setDiscontinued(entity.discontinued);

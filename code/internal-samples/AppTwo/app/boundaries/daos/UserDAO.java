@@ -150,6 +150,7 @@ public class UserDAO implements IUserDAO
 
        protected static void touchAll(UserModel t, User entity)
 {
+	t.setId(entity.id);
 	t.setName(entity.name);
 }
 
