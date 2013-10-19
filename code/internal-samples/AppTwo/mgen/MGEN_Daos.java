@@ -4,19 +4,18 @@
 import static org.junit.Assert.*;
 
 import org.junit.Test;
-import org.mef.dalgen.codegen.DalCodeGenerator;
+import org.mef.framework.sfx.SfxErrorTracker;
+import org.mef.tools.mgen.codegen.DalCodeGenerator;
 
-import sfx.SfxErrorTracker;
-import unittests.BaseTest;
 
 //********************** DAATA!!! ****************************
 
-public class AppTwoDALCodeGenTests extends BaseTest
+public class MGEN_Daos extends BaseTest
 {
 	@Test
 	public void testEntity() throws Exception
 	{
-		boolean genFiles = true;
+		boolean genFiles = false;
 		if (! genFiles)
 		{
 			return;
@@ -24,8 +23,8 @@ public class AppTwoDALCodeGenTests extends BaseTest
 		
 		init();
 		DalCodeGenerator gen = new DalCodeGenerator(_ctx);
-		String appDir = this.getCurrentDir("..\\..\\internal-samples\\AppTwo");
-		String stDir = this.getCurrentDir("src\\org\\mef\\dalgen\\resources\\dal\\");
+		String appDir = this.getCurrentDir("");
+		String stDir = this.getCurrentDir("..\\..\\mettle\\app\\org\\mef\\tools\\mgen\\resources\\dal");
 log(appDir);
 log(stDir);
 

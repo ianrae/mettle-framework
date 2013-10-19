@@ -365,7 +365,7 @@ remove:
  -crap. need sfxlib.jar added to AppTwo
  
 
-
-
+C:\Users\ian\Documents\GitHub\dalgen\code\internal-samples\AppTwo
+C:\Users\ian\Documents\GitHub\dalgen\code\mettle\app\org\mef\tools\mgen\resources
  
  

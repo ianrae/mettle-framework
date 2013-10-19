@@ -4,13 +4,12 @@
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
-import org.mef.dalgen.codegen.PresenterScaffoldCodeGenerator;
+import org.mef.tools.mgen.codegen.PresenterScaffoldCodeGenerator;
 
-import unittests.BaseTest;
 
 //********************** CAREFUL!!! ****************************
 
-public class AppTwoScaffoldPresenterTests extends BaseTest
+public class MGEN_PresenterScaffold extends BaseTest
 {
 	@Test
 	public void testEntity() throws Exception
@@ -18,10 +17,10 @@ public class AppTwoScaffoldPresenterTests extends BaseTest
 		createContext();
 		PresenterScaffoldCodeGenerator gen = new PresenterScaffoldCodeGenerator(_ctx);
 		
-		gen.disableFileIO = false;  //***** WATCH OUT!11 ****
+		gen.disableFileIO = true;  //***** WATCH OUT!11 ****
 		
-		String appDir = this.getCurrentDir("..\\..\\internal-samples\\AppTwo");
-		String stDir = this.getCurrentDir("src\\org\\mef\\dalgen\\resources\\presenter");
+		String appDir = this.getCurrentDir("");
+		String stDir = this.getCurrentDir("..\\..\\mettle\\app\\org\\mef\\tools\\mgen\\resources\\presenter");
 log(appDir);
 log(stDir);
 		

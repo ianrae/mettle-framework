@@ -5,7 +5,7 @@ import org.mef.tools.mgen.codegen.AppScaffoldCodeGenerator;
 
 //********************** CAREFUL!!! ****************************
 
-public class AppTwoScaffoldAppTests extends BaseTest
+public class MGEN_AppScaffold extends BaseTest
 {
 	@Test
 	public void testEntity() throws Exception
@@ -15,8 +15,8 @@ public class AppTwoScaffoldAppTests extends BaseTest
 		
 		gen.disableFileIO = true;  //***** WATCH OUT!11 ****
 		
-		String appDir = this.getCurrentDir("..\\..\\samples\\AppTwo");
-		String stDir = this.getCurrentDir("src\\org\\mef\\dalgen\\resources\\app");
+		String appDir = this.getCurrentDir("");
+		String stDir = this.getCurrentDir("..\\..\\mettle\\app\\org\\mef\\tools\\mgen\\resources\\app");
 log(appDir);
 log(stDir);
 		
