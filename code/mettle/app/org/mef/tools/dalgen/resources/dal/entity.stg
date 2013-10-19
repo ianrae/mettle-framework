@@ -1,0 +1,36 @@
+header(package) ::= <<
+//THIS FILE HAS BEEN AUTO-GENERATED. DO NOT MODIFY.xx
+
+package <package>;
+
+import org.mef.framework.entities.Entity;
+import mef.gen.*;
+import mef.entities.*;
+import java.util.Date;
+
+>>
+
+fielddecl(type, name, value) ::= <<
+    public <type> <name><init(value)>;
+>>
+init(v) ::= "<if(v)> = <v><endif>"
+
+
+classdecl(type, name, args, inits, isNotExtended) ::= <<
+public class <name> extends Entity
+{
+<if(isNotExtended)>
+	public <name>()
+	{}
+	
+	public <name>( <args; separator=", ">)
+	{
+		<inits; separator="\n">
+	}
+<endif>
+>>
+
+endclassdecl() ::= <<
+}
+>>
+

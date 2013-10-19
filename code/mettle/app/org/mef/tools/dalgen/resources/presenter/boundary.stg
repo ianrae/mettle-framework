@@ -1,0 +1,95 @@
+header(package,type) ::= <<
+//THIS FILE HAS BEEN AUTO-GENERATED. DO NOT MODIFY.
+
+package <package>;
+
+import mef.presenters.<type>Presenter;
+import mef.presenters.replies.<type>Reply;
+import models.<type>Model;
+import mef.core.Initializer;
+import org.mef.framework.boundaries.BoundaryBase;
+import org.mef.framework.commands.Command;
+import org.mef.framework.sfx.SfxContext;
+
+import play.Logger;
+import play.data.Form;
+import play.mvc.Controller;
+import boundaries.binders.<type>FormBinder;
+import boundaries.daos.<type>DAO;
+
+>>
+
+fielddecl(type, name, value) ::= <<
+    public <name> <name><init(value)>;
+>>
+init(v) ::= "<if(v)> = <v><endif>"
+
+
+classdecl(type, name) ::= <<
+
+public class <type>Boundary extends BoundaryBase
+{
+	public static <type>Boundary create() 
+	{
+		Boundary.init();
+		return new <type>Boundary(Initializer.theCtx);
+	}
+	
+	public <type>FormBinder binder;
+	
+	public <type>Boundary(SfxContext ctx)
+	{
+		super(ctx);
+	}
+	
+	public <type>Reply addFormAndProcess(Command cmd)
+	{
+		Form\<<type>Model> validationForm =  Form.form(<type>Model.class);
+		binder = new <type>FormBinder(validationForm);
+		cmd.setFormBinder(binder);
+		return process(cmd);
+	}
+	
+	public Form\<<type>Model> makeForm(<type>Reply reply)
+	{
+		if (binder != null)
+		{
+			Logger.info("mf-binder");
+			return binder.getRawForm();
+		}
+		Logger.info("mf-make");
+		Form\<<type>Model> frm = Form.form(<type>Model.class);
+		<type>Model model = <type>DAO.createModelFromEntity(reply._entity);
+		frm = frm.fill(model);
+		return frm;
+	}
+	
+	@Override
+	public <type>Reply process(Command cmd)
+	{
+		begin(cmd);
+		<type>Presenter presenter = new <type>Presenter(_ctx);
+		
+		<type>Reply reply = (<type>Reply) presenter.process(cmd);
+		
+		String flashKey = reply.getFlashKey();
+		String flashMsg = reply.getFlash();
+		if (flashKey != null)
+		{
+			Controller.flash(flashKey, flashMsg);
+		}
+		return reply;
+	}
+	
+	public String getAllValidationErrors()
+	{
+		return dogetAllValidationErrors(binder);
+	}
+
+
+>>
+
+endclassdecl() ::= <<
+}
+>>
+

@@ -1,0 +1,38 @@
+header(package) ::= <<
+//THIS FILE HAS BEEN AUTO-GENERATED. DO NOT MODIFY.
+
+package <package>;
+
+import mef.entities.*;
+import java.util.List;
+import org.mef.framework.binder.IFormBinder;
+import org.mef.framework.dao.IDAO;
+import mef.gen.*;
+import java.util.Date;
+import com.avaje.ebean.Page;
+
+>>
+
+
+classdecl(type, name) ::= <<
+public interface <name>  extends IDAO
+{
+	<type> findById(long id);
+	List\<<type>\> all();
+	void save(<type> entity);        
+	void update(<type> entity);
+    
+    
+>>
+
+endclassdecl() ::= <<
+}
+>>
+
+querydecl(type, fieldType, fullName) ::= <<
+public <type> <fullName>(<fieldType> val);
+>>
+
+methoddecl(meth) ::= <<
+<meth>;
+>>
