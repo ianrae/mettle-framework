@@ -53,7 +53,7 @@ public class OtherTests extends BaseTest
 		
 		//C:\Users\ian\Documents\GitHub\dalgen\code\mettle\.target\org\mef\tools\mgen\resources\dal
 		
-		InputStream stream = gen.getClass().getResourceAsStream("/org/mef/tools/mgen/resources/dal/entity.stg");
+		InputStream stream = gen.getClass().getResourceAsStream("/mgen/resources/dal/entity.stg");
 		assertNotNull(stream);
 	}
 	

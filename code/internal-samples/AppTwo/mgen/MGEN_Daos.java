@@ -24,7 +24,7 @@ public class MGEN_Daos extends BaseTest
 		init();
 		DalCodeGenerator gen = new DalCodeGenerator(_ctx);
 		String appDir = this.getCurrentDir("");
-		String stDir = this.getCurrentDir("..\\..\\mettle\\app\\org\\mef\\tools\\mgen\\resources\\dal");
+		String stDir = this.getCurrentDir("..\\..\\mettle\\conf\\mgen\\resources\\dal");
 log(appDir);
 log(stDir);
 
