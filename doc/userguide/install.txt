@@ -1,6 +1,18 @@
 Installing MEF
 
-for now until I make MEF a Play module
+1. use mettle module
+ build.scala
+  -add ref to mettle from github/releases
+  
+ create new src folder mgen
+ -create junit tests in here for your codegen
+ -MGEN_AppScaffold, _PresenterScaffold, and _Daos
+ -for eclipse you may need sfxlib.jar and stxxx.jar
+  -get these by downloading mettle source and getting from internal-samples\apptwo\lib
+
+
+
+2. for now until I make MEF a Play module
 
  * download mef zip file
  * put in a tools dir, add to path so batch files are avail

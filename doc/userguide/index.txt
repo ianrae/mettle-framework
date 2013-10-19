@@ -11,7 +11,10 @@ http://confreaks.net/videos/759-rubymidwest2011-keynote-architecture-the-lost-ye
 This architecture separates application code from any dependency on databases, the web, or even the Play framework.
 The core of your app is POJO.  Unit tests run extremely fast (no need for entity manager or fakeApplication).
 
-In MEF, each model class now becomes two classe: An "entity object" that contains only public fields, and a "DAO object" that manages persistence.  Entity and DAO classes are created with a code generation tool called mefgenerate.  It creates mock DAOs for unit testing, and real DALs for integration with your eBean or JPA Model object (which mefgeneration also creates).  The Model object is fully annotated with JPA and validation annotations.
+In MEF, each model class now becomes two classe: An "entity object" that contains only public fields, and a "DAO object" that manages persistence.  
+Entity and DAO classes are created with a code generation tool called MGEN.  
+It creates mock DAOs for unit testing, and real DALs for integration with your eBean or JPA Model object (which mefgeneration also creates).  
+The Model object is fully annotated with JPA and validation annotations.
 
 Terminology
 -------------
@@ -52,9 +55,14 @@ see install.txt
 Getting Started
 Create a new play app, using play new. Then run the MEF code generation tool
 
-mefgenerate app
+mgen app
 
-This will create the mef directory structure and some intial files.
+Note. mgen does not exist as an SBT command yet. Instead, create an mgen source folder
+in your app and create -MGEN_AppScaffold, _PresenterScaffold, and _Daos
+ -for eclipse you may need sfxlib.jar and stxxx.jar
+  -get these by downloading mettle source and getting from internal-samples\apptwo\lib
+
+ This will create the mef directory structure and some intial files.
 
   app
     boundaries     layer that sits between Play and MEF
@@ -74,7 +82,7 @@ This will create the mef directory structure and some intial files.
 
 Our app needs CRUD on a Task object, so we'll create a presenter that handles Tasks.
 
-  mefgenerate presenter:Task
+  mgen presenter:Task
 
 The following files are created
 
@@ -114,7 +122,7 @@ And a name field.  Put in the JPA annotations.
 
 Now generate the DAL by running
 
-mefgenerate dal
+mgen dal
 
 The Task class is very simple:
 
@@ -175,7 +183,7 @@ In our controller, we call the presenter
 		return renderOrForward(boundary, reply);
 	}
 
-The TaskBoundary object was created by mefgenerate.  It knows how to convert Play forms to MEF form-binders.
+The TaskBoundary object was created by mgen.  It knows how to convert Play forms to MEF form-binders.
 All controller methods should call renderOrForward which handles generating a Play Result object.
 in all the actions.
 
@@ -304,7 +312,7 @@ A 'new' action displays a form where the user create a new instance of an entity
 
 To generate a form, a presenter creates an entity object and fills in the default values
 that you want each field to have when the form is displayed.  Back in the controller, call
-the boundary's makeForm method.  This was created by mefgenerate and will create a Play
+the boundary's makeForm method.  This was created by mgen and will create a Play
 form from your entity.
 
 		Form<TaskModel> frm = boundary.makeForm(reply); 
