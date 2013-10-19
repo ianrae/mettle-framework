@@ -6,9 +6,9 @@ import java.io.File;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
+import org.mef.framework.sfx.SfxBaseObj;
+import org.mef.framework.sfx.SfxContext;
 
-import sfx.SfxBaseObj;
-import sfx.SfxContext;
 import sfx.SfxTextWriter;
 
 public class AppScaffoldCodeGenerator extends SfxBaseObj

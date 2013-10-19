@@ -6,6 +6,7 @@ import static org.junit.Assert.*;
 
 
 import org.junit.Test;
+import org.mef.framework.sfx.SfxContext;
 import org.mef.tools.mgen.parser.DalGenXmlParser;
 import org.mef.tools.mgen.parser.EntityDef;
 import org.mef.tools.mgen.parser.FieldDef;
@@ -14,7 +15,6 @@ import org.stringtemplate.v4.STGroup;
 import org.stringtemplate.v4.STGroupFile;
 import org.stringtemplate.v4.compiler.STParser.namedArg_return;
 
-import sfx.SfxContext;
 
 public class ParseTests extends BaseTest
 {

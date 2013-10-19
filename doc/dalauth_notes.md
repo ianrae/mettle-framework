@@ -358,7 +358,12 @@ add: "mettle" % "mettle_2.10" % "1.0-SNAPSHOT"
 remove:
 	resolvers += Resolver.file("meflib.jar", file("lib")) transactional()	
 
-
+-added dalgen to mettle.
+-renamed dalgen to mgen
+-AppTwo
+ -created new folder mgen where i will put codegen stuff
+ -crap. need sfxlib.jar added to AppTwo
+ 
 
 
 

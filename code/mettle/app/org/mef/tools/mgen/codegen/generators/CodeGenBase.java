@@ -1,13 +1,13 @@
 package org.mef.tools.mgen.codegen.generators;
 
+import org.mef.framework.sfx.SfxBaseObj;
+import org.mef.framework.sfx.SfxContext;
 import org.mef.tools.mgen.parser.EntityDef;
 import org.mef.tools.mgen.parser.FieldDef;
 import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.STGroup;
 import org.stringtemplate.v4.STGroupFile;
 
-import sfx.SfxBaseObj;
-import sfx.SfxContext;
 
 public abstract class CodeGenBase extends SfxBaseObj
 	{

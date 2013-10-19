@@ -1,4 +1,3 @@
-package tools;
 
 import static org.junit.Assert.*;
 
@@ -6,7 +5,6 @@ import java.io.File;
 
 import org.junit.Test;
 import org.mef.framework.sfx.SfxContext;
-
 
 public class BaseTest 
 {
@@ -20,22 +18,17 @@ public class BaseTest
 	{
 		System.out.println(s);
 	}
-	private String getCurrentDirectory()
-	{
-		File f = new File(".");
-		return f.getAbsolutePath();
-	}
 
 	protected String getTestFile(String filepath)
 	{
-		String path = this.getCurrentDirectory();
-		path = pathCombine(path, "test\\tools\\testfiles");
+		String path = getCurrentDirectory();
+		path = pathCombine(path, "test\\unittests\\testfiles");
 		path = pathCombine(path, filepath);
 		return path;
 	}
 	protected String getUnitTestDir(String filepath)
 	{
-		String path = this.getCurrentDirectory();
+		String path = getCurrentDirectory();
 		path = pathCombine(path, "test\\unittests");
 		if (filepath != null)
 		{
@@ -45,23 +38,29 @@ public class BaseTest
 	}
 	protected String getCurrentDir(String filepath)
 	{
-		String path = this.getCurrentDirectory();
+		String path = getCurrentDirectory();
 		if (filepath != null)
 		{
 			path = pathCombine(path, filepath);
 		}
 		return path;
 	}
+	
+	private String getCurrentDirectory()
+	{
+		File f = new File(".");
+		return f.getAbsolutePath();
+	}
 
 	protected String getTemplateFile(String filename)
 	{
-		String stDir = this.getCurrentDir("app\\org\\mef\\tools\\mgen\\resources\\dal");
+		String stDir = this.getCurrentDir("src\\org\\mef\\dalgen\\resources\\dal");
 		String path = pathCombine(stDir, filename);
 		return path;
 	}
 	protected String getPresenterTemplateFile(String filename)
 	{
-		String stDir = this.getCurrentDir("app\\org\\mef\\tools\\mgen\\resources\\presenter");
+		String stDir = this.getCurrentDir("src\\org\\mef\\dalgen\\resources\\presenter");
 		String path = pathCombine(stDir, filename);
 		return path;
 	}

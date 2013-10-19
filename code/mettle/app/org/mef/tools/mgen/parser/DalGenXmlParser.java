@@ -3,12 +3,12 @@ package org.mef.tools.mgen.parser;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.mef.framework.sfx.SfxBaseObj;
+import org.mef.framework.sfx.SfxContext;
+import org.mef.framework.sfx.SfxErrorTracker;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import sfx.SfxBaseObj;
-import sfx.SfxContext;
-import sfx.SfxErrorTracker;
 import sfx.SfxXmlParser;
 import sfx.SfxXmlReader;
 

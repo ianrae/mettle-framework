@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+import org.mef.framework.sfx.SfxContext;
 import org.mef.tools.mgen.parser.EntityDef;
 import org.mef.tools.mgen.parser.FieldDef;
 import org.stringtemplate.v4.ST;
 
 
-import sfx.SfxContext;
 
 public class RealDAOCodeGen extends CodeGenBase
 {

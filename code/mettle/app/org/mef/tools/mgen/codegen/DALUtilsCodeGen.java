@@ -1,12 +1,12 @@
 package org.mef.tools.mgen.codegen;
 
 
+import org.mef.framework.sfx.SfxContext;
 import org.mef.tools.mgen.codegen.generators.CodeGenBase;
 import org.mef.tools.mgen.parser.EntityDef;
 import org.mef.tools.mgen.parser.FieldDef;
 import org.stringtemplate.v4.ST;
 
-import sfx.SfxContext;
 
 public class DALUtilsCodeGen extends CodeGenBase
 {

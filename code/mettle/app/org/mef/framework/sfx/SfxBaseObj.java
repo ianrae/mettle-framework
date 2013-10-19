@@ -56,11 +56,14 @@ public class SfxBaseObj
 		this.getErrorTrackerInstance().errorOccurred(errMsg);
 	}
 	
-//	protected String pathCombine(String path1, String path2)
-//	{
-//		SfxFileUtils utils = new SfxFileUtils();
-//		String path = utils.PathCombine(path1, path2);
-//		return path;
-//	}
+	protected String pathCombine(String path1, String path2)
+	{
+		if (! path1.endsWith("\\"))
+		{
+			path1 += "\\";
+		}
+		String path = path1 + path2;
+		return path;
+	}
 }
 
