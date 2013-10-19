@@ -69,14 +69,14 @@ public class ComputerPresenterTests extends BasePresenterTest
 		
 		chkReplySucessful(reply, Reply.VIEW_INDEX, null);
 		assertEquals("MacBook Pro 15.4 inch", reply._page.getList().get(0).name);
-		chkReplyWithoutEntity(reply, true, 13);
+		chkReplyWithoutEntity(reply, true, 100);
 
 		//next page
 		log("next page..");
 		reply = (ComputerReply) _presenter.process(new IndexComputerCommand(100, 2));
 		
 		chkReplySucessful(reply, Reply.VIEW_INDEX, null);
-		chkReplyWithoutEntity(reply, true, 0);
+		chkReplyWithoutEntity(reply, true, 100);
 	}
 	
 	@Test

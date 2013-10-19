@@ -348,6 +348,16 @@ schaloner / schaloner.github.com
 http://schaloner.github.io/releases/README
 
 
+----------------------------19OctSat
+METTLE module
+-created and published
+C:\ianTools\play\play-2.1.2\repository\local\mettle\mettle_2.10\1.0-SNAPSHOT
+
+So in apptwo, build.scala
+add: "mettle" % "mettle_2.10" % "1.0-SNAPSHOT"
+remove:
+	resolvers += Resolver.file("meflib.jar", file("lib")) transactional()	
+
 
 
 

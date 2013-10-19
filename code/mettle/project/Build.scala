@@ -4,7 +4,7 @@ import play.Project._
 
 object ApplicationBuild extends Build {
 
-  val appName         = "AppTwo"
+  val appName         = "mettle"
   val appVersion      = "1.0-SNAPSHOT"
 
   val appDependencies = Seq(
@@ -13,9 +13,8 @@ object ApplicationBuild extends Build {
     javaJdbc,
     javaEbean,
     "commons-io" % "commons-io" % "2.3",
-    "postgresql" % "postgresql" % "8.4-702.jdbc4",
-     "mmod" % "mmod_2.10" % "1.0-SNAPSHOT",
-     "mettle" % "mettle_2.10" % "1.0-SNAPSHOT"
+    "commons-lang" % "commons-lang" % "2.6"
+    
   )
 
   val main = play.Project(appName, appVersion, appDependencies).settings(
