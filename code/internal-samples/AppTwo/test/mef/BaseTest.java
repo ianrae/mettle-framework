@@ -26,10 +26,34 @@ public class BaseTest
 	
 	protected String getTestFile(String filepath)
 	{
-		String currentDir = new File(".").getAbsolutePath();
+		String currentDir = this.getCurrentDirectory();
 		String path = FilenameUtils.concat(currentDir, "test\\testfiles");
 		path = FilenameUtils.concat(path, filepath);
 		return path;
 	}
 
+	protected String getCurrentDir(String filepath)
+	{
+		String path = getCurrentDirectory();
+		if (filepath != null)
+		{
+			path = pathCombine(path, filepath);
+		}
+		return path;
+	}
+	
+	private String getCurrentDirectory()
+	{
+		File f = new File(".");
+		return f.getAbsolutePath();
+	}
+	protected String pathCombine(String path1, String path2)
+	{
+		if (! path1.endsWith("\\"))
+		{
+			path1 += "\\";
+		}
+		String path = path1 + path2;
+		return path;
+	}	
 }

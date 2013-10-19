@@ -2,10 +2,16 @@ package mef;
 
 import static org.junit.Assert.*;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Test;
 import org.mef.framework.utils.ResourceReader;
+
+import play.Play;
 
 public class OtherTests extends BaseTest
 {
@@ -15,6 +21,41 @@ public class OtherTests extends BaseTest
 		public String date1;
 		public String date2;
 		public String compId;
+	}
+	
+	@Test
+	public void testResourceRead() throws Exception
+	{
+		log("--testResource--");
+//		Application.resource("public/books.json");
+		String dir = this.getCurrentDir("");
+		log(dir);
+		
+		//reads relative to class'es location in jar
+		InputStream stream = this.getClass().getResourceAsStream("testfiles/file1.txt");
+		assertNotNull(stream);
+		List<String> lineL = readInputStream(stream);
+		
+		for(String s : lineL)
+		{
+			log(s);
+		}
+	}
+	
+	List<String> readInputStream(InputStream stream) throws Exception
+	{
+		List<String> lineL = new ArrayList<String>();
+        BufferedReader r = new BufferedReader(new InputStreamReader(stream));
+
+        // reads each line
+        String l;
+        while((l = r.readLine()) != null) 
+        {
+        	lineL.add(l);
+        } 
+        stream.close();	
+        
+        return lineL;
 	}
 	
 	@Test
