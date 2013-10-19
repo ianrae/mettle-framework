@@ -277,6 +277,80 @@ update computer_model set company_id=43
 where id=529 and name='Samsung Galaxy Tab' and introduced=2010-09-02 00:00:00.0
 and discontinued is null and company_id=42
 
+OK WHAT'S NEXT -- REMINDME APP
+-login
+-add phone # email (to receive an sms)
+-if don't receive reply in X hours, send email to work email
+-so need
+ -twitter bootstrap
+ -authentication: login/logout/conf-email/block/ user auth admin pages
+ -user: name,pwd,email,isAdmin
+ -send email
+ -receive email (background task)
+-seed data
+ -admin user 
+ 
+http://securesocial.ws/
+ 
+ 
+--------------------------------18OctFri
+PLAY MODULE
+http://www.objectify.be/wordpress/?p=363
+created mmod and publish-local
+
+So
+-play new mmod
+-copy everything into mmod\project-code
+-delete routes, empty app.conf
+-delete views and application.java
+-write controllers\plogger.java
+-clean, publish-local
+-go look in $PLAY/repository/local
+C:\ianTools\play\play-2.1.2\repository\local\mmod\mmod_2.10\1.0-SNAPSHOT\jars
+
+to use in an app:
+-build.scala, add:     "mmod" % "mmod_2.10" % "1.0-SNAPSHOT"
+-play eclipse to update project
+-restart eclipse
+-in Application.java do PLogger.message("sdfsdf");
+-works!
+
+http://developer.vz.net/2012/03/16/writing-a-play-2-0-module/ plugins
+
+https://github.com/playframework/modules.playframework.org/wiki eventually publish to here
+
+So how do we do this?
+create module mettle
+ project-code/app/org.mettle.framework.zzz.java
+              app/org.mettle.tools.dalgen
+ build and publish
+
+Then once add to build.scala and re-gen eclipse proj, can do:
+ import org.mettle.framework
+
+-can add to controllers, mef.*, and tests
+
+publishing on github:
+http://java.dzone.com/articles/publishing-play-2-modules
+my normal github url is https://github.com/ianrae/mcomputer
+Pages:
+Your project page has been created at http://ianrae.github.io/mcomputer . 
+-wait: i need to create a new public repo: https://github.com/ianrae/ianrae.github.io
+-so, you publish-local then copy jars and everything into github, releases/ dir
+
+							  
+ 
+ https://github.com/hakandilek/play2-crud a bit like mettle!
+ 
+
+schaloner / schaloner.github.com
+
+http://schaloner.github.io/releases/README
+
+
+
+
+
 
  
  

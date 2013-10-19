@@ -16,7 +16,7 @@ public class Application extends Controller {
 ////    	flight.setName("airOne");
 //    	flight.name = "aixrOne";
 //    	flight.save();
-    	
+    	 PLogger.log("xxHere's my log message");    	
 //		return ok(views.html.flight.render(flight));    	
 		return ok(views.html.index.render(""));    	
     	
