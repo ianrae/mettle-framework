@@ -370,3 +370,11 @@ C:\Users\ian\Documents\GitHub\dalgen\code\mettle\app\org\mef\tools\mgen\resource
 C:\Users\ian\Documents\GitHub\mcomputer 
  
 http://stackoverflow.com/questions/14601982/what-sbt-build-setting-can-i-use-with-the-play-2-framework-that-will-include-sp
+
+-------------------------20OctSun
+published mettle to http://ianrae.github.io/snapshot
+-works on mcomputer local
+-on github fails: invalid sha1
+added checksums := Nil
+-worked!
+http://stark-shelf-1549.herokuapp.com/
