@@ -81,9 +81,9 @@ public class UserPresenterTests extends BasePresenterTest
 		
 		UserReply reply = (UserReply) _presenter.process(cmd);
 		
-		chkReplySucessful(reply, Reply.FORWARD_INDEX, "created user task1");
+		chkReplySucessful(reply, Reply.FORWARD_INDEX, "created user bob");
 		chkDalSize(1);
-		chkReplyWithoutEntity(reply, false, 0);
+		chkReplyForwardOnly(reply);
 		t = _dao.findById(1);
 		assertEquals(new Long(1L), t.id);
 	}
@@ -120,7 +120,7 @@ public class UserPresenterTests extends BasePresenterTest
 		
 		chkReplySucessful(reply, Reply.FORWARD_NOT_FOUND, null);
 		chkDalSize(1);
-		chkReplyWithoutEntity(reply, false, 0);
+		chkReplyForwardOnly(reply);
 	}
 	
 	//--- update ---
@@ -135,7 +135,7 @@ public class UserPresenterTests extends BasePresenterTest
 		
 		chkReplySucessful(reply, Reply.FORWARD_INDEX, null);
 		chkDalSize(1);
-		chkReplyWithoutEntity(reply, false, 0);
+		chkReplyForwardOnly(reply);
 		
 		User t2 = _dao.findById(t.id);
 		assertEquals("task2", t2.name);
@@ -165,7 +165,7 @@ public class UserPresenterTests extends BasePresenterTest
 		
 		chkReplySucessful(reply, Reply.FORWARD_NOT_FOUND, null);
 		chkDalSize(1);
-		chkReplyWithoutEntity(reply, false, 0);
+		chkReplyForwardOnly(reply);
 	}
 	
 	
@@ -178,7 +178,7 @@ public class UserPresenterTests extends BasePresenterTest
 		
 		chkReplySucessful(reply, Reply.FORWARD_INDEX, null);
 		chkDalSize(0);
-		chkReplyWithoutEntity(reply, false, 0);
+		chkReplyForwardOnly(reply);
 	}
 	
 	@Test
@@ -189,7 +189,7 @@ public class UserPresenterTests extends BasePresenterTest
 		
 		chkReplySucessful(reply, Reply.FORWARD_NOT_FOUND, "could not find user");
 		chkDalSize(1);
-		chkReplyWithoutEntity(reply, false, 0);
+		chkReplyForwardOnly(reply);
 	}
 	
 	//--- show ---
@@ -211,7 +211,7 @@ public class UserPresenterTests extends BasePresenterTest
 
 		chkReplySucessful(reply, Reply.FORWARD_NOT_FOUND, "could not find user");
 		chkDalSize(1);
-		chkReplyWithoutEntity(reply, false, 0);
+		chkReplyForwardOnly(reply);
 	}
 	
 	
@@ -246,6 +246,11 @@ public class UserPresenterTests extends BasePresenterTest
 			assertNull(reply._allL);
 		}
 	}
+	private void chkReplyForwardOnly(UserReply reply)
+	{
+		assertEquals(null, reply._entity);
+		assertNull(reply._allL);
+	}
 	
 	private MockUserDAO _dao;
 	private UserPresenter _presenter;
@@ -265,16 +270,25 @@ public class UserPresenterTests extends BasePresenterTest
 	
 	private User initUser()
 	{
+		return initUser("bob");
+	}
+	private User initUser(String name)
+	{
 		User t = new User();
 		t.id = 0L; //dal will assign id
-		t.name = "task1";
+		t.name = name;
 		assertEquals(0, _dao.size());
 		return t;
 	}
 	
 	private User initAndSaveUser()
 	{
-		User t = initUser();
+		return initAndSaveUser("bob");
+	}
+	
+	private User initAndSaveUser(String name)
+	{
+		User t = initUser(name);
 		_dao.save(t);
 		assertEquals(1, _dao.size());
 		return t;
