@@ -23,7 +23,9 @@ import org.mef.framework.sfx.SfxBaseObj;
 import org.mef.framework.sfx.SfxContext;
 
 import mef.daos.IUserDAO;
+import mef.entities.Computer;
 import mef.entities.User;
+import mef.presenters.replies.ComputerReply;
 import mef.presenters.replies.UserReply;
 public class UserPresenter extends Presenter
 {
@@ -46,7 +48,7 @@ public class UserPresenter extends Presenter
 	{
 		UserReply reply = createReply(); 
 		reply.setDestination(Reply.VIEW_INDEX);
-		reply._allL = new ArrayList<User>();
+		reply._allL = _dao.all();
 		return reply;
 	}
 
@@ -54,6 +56,9 @@ public class UserPresenter extends Presenter
 	{
 		UserReply reply = createReply();
 		reply.setDestination(Reply.VIEW_NEW);
+		
+		reply._entity = new User();
+		reply._entity.name = "defaultname";
 		return reply; 
 	}
 
@@ -61,20 +66,80 @@ public class UserPresenter extends Presenter
 	{
 		UserReply reply = createReply();
 		reply.setDestination(Reply.VIEW_NEW);
-		return reply;
+		
+		IFormBinder binder = cmd.getFormBinder();
+		if (! binder.bind())
+		{
+			reply.setFlashFail("binding failed!");
+			Logger.info("BINDING failed");
+			reply._entity = (User) binder.getObject();
+			return reply;
+		}
+		else
+		{
+			User entity = (User) binder.getObject();
+			if (entity == null)
+			{
+				reply.setFailed(true);
+			}
+			else
+			{
+				_dao.save(entity);
+				Logger.info("saved new");
+				reply.setFlashSuccess("created user " + entity.name);
+				reply.setDestination(Reply.FORWARD_INDEX);
+			}
+			return reply;
+		}
 	}
 
 	public UserReply onEditCommand(EditCommand cmd)
 	{
 		UserReply reply = createReply();
 		reply.setDestination(Reply.VIEW_EDIT);
-		return reply;
+		
+		User user = _dao.findById(cmd.id);
+		if (user == null)
+		{
+			reply.setDestination(Reply.FORWARD_NOT_FOUND);
+			return reply;
+		}
+		else
+		{
+			reply._entity = user;
+			return reply;
+		}
 	}
 	public UserReply onUpdateCommand(UpdateCommand cmd)
 	{
 		UserReply reply = createReply();
 		reply.setDestination(Reply.VIEW_EDIT);
-		return reply;
+		IFormBinder binder = cmd.getFormBinder();
+		if (! binder.bind())
+		{
+			reply.setFlashFail("binding failed!");
+			reply._entity = (User) binder.getObject();
+			if (reply._entity == null)
+			{
+				Logger.info("failbinding null entity!");
+				reply._entity = _dao.findById(cmd.id); //fix better later!!
+			}
+			return reply;
+		}
+		else
+		{
+			//ensure id is a valid id
+			User user = _dao.findById(cmd.id);
+			if (user == null)
+			{
+				reply.setDestination(Reply.FORWARD_NOT_FOUND);
+				return reply;
+			}
+			_dao.updateFrom(binder);
+			Logger.info("saved update ");
+			reply.setDestination(Reply.FORWARD_INDEX);
+			return reply;
+		}
 	}
 
 
@@ -82,6 +147,16 @@ public class UserPresenter extends Presenter
 	{
 		UserReply reply = createReply();
 		reply.setDestination(Reply.FORWARD_INDEX);
+		User t = _dao.findById(cmd.id);
+		if (t == null)
+		{
+			reply.setDestination(Reply.FORWARD_NOT_FOUND);
+			reply.setFlashFail("could not find user");
+		}
+		else
+		{
+			_dao.delete(cmd.id);
+		}
 		return reply;
 	}
 
@@ -89,6 +164,16 @@ public class UserPresenter extends Presenter
 	{
 		UserReply reply = createReply();
 		reply.setDestination(Reply.VIEW_SHOW);
+		User t = _dao.findById(cmd.id);
+		if (t == null)
+		{
+			reply.setDestination(Reply.FORWARD_NOT_FOUND);
+			reply.setFlashFail("could not find user");
+		}
+		else
+		{
+			reply._entity = t;
+		}
 		return reply;
 	}
 

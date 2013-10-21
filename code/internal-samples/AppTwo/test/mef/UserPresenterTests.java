@@ -47,172 +47,172 @@ public class UserPresenterTests extends BasePresenterTest
 		chkReplyWithoutEntity(reply, true, 0);
 	}
 
-//	@Test
-//	public void indexTestOne() 
-//	{
-//		User u = createUser("bob");
-//		_dao.save(u);
-//		UserReply reply = (UserReply) _presenter.process(new IndexCommand());
-//		
-//		chkReplySucessful(reply, Reply.VIEW_INDEX, null);
-//		chkDalSize(1);
-//		assertEquals("bob", _dao.all().get(0).name);
-//		chkReplyWithoutEntity(reply, true, 1);
-//	}
-//	
-//	//--- new ---
-//	@Test
-//	public void testNewUser() 
-//	{
-//		UserReply reply = (UserReply) _presenter.process( new NewCommand());
-//		
-//		chkReplySucessful(reply, Reply.VIEW_NEW, null);
-//		assertEquals("defaultname", reply._entity.name);
-//		chkDalSize(0);
-//		chkReplyWithEntity(reply, false, 0);
-//	}
-//	
-//	//--- create ---
-//	@Test
-//	public void testCreateUser() 
-//	{
-//		User t = initUser();
-//		Command cmd = createWithBinder(new CreateCommand(), t, true);
-//		
-//		UserReply reply = (UserReply) _presenter.process(cmd);
-//		
-//		chkReplySucessful(reply, Reply.FORWARD_INDEX, "created user task1");
-//		chkDalSize(1);
-//		chkReplyWithoutEntity(reply, true, 1);
-//		t = _dao.findById(1);
-//		assertEquals(new Long(1L), t.id);
-//	}
-//	
-//	@Test
-//	public void testCreateUser_ValFail() 
-//	{
-//		User t = initUser();
-//		Command cmd = createWithBinder(new CreateCommand(), t, false);
-//		
-//		UserReply reply = (UserReply) _presenter.process(cmd);
-//		
-//		chkReplySucessful(reply, Reply.VIEW_NEW, "binding failed!");
-//		chkDalSize(0);
-//		chkReplyWithEntity(reply, false, 0);
-//	}
-//	
-//	//--- edit ---
-//	@Test
-//	public void testEditUser() 
-//	{
-//		User t = initAndSaveUser();
-//		UserReply reply = (UserReply) _presenter.process(new EditCommand(t.id));
-//		
-//		chkReplySucessful(reply, Reply.VIEW_EDIT, null);
-//		chkDalSize(1);
-//		chkReplyWithEntity(reply, false, 0);
-//	}
-//	@Test
-//	public void testEditUser_NotFound() 
-//	{
-//		User t = initAndSaveUser();
-//		UserReply reply = (UserReply) _presenter.process(new EditCommand(99L));
-//		
-//		chkReplySucessful(reply, Reply.FORWARD_NOT_FOUND, null);
-//		chkDalSize(1);
-//		chkReplyWithoutEntity(reply, false, 0);
-//	}
-//	
-//	//--- update ---
-//	@Test
-//	public void testUpdateUser() 
-//	{
-//		User t = initAndSaveUser();
-//		t.name = "task2"; //simulate user edit
-//		Command cmd = createWithBinder(new UpdateCommand(t.id), t, true);
-//		
-//		UserReply reply = (UserReply) _presenter.process(cmd);
-//		
-//		chkReplySucessful(reply, Reply.FORWARD_INDEX, null);
-//		chkDalSize(1);
-//		chkReplyWithoutEntity(reply, true, 1);
-//		
-//		User t2 = _dao.findById(t.id);
-//		assertEquals("task2", t2.name);
-//	}
-//	@Test
-//	public void testUpdateUser_ValFail() 
-//	{
-//		User t = initAndSaveUser();
-//		t.name = "task2"; //simulate user edit
-//		Command cmd = createWithBinder(new UpdateCommand(t.id), t, false);
-//		
-//		UserReply reply = (UserReply) _presenter.process(cmd);
-//		
-//		chkReplySucessful(reply, Reply.VIEW_EDIT, "binding failed!");
-//		chkDalSize(1);
-//		chkReplyWithEntity(reply, false, 0);
-//		
-//		User t2 = _dao.findById(t.id);
-//		assertEquals("task2", t2.name); //unchanged (but mock dal kinda broken)
-//	}
-//	@Test
-//	public void testUpdateUser_NotFound() 
-//	{
-//		User t = initAndSaveUser();
-//		Command cmd = createWithBinder(new UpdateCommand(99L), t, true);
-//		UserReply reply = (UserReply) _presenter.process(cmd);
-//		
-//		chkReplySucessful(reply, Reply.FORWARD_NOT_FOUND, null);
-//		chkDalSize(1);
-//		chkReplyWithoutEntity(reply, false, 0);
-//	}
-//	
-//	
-//	//--- delete ---
-//	@Test
-//	public void testDeleteUser() 
-//	{
-//		User t = initAndSaveUser();
-//		UserReply reply = (UserReply) _presenter.process( new DeleteCommand(t.id));
-//		
-//		chkReplySucessful(reply, Reply.FORWARD_INDEX, null);
-//		chkDalSize(0);
-//		chkReplyWithoutEntity(reply, true, 0);
-//	}
-//	
-//	@Test
-//	public void testBadDeleteUser() 
-//	{
-//		User t = initAndSaveUser();
-//		UserReply reply = (UserReply) _presenter.process(new DeleteCommand(99L)); //not exist
-//		
-//		chkReplySucessful(reply, Reply.FORWARD_NOT_FOUND, "could not find task");
-//		chkDalSize(1);
-//		chkReplyWithoutEntity(reply, true, 1);
-//	}
-//	
-//	//--- show ---
-//		@Test
-//		public void testShowUser() 
-//		{
-//			User t = initAndSaveUser();
-//			UserReply reply = (UserReply) _presenter.process(new ShowCommand(t.id));
-//			
-//			chkReplySucessful(reply, Reply.VIEW_SHOW, null);
-//			chkDalSize(1);
-//			chkReplyWithEntity(reply, false, 0);
-//		}
-////		@Test
-////		public void testEditUser_NotFound() 
-////		{
-////			User t = initAndSaveUser();
-////			UserReply reply = (UserReply) _presenter.process(new EditCommand(99L));
-////			
-////			chkReplySucessful(reply, Reply.FORWARD_NOT_FOUND, null);
-////			chkDalSize(1);
-////			chkReplyWithoutEntity(reply, false, 0);
-////		}
+	@Test
+	public void indexTestOne() 
+	{
+		User u = createUser("bob");
+		_dao.save(u);
+		assertEquals("bob", _dao.all().get(0).name);
+		UserReply reply = (UserReply) _presenter.process(new IndexCommand());
+		
+		chkReplySucessful(reply, Reply.VIEW_INDEX, null);
+		chkDalSize(1);
+		chkReplyWithoutEntity(reply, true, 1);
+	}
+	
+	//--- new ---
+	@Test
+	public void testNewUser() 
+	{
+		UserReply reply = (UserReply) _presenter.process( new NewCommand());
+		
+		chkReplySucessful(reply, Reply.VIEW_NEW, null);
+		assertEquals("defaultname", reply._entity.name);
+		chkDalSize(0);
+		chkReplyWithEntity(reply, false, 0);
+	}
+	
+	//--- create ---
+	@Test
+	public void testCreateUser() 
+	{
+		User t = initUser();
+		Command cmd = createWithBinder(new CreateCommand(), t, true);
+		
+		UserReply reply = (UserReply) _presenter.process(cmd);
+		
+		chkReplySucessful(reply, Reply.FORWARD_INDEX, "created user task1");
+		chkDalSize(1);
+		chkReplyWithoutEntity(reply, false, 0);
+		t = _dao.findById(1);
+		assertEquals(new Long(1L), t.id);
+	}
+	
+	@Test
+	public void testCreateUser_ValFail() 
+	{
+		User t = initUser();
+		Command cmd = createWithBinder(new CreateCommand(), t, false);
+		
+		UserReply reply = (UserReply) _presenter.process(cmd);
+		
+		chkReplySucessful(reply, Reply.VIEW_NEW, "binding failed!");
+		chkDalSize(0);
+		chkReplyWithEntity(reply, false, 0);
+	}
+	
+	//--- edit ---
+	@Test
+	public void testEditUser() 
+	{
+		User t = initAndSaveUser();
+		UserReply reply = (UserReply) _presenter.process(new EditCommand(t.id));
+		
+		chkReplySucessful(reply, Reply.VIEW_EDIT, null);
+		chkDalSize(1);
+		chkReplyWithEntity(reply, false, 0);
+	}
+	@Test
+	public void testEditUser_NotFound() 
+	{
+		User t = initAndSaveUser();
+		UserReply reply = (UserReply) _presenter.process(new EditCommand(99L));
+		
+		chkReplySucessful(reply, Reply.FORWARD_NOT_FOUND, null);
+		chkDalSize(1);
+		chkReplyWithoutEntity(reply, false, 0);
+	}
+	
+	//--- update ---
+	@Test
+	public void testUpdateUser() 
+	{
+		User t = initAndSaveUser();
+		t.name = "task2"; //simulate user edit
+		Command cmd = createWithBinder(new UpdateCommand(t.id), t, true);
+		
+		UserReply reply = (UserReply) _presenter.process(cmd);
+		
+		chkReplySucessful(reply, Reply.FORWARD_INDEX, null);
+		chkDalSize(1);
+		chkReplyWithoutEntity(reply, false, 0);
+		
+		User t2 = _dao.findById(t.id);
+		assertEquals("task2", t2.name);
+	}
+	@Test
+	public void testUpdateUser_ValFail() 
+	{
+		User t = initAndSaveUser();
+		t.name = "task2"; //simulate user edit
+		Command cmd = createWithBinder(new UpdateCommand(t.id), t, false);
+		
+		UserReply reply = (UserReply) _presenter.process(cmd);
+		
+		chkReplySucessful(reply, Reply.VIEW_EDIT, "binding failed!");
+		chkDalSize(1);
+		chkReplyWithEntity(reply, false, 0);
+		
+		User t2 = _dao.findById(t.id);
+		assertEquals("task2", t2.name); //unchanged (but mock dal kinda broken)
+	}
+	@Test
+	public void testUpdateUser_NotFound() 
+	{
+		User t = initAndSaveUser();
+		Command cmd = createWithBinder(new UpdateCommand(99L), t, true);
+		UserReply reply = (UserReply) _presenter.process(cmd);
+		
+		chkReplySucessful(reply, Reply.FORWARD_NOT_FOUND, null);
+		chkDalSize(1);
+		chkReplyWithoutEntity(reply, false, 0);
+	}
+	
+	
+	//--- delete ---
+	@Test
+	public void testDeleteUser() 
+	{
+		User t = initAndSaveUser();
+		UserReply reply = (UserReply) _presenter.process( new DeleteCommand(t.id));
+		
+		chkReplySucessful(reply, Reply.FORWARD_INDEX, null);
+		chkDalSize(0);
+		chkReplyWithoutEntity(reply, false, 0);
+	}
+	
+	@Test
+	public void testBadDeleteUser() 
+	{
+		User t = initAndSaveUser();
+		UserReply reply = (UserReply) _presenter.process(new DeleteCommand(99L)); //not exist
+		
+		chkReplySucessful(reply, Reply.FORWARD_NOT_FOUND, "could not find user");
+		chkDalSize(1);
+		chkReplyWithoutEntity(reply, false, 0);
+	}
+	
+	//--- show ---
+	@Test
+	public void testShowUser() 
+	{
+		User t = initAndSaveUser();
+		UserReply reply = (UserReply) _presenter.process(new ShowCommand(t.id));
+
+		chkReplySucessful(reply, Reply.VIEW_SHOW, null);
+		chkDalSize(1);
+		chkReplyWithEntity(reply, false, 0);
+	}
+	@Test
+	public void testShowUser_NotFound() 
+	{
+		User t = initAndSaveUser();
+		UserReply reply = (UserReply) _presenter.process(new ShowCommand(99L));
+
+		chkReplySucessful(reply, Reply.FORWARD_NOT_FOUND, "could not find user");
+		chkDalSize(1);
+		chkReplyWithoutEntity(reply, false, 0);
+	}
 	
 	
 	//--------- helper fns--------------
