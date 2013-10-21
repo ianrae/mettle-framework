@@ -69,7 +69,7 @@ public class UserPresenterTests extends BasePresenterTest
 		chkReplySucessful(reply, Reply.VIEW_NEW, null);
 		assertEquals("defaultname", reply._entity.name);
 		chkDalSize(0);
-		chkReplyWithEntity(reply, false, 0);
+		chkReplyWithEntity(reply);
 	}
 	
 	//--- create ---
@@ -77,6 +77,7 @@ public class UserPresenterTests extends BasePresenterTest
 	public void testCreateUser() 
 	{
 		User t = initUser();
+		chkDalSize(0);
 		Command cmd = createWithBinder(new CreateCommand(), t, true);
 		
 		UserReply reply = (UserReply) _presenter.process(cmd);
@@ -98,7 +99,7 @@ public class UserPresenterTests extends BasePresenterTest
 		
 		chkReplySucessful(reply, Reply.VIEW_NEW, "binding failed!");
 		chkDalSize(0);
-		chkReplyWithEntity(reply, false, 0);
+		chkReplyWithEntity(reply);
 	}
 	
 	//--- edit ---
@@ -110,7 +111,7 @@ public class UserPresenterTests extends BasePresenterTest
 		
 		chkReplySucessful(reply, Reply.VIEW_EDIT, null);
 		chkDalSize(1);
-		chkReplyWithEntity(reply, false, 0);
+		chkReplyWithEntity(reply);
 	}
 	@Test
 	public void testEditUser_NotFound() 
@@ -128,7 +129,7 @@ public class UserPresenterTests extends BasePresenterTest
 	public void testUpdateUser() 
 	{
 		User t = initAndSaveUser();
-		t.name = "task2"; //simulate user edit
+		t.name = "user2"; //simulate user edit
 		Command cmd = createWithBinder(new UpdateCommand(t.id), t, true);
 		
 		UserReply reply = (UserReply) _presenter.process(cmd);
@@ -138,23 +139,23 @@ public class UserPresenterTests extends BasePresenterTest
 		chkReplyForwardOnly(reply);
 		
 		User t2 = _dao.findById(t.id);
-		assertEquals("task2", t2.name);
+		assertEquals("user2", t2.name);
 	}
 	@Test
 	public void testUpdateUser_ValFail() 
 	{
 		User t = initAndSaveUser();
-		t.name = "task2"; //simulate user edit
+		t.name = "user2"; //simulate user edit
 		Command cmd = createWithBinder(new UpdateCommand(t.id), t, false);
 		
 		UserReply reply = (UserReply) _presenter.process(cmd);
 		
 		chkReplySucessful(reply, Reply.VIEW_EDIT, "binding failed!");
 		chkDalSize(1);
-		chkReplyWithEntity(reply, false, 0);
+		chkReplyWithEntity(reply);
 		
 		User t2 = _dao.findById(t.id);
-		assertEquals("task2", t2.name); //unchanged (but mock dal kinda broken)
+		assertEquals("bob", t2.name); //unchanged (but mock dal kinda broken)
 	}
 	@Test
 	public void testUpdateUser_NotFound() 
@@ -201,7 +202,7 @@ public class UserPresenterTests extends BasePresenterTest
 
 		chkReplySucessful(reply, Reply.VIEW_SHOW, null);
 		chkDalSize(1);
-		chkReplyWithEntity(reply, false, 0);
+		chkReplyWithEntity(reply);
 	}
 	@Test
 	public void testShowUser_NotFound() 
@@ -219,6 +220,10 @@ public class UserPresenterTests extends BasePresenterTest
 	protected void chkDalSize(int expected)
 	{
 		assertEquals(expected, _dao.size());
+	}
+	private void chkReplyWithEntity(UserReply reply)
+	{
+		chkReplyWithEntity(reply, false, 0);
 	}
 	private void chkReplyWithEntity(UserReply reply, boolean listExists, int expected)
 	{
