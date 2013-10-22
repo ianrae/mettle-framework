@@ -8,9 +8,9 @@ import org.stringtemplate.v4.ST;
 
 public class PresenterCodeGen extends CodeGenBase
 	{
-		public PresenterCodeGen(SfxContext ctx, String path, String packageName)
+		public PresenterCodeGen(SfxContext ctx)
 		{
-			super(ctx, path, packageName);
+			super(ctx);
 		}
 		
 		@Override

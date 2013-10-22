@@ -8,9 +8,9 @@ import org.stringtemplate.v4.ST;
 
 public class KnownDAOsCodeGen extends CodeGenBase
 {
-	public KnownDAOsCodeGen(SfxContext ctx, String path, String packageName)
+	public KnownDAOsCodeGen(SfxContext ctx)
 	{
-		super(ctx, path, packageName);
+		super(ctx);
 	}
 	
 	@Override

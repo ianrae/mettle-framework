@@ -8,9 +8,9 @@ import org.stringtemplate.v4.ST;
 
 	public class BoundaryCodeGen extends CodeGenBase
 		{
-			public BoundaryCodeGen(SfxContext ctx, String path, String packageName)
+			public BoundaryCodeGen(SfxContext ctx)
 			{
-				super(ctx, path, packageName);
+				super(ctx);
 			}
 			
 			@Override

@@ -56,28 +56,28 @@ public class PresenterScaffoldCodeGenerator extends SfxBaseObj
 		EntityDef def = parser._entityL.get(index);
 		
 		String path = this.pathCombine(stDir, "presenter.stg");
-		boolean b = generateOneFile(def, new PresenterCodeGen(_ctx, path, "mef.presenters"), "app\\mef\\presenters");
+		boolean b = generateOneFile(def, new PresenterCodeGen(_ctx), path, "mef.presenters", "app\\mef\\presenters");
 		if (!b )
 		{
 			return false; //!!
 		}
 		
 		path = this.pathCombine(stDir, "reply.stg");
-		b = generateOneFile(def, new ReplyCodeGen(_ctx, path, "mef.presenters.replies"), "app\\mef\\presenters\\replies");
+		b = generateOneFile(def, new ReplyCodeGen(_ctx), path, "mef.presenters.replies", "app\\mef\\presenters\\replies");
 		if (!b )
 		{
 			return false; //!!
 		}
 		
 		path = this.pathCombine(stDir, "boundary.stg");
-		b = generateOneFile(def, new BoundaryCodeGen(_ctx, path, "boundaries"), "app\\boundaries");
+		b = generateOneFile(def, new BoundaryCodeGen(_ctx), path, "boundaries", "app\\boundaries");
 		if (!b )
 		{
 			return false; //!!
 		}
 		
 		path = this.pathCombine(stDir, "formBinder.stg");
-		b = generateOneFile(def, new FormBinderCodeGen(_ctx, path, "boundaries.binders"), "app\\boundaries\\binders");
+		b = generateOneFile(def, new FormBinderCodeGen(_ctx), path, "boundaries.binders", "app\\boundaries\\binders");
 		if (!b )
 		{
 			return false; //!!
@@ -85,8 +85,9 @@ public class PresenterScaffoldCodeGenerator extends SfxBaseObj
 		
 		return b;
 	}
-	private boolean generateOneFile(EntityDef def, CodeGenBase gen, String relPath) throws Exception
+	private boolean generateOneFile(EntityDef def, CodeGenBase gen, String path, String packageName, String relPath) throws Exception
 	{
+		gen.init(path, packageName);
 		if (! def.enabled)
 		{
 			log(def.name + " disabled -- no files generated.");
@@ -96,7 +97,7 @@ public class PresenterScaffoldCodeGenerator extends SfxBaseObj
 		String code = gen.generate(def);	
 		String className = gen.getClassName(def);	
 
-		String path = this.pathCombine(appDir, relPath);
+		path = this.pathCombine(appDir, relPath);
 		path = this.pathCombine(path, className + ".java");
 		File f = new File(path);
 		if (f.exists())

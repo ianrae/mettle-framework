@@ -143,7 +143,8 @@ public class DalCodeGenerator extends SfxBaseObj
 		def.enabled = true;
 
 		String path = this.pathCombine(stDir, "dao_all_known.stg");
-		KnownDAOsCodeGen gen5 = new KnownDAOsCodeGen(_ctx, path, "mef.gen");
+		KnownDAOsCodeGen gen5 = new KnownDAOsCodeGen(_ctx);
+		gen5.init(path, "mef.gen");
 		boolean b = generateOneFile(def, gen5, "mef\\gen");
 		if (!b )
 		{

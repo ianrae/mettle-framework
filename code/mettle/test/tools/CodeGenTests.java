@@ -76,52 +76,32 @@ public class CodeGenTests extends BaseCodeGenTest
 		log("--testKnownDALS--");
 		String path = this.getTemplateFile("dao_all_known.stg");
 		String packageName = "mef.gen";
-		KnownDAOsCodeGen gen = new KnownDAOsCodeGen(_ctx, path, packageName);
-		String code = gen.generate(def);	
-		log(code);
-		assertEquals(true, 10 < code.length());
-		writeFile("TaskDAL", code);
+		KnownDAOsCodeGen gen = new KnownDAOsCodeGen(_ctx);
+		genAndLog(gen, "dao_all_known.stg", "mef.gen");
 	}
 	
 	@Test
 	public void testBoundary() throws Exception
 	{
 		log("--testBoundary--");
-		String path = this.getPresenterTemplateFile("boundary.stg");
-		String packageName = "boundaries";
-		BoundaryCodeGen gen = new BoundaryCodeGen(_ctx, path, packageName);
-		String code = gen.generate(def);	
-		log(code);
-		assertEquals(true, 10 < code.length());
-		writeFile("TaskBoundary", code);
+		BoundaryCodeGen gen = new BoundaryCodeGen(_ctx);
+		genPresenterAndLog(gen, "boundary.stg", "boundaries");
 	}
 	
 	@Test
 	public void testFormBinder() throws Exception
 	{
 		log("--testFormBinder--");
-		String path = this.getPresenterTemplateFile("formbinder.stg");
-		String packageName = "boundaries.binders";
-		FormBinderCodeGen gen = new FormBinderCodeGen(_ctx, path, packageName);
-		String code = gen.generate(def);	
-		log(code);
-		assertEquals(true, 10 < code.length());
-		writeFile("TaskFormBinder", code);
+		FormBinderCodeGen gen = new FormBinderCodeGen(_ctx);
+		genPresenterAndLog(gen, "formbinder.stg", "boundaries.binders");
 	}
 	
 	@Test
 	public void testDaoLoader() throws Exception
 	{
 		log("--testDaoLoader--");
-		
-		String path = this.getTemplateFile("dao_entity_loader.stg");
-		String packageName = "mef.core";
 		DaoEntityLoaderCodeGen gen = new DaoEntityLoaderCodeGen(_ctx);
-		gen.init(path, packageName);
-		String code = gen.generate(def);	
-		log(code);
-		assertEquals(true, 10 < code.length());
-		writeFile("Task", code);
+		genAndLog(gen, "dao_entity_loader.stg", "mef.core");
 	}
 	
 //	@Test
@@ -141,21 +121,17 @@ public class CodeGenTests extends BaseCodeGenTest
 //	}
 	
 	//--- helper fns ---
-
-	private void writeFile(String fileName, String code)
-	{
-//		String outPath = this.getUnitTestDir(String.format("gen\\%s.java", fileName));
-//		log(fileName + ": " + outPath);
-//		SfxTextWriter w = new SfxTextWriter(outPath, null);
-//		w.addLine(code);
-//		boolean b = w.writeFile();
-//		assertEquals(true, b);
-		
-	}
-
 	private void genAndLog(CodeGenBase gen, String templateFile, String packageName)
 	{
 		String path = this.getTemplateFile(templateFile);
+		gen.init(path, packageName);
+		String code = gen.generate(def);	
+		log(code);
+		assertEquals(true, 10 < code.length());
+	}
+	private void genPresenterAndLog(CodeGenBase gen, String templateFile, String packageName)
+	{
+		String path = this.getPresenterTemplateFile(templateFile);
 		gen.init(path, packageName);
 		String code = gen.generate(def);	
 		log(code);

@@ -8,9 +8,9 @@ import org.stringtemplate.v4.ST;
 
 public class ReplyCodeGen extends CodeGenBase
 	{
-		public ReplyCodeGen(SfxContext ctx, String path, String packageName)
+		public ReplyCodeGen(SfxContext ctx)
 		{
-			super(ctx, path, packageName);
+			super(ctx);
 		}
 		
 		@Override

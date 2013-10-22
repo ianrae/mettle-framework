@@ -16,7 +16,8 @@ public class ScaffoldCodeGenTests extends BaseCodeGenTest
 		log("--testPresenter--");
 		String path = this.getPresenterTemplateFile("presenter.stg");
 		String packageName = "mef.presenters";
-		PresenterCodeGen gen = new PresenterCodeGen(_ctx, path, packageName);
+		PresenterCodeGen gen = new PresenterCodeGen(_ctx);
+		gen.init(path, packageName);
 		String code = gen.generate(def);	
 		log(code);
 		assertEquals(true, 10 < code.length());
@@ -29,7 +30,8 @@ public class ScaffoldCodeGenTests extends BaseCodeGenTest
 		log("--testReply--");
 		String path = this.getPresenterTemplateFile("reply.stg");
 		String packageName = "mef.presenters.replies";
-		ReplyCodeGen gen = new ReplyCodeGen(_ctx, path, packageName);
+		ReplyCodeGen gen = new ReplyCodeGen(_ctx);
+		gen.init(path, packageName);
 		String code = gen.generate(def);	
 		log(code);
 		assertEquals(true, 10 < code.length());

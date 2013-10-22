@@ -9,9 +9,9 @@ import org.stringtemplate.v4.ST;
 
 	public class FormBinderCodeGen extends CodeGenBase
 		{
-			public FormBinderCodeGen(SfxContext ctx, String path, String packageName)
+			public FormBinderCodeGen(SfxContext ctx)
 			{
-				super(ctx, path, packageName);
+				super(ctx);
 			}
 			
 			@Override
