@@ -157,7 +157,7 @@ public class <name> extends Presenter
 		if (entity == null)
 		{
 			reply.setDestination(Reply.FORWARD_NOT_FOUND);
-			reply.setFlashFail("could not find <type>");
+			reply.setFlashFail("could not find entity");
 		}
 		else
 		{

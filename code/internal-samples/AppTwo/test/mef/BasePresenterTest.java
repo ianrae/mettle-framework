@@ -2,6 +2,7 @@ package mef;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import mef.entities.Role;
 import mef.entities.User;
 
 import org.mef.framework.commands.Command;
@@ -18,12 +19,5 @@ public class BasePresenterTest extends BaseTest
 		assertEquals(flash, reply.getFlash());
 	}
 
-	protected Command createWithBinder(Command cmd, User t, boolean bindingIsValid)
-	{
-		MockFormBinder binder = new MockFormBinder(t);
-		cmd.setFormBinder(binder);
-		binder.isValid = bindingIsValid;
-		return cmd;
-	}
 	
 }

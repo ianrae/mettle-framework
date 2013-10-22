@@ -89,7 +89,7 @@ public class <type>PresenterTests extends BasePresenterTest
 		
 		<type>Reply reply = (<type>Reply) _presenter.process(cmd);
 		
-		chkReplySucessful(reply, Reply.FORWARD_INDEX, "created user bob");
+		chkReplySucessful(reply, Reply.FORWARD_INDEX, "created entity");
 		chkDalSize(1);
 		chkReplyForwardOnly(reply);
 		t = _dao.findById(1);
@@ -196,7 +196,7 @@ public class <type>PresenterTests extends BasePresenterTest
 		<type> t = initAndSave<type>();
 		<type>Reply reply = (<type>Reply) _presenter.process(new DeleteCommand(99L)); //not exist
 		
-		chkReplySucessful(reply, Reply.FORWARD_NOT_FOUND, "could not find user");
+		chkReplySucessful(reply, Reply.FORWARD_NOT_FOUND, "could not find entity");
 		chkDalSize(1);
 		chkReplyForwardOnly(reply);
 	}
@@ -218,7 +218,7 @@ public class <type>PresenterTests extends BasePresenterTest
 		<type> t = initAndSave<type>();
 		<type>Reply reply = (<type>Reply) _presenter.process(new ShowCommand(99L));
 
-		chkReplySucessful(reply, Reply.FORWARD_NOT_FOUND, "could not find user");
+		chkReplySucessful(reply, Reply.FORWARD_NOT_FOUND, "could not find entity");
 		chkDalSize(1);
 		chkReplyForwardOnly(reply);
 	}
@@ -313,6 +313,14 @@ public class <type>PresenterTests extends BasePresenterTest
 		return u;
 	}
 
+	protected Command createWithBinder(Command cmd, <type> t, boolean bindingIsValid)
+	{
+		MockFormBinder binder = new MockFormBinder(t);
+		cmd.setFormBinder(binder);
+		binder.isValid = bindingIsValid;
+		return cmd;
+	}
+	
 
 >>
 

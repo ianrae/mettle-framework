@@ -1,3 +1,4 @@
+//THIS FILE HAS BEEN AUTO-GENERATED. DO NOT MODIFY.
 package mef;
 
 import static org.junit.Assert.*;
@@ -16,17 +17,15 @@ import org.mef.framework.commands.UpdateCommand;
 import org.mef.framework.presenters.Presenter;
 import org.mef.framework.replies.Reply;
 import org.mef.framework.sfx.SfxContext;
-import org.mef.framework.test.helpers.MockFormBinder;
 
 import mef.core.Initializer;
-import mef.daos.IUserDAO;
-import mef.daos.mocks.MockUserDAO;
+import mef.daos.IRoleDAO;
+import mef.daos.mocks.MockRoleDAO;
 import mef.entities.Role;
-import mef.entities.User;
-import mef.presenters.UserPresenter;
-import mef.presenters.replies.UserReply;
+import mef.presenters.RolePresenter;
+import mef.presenters.replies.RoleReply;
 
-public class UserPresenterTests extends BasePresenterTest
+public class RolePresenterTests extends BasePresenterTest
 {
 
 	//HTTP  URL             ACTION  FRM    VIEW/REDIR     
@@ -42,8 +41,8 @@ public class UserPresenterTests extends BasePresenterTest
 	@Test
 	public void indexTest() 
 	{
-		UserReply reply = (UserReply) _presenter.process(new IndexCommand());
-		
+		RoleReply reply = (RoleReply) _presenter.process(new IndexCommand());
+
 		chkReplySucessful(reply, Reply.VIEW_INDEX, null);
 		chkDalSize(0);
 		chkReplyWithoutEntity(reply, true, 0);
@@ -52,183 +51,183 @@ public class UserPresenterTests extends BasePresenterTest
 	@Test
 	public void indexTestOne() 
 	{
-		User u = createUser("bob");
+		Role u = createRole("bob");
 		_dao.save(u);
 		assertEquals("bob", _dao.all().get(0).name);
-		UserReply reply = (UserReply) _presenter.process(new IndexCommand());
-		
+		RoleReply reply = (RoleReply) _presenter.process(new IndexCommand());
+
 		chkReplySucessful(reply, Reply.VIEW_INDEX, null);
 		chkDalSize(1);
 		chkReplyWithoutEntity(reply, true, 1);
 	}
-	
+
 	//--- new ---
 	@Test
-	public void testNewUser() 
+	public void testNewRole() 
 	{
-		UserReply reply = (UserReply) _presenter.process( new NewCommand());
-		
+		RoleReply reply = (RoleReply) _presenter.process( new NewCommand());
+
 		chkReplySucessful(reply, Reply.VIEW_NEW, null);
 		assertEquals("defaultname", reply._entity.name);
 		chkDalSize(0);
 		chkReplyWithEntity(reply);
 	}
-	
+
 	//--- create ---
 	@Test
-	public void testCreateUser() 
+	public void testCreateRole() 
 	{
-		User t = initUser();
+		Role t = initRole();
 		chkDalSize(0);
 		Command cmd = createWithBinder(new CreateCommand(), t, true);
-		
-		UserReply reply = (UserReply) _presenter.process(cmd);
-		
-		chkReplySucessful(reply, Reply.FORWARD_INDEX, "created user bob");
+
+		RoleReply reply = (RoleReply) _presenter.process(cmd);
+
+		chkReplySucessful(reply, Reply.FORWARD_INDEX, "created entity");
 		chkDalSize(1);
 		chkReplyForwardOnly(reply);
 		t = _dao.findById(1);
 		assertEquals(new Long(1L), t.id);
 	}
-	
+
 	@Test
-	public void testCreateUser_ValFail() 
+	public void testCreateRole_ValFail() 
 	{
-		User t = initUser();
+		Role t = initRole();
 		Command cmd = createWithBinder(new CreateCommand(), t, false);
-		
-		UserReply reply = (UserReply) _presenter.process(cmd);
-		
+
+		RoleReply reply = (RoleReply) _presenter.process(cmd);
+
 		chkReplySucessful(reply, Reply.VIEW_NEW, "binding failed!");
 		chkDalSize(0);
 		chkReplyWithEntity(reply);
 	}
-	
+
 	//--- edit ---
 	@Test
-	public void testEditUser() 
+	public void testEditRole() 
 	{
-		User t = initAndSaveUser();
-		UserReply reply = (UserReply) _presenter.process(new EditCommand(t.id));
-		
+		Role t = initAndSaveRole();
+		RoleReply reply = (RoleReply) _presenter.process(new EditCommand(t.id));
+
 		chkReplySucessful(reply, Reply.VIEW_EDIT, null);
 		chkDalSize(1);
 		chkReplyWithEntity(reply);
 	}
 	@Test
-	public void testEditUser_NotFound() 
+	public void testEditRole_NotFound() 
 	{
-		User t = initAndSaveUser();
-		UserReply reply = (UserReply) _presenter.process(new EditCommand(99L));
-		
+		Role t = initAndSaveRole();
+		RoleReply reply = (RoleReply) _presenter.process(new EditCommand(99L));
+
 		chkReplySucessful(reply, Reply.FORWARD_NOT_FOUND, null);
 		chkDalSize(1);
 		chkReplyForwardOnly(reply);
 	}
-	
+
 	//--- update ---
 	@Test
-	public void testUpdateUser() 
+	public void testUpdateRole() 
 	{
-		User t = initAndSaveUser();
+		Role t = initAndSaveRole();
 		chkDalSize(1);
 		t.name = "user2"; //simulate user edit
 		Command cmd = createWithBinder(new UpdateCommand(t.id), t, true);
-		
-		UserReply reply = (UserReply) _presenter.process(cmd);
-		
+
+		RoleReply reply = (RoleReply) _presenter.process(cmd);
+
 		chkReplySucessful(reply, Reply.FORWARD_INDEX, null);
 		chkDalSize(1);
 		chkReplyForwardOnly(reply);
-		
-		User t2 = _dao.findById(t.id);
+
+		Role t2 = _dao.findById(t.id);
 		assertEquals("user2", t2.name);
 	}
 	@Test
-	public void testUpdateUser_ValFail() 
+	public void testUpdateRole_ValFail() 
 	{
-		User t = initAndSaveUser();
+		Role t = initAndSaveRole();
 		t.name = "user2"; //simulate user edit
 		Command cmd = createWithBinder(new UpdateCommand(t.id), t, false);
-		
-		UserReply reply = (UserReply) _presenter.process(cmd);
-		
+
+		RoleReply reply = (RoleReply) _presenter.process(cmd);
+
 		chkReplySucessful(reply, Reply.VIEW_EDIT, "binding failed!");
 		chkDalSize(1);
 		chkReplyWithEntity(reply);
-		
-		User t2 = _dao.findById(t.id);
+
+		Role t2 = _dao.findById(t.id);
 		assertEquals("bob", t2.name); //unchanged (but mock dal kinda broken)
 	}
 	@Test
-	public void testUpdateUser_NotFound() 
+	public void testUpdateRole_NotFound() 
 	{
-		User t = initAndSaveUser();
+		Role t = initAndSaveRole();
 		Command cmd = createWithBinder(new UpdateCommand(99L), t, true);
-		UserReply reply = (UserReply) _presenter.process(cmd);
-		
+		RoleReply reply = (RoleReply) _presenter.process(cmd);
+
 		chkReplySucessful(reply, Reply.FORWARD_NOT_FOUND, null);
 		chkDalSize(1);
 		chkReplyForwardOnly(reply);
 	}
-	
-	
+
+
 	//--- delete ---
 	@Test
-	public void testDeleteUser() 
+	public void testDeleteRole() 
 	{
-		User t = initAndSaveUser();
-		UserReply reply = (UserReply) _presenter.process( new DeleteCommand(t.id));
-		
+		Role t = initAndSaveRole();
+		RoleReply reply = (RoleReply) _presenter.process( new DeleteCommand(t.id));
+
 		chkReplySucessful(reply, Reply.FORWARD_INDEX, null);
 		chkDalSize(0);
 		chkReplyForwardOnly(reply);
 	}
-	
+
 	@Test
-	public void testBadDeleteUser() 
+	public void testBadDeleteRole() 
 	{
-		User t = initAndSaveUser();
-		UserReply reply = (UserReply) _presenter.process(new DeleteCommand(99L)); //not exist
-		
-		chkReplySucessful(reply, Reply.FORWARD_NOT_FOUND, "could not find user");
+		Role t = initAndSaveRole();
+		RoleReply reply = (RoleReply) _presenter.process(new DeleteCommand(99L)); //not exist
+
+		chkReplySucessful(reply, Reply.FORWARD_NOT_FOUND, "could not find entity");
 		chkDalSize(1);
 		chkReplyForwardOnly(reply);
 	}
-	
+
 	//--- show ---
 	@Test
-	public void testShowUser() 
+	public void testShowRole() 
 	{
-		User t = initAndSaveUser();
-		UserReply reply = (UserReply) _presenter.process(new ShowCommand(t.id));
+		Role t = initAndSaveRole();
+		RoleReply reply = (RoleReply) _presenter.process(new ShowCommand(t.id));
 
 		chkReplySucessful(reply, Reply.VIEW_SHOW, null);
 		chkDalSize(1);
 		chkReplyWithEntity(reply);
 	}
 	@Test
-	public void testShowUser_NotFound() 
+	public void testShowRole_NotFound() 
 	{
-		User t = initAndSaveUser();
-		UserReply reply = (UserReply) _presenter.process(new ShowCommand(99L));
+		Role t = initAndSaveRole();
+		RoleReply reply = (RoleReply) _presenter.process(new ShowCommand(99L));
 
-		chkReplySucessful(reply, Reply.FORWARD_NOT_FOUND, "could not find user");
+		chkReplySucessful(reply, Reply.FORWARD_NOT_FOUND, "could not find entity");
 		chkDalSize(1);
 		chkReplyForwardOnly(reply);
 	}
-	
-	
+
+
 	//--------- helper fns--------------
 	protected void chkDalSize(int expected)
 	{
 		assertEquals(expected, _dao.size());
 	}
-	private void chkReplyWithEntity(UserReply reply)
+	private void chkReplyWithEntity(RoleReply reply)
 	{
 		chkReplyWithEntity(reply, false, 0);
 	}
-	private void chkReplyWithEntity(UserReply reply, boolean listExists, int expected)
+	private void chkReplyWithEntity(RoleReply reply, boolean listExists, int expected)
 	{
 		assertNotNull(reply._entity);
 		if (listExists)
@@ -241,7 +240,7 @@ public class UserPresenterTests extends BasePresenterTest
 			assertNull(reply._allL);
 		}
 	}
-	private void chkReplyWithoutEntity(UserReply reply, boolean listExists, int expected)
+	private void chkReplyWithoutEntity(RoleReply reply, boolean listExists, int expected)
 	{
 		assertEquals(null, reply._entity);
 		if (listExists)
@@ -254,66 +253,62 @@ public class UserPresenterTests extends BasePresenterTest
 			assertNull(reply._allL);
 		}
 	}
-	private void chkReplyForwardOnly(UserReply reply)
+	private void chkReplyForwardOnly(RoleReply reply)
 	{
 		assertEquals(null, reply._entity);
 		assertNull(reply._allL);
 	}
-	
-	private MockUserDAO _dao;
-	private UserPresenter _presenter;
+
+	private MockRoleDAO _dao;
+	private RolePresenter _presenter;
 	@Before
 	public void init()
 	{
 		super.init();
 		_dao = getDAO();
-		this._presenter = new UserPresenter(_ctx);
+		this._presenter = new RolePresenter(_ctx);
 	}
-	
-	private MockUserDAO getDAO()
+
+	private MockRoleDAO getDAO()
 	{
-		MockUserDAO dal = (MockUserDAO) Initializer.getDAO(IUserDAO.class); 
+		MockRoleDAO dal = (MockRoleDAO) Initializer.getDAO(IRoleDAO.class); 
 		return dal;
 	}
-	
-	private User initUser()
+
+	private Role initRole()
 	{
-		return initUser("bob");
+		return initRole("bob");
 	}
-	private User initUser(String name)
+	private Role initRole(String name)
 	{
-		User t = new User();
+		Role t = new Role();
 		t.id = 0L; //dal will assign id
 		t.name = name;
 		assertEquals(0, _dao.size());
 		return t;
 	}
-	
-	private User initAndSaveUser()
+
+	private Role initAndSaveRole()
 	{
-		return initAndSaveUser("bob");
+		return initAndSaveRole("bob");
 	}
-	
-	private User initAndSaveUser(String name)
+
+	private Role initAndSaveRole(String name)
 	{
-		User t = initUser(name);
+		Role t = initRole(name);
 		_dao.save(t);
 		assertEquals(1, _dao.size());
 		return _dao.findById(t.id);
 	}
-	private User createUser(String name)
+	private Role createRole(String name)
 	{
-		User u = new User();
+		Role u = new Role();
 		u.name = name;
 		return u;
 	}
-	
-	protected Command createWithBinder(Command cmd, User t, boolean bindingIsValid)
-	{
-		MockFormBinder binder = new MockFormBinder(t);
-		cmd.setFormBinder(binder);
-		binder.isValid = bindingIsValid;
-		return cmd;
-	}
-	
+
+
+
+
+
 }

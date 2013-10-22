@@ -145,7 +145,7 @@ public class RolePresenter extends Presenter
 		if (entity == null)
 		{
 			reply.setDestination(Reply.FORWARD_NOT_FOUND);
-			reply.setFlashFail("could not find Role");
+			reply.setFlashFail("could not find entity");
 		}
 		else
 		{
