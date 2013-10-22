@@ -70,6 +70,12 @@ public class MockUserDAO implements IUserDAO
     		entity.id = new Long(0L);
     	}
 
+    	if (findActualById(entity.id) != null)
+    	{
+    		throw new RuntimeException(String.format("save: id %d already exists", entity.id));
+    	}
+
+
         delete(entity.id); //remove existing
         if (entity.id == 0)
         {
@@ -95,6 +101,7 @@ public class MockUserDAO implements IUserDAO
 	@Override
 	public void update(User entity) 
 	{
+		this.delete(entity.id);
 		this.save(entity);
 	}
 
@@ -102,6 +109,7 @@ public class MockUserDAO implements IUserDAO
     public void updateFrom(IFormBinder binder) 
     {
     	User entity = (User) binder.getObject();
+		this.delete(entity.id);
     	save(entity);
 
     }
