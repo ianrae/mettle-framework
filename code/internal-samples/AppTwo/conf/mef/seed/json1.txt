@@ -1,5 +1,13 @@
 
 {
+	"Role":
+	[
+	
+   { "id": "0", "name": "Viewer" }
+   ,{ "id": "0", "name": "Owner" }
+   ,{ "id": "0", "name": "Admin" }
+   ],
+   
 	"Company":
 	[
 	

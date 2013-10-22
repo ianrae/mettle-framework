@@ -1,0 +1,28 @@
+@(roles: List[mef.entities.Role])
+
+@import helper._
+
+@main("Role list") {
+    
+ @if(flash.containsKey("success")) {
+        <div 
+        <strong>Done!</strong> @flash.get("success")
+        </div>
+    }  else {
+    <div> no flash </div>
+    } 
+    
+    <h1>@roles.size() roles(s)</h1>
+    
+    <ul>
+        @for(r <- roles) {
+            <li>
+				<div>
+                @r.name  @r.id   
+                </div>
+				<br/>
+				
+            </li>
+        }
+    </ul>
+}

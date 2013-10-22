@@ -378,3 +378,8 @@ published mettle to http://ianrae.github.io/snapshot
 added checksums := Nil
 -worked!
 http://stark-shelf-1549.herokuapp.com/
+
+---------------------------21OctMon
+-gen presenter unit test
+
+https://github.com/philipmjohnson/play-form-kludge
