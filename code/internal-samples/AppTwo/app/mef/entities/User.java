@@ -1,4 +1,4 @@
-//THIS FILE HAS BEEN AUTO-GENERATED. DO NOT MODIFY.xx
+//THIS FILE HAS BEEN AUTO-GENERATED. DO NOT MODIFY.
 
 package mef.entities;
 
@@ -10,14 +10,16 @@ public class User extends Entity
 {
 	public User()
 	{}
+
+	public User( String name)
+	{
+		this.name = name;
+	}
+
 	public User(User entity)
 	{
 		this.id = entity.id;
 		this.name = entity.name;
-	}
-	public User( String name)
-	{
-		this.name = name;
 	}
     public Long id;
 

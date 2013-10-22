@@ -1,4 +1,4 @@
-//THIS FILE HAS BEEN AUTO-GENERATED. DO NOT MODIFY.xx
+//THIS FILE HAS BEEN AUTO-GENERATED. DO NOT MODIFY.
 
 package mef.entities;
 
@@ -17,6 +17,15 @@ public class Computer extends Entity
 		this.introduced = introduced;
 		this.discontinued = discontinued;
 		this.company = company;
+	}
+
+	public Computer(Computer entity)
+	{
+		this.id = entity.id;
+		this.name = entity.name;
+		this.introduced = entity.introduced;
+		this.discontinued = entity.discontinued;
+		this.company = entity.company;
 	}
     public Long id;
 

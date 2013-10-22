@@ -26,6 +26,16 @@ public class MockCompanyDAO implements ICompanyDAO
     @Override
     public Company findById(long id) 
     {
+    	Company entity = this.findActualById(id);
+    	if (entity != null)
+    	{
+    		return new Company(entity); //return copy
+        }
+        return null; //not found
+    }
+
+    protected Company findActualById(long id) 
+    {
         for(Company entity : _L)
         {
             if (entity.id == id)
@@ -45,7 +55,7 @@ public class MockCompanyDAO implements ICompanyDAO
     @Override
     public void delete(long id) 
     {
-        Company entity = this.findById(id);
+        Company entity = this.findActualById(id);
         if (entity != null)
         {
             _L.remove(entity);

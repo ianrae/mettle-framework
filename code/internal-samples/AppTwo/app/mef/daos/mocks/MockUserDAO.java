@@ -29,11 +29,12 @@ public class MockUserDAO implements IUserDAO
     	User entity = this.findActualById(id);
     	if (entity != null)
     	{
-    		return new User(entity);
+    		return new User(entity); //return copy
         }
         return null; //not found
     }
-    public User findActualById(long id) 
+
+    protected User findActualById(long id) 
     {
         for(User entity : _L)
         {

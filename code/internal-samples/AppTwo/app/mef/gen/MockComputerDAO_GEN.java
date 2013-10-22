@@ -26,6 +26,16 @@ public class MockComputerDAO_GEN implements IComputerDAO
     @Override
     public Computer findById(long id) 
     {
+    	Computer entity = this.findActualById(id);
+    	if (entity != null)
+    	{
+    		return new Computer(entity); //return copy
+        }
+        return null; //not found
+    }
+
+    protected Computer findActualById(long id) 
+    {
         for(Computer entity : _L)
         {
             if (entity.id == id)
@@ -45,7 +55,7 @@ public class MockComputerDAO_GEN implements IComputerDAO
     @Override
     public void delete(long id) 
     {
-        Computer entity = this.findById(id);
+        Computer entity = this.findActualById(id);
         if (entity != null)
         {
             _L.remove(entity);
