@@ -109,7 +109,7 @@ public class EntityLoader extends SfxBaseObj
     		if (existing != null)
     		{
     			ph.id = existing.id;
-    			roleDal.save(ph); //inserts or updates 
+    			roleDal.update(ph); //inserts or updates 
     			map.put(key, existing.id);
     		}
     		else
@@ -130,7 +130,7 @@ public class EntityLoader extends SfxBaseObj
     		if (existing != null)
     		{
     			ph.id = existing.id;
-    			companyDal.save(ph); //updates 
+    			companyDal.update(ph); //updates 
     			map.put(key, existing.id);
     		}
     		else
@@ -171,7 +171,7 @@ public class EntityLoader extends SfxBaseObj
     			existing.introduced = computer.introduced;
     			existing.name = computer.name;
     			
-    			computerDal.save(existing); //updates 
+    			computerDal.update(existing); //updates 
     			map.put(key, existing.id);
     		}
     		else

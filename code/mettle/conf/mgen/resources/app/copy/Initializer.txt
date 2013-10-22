@@ -27,6 +27,7 @@ public class Initializer
 		SfxContext ctx = new SfxContext();
 //		AllKnownDAOs_GEN knownDAOs = new AllKnownDAOs_GEN();
 //		knownDAOs.registerDAOs(ctx, createMocks);
+		theCtx = ctx;
 		return ctx;
 	}
 	

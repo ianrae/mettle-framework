@@ -10,6 +10,8 @@ import org.mef.framework.binder.IFormBinder;
 import org.codehaus.jackson.map.ObjectMapper;
 import mef.gen.*;
 import org.mef.framework.entitydb.EntityDB;
+import org.omg.CORBA.portable.ApplicationException;
+
 import java.util.Date;
 import com.avaje.ebean.Page;
 public class MockComputerDAO_GEN implements IComputerDAO
@@ -69,6 +71,11 @@ public class MockComputerDAO_GEN implements IComputerDAO
 		{
     		entity.id = new Long(0L);
     	}
+    	
+    	if (findActualById(entity.id) != null)
+    	{
+    		throw new RuntimeException(String.format("save: id %d already exists", entity.id));
+    	}
 
         delete(entity.id); //remove existing
         if (entity.id == 0)
@@ -95,6 +102,7 @@ public class MockComputerDAO_GEN implements IComputerDAO
 	@Override
 	public void update(Computer entity) 
 	{
+        delete(entity.id); //remove existing
 		this.save(entity);
 	}
 
@@ -102,6 +110,7 @@ public class MockComputerDAO_GEN implements IComputerDAO
     public void updateFrom(IFormBinder binder) 
     {
     	Computer entity = (Computer) binder.getObject();
+        delete(entity.id); //remove existing
     	save(entity);
 
     }
