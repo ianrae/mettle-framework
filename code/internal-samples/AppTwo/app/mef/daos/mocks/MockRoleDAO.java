@@ -107,4 +107,12 @@ public class MockRoleDAO implements IRoleDAO
     }
 
 
-	}
+	//query
+    @Override
+    public Role find_by_name(String val) 
+    {
+		Role user = _entityDB.findFirstMatch(_L, "name", val);
+		return user;
+    }
+
+}

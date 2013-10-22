@@ -159,4 +159,16 @@ protected static void touchAll(Role entity, RoleModel t)
 	entity.name = t.getName();
 }
 
+    @Override
+    public Role find_by_name(String val) 
+    {
+      RoleModel model = RoleModel.find.where().eq("name", val).findUnique();
+	  if (model == null)
+	  {
+		return null;
+	  }
+	  Role entity = createEntityFromModel(model);
+	  return entity;
+    }
+
 }

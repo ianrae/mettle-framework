@@ -16,4 +16,6 @@ public interface IRoleDAO  extends IDAO
 	void save(Role entity);        
 	void update(Role entity);
 
-    }
+    public Role find_by_name(String val);
+
+}
