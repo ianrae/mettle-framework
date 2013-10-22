@@ -17,7 +17,7 @@ public class MGEN_PresenterScaffold extends BaseTest
 		createContext();
 		PresenterScaffoldCodeGenerator gen = new PresenterScaffoldCodeGenerator(_ctx);
 		
-		gen.disableFileIO = true;  //***** WATCH OUT!11 ****
+		gen.disableFileIO = false;  //***** WATCH OUT!11 ****
 		
 		String appDir = this.getCurrentDir("");
 		String stDir = this.getCurrentDir("..\\..\\mettle\\conf\\mgen\\resources\\presenter");
@@ -32,6 +32,7 @@ log(stDir);
 		b = gen.generate("User");
 		b = gen.generate("Company");
 		b = gen.generate("Computer");
+		b = gen.generate("Role");
 		if (b)
 		{}
 	}

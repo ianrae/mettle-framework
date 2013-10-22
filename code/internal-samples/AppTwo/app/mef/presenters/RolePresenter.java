@@ -1,7 +1,6 @@
-header(package,type) ::= <<
 //THIS FILE HAS BEEN AUTO-GENERATED. DO NOT MODIFY.
 
-package <package>;
+package mef.presenters;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -22,68 +21,57 @@ import org.mef.framework.replies.Reply;
 import org.mef.framework.sfx.SfxBaseObj;
 import org.mef.framework.sfx.SfxContext;
 
-import mef.daos.I<type>DAO;
-import mef.entities.<type>;
-import mef.presenters.replies.<type>Reply;
-
->>
-
-fielddecl(type, name, value) ::= <<
-    public <name> <name><init(value)>;
->>
-init(v) ::= "<if(v)> = <v><endif>"
-
-
-classdecl(type, name) ::= <<
-
-public class <name> extends Presenter
+import mef.daos.IRoleDAO;
+import mef.entities.Role;
+import mef.presenters.replies.RoleReply;
+public class RolePresenter extends Presenter
 {
-	private I<type>DAO _dao;
-	private <type>Reply _reply;
+	private IRoleDAO _dao;
+	private RoleReply _reply;
 
-	public <name>(SfxContext ctx)
+	public RolePresenter(SfxContext ctx)
 	{
 		super(ctx); 
-		_dao = (I<type>DAO) getInstance(I<type>DAO.class);
+		_dao = (IRoleDAO) getInstance(IRoleDAO.class);
 	}
 	@Override
-	protected <type>Reply createReply()
+	protected RoleReply createReply()
 	{
-		_reply = new <type>Reply();
+		_reply = new RoleReply();
 		return _reply;
 	}
-	
-	public <type>Reply onIndexCommand(IndexCommand cmd)
+
+	public RoleReply onIndexCommand(IndexCommand cmd)
 	{
-		<type>Reply reply = createReply(); 
+		RoleReply reply = createReply(); 
 		reply.setDestination(Reply.VIEW_INDEX);
 		reply._allL = _dao.all();
 		return reply;
 	}
 
-	public <type>Reply onNewCommand(NewCommand cmd)
+	public RoleReply onNewCommand(NewCommand cmd)
 	{
-		<type>Reply reply = createReply();
+		RoleReply reply = createReply();
 		reply.setDestination(Reply.VIEW_NEW);
-		reply._entity = new <type>();
+		reply._entity = new Role();
 		return reply; 
 	}
-	
-	public <type>Reply onCreateCommand(CreateCommand cmd)
+
+	public RoleReply onCreateCommand(CreateCommand cmd)
 	{
-		<type>Reply reply = createReply();
+		RoleReply reply = createReply();
 		reply.setDestination(Reply.VIEW_NEW);
-		
+
 		IFormBinder binder = cmd.getFormBinder();
 		if (! binder.bind())
 		{
 			reply.setFlashFail("binding failed!");
-			reply._entity = (<type>) binder.getObject();
+			reply._entity = (Role) binder.getObject();
 			return reply;
 		}
 		else
 		{
-			<type> entity = (<type>) binder.getObject();
+			Role entity = (Role) binder.getObject();
 			if (entity == null)
 			{
 				reply.setFailed(true);
@@ -98,13 +86,13 @@ public class <name> extends Presenter
 			return reply;
 		}
 	}
-	
-	public <type>Reply onEditCommand(EditCommand cmd)
+
+	public RoleReply onEditCommand(EditCommand cmd)
 	{
-		<type>Reply reply = createReply();
+		RoleReply reply = createReply();
 		reply.setDestination(Reply.VIEW_EDIT);
-		
-		<type> entity = _dao.findById(cmd.id);
+
+		Role entity = _dao.findById(cmd.id);
 		if (entity == null)
 		{
 			reply.setDestination(Reply.FORWARD_NOT_FOUND);
@@ -116,15 +104,15 @@ public class <name> extends Presenter
 			return reply;
 		}
 	}
-	public <type>Reply onUpdateCommand(UpdateCommand cmd)
+	public RoleReply onUpdateCommand(UpdateCommand cmd)
 	{
-		<type>Reply reply = createReply();
+		RoleReply reply = createReply();
 		reply.setDestination(Reply.VIEW_EDIT);
 		IFormBinder binder = cmd.getFormBinder();
 		if (! binder.bind())
 		{
 			reply.setFlashFail("binding failed!");
-			reply._entity = (<type>) binder.getObject();
+			reply._entity = (Role) binder.getObject();
 			if (reply._entity == null)
 			{
 				Logger.info("failbinding null entity!");
@@ -135,7 +123,7 @@ public class <name> extends Presenter
 		else
 		{
 			//ensure id is a valid id
-			<type> entity = _dao.findById(cmd.id);
+			Role entity = _dao.findById(cmd.id);
 			if (entity == null)
 			{
 				reply.setDestination(Reply.FORWARD_NOT_FOUND);
@@ -147,17 +135,17 @@ public class <name> extends Presenter
 			return reply;
 		}
 	}
-	
-	
-	public <type>Reply onDeleteCommand(DeleteCommand cmd)
+
+
+	public RoleReply onDeleteCommand(DeleteCommand cmd)
 	{
-		<type>Reply reply = createReply();
+		RoleReply reply = createReply();
 		reply.setDestination(Reply.FORWARD_INDEX);
-		<type> entity = _dao.findById(cmd.id);
+		Role entity = _dao.findById(cmd.id);
 		if (entity == null)
 		{
 			reply.setDestination(Reply.FORWARD_NOT_FOUND);
-			reply.setFlashFail("could not find <type>");
+			reply.setFlashFail("could not find Role");
 		}
 		else
 		{
@@ -165,12 +153,12 @@ public class <name> extends Presenter
 		}
 		return reply;
 	}
-	
-	public <type>Reply onShowCommand(ShowCommand cmd)
+
+	public RoleReply onShowCommand(ShowCommand cmd)
 	{
-		<type>Reply reply = createReply();
+		RoleReply reply = createReply();
 		reply.setDestination(Reply.VIEW_SHOW);
-		<type> entity = _dao.findById(cmd.id);
+		Role entity = _dao.findById(cmd.id);
 		if (entity == null)
 		{
 			reply.setDestination(Reply.FORWARD_NOT_FOUND);
@@ -184,9 +172,7 @@ public class <name> extends Presenter
 	}
 
 
->>
 
-endclassdecl() ::= <<
+
+
 }
->>
-
