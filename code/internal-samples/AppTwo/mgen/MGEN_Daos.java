@@ -31,7 +31,7 @@ log(stDir);
 		gen.genRealDAO = true;
 		
 		int n = gen.init(appDir, stDir);
-		assertEquals(3, n);
+		assertEquals(4, n);
 
 		boolean b = false;
 		gen.genDaoLoader = true;
@@ -39,6 +39,7 @@ log(stDir);
 		b = gen.generate("User");
 		b = gen.generate("Company");
 		b = gen.generate("Computer");
+		b = gen.generate("Role");
 		if (b)
 		{}
 	}

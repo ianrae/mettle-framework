@@ -57,6 +57,7 @@ public class <name> extends Presenter
 	{
 		<type>Reply reply = createReply(); 
 		reply.setDestination(Reply.VIEW_INDEX);
+		reply._allL = _dao.all();
 		return reply;
 	}
 
@@ -64,6 +65,7 @@ public class <name> extends Presenter
 	{
 		<type>Reply reply = createReply();
 		reply.setDestination(Reply.VIEW_NEW);
+		reply._entity = new <type>();
 		return reply; 
 	}
 	
@@ -71,19 +73,79 @@ public class <name> extends Presenter
 	{
 		<type>Reply reply = createReply();
 		reply.setDestination(Reply.VIEW_NEW);
-		return reply;
+		
+		IFormBinder binder = cmd.getFormBinder();
+		if (! binder.bind())
+		{
+			reply.setFlashFail("binding failed!");
+			reply._entity = (<type>) binder.getObject();
+			return reply;
+		}
+		else
+		{
+			<type> entity = (<type>) binder.getObject();
+			if (entity == null)
+			{
+				reply.setFailed(true);
+			}
+			else
+			{
+				_dao.save(entity);
+				Logger.info("saved new");
+				reply.setFlashSuccess("created entity");
+				reply.setDestination(Reply.FORWARD_INDEX);
+			}
+			return reply;
+		}
 	}
 	
 	public <type>Reply onEditCommand(EditCommand cmd)
 	{
 		<type>Reply reply = createReply();
 		reply.setDestination(Reply.VIEW_EDIT);
-		return reply;
+		
+		<type> entity = _dao.findById(cmd.id);
+		if (entity == null)
+		{
+			reply.setDestination(Reply.FORWARD_NOT_FOUND);
+			return reply;
+		}
+		else
+		{
+			reply._entity = entity;
+			return reply;
+		}
 	}
 	public <type>Reply onUpdateCommand(UpdateCommand cmd)
 	{
 		<type>Reply reply = createReply();
 		reply.setDestination(Reply.VIEW_EDIT);
+		IFormBinder binder = cmd.getFormBinder();
+		if (! binder.bind())
+		{
+			reply.setFlashFail("binding failed!");
+			reply._entity = (<type>) binder.getObject();
+			if (reply._entity == null)
+			{
+				Logger.info("failbinding null entity!");
+				reply._entity = _dao.findById(cmd.id); //fix better later!!
+			}
+			return reply;
+		}
+		else
+		{
+			//ensure id is a valid id
+			<type> entity = _dao.findById(cmd.id);
+			if (entity == null)
+			{
+				reply.setDestination(Reply.FORWARD_NOT_FOUND);
+				return reply;
+			}
+			_dao.updateFrom(binder);
+			Logger.info("saved update ");
+			reply.setDestination(Reply.FORWARD_INDEX);
+			return reply;
+		}
 		return reply;
 	}
 	
@@ -92,6 +154,16 @@ public class <name> extends Presenter
 	{
 		<type>Reply reply = createReply();
 		reply.setDestination(Reply.FORWARD_INDEX);
+		<type> entity = _dao.findById(cmd.id);
+		if (entity == null)
+		{
+			reply.setDestination(Reply.FORWARD_NOT_FOUND);
+			reply.setFlashFail("could not find <type>");
+		}
+		else
+		{
+			_dao.delete(cmd.id);
+		}
 		return reply;
 	}
 	
@@ -99,6 +171,16 @@ public class <name> extends Presenter
 	{
 		<type>Reply reply = createReply();
 		reply.setDestination(Reply.VIEW_SHOW);
+		<type> entity = _dao.findById(cmd.id);
+		if (entity == null)
+		{
+			reply.setDestination(Reply.FORWARD_NOT_FOUND);
+			reply.setFlashFail("could not find entity");
+		}
+		else
+		{
+			reply._entity = entity;
+		}
 		return reply;
 	}
 

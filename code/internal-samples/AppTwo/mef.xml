@@ -35,4 +35,9 @@
 	<codegen what="dal_real" extend="true" />
 </entity>
 
+<entity name="Role">
+	<field>@Id Long id</field>
+	<field>@Required String name</field>
+</entity>
+
 </entities>

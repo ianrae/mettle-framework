@@ -25,7 +25,7 @@ log(appDir);
 log(stDir);
 		
 		int n = gen.init(appDir, stDir);
-		assertEquals(3, n);
+		assertEquals(4, n);
 
 		boolean b = false;
 //		boolean b = gen.generate(0);
