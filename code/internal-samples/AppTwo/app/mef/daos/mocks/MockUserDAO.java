@@ -26,6 +26,15 @@ public class MockUserDAO implements IUserDAO
     @Override
     public User findById(long id) 
     {
+    	User entity = this.findActualById(id);
+    	if (entity != null)
+    	{
+    		return new User(entity);
+        }
+        return null; //not found
+    }
+    public User findActualById(long id) 
+    {
         for(User entity : _L)
         {
             if (entity.id == id)
@@ -45,7 +54,7 @@ public class MockUserDAO implements IUserDAO
     @Override
     public void delete(long id) 
     {
-        User entity = this.findById(id);
+        User entity = this.findActualById(id);
         if (entity != null)
         {
             _L.remove(entity);

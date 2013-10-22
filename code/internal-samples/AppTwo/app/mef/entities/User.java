@@ -10,7 +10,11 @@ public class User extends Entity
 {
 	public User()
 	{}
-
+	public User(User entity)
+	{
+		this.id = entity.id;
+		this.name = entity.name;
+	}
 	public User( String name)
 	{
 		this.name = name;
