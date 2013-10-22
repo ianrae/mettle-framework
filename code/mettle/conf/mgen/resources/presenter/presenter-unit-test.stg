@@ -25,6 +25,7 @@ import mef.daos.mocks.Mock<type>DAO;
 import mef.entities.<type>;
 import mef.presenters.<type>Presenter;
 import mef.presenters.replies.<type>Reply;
+import org.mef.framework.test.helpers.MockFormBinder;
 
 >>
 

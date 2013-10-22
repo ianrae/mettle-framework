@@ -17,6 +17,7 @@ import org.mef.framework.commands.UpdateCommand;
 import org.mef.framework.presenters.Presenter;
 import org.mef.framework.replies.Reply;
 import org.mef.framework.sfx.SfxContext;
+import org.mef.framework.test.helpers.MockFormBinder;
 
 import mef.core.Initializer;
 import mef.daos.IRoleDAO;
@@ -68,7 +69,7 @@ public class RolePresenterTests extends BasePresenterTest
 		RoleReply reply = (RoleReply) _presenter.process( new NewCommand());
 
 		chkReplySucessful(reply, Reply.VIEW_NEW, null);
-		assertEquals("defaultname", reply._entity.name);
+//		assertEquals("defaultname", reply._entity.name);
 		chkDalSize(0);
 		chkReplyWithEntity(reply);
 	}
@@ -305,6 +306,14 @@ public class RolePresenterTests extends BasePresenterTest
 		Role u = new Role();
 		u.name = name;
 		return u;
+	}
+
+	protected Command createWithBinder(Command cmd, Role t, boolean bindingIsValid)
+	{
+		MockFormBinder binder = new MockFormBinder(t);
+		cmd.setFormBinder(binder);
+		binder.isValid = bindingIsValid;
+		return cmd;
 	}
 
 
