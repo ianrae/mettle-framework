@@ -1,5 +1,5 @@
 header(package) ::= <<
-//THIS FILE HAS BEEN AUTO-GENERATED. DO NOT MODIFY.xx
+//THIS FILE HAS BEEN AUTO-GENERATED. DO NOT MODIFY.
 
 package <package>;
 
@@ -16,7 +16,7 @@ fielddecl(type, name, value) ::= <<
 init(v) ::= "<if(v)> = <v><endif>"
 
 
-classdecl(type, name, args, inits, isNotExtended) ::= <<
+classdecl(type, name, args, inits, copyinits, isNotExtended) ::= <<
 public class <name> extends Entity
 {
 <if(isNotExtended)>
@@ -26,6 +26,12 @@ public class <name> extends Entity
 	public <name>( <args; separator=", ">)
 	{
 		<inits; separator="\n">
+	}
+	
+	public <name>(<name> entity)
+	{
+		this.id = entity.id;
+		<copyinits; separator="\n">
 	}
 <endif>
 >>

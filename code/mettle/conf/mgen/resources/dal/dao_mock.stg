@@ -52,6 +52,16 @@ public class <name> implements I<type>DAO
     @Override
     public <type> findById(long id) 
     {
+    	<type> entity = this.findActualById(id);
+    	if (entity != null)
+    	{
+    		return new <type>(entity); //return copy
+        }
+        return null; //not found
+    }
+
+    protected <type> findActualById(long id) 
+    {
         for(<type> entity : _L)
         {
             if (entity.id == id)
@@ -71,7 +81,7 @@ public class <name> implements I<type>DAO
     @Override
     public void delete(long id) 
     {
-        <type> entity = this.findById(id);
+        <type> entity = this.findActualById(id);
         if (entity != null)
         {
             _L.remove(entity);

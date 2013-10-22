@@ -26,7 +26,8 @@ public class EntityCodeGen extends CodeGenBase
 			st.add("type", "int");
 			st.add("name", getClassName(def));
 			st.add("args", buildArgList(def));
-			st.add("inits", buildCtorInitsList(def));
+			st.add("inits", buildCtorInitsList(def, false));
+			st.add("copyinits", buildCtorInitsList(def, true));
 			st.add("isNotExtended", ! this.isExtended);
 			
 			result += st.render(); 
@@ -39,7 +40,7 @@ public class EntityCodeGen extends CodeGenBase
 			return result;
 		}
 		
-		private Object buildCtorInitsList(EntityDef def) 
+		private Object buildCtorInitsList(EntityDef def, boolean isCopyCtor) 
 		{
 			ArrayList<String> L = new ArrayList<String>();
 			for(FieldDef fdef : def.fieldL)
@@ -49,6 +50,10 @@ public class EntityCodeGen extends CodeGenBase
 				else
 				{
 					String s = String.format("this.%s = %s;", fdef.name, fdef.name);
+					if (isCopyCtor)
+					{
+						s = String.format("this.%s = entity.%s;", fdef.name, fdef.name);
+					}
 					L.add(s);
 				}
 			}
