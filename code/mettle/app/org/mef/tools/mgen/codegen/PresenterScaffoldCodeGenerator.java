@@ -56,32 +56,28 @@ public class PresenterScaffoldCodeGenerator extends SfxBaseObj
 		EntityDef def = parser._entityL.get(index);
 		
 		String path = this.pathCombine(stDir, "presenter.stg");
-		PresenterCodeGen gen = new PresenterCodeGen(_ctx, path, "mef.presenters");
-		boolean b = generateOneFile(def, gen, "app\\mef\\presenters");
+		boolean b = generateOneFile(def, new PresenterCodeGen(_ctx, path, "mef.presenters"), "app\\mef\\presenters");
 		if (!b )
 		{
 			return false; //!!
 		}
 		
 		path = this.pathCombine(stDir, "reply.stg");
-		ReplyCodeGen gen2 = new ReplyCodeGen(_ctx, path, "mef.presenters.replies");
-		b = generateOneFile(def, gen2, "app\\mef\\presenters\\replies");
+		b = generateOneFile(def, new ReplyCodeGen(_ctx, path, "mef.presenters.replies"), "app\\mef\\presenters\\replies");
 		if (!b )
 		{
 			return false; //!!
 		}
 		
 		path = this.pathCombine(stDir, "boundary.stg");
-		BoundaryCodeGen gen3 = new BoundaryCodeGen(_ctx, path, "boundaries");
-		b = generateOneFile(def, gen3, "app\\boundaries");
+		b = generateOneFile(def, new BoundaryCodeGen(_ctx, path, "boundaries"), "app\\boundaries");
 		if (!b )
 		{
 			return false; //!!
 		}
 		
 		path = this.pathCombine(stDir, "formBinder.stg");
-		FormBinderCodeGen gen4 = new FormBinderCodeGen(_ctx, path, "boundaries.binders");
-		b = generateOneFile(def, gen4, "app\\boundaries\\binders");
+		b = generateOneFile(def, new FormBinderCodeGen(_ctx, path, "boundaries.binders"), "app\\boundaries\\binders");
 		if (!b )
 		{
 			return false; //!!
