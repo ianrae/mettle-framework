@@ -129,6 +129,7 @@ public class UserPresenterTests extends BasePresenterTest
 	public void testUpdateUser() 
 	{
 		User t = initAndSaveUser();
+		chkDalSize(1);
 		t.name = "user2"; //simulate user edit
 		Command cmd = createWithBinder(new UpdateCommand(t.id), t, true);
 		
@@ -296,7 +297,7 @@ public class UserPresenterTests extends BasePresenterTest
 		User t = initUser(name);
 		_dao.save(t);
 		assertEquals(1, _dao.size());
-		return t;
+		return _dao.findById(t.id);
 	}
 	private User createUser(String name)
 	{
