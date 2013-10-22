@@ -11,7 +11,7 @@ import org.junit.Test;
 public class CompanyTests extends BaseTest
 {
 
-	@Test
+	@Test(expected = RuntimeException.class)
 	public void test() 
 	{
 		Initializer.createContext(true); //don't call init in unit tests
@@ -26,8 +26,7 @@ public class CompanyTests extends BaseTest
 		Company c = new Company("abc");
 		dao.save(c);
 		assertEquals(43, dao.size());
-		dao.save(c);
-		assertEquals(43, dao.size());
+		dao.save(c); //throws exception
 	}
 
 }
