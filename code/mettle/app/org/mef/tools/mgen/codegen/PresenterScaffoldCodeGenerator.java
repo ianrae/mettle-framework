@@ -10,6 +10,7 @@ import org.mef.tools.mgen.codegen.generators.BoundaryCodeGen;
 import org.mef.tools.mgen.codegen.generators.CodeGenBase;
 import org.mef.tools.mgen.codegen.generators.FormBinderCodeGen;
 import org.mef.tools.mgen.codegen.generators.PresenterCodeGen;
+import org.mef.tools.mgen.codegen.generators.PresenterUnitTestCodeGen;
 import org.mef.tools.mgen.codegen.generators.ReplyCodeGen;
 import org.mef.tools.mgen.parser.DalGenXmlParser;
 import org.mef.tools.mgen.parser.EntityDef;
@@ -78,6 +79,13 @@ public class PresenterScaffoldCodeGenerator extends SfxBaseObj
 		
 		path = this.pathCombine(stDir, "formBinder.stg");
 		b = generateOneFile(def, new FormBinderCodeGen(_ctx), path, "boundaries.binders", "app\\boundaries\\binders");
+		if (!b )
+		{
+			return false; //!!
+		}
+		
+		path = this.pathCombine(stDir, "presenter-unit-test.stg");
+		b = generateOneFile(def, new PresenterUnitTestCodeGen(_ctx), path, "mef", "test\\mef");
 		if (!b )
 		{
 			return false; //!!

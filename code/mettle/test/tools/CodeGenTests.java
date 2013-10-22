@@ -104,6 +104,14 @@ public class CodeGenTests extends BaseCodeGenTest
 		genAndLog(gen, "dao_entity_loader.stg", "mef.core");
 	}
 	
+	@Test
+	public void testPresenterUnitTest() throws Exception
+	{
+		log("--testPresenterUnitTest--");
+		BoundaryCodeGen gen = new BoundaryCodeGen(_ctx);
+		genPresenterAndLog(gen, "presenter-unit-test.stg", "mef");
+	}
+	
 //	@Test
 //	public void testDALUtils() throws Exception
 //	{
