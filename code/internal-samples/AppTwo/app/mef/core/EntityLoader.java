@@ -111,29 +111,11 @@ public class EntityLoader extends SfxBaseObj
     		
     		String key = makeKey(computer, computer.id);
     		Computer existing = computerDal.find_by_name(computer.name); //use seedWith field
-    		if (existing != null)
-    		{
-    			//copy all but id
-    			existing.company = computer.company;
-    			existing.discontinued = computer.discontinued;
-    			existing.introduced = computer.introduced;
-    			existing.name = computer.name;
-    			
-    			computerDal.update(existing); //updates 
-    			map.put(key, existing.id);
-    		}
-    		else
-    		{
-    			computer.id = 0L;
-    			computerDal.save(computer); //inserts or updates 
-    			map.put(key, computer.id);
-    		}
-    		
+    		long id = EntityLoaderSaver_GEN.saveOrUpdate(computer, existing, computerDal);
+    		map.put(key, id);
     	}
-    	
-    	
-    	
 	}
+	
 	private String makeKey(Entity entity, Long id)
 	{
 		String s = entity.getClass().getSimpleName();

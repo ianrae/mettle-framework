@@ -6,100 +6,41 @@ package <package>;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import org.codehaus.jackson.JsonNode;
 import mef.entities.*;
+import mef.daos.*;
 import java.util.Date;
-import org.mef.framework.loaders.BaseDaoJsonLoader;
 
 
 
 
 >>
 
-readentity(type, fields) ::= <<
-	public <type> read<type>(JsonNode node)
+saveorupdate(type, fields) ::= <<
+	public static long saveOrUpdate(<type> obj, <type> existing, I<type>DAO dao)
 	{
-		<type> obj = new <type>();
-		JsonNode jj = node.get("id");
-		obj.id = jj.asLong();
-
-		<fields:{t| 
-		jj = node.get("<t.name>");
-		<if(t.stringType)>
-		obj.<t.name> = jj.getTextValue();
-		<endif>
-		<if(t.booleanType)>
-		obj.<t.name> = jj.asBoolean();
-		<endif>
-		<if(t.dateType)>
-		obj.<t.name> = readDate(jj, "yyyy-MM-dd");
-		<endif>
-		}; separator="\n">
-
-		
-		return obj;
-	}
-
->>
-	
-loadentity(type) ::= <<
-	public List\<<type>\> load<type>s(JsonNode rootNode) 
-	{
-		List\<<type>\> phoneL = new ArrayList\<<type>\>();
-		
-    	JsonNode msgNode = rootNode.path("<type>");
-		Iterator\<JsonNode> ite = msgNode.getElements();
-
-		int i = 0;
-		while (ite.hasNext()) {
-			JsonNode temp = ite.next();
-			<type> ph = read<type>(temp);
+		if (existing != null)
+		{
+			obj.id = existing.id;
+			//copy everything 
+			<fields:{t| 
+			existing.<t.name> = obj.<t.name>;
+			}; separator="\n">			
 			
-			phoneL.add(ph);
-			i++;
-		}    	
-		
-		return phoneL;
-	}
-
->>
-
-findwithidentity(type) ::= <<
-	protected <type> find<type>WithId(long id, List\<<type>\> phoneL) 
-	{
-		for (<type> ph : phoneL)
-		{
-			if (ph.id == id)
-			{
-				return ph;
-			}
+			dao.update(existing); //inserts or updates 
 		}
-		return null;
+		else
+		{
+			obj.id = 0L;
+			dao.save(obj); //inserts or updates 
+		}
+		return obj.id;
 	}
 
 >>
 	
-resolve2(type1, type2) ::= <<
-	public void resolveIds(List\<<type1>\> userL, List\<<type2>\> phoneL) 
-	{
-		for(<type1> u : userL)
-		{
-			<type2> ph = find<type2>WithId(u.phone.id, phoneL);
-			if (ph == null)
-			{
-				//err!!
-			}
-			else
-			{
-				u.phone = ph;
-			}
-		}
-	}
-
->>
 
 classdecl(name) ::= <<
-public class <name> extends BaseDaoJsonLoader
+public class <name> 
 {
 
 	

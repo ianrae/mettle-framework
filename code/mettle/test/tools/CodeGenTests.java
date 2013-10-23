@@ -8,6 +8,7 @@ import org.mef.tools.mgen.codegen.generators.CodeGenBase;
 import org.mef.tools.mgen.codegen.generators.DAOIntefaceCodeGen;
 import org.mef.tools.mgen.codegen.generators.DaoEntityLoaderCodeGen;
 import org.mef.tools.mgen.codegen.generators.EntityCodeGen;
+import org.mef.tools.mgen.codegen.generators.EntityLoaderSaverCodeGen;
 import org.mef.tools.mgen.codegen.generators.FormBinderCodeGen;
 import org.mef.tools.mgen.codegen.generators.KnownDAOsCodeGen;
 import org.mef.tools.mgen.codegen.generators.MockDAOCodeGen;
@@ -102,6 +103,14 @@ public class CodeGenTests extends BaseCodeGenTest
 		log("--testDaoLoader--");
 		DaoEntityLoaderCodeGen gen = new DaoEntityLoaderCodeGen(_ctx);
 		genAndLog(gen, "dao_entity_loader.stg", "mef.core");
+	}
+	
+	@Test
+	public void testEntityLoaderSaver() throws Exception
+	{
+		log("--EntityLoaderSaverCodeGen--");
+		EntityLoaderSaverCodeGen gen = new EntityLoaderSaverCodeGen(_ctx);
+		genAndLog(gen, "dao_entity_saver.stg", "mef.gen");
 	}
 	
 	@Test
