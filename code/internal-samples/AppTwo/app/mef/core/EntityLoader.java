@@ -96,16 +96,11 @@ public class EntityLoader extends SfxBaseObj
     	{
     		if (computer.company != null)
     		{
-				String phKey = makeKey(computer.company, computer.company.id);
-				Long companyId = map.get(phKey);
-				if (companyId != null && companyId.longValue() != 0L)
+    			long existingId = findIdInMap(computer.company, computer.company.id, map);
+				if (existingId != 0L)
 				{
-		    		Company existing = companyDal.findById(companyId);
+		    		Company existing = companyDal.findById(existingId);
 					computer.company = existing;
-				}
-				else
-				{
-					log(String.format("ERR: can't find company id %d", computer.company.id));
 				}
     		}    		
     		
@@ -123,4 +118,18 @@ public class EntityLoader extends SfxBaseObj
 		return s;
 	}
 
+	private long findIdInMap(Entity entity, Long id, HashMap<String, Long> map) 
+	{
+		String key = makeKey(entity, id);
+		Long physicalId = map.get(key);
+		if (physicalId != null && physicalId.longValue() != 0L)
+		{
+			return physicalId.longValue();
+		}
+		else
+		{
+			log(String.format("ERR: can't find id: %s", key));
+			return 0;
+		}
+	}	
 }
