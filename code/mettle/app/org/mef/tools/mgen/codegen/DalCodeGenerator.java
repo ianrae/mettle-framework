@@ -12,6 +12,7 @@ import org.mef.tools.mgen.codegen.generators.CodeGenBase;
 import org.mef.tools.mgen.codegen.generators.DAOIntefaceCodeGen;
 import org.mef.tools.mgen.codegen.generators.DaoEntityLoaderCodeGen;
 import org.mef.tools.mgen.codegen.generators.EntityCodeGen;
+import org.mef.tools.mgen.codegen.generators.EntityLoaderSaverCodeGen;
 import org.mef.tools.mgen.codegen.generators.KnownDAOsCodeGen;
 import org.mef.tools.mgen.codegen.generators.MockDAOCodeGen;
 import org.mef.tools.mgen.codegen.generators.ModelCodeGen;
@@ -155,6 +156,12 @@ public class DalCodeGenerator extends SfxBaseObj
 		{
 			
 			b = doGen(def, "dao_entity_loader.stg", "mef.core", "app\\mef\\core", new DaoEntityLoaderCodeGen(_ctx));
+			if (!b )
+			{
+				return false; //!!
+			}
+
+			b = doGen(def, "dao_entity_saver.stg", "mef.gen", "app\\mef\\gen", new EntityLoaderSaverCodeGen(_ctx));
 			if (!b )
 			{
 				return false; //!!
