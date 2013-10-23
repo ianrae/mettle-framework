@@ -383,3 +383,40 @@ http://stark-shelf-1549.herokuapp.com/
 -gen presenter unit test
 
 https://github.com/philipmjohnson/play-form-kludge
+
+MARKDOWN
+http://johnmacfarlane.net/pandoc/
+http://www.methods.co.nz/asciidoc/asciidoc.css-embedded.html
+http://asciidoctor.org/docs/asciidoc-writers-guide/  ASCIIDOC
+https://community.jboss.org/message/740171 asciidoc on windows
+http://boxgrinder.org/ creates VMs
+http://mashable.com/2013/06/24/markdown-tools/
+
+jekyll
+http://ruhoh.com/ alternative to jekyll
+http://jekyllrb.com/
+http://net.tutsplus.com/tutorials/other/building-static-sites-with-jekyll/
+PLAY
+https://groups.google.com/forum/#!topic/play-framework/T4WE0Ra5d8c deadbolt getsubject
+
+Dolly Dagger - hendrix
+
+NORTH BAY EA-73
+http://en.wikipedia.org/wiki/Variable_bitrate
+-most audio is constant bitrae (CBR)
+-VBR
+http://mediaarea.net/en/MediaInfo mediainfo
+
+AJAX PARTIAL HTML
+          document.getElementById(sDiv).innerHTML = xml.responseText;
+Matt Raibble
+http://www.slideshare.net/mraible/the-modern-java-web-developer-javaone-2013
+-aka "AJAX Postback"
+-still get all the request pipeline, auth, templates, i18n, etc
+-but instead of returning json, return html (part of a page)
+http://architects.dzone.com/articles/unify-client-side-and-server-0
+-returning json tends to duplicate code: on server and client
+http://stackoverflow.com/questions/1148266/ajax-html-vs-xml-json-responses-perfomance-or-other-reasons
+
+http://www.quirksmode.org/blog/archives/2005/12/the_ajax_respon.html
+

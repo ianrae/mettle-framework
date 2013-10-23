@@ -16,8 +16,6 @@ import org.mef.tools.mgen.codegen.generators.ModelCodeGen;
 import org.mef.tools.mgen.codegen.generators.RealDAOCodeGen;
 import org.mef.tools.mgen.parser.EntityDef;
 
-import sfx.SfxFileUtils;
-import sfx.SfxTextWriter;
 
 
 public class CodeGenTests extends BaseCodeGenTest

@@ -6,6 +6,7 @@ import java.io.File;
 
 import org.mef.framework.sfx.SfxBaseObj;
 import org.mef.framework.sfx.SfxContext;
+import org.mef.framework.sfx.SfxTextWriter;
 import org.mef.tools.mgen.codegen.generators.BoundaryCodeGen;
 import org.mef.tools.mgen.codegen.generators.CodeGenBase;
 import org.mef.tools.mgen.codegen.generators.FormBinderCodeGen;
@@ -16,7 +17,6 @@ import org.mef.tools.mgen.parser.DalGenXmlParser;
 import org.mef.tools.mgen.parser.EntityDef;
 import org.mef.tools.mgen.parser.FieldDef;
 
-import sfx.SfxTextWriter;
 
 public class PresenterScaffoldCodeGenerator extends SfxBaseObj
 {

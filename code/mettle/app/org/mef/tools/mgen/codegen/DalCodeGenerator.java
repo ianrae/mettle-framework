@@ -8,6 +8,7 @@ import java.util.HashMap;
 import org.mef.framework.sfx.SfxBaseObj;
 import org.mef.framework.sfx.SfxContext;
 import org.mef.framework.sfx.SfxErrorTracker;
+import org.mef.framework.sfx.SfxTextWriter;
 import org.mef.tools.mgen.codegen.generators.CodeGenBase;
 import org.mef.tools.mgen.codegen.generators.DAOIntefaceCodeGen;
 import org.mef.tools.mgen.codegen.generators.DaoEntityLoaderCodeGen;
@@ -21,7 +22,6 @@ import org.mef.tools.mgen.parser.DalGenXmlParser;
 import org.mef.tools.mgen.parser.EntityDef;
 
 
-import sfx.SfxTextWriter;
 
 public class DalCodeGenerator extends SfxBaseObj
 {

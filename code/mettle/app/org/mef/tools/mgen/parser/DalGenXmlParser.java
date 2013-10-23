@@ -6,11 +6,11 @@ import java.util.List;
 import org.mef.framework.sfx.SfxBaseObj;
 import org.mef.framework.sfx.SfxContext;
 import org.mef.framework.sfx.SfxErrorTracker;
+import org.mef.framework.sfx.SfxXmlParser;
+import org.mef.framework.sfx.SfxXmlReader;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import sfx.SfxXmlParser;
-import sfx.SfxXmlReader;
 
 public class DalGenXmlParser extends SfxBaseObj
 {

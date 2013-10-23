@@ -11,7 +11,6 @@ import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.STGroup;
 import org.stringtemplate.v4.STGroupFile;
 
-import sfx.SfxFileUtils;
 
 public class OtherTests extends BaseTest
 {
