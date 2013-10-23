@@ -12,6 +12,7 @@ import mef.entities.Company;
 import mef.entities.Computer;
 import mef.entities.Role;
 import mef.entities.User;
+import mef.gen.EntityLoaderSaver_GEN;
 
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -35,40 +36,6 @@ public class EntityLoader extends SfxBaseObj
 		roleDal = (IRoleDAO) Initializer.getDAO(IRoleDAO.class);
 	}
 	
-//    public void loadCompany(String json) throws Exception
-//    {
-//    	ObjectMapper mapper = new ObjectMapper();
-//    	Company[] arCompany = mapper.readValue(json, Company[].class);
-//    	for(int i = 0; i < arCompany.length; i++)
-//    	{
-//    		Company entity = arCompany[i];
-//    		Company existing = companyDal.find_by_name(entity.name); //use seedWith field
-//    		if (existing != null)
-//    		{
-//    			entity.id = existing.id;
-//    		}
-//    		companyDal.save(entity); //inserts or updates 
-//    	}
-//    }
-//    
-//    
-//
-//	private void doCompany(Company entity) 
-//	{
-//		Company ph = companyDal.find_by_name(entity.name); //use seedWith field
-//		
-//		if (ph != null)
-//		{
-//			ph.name = entity.name; //!!copy all over
-//			companyDal.update(ph);
-//		}
-//		else
-//		{
-//			companyDal.save(entity);
-//		}
-//		
-//	}
-
 	public void loadAll(String json) throws Exception
 	{
     	DaoJsonLoader loader = new DaoJsonLoader();
@@ -106,20 +73,11 @@ public class EntityLoader extends SfxBaseObj
     		String key = makeKey(ph, ph.id);
 
     		Role existing = roleDal.find_by_name(ph.name); //use seedWith field
-    		if (existing != null)
-    		{
-    			ph.id = existing.id;
-    			roleDal.update(ph); //inserts or updates 
-    			map.put(key, existing.id);
-    		}
-    		else
-    		{
-    			ph.id = 0L;
-    			roleDal.save(ph); //inserts or updates 
-    			map.put(key, ph.id);
-    		}
+    		long id = EntityLoaderSaver_GEN.saveOrUpdate(ph, existing, roleDal);
+    		map.put(key, id);
     	}
 	}
+	
 	
 	private void saveCompanies(List<Company> phoneL, HashMap<String, Long> map) 
 	{
@@ -127,18 +85,8 @@ public class EntityLoader extends SfxBaseObj
     	{
     		String key = makeKey(ph, ph.id);
     		Company existing = companyDal.find_by_name(ph.name); //use seedWith field
-    		if (existing != null)
-    		{
-    			ph.id = existing.id;
-    			companyDal.update(ph); //updates 
-    			map.put(key, existing.id);
-    		}
-    		else
-    		{
-    			ph.id = 0L;
-    			companyDal.save(ph); //inserts
-    			map.put(key, ph.id);
-    		}
+    		long id = EntityLoaderSaver_GEN.saveOrUpdate(ph, existing, companyDal);
+    		map.put(key, id);
     	}
 	}
 	
