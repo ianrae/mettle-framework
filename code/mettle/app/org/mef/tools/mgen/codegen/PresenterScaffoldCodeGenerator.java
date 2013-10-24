@@ -84,7 +84,7 @@ public class PresenterScaffoldCodeGenerator extends CodeGenerator
 			return false; //!!
 		}
 		
-		path = this.getResourceOrFilePath(baseDir, "formBinder.stg");
+		path = this.getResourceOrFilePath(baseDir, "formbinder.stg");
 		b = generateOneFile(def, new FormBinderCodeGen(_ctx), path, "boundaries.binders", "app\\boundaries\\binders");
 		if (!b )
 		{

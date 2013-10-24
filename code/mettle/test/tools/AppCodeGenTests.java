@@ -31,7 +31,7 @@ public class AppCodeGenTests extends BaseTest
 	}
 	
 	@Test
-	public void testEntity() throws Exception
+	public void testPresenter() throws Exception
 	{
 		createContext();
 		PresenterScaffoldCodeGenerator gen = new PresenterScaffoldCodeGenerator(_ctx);

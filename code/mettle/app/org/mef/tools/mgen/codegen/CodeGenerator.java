@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.mef.framework.sfx.SfxBaseObj;
 import org.mef.framework.sfx.SfxContext;
@@ -51,12 +52,19 @@ public abstract class CodeGenerator extends SfxBaseObj
 		return stream;
 	}
 	
-	protected String getResourceOrFilePath(String baseDir, String filename)
+	protected String getResourceOrFilePath(String baseDir, String filename) throws Exception
 	{
 		InputStream stream = this.getClass().getResourceAsStream(baseDir + filename);
 		if (stream != null)
 		{
-			return baseDir + filename;
+			List<String> linesL = readInputStream(stream);
+			String path = FileUtils.getTempDirectoryPath();
+			path = FilenameUtils.concat(path, filename);
+			log("TO: " + path);
+			SfxTextWriter w = new SfxTextWriter(path, linesL);
+			w.writeFile(); //track error later!!
+			
+			return path;
 		}
 		else
 		{
