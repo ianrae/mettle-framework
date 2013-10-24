@@ -1,5 +1,6 @@
 
 
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertNotNull;
 
 import java.io.InputStream;
@@ -20,19 +21,16 @@ public class MGEN_AppScaffold extends BaseTest
 		gen.disableFileIO = false;  //***** WATCH OUT!11 ****
 		
 		String appDir = this.getCurrentDir("");
-		String stDir = this.getCurrentDir("..\\..\\mettle\\conf\\mgen\\resources\\app");
 log(appDir);
-log(stDir);
 		
-		InputStream stream = gen.getClass().getResourceAsStream("/mgen/resources/dal/entity.stg");
-		assertNotNull(stream);
+//		InputStream stream = gen.getClass().getResourceAsStream("/mgen/resources/dal/entity.stg");
+//		assertNotNull(stream);
 
-		gen.init(appDir, stDir);
+		gen.init(appDir);
 
 		boolean b = false;
 		b = gen.generate();
-		if (b)
-		{}
+		assertTrue(b);
 	}
 
 }
