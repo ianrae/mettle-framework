@@ -23,10 +23,8 @@ import org.mef.tools.mgen.parser.EntityDef;
 
 
 
-public class DalCodeGenerator extends SfxBaseObj
+public class DalCodeGenerator extends CodeGenerator
 {
-	private String appDir;
-	private String stDir;
 	private DalGenXmlParser parser;
 	private boolean _needParentClass;
 	public boolean disableFileIO;
@@ -41,10 +39,10 @@ public class DalCodeGenerator extends SfxBaseObj
 		_tracker = (SfxErrorTracker) _ctx.getServiceLocator().getInstance(SfxErrorTracker.class);
 	}
 	
-	public int init(String appDir, String stDir) throws Exception
+	@Override
+	public int init(String appDir) throws Exception
 	{
-		this.appDir = appDir;
-		this.stDir = stDir;
+		super.init(appDir);
 		parser = readEntityDef(appDir);
 		
 		//check for duplicates
@@ -65,6 +63,13 @@ public class DalCodeGenerator extends SfxBaseObj
 		return parser._entityL.size();
 	}
 	
+	@Override
+	public boolean generate() throws Exception
+	{
+		return false;
+	}
+	
+	@Override
 	public boolean generate(String name) throws Exception
 	{
 		int i = 0;
@@ -132,7 +137,8 @@ public class DalCodeGenerator extends SfxBaseObj
 	private boolean doGen(EntityDef def, String stgFilename, String packageName, 
 			String relPath, CodeGenBase gen) throws Exception
 	{
-		String path = this.pathCombine(stDir, stgFilename);
+		String baseDir = "/mgen/resources/dal/";
+		String path = getResourceOrFilePath(baseDir, stgFilename);
 		gen.init(path, packageName);
 		boolean b = generateOneFile(def, gen, relPath);
 		return b;
@@ -143,7 +149,8 @@ public class DalCodeGenerator extends SfxBaseObj
 		EntityDef def = parser._entityL.get(0);
 		def.enabled = true;
 
-		String path = this.pathCombine(stDir, "dao_all_known.stg");
+		String baseDir = "/mgen/resources/dal/";
+		String path = getResourceOrFilePath(baseDir, "dao_all_known.stg");
 		KnownDAOsCodeGen gen5 = new KnownDAOsCodeGen(_ctx);
 		gen5.init(path, "mef.gen");
 		boolean b = generateOneFile(def, gen5, "mef\\gen");
@@ -220,20 +227,5 @@ public class DalCodeGenerator extends SfxBaseObj
 		return parser;
 	}
 
-	private boolean writeFile(String appDir, String subDir, String fileName, String code)
-	{
-		String outPath = this.pathCombine(appDir, subDir);
-		outPath = this.pathCombine(outPath, String.format("%s.java", fileName));
-		log(fileName + ": " + outPath);
-		if (disableFileIO)
-		{
-			return true;
-		}
-		
-		SfxTextWriter w = new SfxTextWriter(outPath, null);
-		w.addLine(code);
-		boolean b = w.writeFile();
-		return b;
-	}
 	
 }
