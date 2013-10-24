@@ -5,9 +5,11 @@ import static org.junit.Assert.*;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 import org.mef.framework.sfx.SfxContext;
 import org.mef.framework.utils.ResourceReader;
@@ -55,6 +57,10 @@ public class OtherTests extends BaseTest
 		
 		InputStream stream = gen.getClass().getResourceAsStream("/mgen/resources/dal/entity.stg");
 		assertNotNull(stream);
+		
+//		URL url = gen.getClass().getClassLoader().getResource("entity.stg");
+//		log(url.toString());
+		
 	}
 	
 	List<String> readInputStream(InputStream stream) throws Exception

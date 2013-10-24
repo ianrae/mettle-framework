@@ -70,33 +70,33 @@ public class PresenterScaffoldCodeGenerator extends CodeGenerator
 			return false; //!!
 		}
 		
-//		path = this.pathCombine(stDir, "reply.stg");
-//		b = generateOneFile(def, new ReplyCodeGen(_ctx), path, "mef.presenters.replies", "app\\mef\\presenters\\replies");
-//		if (!b )
-//		{
-//			return false; //!!
-//		}
-//		
-//		path = this.pathCombine(stDir, "boundary.stg");
-//		b = generateOneFile(def, new BoundaryCodeGen(_ctx), path, "boundaries", "app\\boundaries");
-//		if (!b )
-//		{
-//			return false; //!!
-//		}
-//		
-//		path = this.pathCombine(stDir, "formBinder.stg");
-//		b = generateOneFile(def, new FormBinderCodeGen(_ctx), path, "boundaries.binders", "app\\boundaries\\binders");
-//		if (!b )
-//		{
-//			return false; //!!
-//		}
-//		
-//		path = this.pathCombine(stDir, "presenter-unit-test.stg");
-//		b = generateOneFile(def, new PresenterUnitTestCodeGen(_ctx), path, "mef", "test\\mef");
-//		if (!b )
-//		{
-//			return false; //!!
-//		}
+		path = this.getResourceOrFilePath(baseDir, "reply.stg");
+		b = generateOneFile(def, new ReplyCodeGen(_ctx), path, "mef.presenters.replies", "app\\mef\\presenters\\replies");
+		if (!b )
+		{
+			return false; //!!
+		}
+		
+		path = this.getResourceOrFilePath(baseDir, "boundary.stg");
+		b = generateOneFile(def, new BoundaryCodeGen(_ctx), path, "boundaries", "app\\boundaries");
+		if (!b )
+		{
+			return false; //!!
+		}
+		
+		path = this.getResourceOrFilePath(baseDir, "formBinder.stg");
+		b = generateOneFile(def, new FormBinderCodeGen(_ctx), path, "boundaries.binders", "app\\boundaries\\binders");
+		if (!b )
+		{
+			return false; //!!
+		}
+		
+		path = this.getResourceOrFilePath(baseDir, "presenter-unit-test.stg");
+		b = generateOneFile(def, new PresenterUnitTestCodeGen(_ctx), path, "mef", "test\\mef");
+		if (!b )
+		{
+			return false; //!!
+		}
 		
 		return b;
 	}

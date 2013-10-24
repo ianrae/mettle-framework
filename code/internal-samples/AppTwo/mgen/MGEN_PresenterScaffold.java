@@ -20,11 +20,9 @@ public class MGEN_PresenterScaffold extends BaseTest
 		gen.disableFileIO = false;  //***** WATCH OUT!11 ****
 		
 		String appDir = this.getCurrentDir("");
-		String stDir = this.getCurrentDir("..\\..\\mettle\\conf\\mgen\\resources\\presenter");
 log(appDir);
-log(stDir);
 		
-		int n = gen.init(appDir, stDir);
+		int n = gen.init(appDir);
 		assertEquals(4, n);
 
 		boolean b = false;
