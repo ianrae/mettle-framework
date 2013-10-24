@@ -72,6 +72,9 @@ public class AppCodeGenTests extends BaseTest
 		int n = gen.init(appDir);
 		assertEquals(2, n);
 
+		//need some more dirs
+		gen.createDir("app\\models");
+		
 		gen.genRealDAO = true;
 		
 

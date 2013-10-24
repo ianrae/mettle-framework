@@ -24,13 +24,11 @@ public class MGEN_Daos extends BaseTest
 		init();
 		DalCodeGenerator gen = new DalCodeGenerator(_ctx);
 		String appDir = this.getCurrentDir("");
-		String stDir = this.getCurrentDir("..\\..\\mettle\\conf\\mgen\\resources\\dal");
 log(appDir);
-log(stDir);
 
 		gen.genRealDAO = true;
 		
-		int n = gen.init(appDir, stDir);
+		int n = gen.init(appDir);
 		assertEquals(4, n);
 
 		boolean b = false;

@@ -125,7 +125,7 @@ public abstract class CodeGenerator extends SfxBaseObj
         return lineL;
 	}
 	
-	protected void createDir(String dirName) 
+	public void createDir(String dirName) 
 	{
 		String dest = pathCombine(appDir, dirName);
 		log("creating dir: " + dest);
