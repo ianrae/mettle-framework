@@ -6,6 +6,7 @@ import java.io.InputStream;
 
 import org.junit.Test;
 import org.mef.tools.mgen.codegen.AppScaffoldCodeGenerator;
+import org.mef.tools.mgen.codegen.PresenterScaffoldCodeGenerator;
 
 public class AppCodeGenTests extends BaseTest
 {
@@ -19,17 +20,36 @@ public class AppCodeGenTests extends BaseTest
 		gen.disableFileIO = false;  //***** WATCH OUT!11 ****
 		
 		String appDir = "c:\\tmp\\cc";
-		String stDir = this.getCurrentDir("..\\..\\mettle\\conf\\mgen\\resources\\app");
 log(appDir);
-log(stDir);
-		
-//		InputStream stream = gen.getClass().getResourceAsStream("/mgen/resources/dal/entity.stg");
-//		assertNotNull(stream);
-
-		gen.init(appDir, stDir);
+		gen.init(appDir);
 
 		boolean b = false;
 		b = gen.generate();
+		assertTrue(b);
 	}
+	
+//	@Test
+//	public void testEntity() throws Exception
+//	{
+//		createContext();
+//		PresenterScaffoldCodeGenerator gen = new PresenterScaffoldCodeGenerator(_ctx);
+//		
+//		gen.disableFileIO = false;  //***** WATCH OUT!11 ****
+//		
+//		String appDir = this.getCurrentDir("");
+//log(appDir);
+//		
+//		int n = gen.init(appDir);
+//		assertEquals(4, n);
+//
+//		boolean b = false;
+////		boolean b = gen.generate(0);
+//		b = gen.generate("User");
+//		b = gen.generate("Company");
+//		b = gen.generate("Computer");
+//		b = gen.generate("Role");
+//		if (b)
+//		{}
+//	}
 
 }

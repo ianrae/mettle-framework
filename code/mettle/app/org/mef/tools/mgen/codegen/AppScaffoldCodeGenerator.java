@@ -41,15 +41,7 @@ public class AppScaffoldCodeGenerator extends SfxBaseObj
 		createDirStructure();
 		String filename = "mef.xml";
 		String baseDir = "/mgen/resources/app/copy/";
-		InputStream stream = this.getClass().getResourceAsStream(baseDir + filename);
-		if (stream == null)
-		{
-			SfxFileUtils utils = new SfxFileUtils();
-			String tmp = utils.getCurrentDir();
-			tmp = utils.PathCombine(tmp, "conf/" + baseDir + filename);
-			stream = new FileInputStream(tmp);
-			log("found at: " + tmp);
-		}
+		InputStream stream = getSourceFile(baseDir, filename);
 		
 //		String resDir = FilenameUtils.concat(stDir, "copy");
 //		String resDir = pathCombine(stDir, "copy");
@@ -59,23 +51,39 @@ public class AppScaffoldCodeGenerator extends SfxBaseObj
 			return false;
 		}
 		
-//		filename = "Boundary.txt";
-//		String dest = pathCombine(appDir, "app\\boundaries");
-//		b = copyFile(filename, ".java", resDir, dest);
-//		if (! b)
-//		{
-//			return false;
-//		}
-//		
-//		filename = "Initializer.txt";
-//		dest = pathCombine(appDir, "app\\mef\\core");
-//		b = copyFile(filename, ".java", resDir, dest);
-//		if (! b)
-//		{
-//			return false;
-//		}
+		filename = "Boundary.txt";
+		String dest = pathCombine(appDir, "app\\boundaries");
+		stream = getSourceFile(baseDir, filename);
+		b = copyFile(stream, filename, ".java", dest);
+		if (! b)
+		{
+			return false;
+		}
+		
+		filename = "Initializer.txt";
+		dest = pathCombine(appDir, "app\\mef\\core");
+		stream = getSourceFile(baseDir, filename);
+		b = copyFile(stream, filename, ".java", dest);
+		if (! b)
+		{
+			return false;
+		}
 		
 		return b;
+	}
+	
+	private InputStream getSourceFile(String baseDir, String filename) throws Exception
+	{
+		InputStream stream = this.getClass().getResourceAsStream(baseDir + filename);
+		if (stream == null)
+		{
+			SfxFileUtils utils = new SfxFileUtils();
+			String tmp = utils.getCurrentDir();
+			tmp = utils.PathCombine(tmp, "conf/" + baseDir + filename);
+			stream = new FileInputStream(tmp);
+			log("found at: " + tmp);
+		}
+		return stream;
 	}
 	
 	private boolean copyFile(InputStream stream, String filename, String appDir) throws Exception
