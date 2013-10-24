@@ -6,15 +6,16 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.List;
 
 public class SfxTextWriter 
 {
 	private String _path;
-	private ArrayList<String> _linesL;
+	private List<String> _linesL;
 	
 	public SfxTextWriter()
 	{}
-	public SfxTextWriter(String path, ArrayList<String> linesL)
+	public SfxTextWriter(String path, List<String> linesL)
 	{
 		_path = path;
 		_linesL = linesL;
