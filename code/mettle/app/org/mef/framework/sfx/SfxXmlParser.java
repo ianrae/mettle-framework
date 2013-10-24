@@ -1,6 +1,5 @@
 package org.mef.framework.sfx;
 
-import java.io.FileReader;
 import java.util.ArrayList;
 
 import javax.xml.xpath.XPath;
@@ -11,8 +10,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.w3c.dom.xpath.XPathExpression;
-import org.xml.sax.InputSource;
 
 
 public class SfxXmlParser {
