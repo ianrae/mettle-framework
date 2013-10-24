@@ -64,7 +64,11 @@ public class AppScaffoldCodeGenerator extends CodeGenerator
 		return b;
 	}
 	
-	
+	@Override
+	public boolean generate(String name) throws Exception
+	{
+		return false;
+	}
 	
 	private void createDirStructure()
 	{

@@ -3,6 +3,7 @@ package org.mef.tools.mgen.codegen;
 import static org.junit.Assert.assertEquals;
 
 import java.io.File;
+import java.io.InputStream;
 
 import org.mef.framework.sfx.SfxBaseObj;
 import org.mef.framework.sfx.SfxContext;
@@ -18,26 +19,30 @@ import org.mef.tools.mgen.parser.EntityDef;
 import org.mef.tools.mgen.parser.FieldDef;
 
 
-public class PresenterScaffoldCodeGenerator extends SfxBaseObj
+public class PresenterScaffoldCodeGenerator extends CodeGenerator
 {
-	private String appDir;
-	private String stDir;
 	private DalGenXmlParser parser;
-	public boolean disableFileIO;
 	
 	public PresenterScaffoldCodeGenerator(SfxContext ctx)
 	{
 		super(ctx);
 	}
 	
-	public int init(String appDir, String stDir) throws Exception
+	@Override
+	public int init(String appDir) throws Exception
 	{
-		this.appDir = appDir;
-		this.stDir = stDir;
+		super.init(appDir);
 		parser = readEntityDef(appDir);
 		return parser._entityL.size();
 	}
 	
+	@Override
+	public boolean generate() throws Exception
+	{
+		return false;
+	}
+	
+	@Override
 	public boolean generate(String name) throws Exception
 	{
 		int i = 0;
@@ -56,40 +61,42 @@ public class PresenterScaffoldCodeGenerator extends SfxBaseObj
 	{
 		EntityDef def = parser._entityL.get(index);
 		
-		String path = this.pathCombine(stDir, "presenter.stg");
+		
+		String baseDir = "/mgen/resources/presenter/";
+		String path = getResourceOrFilePath(baseDir, "presenter.stg");
 		boolean b = generateOneFile(def, new PresenterCodeGen(_ctx), path, "mef.presenters", "app\\mef\\presenters");
 		if (!b )
 		{
 			return false; //!!
 		}
 		
-		path = this.pathCombine(stDir, "reply.stg");
-		b = generateOneFile(def, new ReplyCodeGen(_ctx), path, "mef.presenters.replies", "app\\mef\\presenters\\replies");
-		if (!b )
-		{
-			return false; //!!
-		}
-		
-		path = this.pathCombine(stDir, "boundary.stg");
-		b = generateOneFile(def, new BoundaryCodeGen(_ctx), path, "boundaries", "app\\boundaries");
-		if (!b )
-		{
-			return false; //!!
-		}
-		
-		path = this.pathCombine(stDir, "formBinder.stg");
-		b = generateOneFile(def, new FormBinderCodeGen(_ctx), path, "boundaries.binders", "app\\boundaries\\binders");
-		if (!b )
-		{
-			return false; //!!
-		}
-		
-		path = this.pathCombine(stDir, "presenter-unit-test.stg");
-		b = generateOneFile(def, new PresenterUnitTestCodeGen(_ctx), path, "mef", "test\\mef");
-		if (!b )
-		{
-			return false; //!!
-		}
+//		path = this.pathCombine(stDir, "reply.stg");
+//		b = generateOneFile(def, new ReplyCodeGen(_ctx), path, "mef.presenters.replies", "app\\mef\\presenters\\replies");
+//		if (!b )
+//		{
+//			return false; //!!
+//		}
+//		
+//		path = this.pathCombine(stDir, "boundary.stg");
+//		b = generateOneFile(def, new BoundaryCodeGen(_ctx), path, "boundaries", "app\\boundaries");
+//		if (!b )
+//		{
+//			return false; //!!
+//		}
+//		
+//		path = this.pathCombine(stDir, "formBinder.stg");
+//		b = generateOneFile(def, new FormBinderCodeGen(_ctx), path, "boundaries.binders", "app\\boundaries\\binders");
+//		if (!b )
+//		{
+//			return false; //!!
+//		}
+//		
+//		path = this.pathCombine(stDir, "presenter-unit-test.stg");
+//		b = generateOneFile(def, new PresenterUnitTestCodeGen(_ctx), path, "mef", "test\\mef");
+//		if (!b )
+//		{
+//			return false; //!!
+//		}
 		
 		return b;
 	}
@@ -133,20 +140,4 @@ public class PresenterScaffoldCodeGenerator extends SfxBaseObj
 		return parser;
 	}
 
-	private boolean writeFile(String appDir, String subDir, String fileName, String code)
-	{
-		String outPath = this.pathCombine(appDir, subDir);
-		outPath = this.pathCombine(outPath, String.format("%s.java", fileName));
-		log(fileName + ": " + outPath);
-		if (disableFileIO)
-		{
-			return true;
-		}
-		
-		SfxTextWriter w = new SfxTextWriter(outPath, null);
-		w.addLine(code);
-		boolean b = w.writeFile();
-		return b;
-	}
-	
 }

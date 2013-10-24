@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<entities orm="ebean"> 
+
+<entity name="Company">
+	<field>@Id Long id</field>
+	<field>@Required String name</field>
+
+	<query>find_by_name</query>
+</entity>
+
+<entity name="Computer">
+	<field>@Id Long id</field>
+	<field>@Required String name</field>
+	<field>@Formats.DateTime(pattern="yyyy-MM-dd") Date introduced</field>
+	<field>@Formats.DateTime(pattern="yyyy-MM-dd") Date discontinued</field>
+	<field>@ManyToOne Company company</field>
+	
+	<query>find_by_name</query>
+	<method><![CDATA[Page<Computer> page(int page, int pageSize,String orderBy, String order, String filter)]]></method>
+
+	<codegen what="dal_mock" extend="true" />
+	<codegen what="dal_real" extend="true" />
+</entity>
+
+</entities>

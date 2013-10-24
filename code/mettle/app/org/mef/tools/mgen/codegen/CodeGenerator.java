@@ -25,13 +25,16 @@ public abstract class CodeGenerator extends SfxBaseObj
 		super(ctx);
 	}
 	
-	public void init(String appDir) throws Exception
+	public int init(String appDir) throws Exception
 	{
 		this.appDir = appDir;
 //		this.stDir = stDir;
+		return 0;
 	}
 	
 	public abstract boolean generate() throws Exception;
+	
+	public abstract boolean generate(String name) throws Exception;
 	
 	
 	protected InputStream getSourceFile(String baseDir, String filename) throws Exception
@@ -46,6 +49,24 @@ public abstract class CodeGenerator extends SfxBaseObj
 			log("found at: " + tmp);
 		}
 		return stream;
+	}
+	
+	protected String getResourceOrFilePath(String baseDir, String filename)
+	{
+		InputStream stream = this.getClass().getResourceAsStream(baseDir + filename);
+		if (stream != null)
+		{
+			return baseDir + filename;
+		}
+		else
+		{
+			SfxFileUtils utils = new SfxFileUtils();
+			String tmp = utils.getCurrentDir();
+			tmp = utils.PathCombine(tmp, "conf/" + baseDir + filename);
+			log("found at: " + tmp);
+			return tmp;
+		}
+		
 	}
 
 	protected boolean copyFile(InputStream stream, String filename, String appDir) throws Exception
