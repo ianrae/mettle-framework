@@ -504,3 +504,22 @@ then can query select * where userId=5
 
 Play cache is http://ehcache.org/
 
+PLAY NEW APP APPTHREE
+-play new AppThree
+-add lib (st and ebean for eclipse)
+-play eclipse
+
+-build.scala, add
+    "commons-io" % "commons-io" % "2.3",
+     "mettle" % "mettle_2.10" % "1.0-SNAPSHOT"
+-if mettle from github, add ....
+
+
+-copy mgen folder from AppTwo
+-add mgen as source folder in Eclipse build path
+-play eclipse and restart Eclipse
+
+-run AppCodeGenTest, and then delete it
+
+	 
+
