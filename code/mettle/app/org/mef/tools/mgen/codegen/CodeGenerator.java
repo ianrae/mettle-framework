@@ -33,7 +33,7 @@ public abstract class CodeGenerator extends SfxBaseObj
 		return 0;
 	}
 	
-	public abstract boolean generate() throws Exception;
+	public abstract boolean generateAll() throws Exception;
 	
 	public abstract boolean generate(String name) throws Exception;
 	

@@ -27,7 +27,7 @@ public class AppCodeGenTests extends BaseTest
 		gen.init(appDir);
 
 		boolean b = false;
-		b = gen.generate();
+		b = gen.generateAll();
 		assertTrue(b);
 	}
 	

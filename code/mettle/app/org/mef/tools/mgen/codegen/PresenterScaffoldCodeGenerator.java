@@ -37,9 +37,18 @@ public class PresenterScaffoldCodeGenerator extends CodeGenerator
 	}
 	
 	@Override
-	public boolean generate() throws Exception
+	public boolean generateAll() throws Exception
 	{
-		return false;
+		int i = 0;
+		for(EntityDef def : parser._entityL)
+		{
+			if (! generate(i))
+			{
+				return false;
+			}
+			i++;
+		}
+		return true;
 	}
 	
 	@Override

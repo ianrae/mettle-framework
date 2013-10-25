@@ -95,16 +95,8 @@ and check if any class's ticket had "Viewer" role on itself.  If a match is foun
 student can view the home page.
 
 The God Rule
-For admins, we would usually create a system ticket, and then add a rule
-
-system-ticket has "Everything" role on system-ticket.
-
-Then any user who has isAdmin flag set to true would have access to everything in the system.
-The code would look like this:
-
- if (user.isAdmin && isAuth(systemTicketId, "Everything", systemTicketId))
- { //allowed
-   //..
+Administrators should have full access to the entire system. In TBA you might do this
+with code and rely on user.isAdmin.  No rule in the auth table is needed.
    
 Other Types of Subject Tickets
 A school system has students, classes, teachers, schools, districts, and states.
@@ -124,26 +116,20 @@ For fine-grain control, create multiple tickets per school.  A schoolAdmin ticke
 would let the principal and other administrators have certain permissions.
 A schoolStaff ticket would let other members of staff have lesser permissions.
 
-This is a code-centric model.  Your class home page might be checking for admin rules,
+This is a code-centric model.  For example, your class home page might be checking for admin rules,
 teacher rules, class-level rules, or school-level rules.
 
+TBA Caching
+TBA caches the most recently used portion of the auth table in memory to reduce the amount
+of database access.
+
+You need to clear this cache whenever changes are made to the ticket or auth or user tables. 
  
  
- 
-
-   
-
-	 
-	 
-	   
-
- 
-  
 
 
 
-
-
+-------------------------------- old----------------------
 
 better algorithm:  our main API that presenters call is
 

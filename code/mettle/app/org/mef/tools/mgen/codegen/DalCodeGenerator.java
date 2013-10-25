@@ -64,9 +64,24 @@ public class DalCodeGenerator extends CodeGenerator
 	}
 	
 	@Override
-	public boolean generate() throws Exception
+	public boolean generateAll() throws Exception
 	{
-		return false;
+		boolean b = this.generateOnce();
+		if (! b)
+		{
+			return false;
+		}
+		
+		int i = 0;
+		for(EntityDef def : parser._entityL)
+		{
+			if (! generate(i))
+			{
+				return false;
+			}
+			i++;
+		}
+		return true;
 	}
 	
 	@Override
@@ -84,7 +99,7 @@ public class DalCodeGenerator extends CodeGenerator
 		return false;
 	}
 	
-	public boolean generate(int index) throws Exception
+	protected boolean generate(int index) throws Exception
 	{
 		EntityDef def = parser._entityL.get(index);
 		

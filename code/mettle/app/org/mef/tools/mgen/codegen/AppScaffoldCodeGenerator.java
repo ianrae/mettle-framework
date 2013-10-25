@@ -28,7 +28,7 @@ public class AppScaffoldCodeGenerator extends CodeGenerator
 	}
 	
 	@Override
-	public boolean generate() throws Exception
+	public boolean generateAll() throws Exception
 	{
 		createDirStructure();
 		String filename = "mef.xml";

@@ -15,17 +15,11 @@ public class MGEN_Daos extends BaseTest
 	@Test
 	public void testEntity() throws Exception
 	{
-		boolean genFiles = true;
-		if (! genFiles)
-		{
-			return;
-		}
-		
 		init();
-		DalCodeGenerator gen = new DalCodeGenerator(_ctx);
 		String appDir = this.getCurrentDir("");
-log(appDir);
+		log(appDir);
 
+		DalCodeGenerator gen = new DalCodeGenerator(_ctx);
 		gen.genRealDAO = true;
 		
 		int n = gen.init(appDir);
@@ -33,13 +27,15 @@ log(appDir);
 
 		boolean b = false;
 		gen.genDaoLoader = true;
-		b = gen.generateOnce(); //allKnownDAOs
-		b = gen.generate("User");
-		b = gen.generate("Company");
-		b = gen.generate("Computer");
-		b = gen.generate("Role");
-		if (b)
-		{}
+		b =gen.generateAll();
+		
+//		b = gen.generateOnce(); //allKnownDAOs
+//		b = gen.generate("User");
+//		b = gen.generate("Company");
+//		b = gen.generate("Computer");
+//		b = gen.generate("Role");
+		
+		assertTrue(b);
 	}
 	
 	private void init()

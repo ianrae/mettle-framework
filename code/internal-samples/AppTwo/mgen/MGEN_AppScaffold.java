@@ -21,15 +21,12 @@ public class MGEN_AppScaffold extends BaseTest
 		gen.disableFileIO = false;  //***** WATCH OUT!11 ****
 		
 		String appDir = this.getCurrentDir("");
-log(appDir);
+		log(appDir);
 		
-//		InputStream stream = gen.getClass().getResourceAsStream("/mgen/resources/dal/entity.stg");
-//		assertNotNull(stream);
-
 		gen.init(appDir);
 
 		boolean b = false;
-		b = gen.generate();
+		b = gen.generateAll();
 		assertTrue(b);
 	}
 
