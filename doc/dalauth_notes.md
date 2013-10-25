@@ -420,3 +420,87 @@ http://stackoverflow.com/questions/1148266/ajax-html-vs-xml-json-responses-perfo
 
 http://www.quirksmode.org/blog/archives/2005/12/the_ajax_respon.html
 
+
+                               C:\Users\ian\Documents\GitHub\dalgen\code\mettle\conf\mgen\resources
+java.io.FileNotFoundException: C:\Users\ian\Documents\GitHub\dalgen\code\mettle\mgen\resources\app\copy\mef.xml (The system cannot find the path specified)
+
+
+------------------------------25OctFri
+
+
+
+
+---------- Forwarded message ----------
+
+
+PLAY
+http://eng.42go.com/play-framework-dependency-injection-guice/
+
+XML DIFF
+http://prettydiff.com/
+
+in WIRK i made XmlCompareTests
+-reads two xml and writes normalized form (sorted attrs)
+c:\tmp\xmlnormalized1.txt
+c:\tmp\xmlnormalized2.txt
+C:\ian\LogsAndDumps\aor\2013\oct25_aor_flash.xml
+C:\ian\LogsAndDumps\aor\2013\oct25_aor_ipad.xml
+
+
+10.103.24.151 - - [25/Oct/2013:10:18:03 -0400] "GET /academy/login.do?database=academy HTTP/1.1" 200 10201 280 C512A9224D5A9E7D4E437C31640ECCAC
+10.103.24.151 - - [25/Oct/2013:10:18:11 -0400] "POST /academy/ProcessStudentLogin.do?challenge=axSMhXYwrEKBbEzPubPMOm&tempLoginPassword=&loginPassword=aCMYVw3P5+8O2QLMh8thgA&randNumber=235&schoolId=4&loginUsername=nn&subtypeId=-2&loginSubject=Universal&method=studentLogin HTTP/1.1" 200 986 485 2C50251C5799BA7EEC978784DA9B188C
+
+
+PLAY
+messages
+https://groups.google.com/forum/#!topic/play-framework/HHuyYAPCXIc
+t is possible in Griffon using alias.key = @[message.key]
+
+http://griffon.codehaus.org/guide/1.4.0/guide/internationalization.html
+
+http://stackoverflow.com/questions/19556028/play-framework-2-1-3-function-that-will-render-scala-template-with-given-paramet
+-how to invoke view programmatically
+http://www.scala-sbt.org/0.12.2/docs/Howto/generatefiles.html#sources -sbt codegen!
+
+DEADBOLT
+http://www.playframework.com/modules/deadbolt-1.5/home old version
+http://marcelo-olivas.blogspot.com/2013/02/using-deadbolt-for-authorization-in.html
+https://github.com/schaloner/deadbolt-2-guide
+
+Subject,Object,Role
+isAuth(userId, blogPostId, "viewer")
+ userGrpId = xcache.get(userId)
+ objGrpId = xcache.get(blogPostId)
+
+
+
+ xcache.get(key)
+  val = map.get(key)
+  if val == null
+     val = _dao.xxx
+     if val == null then return null
+     if map.size > MAX map.randomlyremove one entry
+     map.put(key, val)
+ else
+ return val
+
+Don't store different table ids in a single column!
+instead have column per id-type
+-can do this with user and userGrp
+-but can't with objects since there might be dozens.
+-so instead we create an AuthId table: id, tablName
+-and each table that we want auth on will have authId column.
+  -so Post table would have authId field. when add new post add this
+   to authId table:  <new auth id>, "Post"
+  -also need to seed authId table with one row per table. An owner of Post table
+   has create permissions but the post doesn't exist yet so we must use an authId of
+   the whole Post table
+ When you add row to table must create a new auth row too.
+-so now only have to query authid table when searching for "objects"
+
+Role: id, userId, userGrpId, authId, roleId
+then can query select * where userId=5
+               select * where userGrpId=10
+
+Play cache is http://ehcache.org/
+
