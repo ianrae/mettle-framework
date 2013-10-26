@@ -23,7 +23,7 @@ public class MGEN_Daos extends BaseTest
 		gen.genRealDAO = true;
 		
 		int n = gen.init(appDir);
-		assertEquals(4, n);
+		assertEquals(1, n);
 
 		boolean b = false;
 		gen.genDaoLoader = true;

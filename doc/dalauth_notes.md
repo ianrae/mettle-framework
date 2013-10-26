@@ -520,6 +520,23 @@ PLAY NEW APP APPTHREE
 -play eclipse and restart Eclipse
 
 -run AppCodeGenTest, and then delete it
+-add User to mef.xml
+-create app.models dir -- fix this in appcodegen
 
-	 
+-run PresenterCodeGen
+-run DaoGen
+
+-copy BaseTest and BasePresenterTest -- fix this in codegen!
+-initializer.java
+ -uncomment out the AllKnownDaos stuff
+ 
+-run UserPresenterTest -- all pass except one
+ in prsenter onNewCommand
+		reply._entity.name = "defaultname";
+-all pass!
+
+		
+
+
+
 

@@ -23,7 +23,7 @@ public class MGEN_PresenterScaffold extends BaseTest
 		log(appDir);
 		
 		int n = gen.init(appDir);
-		assertEquals(4, n);
+		assertEquals(1, n);
 
 		boolean b = gen.generateAll();
 		

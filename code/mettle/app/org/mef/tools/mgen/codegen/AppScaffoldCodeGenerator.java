@@ -75,6 +75,7 @@ public class AppScaffoldCodeGenerator extends CodeGenerator
 		createDir("app\\boundaries");
 		createDir("app\\boundaries\\binders");
 		createDir("app\\boundaries\\daos");
+		createDir("app\\models");
 		createDir("app\\mef");
 		createDir("app\\mef\\core");
 		createDir("app\\mef\\daos");
