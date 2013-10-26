@@ -570,6 +570,20 @@ and uncomment:
 		
 WORKS!
 
+So the to-do list for codegen is
+ -app codegen
+   -create app.models
+   -create mgen for presenter and dao (user must manually create the app codegen)
+  -copy BaseTest and BasePresenterTest -- fix this in codegen!
+  -initializer.java
+    -uncomment out the AllKnownDaos stuff
+  -copy in ErrorController
+   fix this. app codegen should create this if not exist
+  -add error.scala.html - fix. app codegen should create
 
+ -presenter codegen
+   -create UsersController
+   -add User/index.scala.html
+ 
 
 
