@@ -535,6 +535,29 @@ PLAY NEW APP APPTHREE
 		reply._entity.name = "defaultname";
 -all pass!
 
+-create UsersController
+ by hand -- fix this. presenter codegen should create if not exist
+ 
+-copy in ErrorController
+ fix this. app codegen should create this if not exist
+ 
+-add error.scala.html - fix. app codegen should create
+
+-add User/index.scala.html
+
+-add to routes
+
+# Users
+GET     /users                  controllers.UsersController.index()
+
+
+# Error
+GET 	/logout                 controllers.ErrorController.logout()
+
+-add link on main page. index.scala.html
+
+        <a class="brand" href="@routes.UsersController.index()">Users</a>
+
 		
 
 
