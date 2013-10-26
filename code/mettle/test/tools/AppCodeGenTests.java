@@ -25,6 +25,8 @@ public class AppCodeGenTests extends BaseTest
 		log(appDir);
 		gen.init(appDir);
 		gen.createDir("mgen");
+		gen.createDir("app\\controllers");
+		gen.createDir("app\\views");
 
 		boolean b = false;
 		b = gen.generateAll();

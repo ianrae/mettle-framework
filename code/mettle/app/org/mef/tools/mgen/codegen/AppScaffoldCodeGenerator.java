@@ -108,6 +108,26 @@ public class AppScaffoldCodeGenerator extends CodeGenerator
 		{
 			return false;
 		}
+
+		//controllers
+		filename = "ErrorController.txt";
+		dest = pathCombine(appDir, "app/controllers");
+		stream = getSourceFile(baseDir, filename);
+		b = copyFile(stream, filename, ".java", dest);
+		if (! b)
+		{
+			return false;
+		}
+		
+		//views
+		filename = "error.scala.html";
+		dest = pathCombine(appDir, "app/views");
+		stream = getSourceFile(baseDir, filename);
+		b = copyFile(stream, filename, null, dest);
+		if (! b)
+		{
+			return false;
+		}
 		
 		return b;
 	}
