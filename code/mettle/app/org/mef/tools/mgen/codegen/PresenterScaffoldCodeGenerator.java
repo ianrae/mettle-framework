@@ -10,6 +10,7 @@ import org.mef.framework.sfx.SfxContext;
 import org.mef.framework.sfx.SfxTextWriter;
 import org.mef.tools.mgen.codegen.generators.BoundaryCodeGen;
 import org.mef.tools.mgen.codegen.generators.CodeGenBase;
+import org.mef.tools.mgen.codegen.generators.ControllerCodeGen;
 import org.mef.tools.mgen.codegen.generators.FormBinderCodeGen;
 import org.mef.tools.mgen.codegen.generators.PresenterCodeGen;
 import org.mef.tools.mgen.codegen.generators.PresenterUnitTestCodeGen;
@@ -102,6 +103,13 @@ public class PresenterScaffoldCodeGenerator extends CodeGenerator
 		
 		path = this.getResourceOrFilePath(baseDir, "presenter-unit-test.stg");
 		b = generateOneFile(def, new PresenterUnitTestCodeGen(_ctx), path, "mef", "test\\mef");
+		if (!b )
+		{
+			return false; //!!
+		}
+		
+		path = this.getResourceOrFilePath(baseDir, "controller.stg");
+		b = generateOneFile(def, new ControllerCodeGen(_ctx), path, "controllers", "app\\controllers");
 		if (!b )
 		{
 			return false; //!!
