@@ -1,0 +1,48 @@
+header(package,type) ::= <<
+
+>>
+
+
+classdecl(type, name) ::= <<
+
+@(entities: List[mef.entities.<type>])
+
+@import helper._
+
+
+
+@main("<type> list") {
+    
+ @if(flash.containsKey("success")) {
+        \<div 
+        \<strong>Done!\</strong> @flash.get("success")
+        \</div>
+    }  else {
+    \<div> no flash \</div>
+    } 
+    
+    \<h1>@entities.size() <type>(s). \</h1>
+    
+    \<ul>
+        @for(cc \<- entities) {
+            \<li>
+				\<div>
+                @cc.name  @cc.id   
+                \</div>
+				\<br/>
+				
+            \</li>
+        }
+    \</ul>
+    
+        \<br/>
+        
+    
+}
+
+>>
+
+endclassdecl() ::= <<
+}
+>>
+

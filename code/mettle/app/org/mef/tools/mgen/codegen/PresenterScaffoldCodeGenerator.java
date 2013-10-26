@@ -15,6 +15,7 @@ import org.mef.tools.mgen.codegen.generators.FormBinderCodeGen;
 import org.mef.tools.mgen.codegen.generators.PresenterCodeGen;
 import org.mef.tools.mgen.codegen.generators.PresenterUnitTestCodeGen;
 import org.mef.tools.mgen.codegen.generators.ReplyCodeGen;
+import org.mef.tools.mgen.codegen.generators.ViewCodeGen;
 import org.mef.tools.mgen.parser.DalGenXmlParser;
 import org.mef.tools.mgen.parser.EntityDef;
 import org.mef.tools.mgen.parser.FieldDef;
@@ -115,6 +116,13 @@ public class PresenterScaffoldCodeGenerator extends CodeGenerator
 			return false; //!!
 		}
 		
+		
+		path = this.getResourceOrFilePath(baseDir, "index-view.stg");
+		b = generateOneFile(def, new ViewCodeGen(_ctx), path, "", "app\\views");
+		if (!b )
+		{
+			return false; //!!
+		}
 		return b;
 	}
 	private boolean generateOneFile(EntityDef def, CodeGenBase gen, String path, String packageName, String relPath) throws Exception
@@ -130,7 +138,12 @@ public class PresenterScaffoldCodeGenerator extends CodeGenerator
 		String className = gen.getClassName(def);	
 
 		path = this.pathCombine(appDir, relPath);
-		path = this.pathCombine(path, className + ".java");
+		String filename = className;
+		if (! filename.contains(".html"))
+		{
+			filename += ".java";
+		}
+		path = this.pathCombine(path, filename);
 		File f = new File(path);
 		if (f.exists())
 		{
@@ -139,7 +152,7 @@ public class PresenterScaffoldCodeGenerator extends CodeGenerator
 			return true;
 		}
 		
-		boolean b = writeFile(appDir, relPath, className, code);
+		boolean b = writeFile(appDir, relPath, filename, code);
 		if (!b)
 		{
 			return false;

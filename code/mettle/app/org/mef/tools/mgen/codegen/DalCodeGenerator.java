@@ -211,7 +211,7 @@ public class DalCodeGenerator extends CodeGenerator
 		}
 		//log(code);
 		String className = gen.getClassName(def);	
-		boolean b = writeFile(appDir, relPath, className, code);
+		boolean b = writeFile(appDir, relPath, className + ".java", code);
 		if (!b)
 		{
 			return false;
