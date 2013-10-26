@@ -558,7 +558,17 @@ GET 	/logout                 controllers.ErrorController.logout()
 
         <a class="brand" href="@routes.UsersController.index()">Users</a>
 
+app.conf
+db.default.driver=org.h2.Driver
+db.default.url="jdbc:h2:mem:play"
+
+db.default.logStatements=true
+logger.com.jolbox=DEBUG
+
+and uncomment:
+ ebean.default="models.*"		
 		
+WORKS!
 
 
 
