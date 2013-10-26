@@ -61,6 +61,7 @@ public class AppScaffoldCodeGenerator extends CodeGenerator
 			return false;
 		}
 		
+		//---mgen---
 		filename = "BaseTest.txt";
 		dest = pathCombine(appDir, "mgen");
 		stream = getSourceFile(baseDir + "mgen/", filename);
@@ -82,6 +83,26 @@ public class AppScaffoldCodeGenerator extends CodeGenerator
 		filename = "MGEN_PresenterScaffold.txt";
 		dest = pathCombine(appDir, "mgen");
 		stream = getSourceFile(baseDir + "mgen/", filename);
+		b = copyFile(stream, filename, ".java", dest);
+		if (! b)
+		{
+			return false;
+		}
+		
+		
+		//--- unit test---
+		filename = "BaseTest.txt";
+		dest = pathCombine(appDir, "test/mef");
+		stream = getSourceFile(baseDir + "test/", filename);
+		b = copyFile(stream, filename, ".java", dest);
+		if (! b)
+		{
+			return false;
+		}
+		
+		filename = "BasePresenterTest.txt";
+		dest = pathCombine(appDir, "test/mef");
+		stream = getSourceFile(baseDir + "test/", filename);
 		b = copyFile(stream, filename, ".java", dest);
 		if (! b)
 		{
