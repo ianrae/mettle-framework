@@ -21,10 +21,10 @@ public class AppCodeGenTests extends BaseTest
 		AppScaffoldCodeGenerator gen = new AppScaffoldCodeGenerator(_ctx);
 		
 		gen.disableFileIO = false;  //***** WATCH OUT!11 ****
-		
 		String appDir = "c:\\tmp\\cc";
 		log(appDir);
 		gen.init(appDir);
+		gen.createDir("mgen");
 
 		boolean b = false;
 		b = gen.generateAll();

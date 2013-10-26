@@ -61,6 +61,33 @@ public class AppScaffoldCodeGenerator extends CodeGenerator
 			return false;
 		}
 		
+		filename = "BaseTest.txt";
+		dest = pathCombine(appDir, "mgen");
+		stream = getSourceFile(baseDir + "mgen/", filename);
+		b = copyFile(stream, filename, ".java", dest);
+		if (! b)
+		{
+			return false;
+		}
+		
+		filename = "MGEN_Daos.txt";
+		dest = pathCombine(appDir, "mgen");
+		stream = getSourceFile(baseDir + "mgen/", filename);
+		b = copyFile(stream, filename, ".java", dest);
+		if (! b)
+		{
+			return false;
+		}
+		
+		filename = "MGEN_PresenterScaffold.txt";
+		dest = pathCombine(appDir, "mgen");
+		stream = getSourceFile(baseDir + "mgen/", filename);
+		b = copyFile(stream, filename, ".java", dest);
+		if (! b)
+		{
+			return false;
+		}
+		
 		return b;
 	}
 	
