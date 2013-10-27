@@ -23,10 +23,13 @@ public class <name> extends Entity
 	public <name>()
 	{}
 	
+	
+<if(args)>
 	public <name>( <args; separator=", ">)
 	{
 		<inits; separator="\n">
 	}
+<endif>
 	
 	public <name>(<name> entity)
 	{

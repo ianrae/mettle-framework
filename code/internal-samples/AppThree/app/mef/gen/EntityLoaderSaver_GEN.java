@@ -68,4 +68,26 @@ public class EntityLoaderSaver_GEN
 		}
 		return obj.id;
 	}
+	public static long saveOrUpdate(AuthRules obj, AuthRules existing, IAuthRulesDAO dao)
+	{
+		if (existing != null)
+		{
+			obj.id = existing.id;
+			//copy everything 
+						existing.userId = obj.userId;
+
+						existing.roleId = obj.roleId;
+
+						existing.ticketId = obj.ticketId;
+			
+
+			dao.update(existing); //inserts or updates 
+		}
+		else
+		{
+			obj.id = 0L;
+			dao.save(obj); //inserts or updates 
+		}
+		return obj.id;
+	}
 }

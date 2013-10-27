@@ -139,4 +139,49 @@ public class DaoJsonLoader_GEN extends BaseDaoJsonLoader
 		}
 		return null;
 	}
+	public AuthRules readAuthRules(JsonNode node)
+	{
+		AuthRules obj = new AuthRules();
+		JsonNode jj = node.get("id");
+		obj.id = jj.asLong();
+
+				jj = node.get("userId");
+
+				jj = node.get("roleId");
+
+				jj = node.get("ticketId");
+
+
+
+		return obj;
+	}
+	public List<AuthRules> loadAuthRuless(JsonNode rootNode) 
+	{
+		List<AuthRules> phoneL = new ArrayList<AuthRules>();
+
+    	JsonNode msgNode = rootNode.path("AuthRules");
+		Iterator<JsonNode> ite = msgNode.getElements();
+
+		int i = 0;
+		while (ite.hasNext()) {
+			JsonNode temp = ite.next();
+			AuthRules ph = readAuthRules(temp);
+
+			phoneL.add(ph);
+			i++;
+		}    	
+
+		return phoneL;
+	}
+	protected AuthRules findAuthRulesWithId(long id, List<AuthRules> phoneL) 
+	{
+		for (AuthRules ph : phoneL)
+		{
+			if (ph.id == id)
+			{
+				return ph;
+			}
+		}
+		return null;
+	}
 }

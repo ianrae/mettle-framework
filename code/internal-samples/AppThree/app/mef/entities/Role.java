@@ -11,6 +11,7 @@ public class Role extends Entity
 	public Role()
 	{}
 
+
 	public Role( String name)
 	{
 		this.name = name;

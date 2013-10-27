@@ -11,6 +11,7 @@ public class User extends Entity
 	public User()
 	{}
 
+
 	public User( String name)
 	{
 		this.name = name;

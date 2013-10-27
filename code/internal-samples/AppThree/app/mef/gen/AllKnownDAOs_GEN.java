@@ -49,6 +49,17 @@ else
 	ITicketDAO dal = new TicketDAO();
 	ctx.getServiceLocator().registerSingleton(ITicketDAO.class, dal);
 	L.add(dal);
+}	if (createMocks)
+{
+	IAuthRulesDAO dal = new MockAuthRulesDAO();
+	ctx.getServiceLocator().registerSingleton(IAuthRulesDAO.class, dal);
+	L.add(dal);
+}
+else
+{
+	IAuthRulesDAO dal = new AuthRulesDAO();
+	ctx.getServiceLocator().registerSingleton(IAuthRulesDAO.class, dal);
+	L.add(dal);
 }	
 	return L;
 }

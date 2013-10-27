@@ -11,9 +11,7 @@ public class Ticket extends Entity
 	public Ticket()
 	{}
 
-	public Ticket( )
-	{
-	}
+
 
 	public Ticket(Ticket entity)
 	{
