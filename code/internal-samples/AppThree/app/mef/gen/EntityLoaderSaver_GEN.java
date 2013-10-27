@@ -33,4 +33,22 @@ public class EntityLoaderSaver_GEN
 		}
 		return obj.id;
 	}
+	public static long saveOrUpdate(Role obj, Role existing, IRoleDAO dao)
+	{
+		if (existing != null)
+		{
+			obj.id = existing.id;
+			//copy everything 
+						existing.name = obj.name;
+			
+
+			dao.update(existing); //inserts or updates 
+		}
+		else
+		{
+			obj.id = 0L;
+			dao.save(obj); //inserts or updates 
+		}
+		return obj.id;
+	}
 }

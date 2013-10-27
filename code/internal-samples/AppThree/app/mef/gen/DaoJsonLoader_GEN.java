@@ -58,4 +58,46 @@ public class DaoJsonLoader_GEN extends BaseDaoJsonLoader
 		}
 		return null;
 	}
+	public Role readRole(JsonNode node)
+	{
+		Role obj = new Role();
+		JsonNode jj = node.get("id");
+		obj.id = jj.asLong();
+
+				jj = node.get("name");
+				obj.name = jj.getTextValue();
+
+
+
+		return obj;
+	}
+	public List<Role> loadRoles(JsonNode rootNode) 
+	{
+		List<Role> phoneL = new ArrayList<Role>();
+
+    	JsonNode msgNode = rootNode.path("Role");
+		Iterator<JsonNode> ite = msgNode.getElements();
+
+		int i = 0;
+		while (ite.hasNext()) {
+			JsonNode temp = ite.next();
+			Role ph = readRole(temp);
+
+			phoneL.add(ph);
+			i++;
+		}    	
+
+		return phoneL;
+	}
+	protected Role findRoleWithId(long id, List<Role> phoneL) 
+	{
+		for (Role ph : phoneL)
+		{
+			if (ph.id == id)
+			{
+				return ph;
+			}
+		}
+		return null;
+	}
 }

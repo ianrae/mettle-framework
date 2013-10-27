@@ -14,5 +14,11 @@
 	<codegen what="dal_real" extend="false" />
 </entity>
 
+<entity name="Role">
+	<field>@Id Long id</field>
+	<field>@Required String name</field>
+
+	<query>find_by_name</query>
+</entity>
 
 </entities>
