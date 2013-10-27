@@ -3,7 +3,6 @@
 package mef.daos;
 
 import mef.entities.*;
-
 import java.util.List;
 import org.mef.framework.binder.IFormBinder;
 import org.mef.framework.dao.IDAO;
@@ -16,6 +15,7 @@ public interface IAuthRuleDAO  extends IDAO
 	List<AuthRule> all();
 	void save(AuthRule entity);        
 	void update(AuthRule entity);
-	public AuthRule find_by_user_and_role_and_ticket(User u, Role r, Ticket t);
 
-    }
+    AuthRule find_by_user_and_role_and_ticket(User u, Role r, Ticket t);
+
+}

@@ -12,125 +12,24 @@ import mef.gen.*;
 import org.mef.framework.entitydb.EntityDB;
 import java.util.Date;
 import com.avaje.ebean.Page;
-public class MockAuthRuleDAO implements IAuthRuleDAO
+public class MockAuthRuleDAO extends MockAuthRuleDAO_GEN
 {
-    protected List<AuthRule> _L = new ArrayList<AuthRule>();
-    protected EntityDB<AuthRule> _entityDB = new EntityDB<AuthRule>();
-
-    @Override
-    public int size() 
-    {
-        return _L.size();
-    }
-
-    @Override
-    public AuthRule findById(long id) 
-    {
-    	AuthRule entity = this.findActualById(id);
-    	if (entity != null)
-    	{
-    		return new AuthRule(entity); //return copy
-        }
-        return null; //not found
-    }
-
-    protected AuthRule findActualById(long id) 
-    {
-        for(AuthRule entity : _L)
-        {
-            if (entity.id == id)
-            {
-                return entity;
-            }
-        }
-        return null; //not found
-    }
-
-    @Override
-    public List<AuthRule> all() 
-    {
-        return _L; //ret copy??!!
-    }
-
-    @Override
-    public void delete(long id) 
-    {
-        AuthRule entity = this.findActualById(id);
-        if (entity != null)
-        {
-            _L.remove(entity);
-        }
-    }
-
-    @Override
-    public void save(AuthRule entity) 
-    {
-    	if (entity.id == null)
-		{
-    		entity.id = new Long(0L);
-    	}
-
-    	if (findActualById(entity.id) != null)
-    	{
-    		throw new RuntimeException(String.format("save: id %d already exists", entity.id));
-    	}
 
 
-        delete(entity.id); //remove existing
-        if (entity.id == 0)
-        {
-        	entity.id = nextAvailIdNumber();
-        }
-
-         _L.add(entity);
-     }
-
-    @Override
-	public AuthRule find_by_user_and_role_and_ticket(User u, Role r, Ticket t)
-    {
-    	List<AuthRule> L = this.all();
-    	AuthRule rule = this._entityDB.findFirstMatchEntity(L, "user", u);
-    	
-    	if (rule == null)
-    	{
-    		return null;
-    	}
-    	else
-    	{
-    		return L.get(0);
-    	}
-    }
-
-    
-    
-    private Long nextAvailIdNumber() 
-    {
-    	long used = 0;
-        for(AuthRule entity : _L)
-        {
-            if (entity.id > used)
-            {
-                used = entity.id;
-            }
-        }
-        return used + 1;
-	}
-
-	@Override
-	public void update(AuthRule entity) 
+	//method
+public AuthRule find_by_user_and_role_and_ticket(User u, Role r, Ticket t)
+{
+	List<AuthRule> L = this.all();
+	AuthRule rule = this._entityDB.findFirstMatchEntity(L, "user", u);
+	
+	if (rule == null)
 	{
-		this.delete(entity.id);
-		this.save(entity);
+		return null;
 	}
-
-    @Override
-    public void updateFrom(IFormBinder binder) 
-    {
-    	AuthRule entity = (AuthRule) binder.getObject();
-		this.delete(entity.id);
-    	save(entity);
-
-    }
-
-
+	else
+	{
+		return L.get(0);
 	}
+}
+
+}

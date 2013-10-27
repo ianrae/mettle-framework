@@ -76,7 +76,7 @@ public class EntityLoaderSaver_GEN
 			//copy everything 
 						existing.user = obj.user;
 
-						existing.roleId = obj.roleId;
+						existing.role = obj.role;
 
 						existing.ticketId = obj.ticketId;
 			

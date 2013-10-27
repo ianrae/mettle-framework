@@ -78,7 +78,7 @@ public class RoleTests extends BaseTest
 		Ticket t = _ticketDao.findById(1L);
 		assertNotNull(t);
 		
-		AuthRule rule = new AuthRule(u, role.id, t.id);
+		AuthRule rule = new AuthRule(u, role, t.id);
 		_ruleDao.save(rule);
 		
 		MyAuthorizer auth = new MyAuthorizer(_ctx);
