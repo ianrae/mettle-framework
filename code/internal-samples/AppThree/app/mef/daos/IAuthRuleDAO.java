@@ -9,11 +9,11 @@ import org.mef.framework.dao.IDAO;
 import mef.gen.*;
 import java.util.Date;
 import com.avaje.ebean.Page;
-public interface IAuthRulesDAO  extends IDAO
+public interface IAuthRuleDAO  extends IDAO
 {
-	AuthRules findById(long id);
-	List<AuthRules> all();
-	void save(AuthRules entity);        
-	void update(AuthRules entity);
+	AuthRule findById(long id);
+	List<AuthRule> all();
+	void save(AuthRule entity);        
+	void update(AuthRule entity);
 
     }

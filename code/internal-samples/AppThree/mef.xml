@@ -26,7 +26,7 @@
 	<field>@Id Long id</field>
 </entity>
 
-<entity name="AuthRules">
+<entity name="AuthRule">
 	<field>@Id Long id</field>
 	<field>Long userId</field>
 	<field>Long roleId</field>

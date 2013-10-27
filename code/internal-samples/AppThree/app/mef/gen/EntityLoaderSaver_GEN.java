@@ -68,7 +68,7 @@ public class EntityLoaderSaver_GEN
 		}
 		return obj.id;
 	}
-	public static long saveOrUpdate(AuthRules obj, AuthRules existing, IAuthRulesDAO dao)
+	public static long saveOrUpdate(AuthRule obj, AuthRule existing, IAuthRuleDAO dao)
 	{
 		if (existing != null)
 		{

@@ -139,9 +139,9 @@ public class DaoJsonLoader_GEN extends BaseDaoJsonLoader
 		}
 		return null;
 	}
-	public AuthRules readAuthRules(JsonNode node)
+	public AuthRule readAuthRule(JsonNode node)
 	{
-		AuthRules obj = new AuthRules();
+		AuthRule obj = new AuthRule();
 		JsonNode jj = node.get("id");
 		obj.id = jj.asLong();
 
@@ -155,17 +155,17 @@ public class DaoJsonLoader_GEN extends BaseDaoJsonLoader
 
 		return obj;
 	}
-	public List<AuthRules> loadAuthRuless(JsonNode rootNode) 
+	public List<AuthRule> loadAuthRules(JsonNode rootNode) 
 	{
-		List<AuthRules> phoneL = new ArrayList<AuthRules>();
+		List<AuthRule> phoneL = new ArrayList<AuthRule>();
 
-    	JsonNode msgNode = rootNode.path("AuthRules");
+    	JsonNode msgNode = rootNode.path("AuthRule");
 		Iterator<JsonNode> ite = msgNode.getElements();
 
 		int i = 0;
 		while (ite.hasNext()) {
 			JsonNode temp = ite.next();
-			AuthRules ph = readAuthRules(temp);
+			AuthRule ph = readAuthRule(temp);
 
 			phoneL.add(ph);
 			i++;
@@ -173,9 +173,9 @@ public class DaoJsonLoader_GEN extends BaseDaoJsonLoader
 
 		return phoneL;
 	}
-	protected AuthRules findAuthRulesWithId(long id, List<AuthRules> phoneL) 
+	protected AuthRule findAuthRuleWithId(long id, List<AuthRule> phoneL) 
 	{
-		for (AuthRules ph : phoneL)
+		for (AuthRule ph : phoneL)
 		{
 			if (ph.id == id)
 			{

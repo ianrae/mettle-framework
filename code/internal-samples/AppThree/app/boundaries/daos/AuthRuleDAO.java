@@ -18,18 +18,18 @@ import boundaries.Boundary;
 import boundaries.daos.*;
 import mef.core.Initializer;
 
-import models.AuthRulesModel;
+import models.AuthRuleModel;
 import play.db.ebean.Model.Finder;
 
 import mef.daos.*;
-import mef.entities.AuthRules;
+import mef.entities.AuthRule;
 import com.avaje.ebean.Page;
-public class AuthRulesDAO implements IAuthRulesDAO 
+public class AuthRuleDAO implements IAuthRuleDAO 
 {
 	@Override
-	public void save(AuthRules entity) 
+	public void save(AuthRule entity) 
 	{
-		AuthRulesModel t = (AuthRulesModel)entity.cc; 
+		AuthRuleModel t = (AuthRuleModel)entity.cc; 
 		if (t == null) //not yet known by db? (newly created)
 		{
 			System.out.println("save-auto-create");
@@ -44,9 +44,9 @@ public class AuthRulesDAO implements IAuthRulesDAO
 	}
 
 	@Override
-	public AuthRules findById(long id) 
+	public AuthRule findById(long id) 
 	{
-		AuthRulesModel t = AuthRulesModel.find.byId(id);
+		AuthRuleModel t = AuthRuleModel.find.byId(id);
 		if (t == null)
 		{
 			return null;
@@ -57,42 +57,42 @@ public class AuthRulesDAO implements IAuthRulesDAO
 	}
 
 	@Override
-	public List<AuthRules> all() 
+	public List<AuthRule> all() 
 	{
-		List<AuthRulesModel> L = AuthRulesModel.all();
-		List<AuthRules> entityL = createEntityFromModel(L);
+		List<AuthRuleModel> L = AuthRuleModel.all();
+		List<AuthRule> entityL = createEntityFromModel(L);
 		return entityL;
 	}
 
 	@Override
 	public int size() 
 	{
-		return AuthRulesModel.all().size();
+		return AuthRuleModel.all().size();
 	}
 
 	@Override
 	public void delete(long id) 
 	{
-		AuthRulesModel t = AuthRulesModel.find.byId(id);
+		AuthRuleModel t = AuthRuleModel.find.byId(id);
 		t.delete();
 	}
 
-	//AuthRules
+	//AuthRule
 	//create model, set entity, and call all setters
-	public static AuthRulesModel createModelFromEntity(AuthRules entity)
+	public static AuthRuleModel createModelFromEntity(AuthRule entity)
 	{
 		if (entity == null)
 		{
 			return null;
 		}
-		AuthRulesModel t = new AuthRulesModel();
+		AuthRuleModel t = new AuthRuleModel();
 		entity.cc = t;
 		t.entity = entity;
 		touchAll(t, entity);
 		return t;
 	}
 	//create entity, set m.cc and t.entity, copy all fields from model to entity
-	public static AuthRules createEntityFromModel(AuthRulesModel t)
+	public static AuthRule createEntityFromModel(AuthRuleModel t)
 	{
 		if (t == null)
 		{
@@ -103,19 +103,19 @@ public class AuthRulesDAO implements IAuthRulesDAO
 		{
 			return t.entity; //already exists
 		}
-		AuthRules entity = new AuthRules();
+		AuthRule entity = new AuthRule();
 		entity.cc = t;
 		entity.id = (t.getId() == null) ? 0 : t.getId();		
 		t.entity = entity;
 		touchAll(entity, t);
 		return entity;
 	}
-	public static List<AuthRules> createEntityFromModel(List<AuthRulesModel> L)
+	public static List<AuthRule> createEntityFromModel(List<AuthRuleModel> L)
 	{
-		ArrayList<AuthRules> entityL = new ArrayList<AuthRules>();
-		for(AuthRulesModel t : L)
+		ArrayList<AuthRule> entityL = new ArrayList<AuthRule>();
+		for(AuthRuleModel t : L)
 		{
-			AuthRules entity = createEntityFromModel(t);
+			AuthRule entity = createEntityFromModel(t);
 			if (entity != null) //why??!!
 			{
 				entityL.add(entity);
@@ -128,15 +128,15 @@ public class AuthRulesDAO implements IAuthRulesDAO
 	@Override
 	public void updateFrom(IFormBinder binder) 
 	{
-		AuthRulesModel model = (AuthRulesModel) binder.getRawObject();
+		AuthRuleModel model = (AuthRuleModel) binder.getRawObject();
 		model.update();
 	}
 
 
 	@Override
-	public void update(AuthRules entity) 
+	public void update(AuthRule entity) 
 	{
-		AuthRulesModel t = (AuthRulesModel)entity.cc; 
+		AuthRuleModel t = (AuthRuleModel)entity.cc; 
 		if (t == null) //not yet known by db? (newly created)
 		{
 			t.entity = null; //throw exception
@@ -148,7 +148,7 @@ public class AuthRulesDAO implements IAuthRulesDAO
 		t.update();
 	}
 
-       protected static void touchAll(AuthRulesModel t, AuthRules entity)
+       protected static void touchAll(AuthRuleModel t, AuthRule entity)
 {
 	t.setId(entity.id);
 	t.setUserId(entity.userId);
@@ -156,7 +156,7 @@ public class AuthRulesDAO implements IAuthRulesDAO
 	t.setTicketId(entity.ticketId);
 }
 
-protected static void touchAll(AuthRules entity, AuthRulesModel t)
+protected static void touchAll(AuthRule entity, AuthRuleModel t)
 {
 	entity.userId = t.getUserId();
 	entity.roleId = t.getRoleId();

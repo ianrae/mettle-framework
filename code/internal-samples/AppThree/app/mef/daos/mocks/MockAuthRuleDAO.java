@@ -12,10 +12,10 @@ import mef.gen.*;
 import org.mef.framework.entitydb.EntityDB;
 import java.util.Date;
 import com.avaje.ebean.Page;
-public class MockAuthRulesDAO implements IAuthRulesDAO
+public class MockAuthRuleDAO implements IAuthRuleDAO
 {
-    protected List<AuthRules> _L = new ArrayList<AuthRules>();
-    protected EntityDB<AuthRules> _entityDB = new EntityDB<AuthRules>();
+    protected List<AuthRule> _L = new ArrayList<AuthRule>();
+    protected EntityDB<AuthRule> _entityDB = new EntityDB<AuthRule>();
 
     @Override
     public int size() 
@@ -24,19 +24,19 @@ public class MockAuthRulesDAO implements IAuthRulesDAO
     }
 
     @Override
-    public AuthRules findById(long id) 
+    public AuthRule findById(long id) 
     {
-    	AuthRules entity = this.findActualById(id);
+    	AuthRule entity = this.findActualById(id);
     	if (entity != null)
     	{
-    		return new AuthRules(entity); //return copy
+    		return new AuthRule(entity); //return copy
         }
         return null; //not found
     }
 
-    protected AuthRules findActualById(long id) 
+    protected AuthRule findActualById(long id) 
     {
-        for(AuthRules entity : _L)
+        for(AuthRule entity : _L)
         {
             if (entity.id == id)
             {
@@ -47,7 +47,7 @@ public class MockAuthRulesDAO implements IAuthRulesDAO
     }
 
     @Override
-    public List<AuthRules> all() 
+    public List<AuthRule> all() 
     {
         return _L; //ret copy??!!
     }
@@ -55,7 +55,7 @@ public class MockAuthRulesDAO implements IAuthRulesDAO
     @Override
     public void delete(long id) 
     {
-        AuthRules entity = this.findActualById(id);
+        AuthRule entity = this.findActualById(id);
         if (entity != null)
         {
             _L.remove(entity);
@@ -63,7 +63,7 @@ public class MockAuthRulesDAO implements IAuthRulesDAO
     }
 
     @Override
-    public void save(AuthRules entity) 
+    public void save(AuthRule entity) 
     {
     	if (entity.id == null)
 		{
@@ -88,7 +88,7 @@ public class MockAuthRulesDAO implements IAuthRulesDAO
     private Long nextAvailIdNumber() 
     {
     	long used = 0;
-        for(AuthRules entity : _L)
+        for(AuthRule entity : _L)
         {
             if (entity.id > used)
             {
@@ -99,7 +99,7 @@ public class MockAuthRulesDAO implements IAuthRulesDAO
 	}
 
 	@Override
-	public void update(AuthRules entity) 
+	public void update(AuthRule entity) 
 	{
 		this.delete(entity.id);
 		this.save(entity);
@@ -108,7 +108,7 @@ public class MockAuthRulesDAO implements IAuthRulesDAO
     @Override
     public void updateFrom(IFormBinder binder) 
     {
-    	AuthRules entity = (AuthRules) binder.getObject();
+    	AuthRule entity = (AuthRule) binder.getObject();
 		this.delete(entity.id);
     	save(entity);
 

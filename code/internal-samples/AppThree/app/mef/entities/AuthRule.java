@@ -6,20 +6,20 @@ import org.mef.framework.entities.Entity;
 import mef.gen.*;
 import mef.entities.*;
 import java.util.Date;
-public class AuthRules extends Entity
+public class AuthRule extends Entity
 {
-	public AuthRules()
+	public AuthRule()
 	{}
 
 
-	public AuthRules( Long userId, Long roleId, Long ticketId)
+	public AuthRule( Long userId, Long roleId, Long ticketId)
 	{
 		this.userId = userId;
 		this.roleId = roleId;
 		this.ticketId = ticketId;
 	}
 
-	public AuthRules(AuthRules entity)
+	public AuthRule(AuthRule entity)
 	{
 		this.id = entity.id;
 		this.userId = entity.userId;

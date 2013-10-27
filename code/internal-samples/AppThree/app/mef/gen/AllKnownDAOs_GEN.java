@@ -51,14 +51,14 @@ else
 	L.add(dal);
 }	if (createMocks)
 {
-	IAuthRulesDAO dal = new MockAuthRulesDAO();
-	ctx.getServiceLocator().registerSingleton(IAuthRulesDAO.class, dal);
+	IAuthRuleDAO dal = new MockAuthRuleDAO();
+	ctx.getServiceLocator().registerSingleton(IAuthRuleDAO.class, dal);
 	L.add(dal);
 }
 else
 {
-	IAuthRulesDAO dal = new AuthRulesDAO();
-	ctx.getServiceLocator().registerSingleton(IAuthRulesDAO.class, dal);
+	IAuthRuleDAO dal = new AuthRuleDAO();
+	ctx.getServiceLocator().registerSingleton(IAuthRuleDAO.class, dal);
 	L.add(dal);
 }	
 	return L;
