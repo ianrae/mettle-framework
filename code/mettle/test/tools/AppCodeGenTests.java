@@ -17,8 +17,7 @@ public class AppCodeGenTests extends BaseTest
 	@Test
 	public void test() throws Exception
 	{
-		this.createContext();
-		AppScaffoldCodeGenerator gen = new AppScaffoldCodeGenerator(_ctx);
+		AppScaffoldCodeGenerator gen = new AppScaffoldCodeGenerator();
 		
 		gen.disableFileIO = false;  //***** WATCH OUT!11 ****
 		String appDir = "c:\\tmp\\cc";

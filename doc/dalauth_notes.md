@@ -653,3 +653,57 @@ WORKS!
 TO DO
 -appgen if appDir null then use current dir
 -find pluralize code so can create UsersController
+
+PLAY NEW APP APPTHREE (ATTEMPT #3)
+-play new AppThree
+-add lib (st and ebean for eclipse)
+ -create lib dir and add ST-4.0.7.jar and add to Eclipse build path
+
+-build.scala, add
+     "mettle" % "mettle_2.10" % "1.0-SNAPSHOT"
+-if mettle from github, add ....
+-play eclipse 
+
+-new source folder: mgen  (eg. sibling of app and test directories)
+-new Junit test case: AppCodeGen
+-copy in this test
+	@Test
+	public void codeGen() throws Exception
+	{
+		AppScaffoldCodeGenerator gen = new AppScaffoldCodeGenerator();
+		boolean b = gen.generateAll();
+		assertTrue(b);
+	}
+-run it
+-delete the test. You don't need it anymore
+
+-add User to mef.xml
+-run PresenterCodeGen
+-run DaoGen
+ 
+-run UserPresenterTest 
+  -all pass!
+
+
+-add to routes
+# Users
+GET     /users                  controllers.UserController.index()
+
+# Error
+GET 	/logout                 controllers.ErrorController.logout()
+
+-add link on main page. index.scala.html, replace the @play20.weclome with
+
+        <a class="brand" href="@routes.UserController.index()">Users</a>
+
+app.conf
+db.default.driver=org.h2.Driver
+db.default.url="jdbc:h2:mem:play"
+
+db.default.logStatements=true
+logger.com.jolbox=DEBUG
+
+and uncomment:
+ ebean.default="models.*"		
+		
+WORKS!

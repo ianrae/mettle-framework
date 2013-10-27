@@ -12,8 +12,7 @@ object ApplicationBuild extends Build {
     javaCore,
     javaJdbc,
     javaEbean,
-    "commons-io" % "commons-io" % "2.3",
-     "mettle" % "mettle_2.10" % "1.0-SNAPSHOT"
+	"mettle" % "mettle_2.10" % "1.0-SNAPSHOT"	
   )
 
   val main = play.Project(appName, appVersion, appDependencies).settings(

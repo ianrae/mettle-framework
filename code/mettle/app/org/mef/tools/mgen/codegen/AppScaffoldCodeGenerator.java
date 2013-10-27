@@ -22,6 +22,11 @@ import org.mef.framework.sfx.SfxTextWriter;
 public class AppScaffoldCodeGenerator extends CodeGenerator
 {
 	
+	public AppScaffoldCodeGenerator()
+	{
+		super(new SfxContext());
+	}
+	
 	public AppScaffoldCodeGenerator(SfxContext ctx)
 	{
 		super(ctx);
@@ -30,6 +35,11 @@ public class AppScaffoldCodeGenerator extends CodeGenerator
 	@Override
 	public boolean generateAll() throws Exception
 	{
+		if (this.appDir == null)
+		{
+			this.appDir = new File(".").getAbsolutePath(); //default to current directory
+		}
+		
 		createDirStructure();
 		String filename = "mef.xml";
 		String baseDir = "/mgen/resources/app/copy/";

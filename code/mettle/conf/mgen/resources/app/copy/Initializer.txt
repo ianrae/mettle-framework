@@ -6,7 +6,8 @@ import org.mef.framework.dao.IDAO;
 import org.mef.framework.sfx.SfxContext;
 import org.mef.framework.utils.ResourceReader;
 
-//import mef.gen.AllKnownDAOs_GEN;
+import mef.gen.AllKnownDAOs_GEN; //will be undefined until you run Presenter and DAO code-generation
+
 
 public class Initializer 
 {
@@ -25,8 +26,8 @@ public class Initializer
 	public static SfxContext createContext(boolean createMocks)
 	{
 		SfxContext ctx = new SfxContext();
-//		AllKnownDAOs_GEN knownDAOs = new AllKnownDAOs_GEN();
-//		knownDAOs.registerDAOs(ctx, createMocks);
+		AllKnownDAOs_GEN knownDAOs = new AllKnownDAOs_GEN();
+		knownDAOs.registerDAOs(ctx, createMocks);
 		theCtx = ctx;
 		return ctx;
 	}

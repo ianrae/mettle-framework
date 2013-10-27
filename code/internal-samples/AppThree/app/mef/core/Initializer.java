@@ -2,13 +2,12 @@ package mef.core;
 
 import java.util.List;
 import play.Logger;
-import mef.gen.AllKnownDAOs_GEN;
-
 import org.mef.framework.dao.IDAO;
 import org.mef.framework.sfx.SfxContext;
 import org.mef.framework.utils.ResourceReader;
 
-//import mef.gen.AllKnownDAOs_GEN;
+import mef.gen.AllKnownDAOs_GEN; //will be undefined until you run Presenter and DAO code-generation
+
 
 public class Initializer 
 {

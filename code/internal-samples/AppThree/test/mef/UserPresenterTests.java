@@ -69,7 +69,6 @@ public class UserPresenterTests extends BasePresenterTest
 		UserReply reply = (UserReply) _presenter.process( new NewCommand());
 
 		chkReplySucessful(reply, Reply.VIEW_NEW, null);
-		assertEquals("defaultname", reply._entity.name);
 		chkDalSize(0);
 		chkReplyWithEntity(reply);
 	}
