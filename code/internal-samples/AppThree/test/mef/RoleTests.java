@@ -82,7 +82,7 @@ public class RoleTests extends BaseTest
 		_ruleDao.save(rule);
 		
 		MyAuthorizer auth = new MyAuthorizer(_ctx);
-		//assertFalse(auth.isAuth(null, null, null));
+		assertFalse(auth.isAuth(null, null, null));
 
 		assertTrue(auth.isAuth(u, role, t));
 		

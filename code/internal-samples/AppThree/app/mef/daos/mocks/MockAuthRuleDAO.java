@@ -89,7 +89,7 @@ public class MockAuthRuleDAO implements IAuthRuleDAO
 	public AuthRule find_by_user_and_role_and_ticket(User u, Role r, Ticket t)
     {
     	List<AuthRule> L = this.all();
-    	AuthRule rule = this._entityDB.findFirstMatch(L, "userId", u);
+    	AuthRule rule = this._entityDB.findFirstMatchEntity(L, "user", u);
     	
     	if (rule == null)
     	{

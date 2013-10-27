@@ -11,7 +11,11 @@ public class EntityDBHelper<T>
 	{
 		if (fieldName == null)
 		{
-			return false;
+			return null;
+		}
+		if (obj == null)
+		{
+			return null;
 		}
 		
 		Field field = null;
