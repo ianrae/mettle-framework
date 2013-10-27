@@ -47,7 +47,7 @@ public abstract class CodeGenerator extends SfxBaseObj
 			String tmp = utils.getCurrentDir();
 			tmp = utils.PathCombine(tmp, "conf/" + baseDir + filename);
 			stream = new FileInputStream(tmp);
-			log("found at: " + tmp);
+//			log("found at: " + tmp);
 		}
 		return stream;
 	}
@@ -71,7 +71,7 @@ public abstract class CodeGenerator extends SfxBaseObj
 			SfxFileUtils utils = new SfxFileUtils();
 			String tmp = utils.getCurrentDir();
 			tmp = utils.PathCombine(tmp, "conf/" + baseDir + filename);
-			log("found at: " + tmp);
+//			log("found at: " + tmp);
 			return tmp;
 		}
 		
@@ -128,9 +128,12 @@ public abstract class CodeGenerator extends SfxBaseObj
 	public void createDir(String dirName) 
 	{
 		String dest = pathCombine(appDir, dirName);
-		log("creating dir: " + dest);
 		File f = new File(dest);
-		f.mkdirs();
+		if (! f.exists())
+		{
+			log("creating dir: " + dest);
+			f.mkdirs();
+		}
 	}
 
 	protected boolean writeFile(String appDir, String subDir, String fileName, String code)

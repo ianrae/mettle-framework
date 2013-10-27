@@ -118,7 +118,7 @@ public class PresenterScaffoldCodeGenerator extends CodeGenerator
 		
 		
 		path = this.getResourceOrFilePath(baseDir, "index-view.stg");
-		b = generateOneFile(def, new ViewCodeGen(_ctx), path, "", "app\\views");
+		b = generateOneFile(def, new ViewCodeGen(_ctx), path, "", "app\\views\\" + def.name);
 		if (!b )
 		{
 			return false; //!!
@@ -138,6 +138,8 @@ public class PresenterScaffoldCodeGenerator extends CodeGenerator
 		String className = gen.getClassName(def);	
 
 		path = this.pathCombine(appDir, relPath);
+		this.createDir(relPath);
+		
 		String filename = className;
 		if (! filename.contains(".html"))
 		{
@@ -147,8 +149,7 @@ public class PresenterScaffoldCodeGenerator extends CodeGenerator
 		File f = new File(path);
 		if (f.exists())
 		{
-			log(path);
-			this.log(def.name + ": skipping - already exists");
+			log(path  + ": skipping - already exists");
 			return true;
 		}
 		
