@@ -37,40 +37,40 @@ public class EntityValueMatcher implements IValueMatcher
 		}
 	}
 
-	private Long getId(Entity entity)
-	{
-		Method meth = null;
-		try {
-			meth = entity.getClass().getDeclaredMethod("getId", null);
-		} catch (SecurityException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (NoSuchMethodException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
-		
-		if (meth == null)
-		{
-			throw new RuntimeException("getId not found!");
-		}
-		
-		Long lval = null;
-		try {
-			lval = (Long)meth.invoke(entity, null);
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return lval;
-	}
+//	private Long getId(Entity entity)
+//	{
+//		Method meth = null;
+//		try {
+//			meth = entity.getClass().getDeclaredMethod("getId", null);
+//		} catch (SecurityException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		} catch (NoSuchMethodException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
+//		
+//		
+//		if (meth == null)
+//		{
+//			throw new RuntimeException("getId not found!");
+//		}
+//		
+//		Long lval = null;
+//		try {
+//			lval = (Long)meth.invoke(entity, null);
+//		} catch (IllegalArgumentException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (IllegalAccessException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (InvocationTargetException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		return lval;
+//	}
 	
 	@Override
 	public int compare(Object value, Object valueToMatch, int matchType) 

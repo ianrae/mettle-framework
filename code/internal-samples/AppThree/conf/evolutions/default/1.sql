@@ -38,6 +38,8 @@ create sequence user_model_seq;
 
 alter table auth_rule_model add constraint fk_auth_rule_model_user_1 foreign key (user_id) references user_model (id) on delete restrict on update restrict;
 create index ix_auth_rule_model_user_1 on auth_rule_model (user_id);
+alter table auth_rule_model add constraint fk_auth_rule_model_role_2 foreign key (role_id) references role_model (id) on delete restrict on update restrict;
+create index ix_auth_rule_model_role_2 on auth_rule_model (role_id);
 
 
 

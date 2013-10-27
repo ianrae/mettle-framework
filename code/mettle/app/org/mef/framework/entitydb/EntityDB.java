@@ -69,7 +69,7 @@ public class EntityDB<T>
 		
 		public boolean isMatchObject(T obj, String fieldName, Object valueToMatch, Class clazz, int matchType)
 		{
-			if (fieldName == null)
+			if (fieldName == null || fieldName.isEmpty())
 			{
 				return false;
 			}
@@ -77,7 +77,7 @@ public class EntityDB<T>
 			Object value = helper.getFieldValue(obj, fieldName);
 			if (value == null)
 			{
-				return false;
+				return (valueToMatch == null);
 			}
 			
 			IValueMatcher matcher = this.getMatcher(clazz);
@@ -163,6 +163,19 @@ public class EntityDB<T>
 			for(T f : L)
 			{
 				if (isMatchObject(f, fieldName, valueToMatch, String.class, matchType))
+				{
+					resultL.add(f);
+				}
+			}
+			return resultL;
+		}
+		public List<T> findMatchesEntity(List<T> L, String fieldName, Entity valueToMatch)
+		{
+			List<T> resultL = new ArrayList<T>();
+			
+			for(T f : L)
+			{
+				if (isMatchObject(f, fieldName, valueToMatch, Entity.class, IValueMatcher.EXACT))
 				{
 					resultL.add(f);
 				}

@@ -91,6 +91,30 @@ public class RoleTests extends BaseTest
 		
 	}
 
+	@Test
+	public void testNullUser() 
+	{
+		init();
+		buildRoles();
+		buildUsers();
+		buildTickets();
+		Role role = _roleDao.find_by_name("Viewer");
+		Ticket t = _ticketDao.findById(1L);
+		assertNotNull(t);
+		
+		AuthRule rule = new AuthRule(null, role, t.id);
+		_ruleDao.save(rule);
+		assertEquals(1, _ruleDao.size());
+		
+		MyAuthorizer auth = new MyAuthorizer(_ctx);
+		assertFalse(auth.isAuth(null, null, null));
+
+		assertTrue(auth.isAuth(null, role, t));
+		
+		User u2 = _userDao.find_by_name("bob");
+		assertFalse(auth.isAuth(u2, role, t));
+		
+	}
 	
 	//--- helpers ---
 	private void buildRoles()
