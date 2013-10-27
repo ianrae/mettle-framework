@@ -5,9 +5,8 @@
 # Home page
 GET     /                           controllers.Application.index()
 
-
 # Users
-GET     /users                  controllers.UsersController.index()
+GET     /users                  controllers.UserController.index()
 
 
 # Error

@@ -54,7 +54,7 @@ public class UserPresenter extends Presenter
 		UserReply reply = createReply();
 		reply.setDestination(Reply.VIEW_NEW);
 		reply._entity = new User();
-		reply._entity.name = "defaultname";
+		reply._entity.name = "defaultname";		
 		return reply; 
 	}
 

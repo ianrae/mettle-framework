@@ -28,13 +28,6 @@ public class MGEN_Daos extends BaseTest
 		boolean b = false;
 		gen.genDaoLoader = true;
 		b =gen.generateAll();
-		
-//		b = gen.generateOnce(); //allKnownDAOs
-//		b = gen.generate("User");
-//		b = gen.generate("Company");
-//		b = gen.generate("Computer");
-//		b = gen.generate("Role");
-		
 		assertTrue(b);
 	}
 	

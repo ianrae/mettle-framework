@@ -17,8 +17,6 @@ public class MGEN_PresenterScaffold extends BaseTest
 	{
 		createContext();
 		PresenterScaffoldCodeGenerator gen = new PresenterScaffoldCodeGenerator(_ctx);
-		gen.disableFileIO = false;  //***** WATCH OUT!11 ****
-		
 		String appDir = this.getCurrentDir("");
 		log(appDir);
 		
@@ -26,11 +24,6 @@ public class MGEN_PresenterScaffold extends BaseTest
 		assertEquals(1, n);
 
 		boolean b = gen.generateAll();
-		
-//		b = gen.generate("User");
-//		b = gen.generate("Company");
-//		b = gen.generate("Computer");
-//		b = gen.generate("Role");
 		assertTrue(b);
 	}
 

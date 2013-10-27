@@ -15,7 +15,6 @@ public class ErrorController extends Controller {
 	
 
 	public static Result logout() {
-//	return ok("ok owners...");
 	return ok(
 		views.html.error.render("")
 	  );

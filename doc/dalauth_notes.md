@@ -583,5 +583,73 @@ So the to-do list for codegen is
    -create UsersController
    -add User/index.scala.html
  
+----------------------------------------27OctSun
+PLAY NEW APP APPTHREE (ATTEMPT #2)
+-play new AppThree
+-add lib (st and ebean for eclipse)
+-play eclipse
+
+-build.scala, add
+    "commons-io" % "commons-io" % "2.3",
+     "mettle" % "mettle_2.10" % "1.0-SNAPSHOT"
+-if mettle from github, add ....
+-play eclipse and restart Eclipse
+
+-create lib dir and add ST-4.0.7.jar and add to Eclipse build path
+
+-copy mgen folder from AppTwo or create this test AppCodeGen.java
+	@Test
+	public void testEntity() throws Exception
+	{
+		SfxContext ctx = new SfxContext();
+		AppScaffoldCodeGenerator gen = new AppScaffoldCodeGenerator(ctx);
+		
+		String appDir = new File(".").getAbsolutePath();
+		gen.init(appDir);
+
+		boolean b = false;
+		b = gen.generateAll();
+		assertTrue(b);
+	}
+-run it
+-delete the test. You don't need it anymore
+
+-add User to mef.xml
+-run PresenterCodeGen
+-run DaoGen
+
+-initializer.java
+ -uncomment out the AllKnownDaos stuff
+ 
+-run UserPresenterTest -- all pass except one
+ in prsenter onNewCommand
+		reply._entity.name = "defaultname";
+-all pass!
 
 
+-add to routes
+# Users
+GET     /users                  controllers.UserController.index()
+
+# Error
+GET 	/logout                 controllers.ErrorController.logout()
+
+-add link on main page. index.scala.html, replace the play.weclome with
+
+        <a class="brand" href="@routes.UserController.index()">Users</a>
+
+app.conf
+db.default.driver=org.h2.Driver
+db.default.url="jdbc:h2:mem:play"
+
+db.default.logStatements=true
+logger.com.jolbox=DEBUG
+
+and uncomment:
+ ebean.default="models.*"		
+		
+WORKS!
+
+TO DO
+-appgen if appDir null then use current dir
+-find pluralize code so can create UsersController
