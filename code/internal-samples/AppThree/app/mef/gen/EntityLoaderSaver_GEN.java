@@ -78,7 +78,7 @@ public class EntityLoaderSaver_GEN
 
 						existing.role = obj.role;
 
-						existing.ticketId = obj.ticketId;
+						existing.ticket = obj.ticket;
 			
 
 			dao.update(existing); //inserts or updates 

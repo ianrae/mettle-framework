@@ -78,7 +78,7 @@ public class RoleTests extends BaseTest
 		Ticket t = _ticketDao.findById(1L);
 		assertNotNull(t);
 		
-		AuthRule rule = new AuthRule(u, role, t.id);
+		AuthRule rule = new AuthRule(u, role, t);
 		_ruleDao.save(rule);
 		
 		MyAuthorizer auth = new MyAuthorizer(_ctx);
@@ -88,6 +88,10 @@ public class RoleTests extends BaseTest
 		
 		User u2 = _userDao.find_by_name("bob");
 		assertFalse(auth.isAuth(u2, role, t));
+		
+		Ticket t2 = _ticketDao.findById(2L);
+		assertFalse(auth.isAuth(u, role, t2));
+		
 		
 	}
 
@@ -102,7 +106,7 @@ public class RoleTests extends BaseTest
 		Ticket t = _ticketDao.findById(1L);
 		assertNotNull(t);
 		
-		AuthRule rule = new AuthRule(null, role, t.id);
+		AuthRule rule = new AuthRule(null, role, t);
 		_ruleDao.save(rule);
 		assertEquals(1, _ruleDao.size());
 		
@@ -110,6 +114,7 @@ public class RoleTests extends BaseTest
 		assertFalse(auth.isAuth(null, null, null));
 
 		assertTrue(auth.isAuth(null, role, t));
+		assertFalse(auth.isAuth(null, role, null));
 		
 		User u2 = _userDao.find_by_name("bob");
 		assertFalse(auth.isAuth(u2, role, t));

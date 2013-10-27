@@ -24,6 +24,7 @@ public AuthRule find_by_user_and_role_and_ticket(User u, Role r, Ticket t)
 	List<AuthRule> L = this.all();
 	L = this._entityDB.findMatchesEntity(L, "user", u);
 	L = this._entityDB.findMatchesEntity(L, "role", r);
+	L = this._entityDB.findMatchesEntity(L, "ticket", t);
 	
 	
 	if (L.size() == 0)

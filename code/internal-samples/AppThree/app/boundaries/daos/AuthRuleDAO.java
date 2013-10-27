@@ -159,7 +159,8 @@ public class AuthRuleDAO implements IAuthRuleDAO
 	t.setUser(userDAO.createModelFromEntity(entity.user));
 	RoleDAO roleDAO = (RoleDAO)Initializer.theCtx.getServiceLocator().getInstance(IRoleDAO.class);
 	t.setRole(roleDAO.createModelFromEntity(entity.role));
-	t.setTicketId(entity.ticketId);
+	TicketDAO ticketDAO = (TicketDAO)Initializer.theCtx.getServiceLocator().getInstance(ITicketDAO.class);
+	t.setTicket(ticketDAO.createModelFromEntity(entity.ticket));
 }
 
 protected static void touchAll(AuthRule entity, AuthRuleModel t)
@@ -168,7 +169,8 @@ protected static void touchAll(AuthRule entity, AuthRuleModel t)
 	entity.user = userDAO.createEntityFromModel(t.getUser());
 	RoleDAO roleDAO = (RoleDAO)Initializer.theCtx.getServiceLocator().getInstance(IRoleDAO.class);
 	entity.role = roleDAO.createEntityFromModel(t.getRole());
-	entity.ticketId = t.getTicketId();
+	TicketDAO ticketDAO = (TicketDAO)Initializer.theCtx.getServiceLocator().getInstance(ITicketDAO.class);
+	entity.ticket = ticketDAO.createEntityFromModel(t.getTicket());
 }
 
 
