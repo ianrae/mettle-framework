@@ -15,7 +15,6 @@ public class BaseTest
 	public void init()
 	{
 		_ctx = Initializer.createContext(true);
-		Initializer.theCtx = _ctx;
 	}
 
 	

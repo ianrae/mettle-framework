@@ -100,4 +100,43 @@ public class DaoJsonLoader_GEN extends BaseDaoJsonLoader
 		}
 		return null;
 	}
+	public Ticket readTicket(JsonNode node)
+	{
+		Ticket obj = new Ticket();
+		JsonNode jj = node.get("id");
+		obj.id = jj.asLong();
+
+
+
+		return obj;
+	}
+	public List<Ticket> loadTickets(JsonNode rootNode) 
+	{
+		List<Ticket> phoneL = new ArrayList<Ticket>();
+
+    	JsonNode msgNode = rootNode.path("Ticket");
+		Iterator<JsonNode> ite = msgNode.getElements();
+
+		int i = 0;
+		while (ite.hasNext()) {
+			JsonNode temp = ite.next();
+			Ticket ph = readTicket(temp);
+
+			phoneL.add(ph);
+			i++;
+		}    	
+
+		return phoneL;
+	}
+	protected Ticket findTicketWithId(long id, List<Ticket> phoneL) 
+	{
+		for (Ticket ph : phoneL)
+		{
+			if (ph.id == id)
+			{
+				return ph;
+			}
+		}
+		return null;
+	}
 }

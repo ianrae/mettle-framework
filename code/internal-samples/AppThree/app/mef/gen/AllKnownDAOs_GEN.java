@@ -38,6 +38,17 @@ else
 	IRoleDAO dal = new RoleDAO();
 	ctx.getServiceLocator().registerSingleton(IRoleDAO.class, dal);
 	L.add(dal);
+}	if (createMocks)
+{
+	ITicketDAO dal = new MockTicketDAO();
+	ctx.getServiceLocator().registerSingleton(ITicketDAO.class, dal);
+	L.add(dal);
+}
+else
+{
+	ITicketDAO dal = new TicketDAO();
+	ctx.getServiceLocator().registerSingleton(ITicketDAO.class, dal);
+	L.add(dal);
 }	
 	return L;
 }

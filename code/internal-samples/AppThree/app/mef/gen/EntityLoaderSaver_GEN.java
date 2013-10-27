@@ -51,4 +51,21 @@ public class EntityLoaderSaver_GEN
 		}
 		return obj.id;
 	}
+	public static long saveOrUpdate(Ticket obj, Ticket existing, ITicketDAO dao)
+	{
+		if (existing != null)
+		{
+			obj.id = existing.id;
+			//copy everything 
+			
+
+			dao.update(existing); //inserts or updates 
+		}
+		else
+		{
+			obj.id = 0L;
+			dao.save(obj); //inserts or updates 
+		}
+		return obj.id;
+	}
 }
