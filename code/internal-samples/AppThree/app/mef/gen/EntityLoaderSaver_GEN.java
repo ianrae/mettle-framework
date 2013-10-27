@@ -74,7 +74,7 @@ public class EntityLoaderSaver_GEN
 		{
 			obj.id = existing.id;
 			//copy everything 
-						existing.userId = obj.userId;
+						existing.user = obj.user;
 
 						existing.roleId = obj.roleId;
 

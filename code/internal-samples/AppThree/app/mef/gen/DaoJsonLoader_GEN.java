@@ -145,7 +145,7 @@ public class DaoJsonLoader_GEN extends BaseDaoJsonLoader
 		JsonNode jj = node.get("id");
 		obj.id = jj.asLong();
 
-				jj = node.get("userId");
+				jj = node.get("user");
 
 				jj = node.get("roleId");
 

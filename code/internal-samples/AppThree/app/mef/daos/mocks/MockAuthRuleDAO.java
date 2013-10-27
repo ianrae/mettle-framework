@@ -85,6 +85,24 @@ public class MockAuthRuleDAO implements IAuthRuleDAO
          _L.add(entity);
      }
 
+    @Override
+	public AuthRule find_by_user_and_role_and_ticket(User u, Role r, Ticket t)
+    {
+    	List<AuthRule> L = this.all();
+    	AuthRule rule = this._entityDB.findFirstMatch(L, "userId", u);
+    	
+    	if (rule == null)
+    	{
+    		return null;
+    	}
+    	else
+    	{
+    		return L.get(0);
+    	}
+    }
+
+    
+    
     private Long nextAvailIdNumber() 
     {
     	long used = 0;
@@ -97,23 +115,6 @@ public class MockAuthRuleDAO implements IAuthRuleDAO
         }
         return used + 1;
 	}
-    
-
-    @Override
-	public AuthRule find_by_user_and_role_and_ticket(User u, Role r, Ticket t)
-    {
-    	List<AuthRule> L = this.all();
-    	L = this._entityDB.findMatches(L, "userId", u.id);
-    	
-    	if (L.size() == 0)
-    	{
-    		return null;
-    	}
-    	else
-    	{
-    		return L.get(0);
-    	}
-    }
 
 	@Override
 	public void update(AuthRule entity) 

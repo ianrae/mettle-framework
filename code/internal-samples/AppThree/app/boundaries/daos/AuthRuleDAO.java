@@ -155,14 +155,16 @@ public class AuthRuleDAO implements IAuthRuleDAO
        protected static void touchAll(AuthRuleModel t, AuthRule entity)
 {
 	t.setId(entity.id);
-	t.setUserId(entity.userId);
+	UserDAO userDAO = (UserDAO)Initializer.theCtx.getServiceLocator().getInstance(IUserDAO.class);
+	t.setUser(userDAO.createModelFromEntity(entity.user));
 	t.setRoleId(entity.roleId);
 	t.setTicketId(entity.ticketId);
 }
 
 protected static void touchAll(AuthRule entity, AuthRuleModel t)
 {
-	entity.userId = t.getUserId();
+	UserDAO userDAO = (UserDAO)Initializer.theCtx.getServiceLocator().getInstance(IUserDAO.class);
+	entity.user = userDAO.createEntityFromModel(t.getUser());
 	entity.roleId = t.getRoleId();
 	entity.ticketId = t.getTicketId();
 }

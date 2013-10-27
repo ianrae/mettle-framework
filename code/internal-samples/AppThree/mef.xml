@@ -28,7 +28,7 @@
 
 <entity name="AuthRule">
 	<field>@Id Long id</field>
-	<field>Long userId</field>
+	<field>@ManyToOne User user</field>
 	<field>Long roleId</field>
 	<field>Long ticketId</field>
 </entity>

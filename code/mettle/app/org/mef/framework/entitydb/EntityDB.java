@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.apache.commons.lang.NotImplementedException;
+import org.mef.framework.entities.Entity;
 
 //Whole idea is we don't need a fully emulated sql db like H2.
 //(a)we are dealing with objects (which can be assumed to be fully eagerly loaded)
@@ -27,6 +28,7 @@ public class EntityDB<T>
 			matcherMap.put(String.class, new StringValueMatcher());
 			matcherMap.put(Integer.class, new IntegerValueMatcher());
 			matcherMap.put(Long.class, new LongValueMatcher());
+			matcherMap.put(Entity.class, new EntityValueMatcher());
 			
 		}
 		//hmm should union just work in whole objects. If same object (Flight 55) in both

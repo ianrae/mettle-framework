@@ -29,7 +29,7 @@
 	<field>@ManyToOne Company company</field>
 	
 	<query>find_by_name</query>
-	<method><![CDATA[Page<Computer> page(int page, int pageSize,String orderBy, String filter)]]></method>
+	<method><![CDATA[AuthRule find_by_user_and_role_and_ticket(User u, Role r, Ticket t)]]></method>
 
 	<codegen what="dal_mock" extend="true" />
 	<codegen what="dal_real" extend="true" />
