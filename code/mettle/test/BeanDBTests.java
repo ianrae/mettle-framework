@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
+import org.mef.framework.entities.Entity;
 import org.mef.framework.entitydb.DBChecker;
 import org.mef.framework.entitydb.EntityDB;
 import org.mef.framework.entitydb.IValueMatcher;
@@ -12,7 +13,7 @@ import org.mef.framework.entitydb.Query;
 
 public class BeanDBTests 
 {
-	public static class Flight
+	public static class Flight extends Entity
 	{
 		String flight;
 		String model;
@@ -28,6 +29,15 @@ public class BeanDBTests
 		}
 	}
 	
+	public static class Airline extends Entity
+	{
+		Flight flight;
+		
+		public Airline(Flight flight)
+		{
+			this.flight = flight;
+		}
+	}
 	
 	
 	@Test
@@ -196,6 +206,24 @@ public class BeanDBTests
 	}
 	
 	
+	@Test
+	public void testFindMatchEntity() throws Exception
+	{
+		log("--testFindMatchEntity--");
+		List<Flight> L = this.buildFlights();
+		Flight flight1 = L.get(0);
+		assertEquals("UL900", flight1.flight);
+		Flight flight2 = L.get(1);
+		
+		List<Airline> airlineL = this.buildAirlines(L);
+		EntityDB<Airline> db = new EntityDB<Airline>();
+		
+		Airline airline = db.findFirstMatchEntity(airlineL, "flight", flight1);
+		assertSame(airlineL.get(0), airline);
+		airline = db.findFirstMatchEntity(airlineL, "flight", flight2);
+		assertSame(airlineL.get(0), airline);
+	}
+	
 	
 
 	//------------- helper functions -------------
@@ -204,6 +232,14 @@ public class BeanDBTests
 		System.out.println(s);
 	}
 	
+	List<Airline> buildAirlines(List<Flight> flightL)
+	{
+		ArrayList<Airline> L = new ArrayList<BeanDBTests.Airline>();
+		
+		L.add(new Airline(flightL.get(0)));
+		L.add(new Airline(flightL.get(1)));
+		return L;
+	}
 	List<Flight> buildFlights()
 	{
 		ArrayList<Flight> L = new ArrayList<BeanDBTests.Flight>();

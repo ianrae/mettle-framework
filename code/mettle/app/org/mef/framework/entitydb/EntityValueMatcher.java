@@ -8,15 +8,16 @@ import org.mef.framework.entities.Entity;
 
 public class EntityValueMatcher implements IValueMatcher
 {
-
+	private EntityDBHelper<Entity> helper = new EntityDBHelper<Entity>();
+	
 	@Override
 	public boolean isMatch(Object value, Object valueToMatch, int matchType)
 	{
 		Entity s1 = (Entity)value;
 		Entity s2 = (Entity) valueToMatch;
 		
-		Long lval1 = this.getId(s1);
-		Long lval2 = this.getId(s2);
+		Long lval1 = (Long) helper.getFieldValue(s1,  "id");// this.getId(s1);
+		Long lval2 = (Long) helper.getFieldValue(s2,  "id");// this.getId(s1);
 		
 		switch(matchType)
 		{
