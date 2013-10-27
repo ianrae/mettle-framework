@@ -23,6 +23,10 @@ import play.db.ebean.Model.Finder;
 
 import mef.daos.*;
 import mef.entities.AuthRule;
+import mef.entities.Role;
+import mef.entities.Ticket;
+import mef.entities.User;
+
 import com.avaje.ebean.Page;
 public class AuthRuleDAO implements IAuthRuleDAO 
 {
@@ -161,6 +165,12 @@ protected static void touchAll(AuthRule entity, AuthRuleModel t)
 	entity.userId = t.getUserId();
 	entity.roleId = t.getRoleId();
 	entity.ticketId = t.getTicketId();
+}
+
+@Override
+public AuthRule find_by_user_and_role_and_ticket(User u, Role r, Ticket t) {
+	// TODO Auto-generated method stub
+	return null;
 }
 
 }

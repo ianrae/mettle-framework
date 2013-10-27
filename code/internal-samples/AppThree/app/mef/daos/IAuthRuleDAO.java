@@ -15,5 +15,6 @@ public interface IAuthRuleDAO  extends IDAO
 	List<AuthRule> all();
 	void save(AuthRule entity);        
 	void update(AuthRule entity);
+	AuthRule find_by_user_and_role_and_ticket(User u, Role r, Ticket t);
 
     }
