@@ -16,7 +16,7 @@ import java.util.Date;
 
 >>
 
-fielddecl(type, name, bigName, setName, isEntity) ::= <<
+fielddecl(type, name, bigName, setName, isEntity, daoName) ::= <<
 
     private <type> <name>;
     
@@ -25,7 +25,7 @@ fielddecl(type, name, bigName, setName, isEntity) ::= <<
     }
     public void <setName><bigName>(<type> val) {
 		this.<name> = val;
-		<if(isEntity)>this.entity.<name> = <bigName>DAO.createEntityFromModel(val);
+		<if(isEntity)>this.entity.<name> = <daoName>DAO.createEntityFromModel(val);
 		<else>this.entity.<name> = val;
 		<endif>
         

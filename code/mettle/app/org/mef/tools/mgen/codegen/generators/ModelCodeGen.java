@@ -52,6 +52,7 @@ public class ModelCodeGen extends CodeGenBase
 		st.add("bigName", uppify(fdef.name));
 		st.add("setName", isId(fdef.name) ? "set" : "set");
 		st.add("isEntity", isEntity);
+		st.add("daoName", fdef.typeName);
 		result = st.render(); 
 
 		String s = "";

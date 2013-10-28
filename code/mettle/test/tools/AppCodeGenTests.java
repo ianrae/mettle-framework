@@ -84,7 +84,7 @@ public class AppCodeGenTests extends BaseTest
 		b = gen.generateOnce(); //allKnownDAOs
 //		b = gen.generate("User");
 		b = gen.generate("Company");
-//		b = gen.generate("Computer");
+		b = gen.generate("Computer");
 //		b = gen.generate("Role");
 		if (b)
 		{}
