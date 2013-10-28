@@ -25,31 +25,38 @@ public class RoleTests extends BaseTest
 {
 	public interface IAuthorizer
 	{
+		void init(IAuthUserDAO userDao, IAuthRoleDAO roleDao, IAuthTicketDAO ticketDao, IAuthRuleDAO ruleDao);
 		boolean isAuth(AuthUser u, AuthRole role, AuthTicket ticket);
 	}
 	
 	public static class MyAuthorizer extends SfxBaseObj implements IAuthorizer
 	{
-		private static IAuthRoleDAO _roleDao;
-		private static IAuthTicketDAO _ticketDao;
-		private static IAuthRuleDAO _ruleDao;
-		private static IAuthUserDAO _userDao;
+		private IAuthRoleDAO _roleDao;
+		private IAuthTicketDAO _ticketDao;
+		private IAuthRuleDAO _ruleDao;
+		private IAuthUserDAO _userDao;
 		
 		public MyAuthorizer(SfxContext ctx)
 		{
 			super(ctx);
-			_roleDao = (IAuthRoleDAO) Initializer.getDAO(IAuthRoleDAO.class);
-			_ticketDao = (IAuthTicketDAO) Initializer.getDAO(IAuthTicketDAO.class);
-			_ruleDao = (IAuthRuleDAO) Initializer.getDAO(IAuthRuleDAO.class);
-			_userDao = (IAuthUserDAO) Initializer.getDAO(IAuthUserDAO.class);
 		}
 		
 		@Override
 		public boolean isAuth(AuthUser u, AuthRole role, AuthTicket ticket) 
 		{
 			AuthRule rule = _ruleDao.find_by_user_and_role_and_ticket(u, role, ticket);
-			
 			return (rule != null);
+		}
+
+		@Override
+		public void init(IAuthUserDAO userDao, IAuthRoleDAO roleDao,
+				IAuthTicketDAO ticketDao, IAuthRuleDAO ruleDao) 
+		{
+			this._userDao = userDao;
+			this._roleDao = roleDao;
+			this._ticketDao = ticketDao;
+			this._ruleDao = ruleDao;
+			
 		}
 		
 	}
@@ -81,7 +88,7 @@ public class RoleTests extends BaseTest
 		AuthRule rule = new AuthRule(u, role, t);
 		_ruleDao.save(rule);
 		
-		MyAuthorizer auth = new MyAuthorizer(_ctx);
+		MyAuthorizer auth = createAuthorizer();
 		assertFalse(auth.isAuth(null, null, null));
 
 		assertTrue(auth.isAuth(u, role, t));
@@ -110,7 +117,7 @@ public class RoleTests extends BaseTest
 		_ruleDao.save(rule);
 		assertEquals(1, _ruleDao.size());
 		
-		MyAuthorizer auth = new MyAuthorizer(_ctx);
+		MyAuthorizer auth = createAuthorizer();
 		assertFalse(auth.isAuth(null, null, null));
 
 		assertTrue(auth.isAuth(null, role, t));
@@ -171,4 +178,15 @@ public class RoleTests extends BaseTest
 		return dal;
 	}
 	
+	private MyAuthorizer createAuthorizer()
+	{
+		MyAuthorizer auth = new MyAuthorizer(_ctx);
+		auth.init((IAuthUserDAO)Initializer.getDAO(IAuthUserDAO.class), 
+				(IAuthRoleDAO)Initializer.getDAO(IAuthRoleDAO.class),
+				(IAuthTicketDAO) Initializer.getDAO(IAuthTicketDAO.class),
+				(IAuthRuleDAO) Initializer.getDAO(IAuthRuleDAO.class));
+		
+		return auth;
+	}	
+
 }
