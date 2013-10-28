@@ -4,15 +4,15 @@ import static org.junit.Assert.*;
 
 import mef.core.Initializer;
 import mef.daos.IAuthRuleDAO;
-import mef.daos.IRoleDAO;
+import mef.daos.IAuthRoleDAO;
 import mef.daos.ITicketDAO;
 import mef.daos.IUserDAO;
 import mef.daos.mocks.MockAuthRuleDAO;
-import mef.daos.mocks.MockRoleDAO;
+import mef.daos.mocks.MockAuthRoleDAO;
 import mef.daos.mocks.MockTicketDAO;
 import mef.daos.mocks.MockUserDAO;
 import mef.entities.AuthRule;
-import mef.entities.Role;
+import mef.entities.AuthRole;
 import mef.entities.Ticket;
 import mef.entities.User;
 
@@ -25,12 +25,12 @@ public class RoleTests extends BaseTest
 {
 	public interface IAuthorizer
 	{
-		boolean isAuth(User u, Role role, Ticket ticket);
+		boolean isAuth(User u, AuthRole role, Ticket ticket);
 	}
 	
 	public static class MyAuthorizer extends SfxBaseObj implements IAuthorizer
 	{
-		private static IRoleDAO _roleDao;
+		private static IAuthRoleDAO _roleDao;
 		private static ITicketDAO _ticketDao;
 		private static IAuthRuleDAO _ruleDao;
 		private static IUserDAO _userDao;
@@ -38,14 +38,14 @@ public class RoleTests extends BaseTest
 		public MyAuthorizer(SfxContext ctx)
 		{
 			super(ctx);
-			_roleDao = (IRoleDAO) Initializer.getDAO(IRoleDAO.class);
+			_roleDao = (IAuthRoleDAO) Initializer.getDAO(IAuthRoleDAO.class);
 			_ticketDao = (ITicketDAO) Initializer.getDAO(ITicketDAO.class);
 			_ruleDao = (IAuthRuleDAO) Initializer.getDAO(IAuthRuleDAO.class);
 			_userDao = (IUserDAO) Initializer.getDAO(IUserDAO.class);
 		}
 		
 		@Override
-		public boolean isAuth(User u, Role role, Ticket ticket) 
+		public boolean isAuth(User u, AuthRole role, Ticket ticket) 
 		{
 			AuthRule rule = _ruleDao.find_by_user_and_role_and_ticket(u, role, ticket);
 			
@@ -58,7 +58,7 @@ public class RoleTests extends BaseTest
 	public void test() 
 	{
 		init();
-		IRoleDAO dao = this.getDAO();
+		IAuthRoleDAO dao = this.getDAO();
 		assertNotNull(dao);
 		assertNotNull(_ticketDao);
 		assertNotNull(_ruleDao);
@@ -73,7 +73,7 @@ public class RoleTests extends BaseTest
 		buildRoles();
 		buildUsers();
 		buildTickets();
-		Role role = _roleDao.find_by_name("Viewer");
+		AuthRole role = _roleDao.find_by_name("Viewer");
 		User u = _userDao.find_by_name("alice");
 		Ticket t = _ticketDao.findById(1L);
 		assertNotNull(t);
@@ -102,7 +102,7 @@ public class RoleTests extends BaseTest
 		buildRoles();
 		buildUsers();
 		buildTickets();
-		Role role = _roleDao.find_by_name("Viewer");
+		AuthRole role = _roleDao.find_by_name("Viewer");
 		Ticket t = _ticketDao.findById(1L);
 		assertNotNull(t);
 		
@@ -124,9 +124,9 @@ public class RoleTests extends BaseTest
 	//--- helpers ---
 	private void buildRoles()
 	{
-		Role role = new Role("Viewer");
+		AuthRole role = new AuthRole("Viewer");
 		_roleDao.save(role);
-		role = new Role("Viewer");
+		role = new AuthRole("Viewer");
 		_roleDao.save(role);
 		
 		assertEquals(2, _roleDao.size());
@@ -149,7 +149,7 @@ public class RoleTests extends BaseTest
 		assertEquals(1, _ticketDao.size());
 	}
 	
-	private MockRoleDAO _roleDao;
+	private MockAuthRoleDAO _roleDao;
 	private MockTicketDAO _ticketDao;
 	private MockAuthRuleDAO _ruleDao;
 	private MockUserDAO _userDao;
@@ -165,9 +165,9 @@ public class RoleTests extends BaseTest
 		_userDao = (MockUserDAO) Initializer.getDAO(IUserDAO.class);
 	}
 	
-	private MockRoleDAO getDAO()
+	private MockAuthRoleDAO getDAO()
 	{
-		MockRoleDAO dal = (MockRoleDAO) Initializer.getDAO(IRoleDAO.class); 
+		MockAuthRoleDAO dal = (MockAuthRoleDAO) Initializer.getDAO(IAuthRoleDAO.class); 
 		return dal;
 	}
 	

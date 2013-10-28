@@ -9,13 +9,13 @@ import org.mef.framework.dao.IDAO;
 import mef.gen.*;
 import java.util.Date;
 import com.avaje.ebean.Page;
-public interface IRoleDAO  extends IDAO
+public interface IAuthRoleDAO  extends IDAO
 {
-	Role findById(long id);
-	List<Role> all();
-	void save(Role entity);        
-	void update(Role entity);
+	AuthRole findById(long id);
+	List<AuthRole> all();
+	void save(AuthRole entity);        
+	void update(AuthRole entity);
 
-    public Role find_by_name(String val);
+    public AuthRole find_by_name(String val);
 
 }

@@ -56,14 +56,14 @@ public class AuthRuleModel extends Model
     }
 
    @ManyToOne 
-    private RoleModel role;
+    private AuthRoleModel role;
 
-    public RoleModel getRole() {
+    public AuthRoleModel getRole() {
         return this.role;
     }
-    public void setRole(RoleModel val) {
+    public void setRole(AuthRoleModel val) {
 		this.role = val;
-		this.entity.role = RoleDAO.createEntityFromModel(val);
+		this.entity.role = AuthRoleDAO.createEntityFromModel(val);
 
     }
 

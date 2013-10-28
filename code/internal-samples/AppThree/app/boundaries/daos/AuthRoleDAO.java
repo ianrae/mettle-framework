@@ -18,18 +18,18 @@ import boundaries.Boundary;
 import boundaries.daos.*;
 import mef.core.Initializer;
 
-import models.RoleModel;
+import models.AuthRoleModel;
 import play.db.ebean.Model.Finder;
 
 import mef.daos.*;
-import mef.entities.Role;
+import mef.entities.AuthRole;
 import com.avaje.ebean.Page;
-public class RoleDAO implements IRoleDAO 
+public class AuthRoleDAO implements IAuthRoleDAO 
 {
 	@Override
-	public void save(Role entity) 
+	public void save(AuthRole entity) 
 	{
-		RoleModel t = (RoleModel)entity.cc; 
+		AuthRoleModel t = (AuthRoleModel)entity.cc; 
 		if (t == null) //not yet known by db? (newly created)
 		{
 			System.out.println("save-auto-create");
@@ -44,9 +44,9 @@ public class RoleDAO implements IRoleDAO
 	}
 
 	@Override
-	public Role findById(long id) 
+	public AuthRole findById(long id) 
 	{
-		RoleModel t = RoleModel.find.byId(id);
+		AuthRoleModel t = AuthRoleModel.find.byId(id);
 		if (t == null)
 		{
 			return null;
@@ -57,42 +57,42 @@ public class RoleDAO implements IRoleDAO
 	}
 
 	@Override
-	public List<Role> all() 
+	public List<AuthRole> all() 
 	{
-		List<RoleModel> L = RoleModel.all();
-		List<Role> entityL = createEntityFromModel(L);
+		List<AuthRoleModel> L = AuthRoleModel.all();
+		List<AuthRole> entityL = createEntityFromModel(L);
 		return entityL;
 	}
 
 	@Override
 	public int size() 
 	{
-		return RoleModel.all().size();
+		return AuthRoleModel.all().size();
 	}
 
 	@Override
 	public void delete(long id) 
 	{
-		RoleModel t = RoleModel.find.byId(id);
+		AuthRoleModel t = AuthRoleModel.find.byId(id);
 		t.delete();
 	}
 
 	//Role
 	//create model, set entity, and call all setters
-	public static RoleModel createModelFromEntity(Role entity)
+	public static AuthRoleModel createModelFromEntity(AuthRole entity)
 	{
 		if (entity == null)
 		{
 			return null;
 		}
-		RoleModel t = new RoleModel();
+		AuthRoleModel t = new AuthRoleModel();
 		entity.cc = t;
 		t.entity = entity;
 		touchAll(t, entity);
 		return t;
 	}
 	//create entity, set m.cc and t.entity, copy all fields from model to entity
-	public static Role createEntityFromModel(RoleModel t)
+	public static AuthRole createEntityFromModel(AuthRoleModel t)
 	{
 		if (t == null)
 		{
@@ -103,19 +103,19 @@ public class RoleDAO implements IRoleDAO
 		{
 			return t.entity; //already exists
 		}
-		Role entity = new Role();
+		AuthRole entity = new AuthRole();
 		entity.cc = t;
 		entity.id = (t.getId() == null) ? 0 : t.getId();		
 		t.entity = entity;
 		touchAll(entity, t);
 		return entity;
 	}
-	public static List<Role> createEntityFromModel(List<RoleModel> L)
+	public static List<AuthRole> createEntityFromModel(List<AuthRoleModel> L)
 	{
-		ArrayList<Role> entityL = new ArrayList<Role>();
-		for(RoleModel t : L)
+		ArrayList<AuthRole> entityL = new ArrayList<AuthRole>();
+		for(AuthRoleModel t : L)
 		{
-			Role entity = createEntityFromModel(t);
+			AuthRole entity = createEntityFromModel(t);
 			if (entity != null) //why??!!
 			{
 				entityL.add(entity);
@@ -128,15 +128,15 @@ public class RoleDAO implements IRoleDAO
 	@Override
 	public void updateFrom(IFormBinder binder) 
 	{
-		RoleModel model = (RoleModel) binder.getRawObject();
+		AuthRoleModel model = (AuthRoleModel) binder.getRawObject();
 		model.update();
 	}
 
 
 	@Override
-	public void update(Role entity) 
+	public void update(AuthRole entity) 
 	{
-		RoleModel t = (RoleModel)entity.cc; 
+		AuthRoleModel t = (AuthRoleModel)entity.cc; 
 		if (t == null) //not yet known by db? (newly created)
 		{
 			t.entity = null; //throw exception
@@ -148,26 +148,26 @@ public class RoleDAO implements IRoleDAO
 		t.update();
 	}
 
-       protected static void touchAll(RoleModel t, Role entity)
+       protected static void touchAll(AuthRoleModel t, AuthRole entity)
 {
 	t.setId(entity.id);
 	t.setName(entity.name);
 }
 
-protected static void touchAll(Role entity, RoleModel t)
+protected static void touchAll(AuthRole entity, AuthRoleModel t)
 {
 	entity.name = t.getName();
 }
 
     @Override
-    public Role find_by_name(String val) 
+    public AuthRole find_by_name(String val) 
     {
-      RoleModel model = RoleModel.find.where().eq("name", val).findUnique();
+      AuthRoleModel model = AuthRoleModel.find.where().eq("name", val).findUnique();
 	  if (model == null)
 	  {
 		return null;
 	  }
-	  Role entity = createEntityFromModel(model);
+	  AuthRole entity = createEntityFromModel(model);
 	  return entity;
     }
 

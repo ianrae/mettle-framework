@@ -29,14 +29,14 @@ else
 	L.add(dal);
 }	if (createMocks)
 {
-	IRoleDAO dal = new MockRoleDAO();
-	ctx.getServiceLocator().registerSingleton(IRoleDAO.class, dal);
+	IAuthRoleDAO dal = new MockAuthRoleDAO();
+	ctx.getServiceLocator().registerSingleton(IAuthRoleDAO.class, dal);
 	L.add(dal);
 }
 else
 {
-	IRoleDAO dal = new RoleDAO();
-	ctx.getServiceLocator().registerSingleton(IRoleDAO.class, dal);
+	IAuthRoleDAO dal = new AuthRoleDAO();
+	ctx.getServiceLocator().registerSingleton(IAuthRoleDAO.class, dal);
 	L.add(dal);
 }	if (createMocks)
 {

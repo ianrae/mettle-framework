@@ -33,7 +33,7 @@ public class EntityLoaderSaver_GEN
 		}
 		return obj.id;
 	}
-	public static long saveOrUpdate(Role obj, Role existing, IRoleDAO dao)
+	public static long saveOrUpdate(AuthRole obj, AuthRole existing, IAuthRoleDAO dao)
 	{
 		if (existing != null)
 		{
