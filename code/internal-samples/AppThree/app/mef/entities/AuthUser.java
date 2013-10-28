@@ -6,18 +6,18 @@ import org.mef.framework.entities.Entity;
 import mef.gen.*;
 import mef.entities.*;
 import java.util.Date;
-public class User extends Entity
+public class AuthUser extends Entity
 {
-	public User()
+	public AuthUser()
 	{}
 
 
-	public User( String name)
+	public AuthUser( String name)
 	{
 		this.name = name;
 	}
 
-	public User(User entity)
+	public AuthUser(AuthUser entity)
 	{
 		this.id = entity.id;
 		this.name = entity.name;

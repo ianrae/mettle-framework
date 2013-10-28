@@ -15,7 +15,7 @@ public class EntityLoaderSaver_GEN
 {
 
 
-	public static long saveOrUpdate(User obj, User existing, IUserDAO dao)
+	public static long saveOrUpdate(AuthUser obj, AuthUser existing, IAuthUserDAO dao)
 	{
 		if (existing != null)
 		{

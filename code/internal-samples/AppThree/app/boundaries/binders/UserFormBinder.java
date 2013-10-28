@@ -4,22 +4,22 @@ package boundaries.binders;
 
 import java.util.Map;
 
-import mef.entities.User;
-import models.UserModel;
+import mef.entities.AuthUser;
+import models.AuthUserModel;
 
 import org.mef.framework.binder.IFormBinder;
 
-import boundaries.daos.UserDAO;
+import boundaries.daos.AuthUserDAO;
 
 import play.Logger;
 import play.data.Form;
 
 public class UserFormBinder implements IFormBinder
 {
-	private Form<UserModel> validationForm;
-	private Form<UserModel> filledForm;
+	private Form<AuthUserModel> validationForm;
+	private Form<AuthUserModel> filledForm;
 
-	public UserFormBinder(Form<UserModel> validationForm)
+	public UserFormBinder(Form<AuthUserModel> validationForm)
 	{
 		this.validationForm = validationForm;
 	}
@@ -28,7 +28,7 @@ public class UserFormBinder implements IFormBinder
 	{
 		this.filledForm = validationForm.bindFromRequest();
 		Logger.info("b0");
-		User entity = getObject();
+		AuthUser entity = getObject();
 		if (entity != null)
 		{
 			Logger.info("b1");
@@ -44,7 +44,7 @@ public class UserFormBinder implements IFormBinder
 	}
 
 	@Override
-	public User getObject() 
+	public AuthUser getObject() 
 	{
 		Logger.info("g0");
 		if (filledForm.hasErrors())
@@ -53,7 +53,7 @@ public class UserFormBinder implements IFormBinder
 			return null;
 		}
 
-		UserModel model = filledForm.get();
+		AuthUserModel model = filledForm.get();
 		if (model == null)
 		{
 			Logger.info("g2");
@@ -61,7 +61,7 @@ public class UserFormBinder implements IFormBinder
 		}
 
 		Logger.info("g3");
-		User entity = UserDAO.createEntityFromModel(model);
+		AuthUser entity = AuthUserDAO.createEntityFromModel(model);
 		return entity;
 	}
 
@@ -71,12 +71,12 @@ public class UserFormBinder implements IFormBinder
 		return filledForm.errors();
 	}
 
-	public Form<UserModel> getRawForm()
+	public Form<AuthUserModel> getRawForm()
 	{
 		return filledForm;
 	}
 	@Override
-	public UserModel getRawObject() 
+	public AuthUserModel getRawObject() 
 	{
 		return filledForm.get();
 	}

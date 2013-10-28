@@ -21,18 +21,18 @@ import org.mef.framework.replies.Reply;
 import org.mef.framework.sfx.SfxBaseObj;
 import org.mef.framework.sfx.SfxContext;
 
-import mef.daos.IUserDAO;
-import mef.entities.User;
+import mef.daos.IAuthUserDAO;
+import mef.entities.AuthUser;
 import mef.presenters.replies.UserReply;
 public class UserPresenter extends Presenter
 {
-	private IUserDAO _dao;
+	private IAuthUserDAO _dao;
 	private UserReply _reply;
 
 	public UserPresenter(SfxContext ctx)
 	{
 		super(ctx); 
-		_dao = (IUserDAO) getInstance(IUserDAO.class);
+		_dao = (IAuthUserDAO) getInstance(IAuthUserDAO.class);
 	}
 	@Override
 	protected UserReply createReply()
@@ -53,7 +53,7 @@ public class UserPresenter extends Presenter
 	{
 		UserReply reply = createReply();
 		reply.setDestination(Reply.VIEW_NEW);
-		reply._entity = new User();
+		reply._entity = new AuthUser();
 		return reply; 
 	}
 
@@ -66,12 +66,12 @@ public class UserPresenter extends Presenter
 		if (! binder.bind())
 		{
 			reply.setFlashFail("binding failed!");
-			reply._entity = (User) binder.getObject();
+			reply._entity = (AuthUser) binder.getObject();
 			return reply;
 		}
 		else
 		{
-			User entity = (User) binder.getObject();
+			AuthUser entity = (AuthUser) binder.getObject();
 			if (entity == null)
 			{
 				reply.setFailed(true);
@@ -92,7 +92,7 @@ public class UserPresenter extends Presenter
 		UserReply reply = createReply();
 		reply.setDestination(Reply.VIEW_EDIT);
 
-		User entity = _dao.findById(cmd.id);
+		AuthUser entity = _dao.findById(cmd.id);
 		if (entity == null)
 		{
 			reply.setDestination(Reply.FORWARD_NOT_FOUND);
@@ -112,7 +112,7 @@ public class UserPresenter extends Presenter
 		if (! binder.bind())
 		{
 			reply.setFlashFail("binding failed!");
-			reply._entity = (User) binder.getObject();
+			reply._entity = (AuthUser) binder.getObject();
 			if (reply._entity == null)
 			{
 				Logger.info("failbinding null entity!");
@@ -123,7 +123,7 @@ public class UserPresenter extends Presenter
 		else
 		{
 			//ensure id is a valid id
-			User entity = _dao.findById(cmd.id);
+			AuthUser entity = _dao.findById(cmd.id);
 			if (entity == null)
 			{
 				reply.setDestination(Reply.FORWARD_NOT_FOUND);
@@ -141,7 +141,7 @@ public class UserPresenter extends Presenter
 	{
 		UserReply reply = createReply();
 		reply.setDestination(Reply.FORWARD_INDEX);
-		User entity = _dao.findById(cmd.id);
+		AuthUser entity = _dao.findById(cmd.id);
 		if (entity == null)
 		{
 			reply.setDestination(Reply.FORWARD_NOT_FOUND);
@@ -158,7 +158,7 @@ public class UserPresenter extends Presenter
 	{
 		UserReply reply = createReply();
 		reply.setDestination(Reply.VIEW_SHOW);
-		User entity = _dao.findById(cmd.id);
+		AuthUser entity = _dao.findById(cmd.id);
 		if (entity == null)
 		{
 			reply.setDestination(Reply.FORWARD_NOT_FOUND);

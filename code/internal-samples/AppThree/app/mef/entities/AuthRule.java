@@ -12,7 +12,7 @@ public class AuthRule extends Entity
 	{}
 
 
-	public AuthRule( User user, AuthRole role, AuthTicket ticket)
+	public AuthRule( AuthUser user, AuthRole role, AuthTicket ticket)
 	{
 		this.user = user;
 		this.role = role;
@@ -28,7 +28,7 @@ public class AuthRule extends Entity
 	}
     public Long id;
 
-    public User user;
+    public AuthUser user;
 
     public AuthRole role;
 

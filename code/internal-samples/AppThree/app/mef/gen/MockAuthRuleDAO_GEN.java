@@ -116,7 +116,7 @@ public class MockAuthRuleDAO_GEN implements IAuthRuleDAO
 
 
 	//method
-public AuthRule find_by_user_and_role_and_ticket(User u, AuthRole r, AuthTicket t)
+public AuthRule find_by_user_and_role_and_ticket(AuthUser u, AuthRole r, AuthTicket t)
 {
 	return null;
 }
