@@ -22,8 +22,8 @@ import models.AuthRuleModel;
 import play.db.ebean.Model.Finder;
 
 import mef.daos.*;
-import mef.entities.AuthRule;
 import mef.entities.AuthRole;
+import mef.entities.AuthRule;
 import mef.entities.Ticket;
 import mef.entities.User;
 
@@ -173,10 +173,8 @@ protected static void touchAll(AuthRule entity, AuthRuleModel t)
 	entity.ticket = ticketDAO.createEntityFromModel(t.getTicket());
 }
 
-
-@Override
-public AuthRule find_by_user_and_role_and_ticket(User u, AuthRole r, Ticket t) {
-	// TODO Auto-generated method stub
+public AuthRule find_by_user_and_role_and_ticket(User u, AuthRole r, Ticket t)
+{
 	return null;
 }
 

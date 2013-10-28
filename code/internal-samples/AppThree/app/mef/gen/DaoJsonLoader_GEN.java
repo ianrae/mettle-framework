@@ -58,7 +58,7 @@ public class DaoJsonLoader_GEN extends BaseDaoJsonLoader
 		}
 		return null;
 	}
-	public AuthRole readRole(JsonNode node)
+	public AuthRole readAuthRole(JsonNode node)
 	{
 		AuthRole obj = new AuthRole();
 		JsonNode jj = node.get("id");
@@ -71,17 +71,17 @@ public class DaoJsonLoader_GEN extends BaseDaoJsonLoader
 
 		return obj;
 	}
-	public List<AuthRole> loadRoles(JsonNode rootNode) 
+	public List<AuthRole> loadAuthRoles(JsonNode rootNode) 
 	{
 		List<AuthRole> phoneL = new ArrayList<AuthRole>();
 
-    	JsonNode msgNode = rootNode.path("Role");
+    	JsonNode msgNode = rootNode.path("AuthRole");
 		Iterator<JsonNode> ite = msgNode.getElements();
 
 		int i = 0;
 		while (ite.hasNext()) {
 			JsonNode temp = ite.next();
-			AuthRole ph = readRole(temp);
+			AuthRole ph = readAuthRole(temp);
 
 			phoneL.add(ph);
 			i++;
@@ -89,7 +89,7 @@ public class DaoJsonLoader_GEN extends BaseDaoJsonLoader
 
 		return phoneL;
 	}
-	protected AuthRole findRoleWithId(long id, List<AuthRole> phoneL) 
+	protected AuthRole findAuthRoleWithId(long id, List<AuthRole> phoneL) 
 	{
 		for (AuthRole ph : phoneL)
 		{

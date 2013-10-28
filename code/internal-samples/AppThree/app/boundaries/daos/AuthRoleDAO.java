@@ -77,7 +77,7 @@ public class AuthRoleDAO implements IAuthRoleDAO
 		t.delete();
 	}
 
-	//Role
+	//AuthRole
 	//create model, set entity, and call all setters
 	public static AuthRoleModel createModelFromEntity(AuthRole entity)
 	{
