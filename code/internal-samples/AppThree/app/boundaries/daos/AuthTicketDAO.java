@@ -24,10 +24,10 @@ import play.db.ebean.Model.Finder;
 import mef.daos.*;
 import mef.entities.*;
 import com.avaje.ebean.Page;
-public class TicketDAO implements ITicketDAO 
+public class AuthTicketDAO implements IAuthTicketDAO 
 {
 	@Override
-	public void save(Ticket entity) 
+	public void save(AuthTicket entity) 
 	{
 		TicketModel t = (TicketModel)entity.cc; 
 		if (t == null) //not yet known by db? (newly created)
@@ -44,7 +44,7 @@ public class TicketDAO implements ITicketDAO
 	}
 
 	@Override
-	public Ticket findById(long id) 
+	public AuthTicket findById(long id) 
 	{
 		TicketModel t = TicketModel.find.byId(id);
 		if (t == null)
@@ -57,10 +57,10 @@ public class TicketDAO implements ITicketDAO
 	}
 
 	@Override
-	public List<Ticket> all() 
+	public List<AuthTicket> all() 
 	{
 		List<TicketModel> L = TicketModel.all();
-		List<Ticket> entityL = createEntityFromModel(L);
+		List<AuthTicket> entityL = createEntityFromModel(L);
 		return entityL;
 	}
 
@@ -79,7 +79,7 @@ public class TicketDAO implements ITicketDAO
 
 	//Ticket
 	//create model, set entity, and call all setters
-	public static TicketModel createModelFromEntity(Ticket entity)
+	public static TicketModel createModelFromEntity(AuthTicket entity)
 	{
 		if (entity == null)
 		{
@@ -92,7 +92,7 @@ public class TicketDAO implements ITicketDAO
 		return t;
 	}
 	//create entity, set m.cc and t.entity, copy all fields from model to entity
-	public static Ticket createEntityFromModel(TicketModel t)
+	public static AuthTicket createEntityFromModel(TicketModel t)
 	{
 		if (t == null)
 		{
@@ -103,19 +103,19 @@ public class TicketDAO implements ITicketDAO
 		{
 			return t.entity; //already exists
 		}
-		Ticket entity = new Ticket();
+		AuthTicket entity = new AuthTicket();
 		entity.cc = t;
 		entity.id = (t.getId() == null) ? 0 : t.getId();		
 		t.entity = entity;
 		touchAll(entity, t);
 		return entity;
 	}
-	public static List<Ticket> createEntityFromModel(List<TicketModel> L)
+	public static List<AuthTicket> createEntityFromModel(List<TicketModel> L)
 	{
-		ArrayList<Ticket> entityL = new ArrayList<Ticket>();
+		ArrayList<AuthTicket> entityL = new ArrayList<AuthTicket>();
 		for(TicketModel t : L)
 		{
-			Ticket entity = createEntityFromModel(t);
+			AuthTicket entity = createEntityFromModel(t);
 			if (entity != null) //why??!!
 			{
 				entityL.add(entity);
@@ -134,7 +134,7 @@ public class TicketDAO implements ITicketDAO
 
 
 	@Override
-	public void update(Ticket entity) 
+	public void update(AuthTicket entity) 
 	{
 		TicketModel t = (TicketModel)entity.cc; 
 		if (t == null) //not yet known by db? (newly created)
@@ -148,12 +148,12 @@ public class TicketDAO implements ITicketDAO
 		t.update();
 	}
 
-       protected static void touchAll(TicketModel t, Ticket entity)
+       protected static void touchAll(TicketModel t, AuthTicket entity)
 {
 	t.setId(entity.id);
 }
 
-protected static void touchAll(Ticket entity, TicketModel t)
+protected static void touchAll(AuthTicket entity, TicketModel t)
 {
 }
 

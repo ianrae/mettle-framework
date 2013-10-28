@@ -51,7 +51,7 @@ public class EntityLoaderSaver_GEN
 		}
 		return obj.id;
 	}
-	public static long saveOrUpdate(Ticket obj, Ticket existing, ITicketDAO dao)
+	public static long saveOrUpdate(AuthTicket obj, AuthTicket existing, IAuthTicketDAO dao)
 	{
 		if (existing != null)
 		{

@@ -6,14 +6,14 @@ import org.mef.framework.entities.Entity;
 import mef.gen.*;
 import mef.entities.*;
 import java.util.Date;
-public class Ticket extends Entity
+public class AuthTicket extends Entity
 {
-	public Ticket()
+	public AuthTicket()
 	{}
 
 
 
-	public Ticket(Ticket entity)
+	public AuthTicket(AuthTicket entity)
 	{
 		this.id = entity.id;
 	}

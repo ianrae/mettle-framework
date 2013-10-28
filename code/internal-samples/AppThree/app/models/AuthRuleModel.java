@@ -75,7 +75,7 @@ public class AuthRuleModel extends Model
     }
     public void setTicket(TicketModel val) {
 		this.ticket = val;
-		this.entity.ticket = TicketDAO.createEntityFromModel(val);
+		this.entity.ticket = AuthTicketDAO.createEntityFromModel(val);
 
     }
 

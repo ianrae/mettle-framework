@@ -40,14 +40,14 @@ else
 	L.add(dal);
 }	if (createMocks)
 {
-	ITicketDAO dal = new MockTicketDAO();
-	ctx.getServiceLocator().registerSingleton(ITicketDAO.class, dal);
+	IAuthTicketDAO dal = new MockAuthTicketDAO();
+	ctx.getServiceLocator().registerSingleton(IAuthTicketDAO.class, dal);
 	L.add(dal);
 }
 else
 {
-	ITicketDAO dal = new TicketDAO();
-	ctx.getServiceLocator().registerSingleton(ITicketDAO.class, dal);
+	IAuthTicketDAO dal = new AuthTicketDAO();
+	ctx.getServiceLocator().registerSingleton(IAuthTicketDAO.class, dal);
 	L.add(dal);
 }	if (createMocks)
 {

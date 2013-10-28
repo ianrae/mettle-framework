@@ -16,7 +16,7 @@ import java.util.Date;
 public class TicketModel extends Model
 {
 	@Transient
-    public Ticket entity = new Ticket(); //needed else get illegalStateException
+    public AuthTicket entity = new AuthTicket(); //needed else get illegalStateException
 
 
 	public static Finder<Long,TicketModel> find = new Finder(

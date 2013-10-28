@@ -12,10 +12,10 @@ import mef.gen.*;
 import org.mef.framework.entitydb.EntityDB;
 import java.util.Date;
 import com.avaje.ebean.Page;
-public class MockTicketDAO implements ITicketDAO
+public class MockAuthTicketDAO implements IAuthTicketDAO
 {
-    protected List<Ticket> _L = new ArrayList<Ticket>();
-    protected EntityDB<Ticket> _entityDB = new EntityDB<Ticket>();
+    protected List<AuthTicket> _L = new ArrayList<AuthTicket>();
+    protected EntityDB<AuthTicket> _entityDB = new EntityDB<AuthTicket>();
 
     @Override
     public int size() 
@@ -24,19 +24,19 @@ public class MockTicketDAO implements ITicketDAO
     }
 
     @Override
-    public Ticket findById(long id) 
+    public AuthTicket findById(long id) 
     {
-    	Ticket entity = this.findActualById(id);
+    	AuthTicket entity = this.findActualById(id);
     	if (entity != null)
     	{
-    		return new Ticket(entity); //return copy
+    		return new AuthTicket(entity); //return copy
         }
         return null; //not found
     }
 
-    protected Ticket findActualById(long id) 
+    protected AuthTicket findActualById(long id) 
     {
-        for(Ticket entity : _L)
+        for(AuthTicket entity : _L)
         {
             if (entity.id == id)
             {
@@ -47,7 +47,7 @@ public class MockTicketDAO implements ITicketDAO
     }
 
     @Override
-    public List<Ticket> all() 
+    public List<AuthTicket> all() 
     {
         return _L; //ret copy??!!
     }
@@ -55,7 +55,7 @@ public class MockTicketDAO implements ITicketDAO
     @Override
     public void delete(long id) 
     {
-        Ticket entity = this.findActualById(id);
+        AuthTicket entity = this.findActualById(id);
         if (entity != null)
         {
             _L.remove(entity);
@@ -63,7 +63,7 @@ public class MockTicketDAO implements ITicketDAO
     }
 
     @Override
-    public void save(Ticket entity) 
+    public void save(AuthTicket entity) 
     {
     	if (entity.id == null)
 		{
@@ -88,7 +88,7 @@ public class MockTicketDAO implements ITicketDAO
     private Long nextAvailIdNumber() 
     {
     	long used = 0;
-        for(Ticket entity : _L)
+        for(AuthTicket entity : _L)
         {
             if (entity.id > used)
             {
@@ -99,7 +99,7 @@ public class MockTicketDAO implements ITicketDAO
 	}
 
 	@Override
-	public void update(Ticket entity) 
+	public void update(AuthTicket entity) 
 	{
 		this.delete(entity.id);
 		this.save(entity);
@@ -108,7 +108,7 @@ public class MockTicketDAO implements ITicketDAO
     @Override
     public void updateFrom(IFormBinder binder) 
     {
-    	Ticket entity = (Ticket) binder.getObject();
+    	AuthTicket entity = (AuthTicket) binder.getObject();
 		this.delete(entity.id);
     	save(entity);
 

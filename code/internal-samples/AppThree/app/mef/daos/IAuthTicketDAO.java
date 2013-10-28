@@ -9,11 +9,11 @@ import org.mef.framework.dao.IDAO;
 import mef.gen.*;
 import java.util.Date;
 import com.avaje.ebean.Page;
-public interface ITicketDAO  extends IDAO
+public interface IAuthTicketDAO  extends IDAO
 {
-	Ticket findById(long id);
-	List<Ticket> all();
-	void save(Ticket entity);        
-	void update(Ticket entity);
+	AuthTicket findById(long id);
+	List<AuthTicket> all();
+	void save(AuthTicket entity);        
+	void update(AuthTicket entity);
 
     }

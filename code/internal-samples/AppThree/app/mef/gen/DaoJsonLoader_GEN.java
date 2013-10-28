@@ -100,9 +100,9 @@ public class DaoJsonLoader_GEN extends BaseDaoJsonLoader
 		}
 		return null;
 	}
-	public Ticket readTicket(JsonNode node)
+	public AuthTicket readTicket(JsonNode node)
 	{
-		Ticket obj = new Ticket();
+		AuthTicket obj = new AuthTicket();
 		JsonNode jj = node.get("id");
 		obj.id = jj.asLong();
 
@@ -110,9 +110,9 @@ public class DaoJsonLoader_GEN extends BaseDaoJsonLoader
 
 		return obj;
 	}
-	public List<Ticket> loadTickets(JsonNode rootNode) 
+	public List<AuthTicket> loadTickets(JsonNode rootNode) 
 	{
-		List<Ticket> phoneL = new ArrayList<Ticket>();
+		List<AuthTicket> phoneL = new ArrayList<AuthTicket>();
 
     	JsonNode msgNode = rootNode.path("Ticket");
 		Iterator<JsonNode> ite = msgNode.getElements();
@@ -120,7 +120,7 @@ public class DaoJsonLoader_GEN extends BaseDaoJsonLoader
 		int i = 0;
 		while (ite.hasNext()) {
 			JsonNode temp = ite.next();
-			Ticket ph = readTicket(temp);
+			AuthTicket ph = readTicket(temp);
 
 			phoneL.add(ph);
 			i++;
@@ -128,9 +128,9 @@ public class DaoJsonLoader_GEN extends BaseDaoJsonLoader
 
 		return phoneL;
 	}
-	protected Ticket findTicketWithId(long id, List<Ticket> phoneL) 
+	protected AuthTicket findTicketWithId(long id, List<AuthTicket> phoneL) 
 	{
-		for (Ticket ph : phoneL)
+		for (AuthTicket ph : phoneL)
 		{
 			if (ph.id == id)
 			{
