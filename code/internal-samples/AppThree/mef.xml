@@ -22,7 +22,7 @@
 	<query>find_by_name</query>
 </entity>
 
-<entity name="Ticket">
+<entity name="AuthTicket">
 	<field>@Id Long id</field>
 </entity>
 
@@ -30,9 +30,9 @@
 	<field>@Id Long id</field>
 	<field>@ManyToOne User user</field>
 	<field>@ManyToOne AuthRole role</field>
-	<field>@ManyToOne Ticket ticket</field>
+	<field>@ManyToOne AuthTicket ticket</field>
 	
-	<method><![CDATA[AuthRule find_by_user_and_role_and_ticket(User u, AuthRole r, Ticket t)]]></method>
+	<method><![CDATA[AuthRule find_by_user_and_role_and_ticket(User u, AuthRole r, AuthTicket t)]]></method>
 	<codegen what="dal_mock" extend="true" />
 </entity>
 

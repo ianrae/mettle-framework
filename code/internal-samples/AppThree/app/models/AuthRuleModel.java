@@ -68,12 +68,12 @@ public class AuthRuleModel extends Model
     }
 
    @ManyToOne 
-    private TicketModel ticket;
+    private AuthTicketModel ticket;
 
-    public TicketModel getTicket() {
+    public AuthTicketModel getTicket() {
         return this.ticket;
     }
-    public void setTicket(TicketModel val) {
+    public void setTicket(AuthTicketModel val) {
 		this.ticket = val;
 		this.entity.ticket = AuthTicketDAO.createEntityFromModel(val);
 
