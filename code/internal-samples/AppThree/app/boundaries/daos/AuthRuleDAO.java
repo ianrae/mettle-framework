@@ -22,11 +22,7 @@ import models.AuthRuleModel;
 import play.db.ebean.Model.Finder;
 
 import mef.daos.*;
-import mef.entities.AuthRole;
-import mef.entities.AuthRule;
-import mef.entities.Ticket;
-import mef.entities.User;
-
+import mef.entities.*;
 import com.avaje.ebean.Page;
 public class AuthRuleDAO implements IAuthRuleDAO 
 {
@@ -157,7 +153,7 @@ public class AuthRuleDAO implements IAuthRuleDAO
 	t.setId(entity.id);
 	UserDAO userDAO = (UserDAO)Initializer.theCtx.getServiceLocator().getInstance(IUserDAO.class);
 	t.setUser(userDAO.createModelFromEntity(entity.user));
-	AuthRoleDAO roleDAO = (AuthRoleDAO)Initializer.theCtx.getServiceLocator().getInstance(IAuthRoleDAO.class);
+	AuthRoleDAO authRoleDAO = (AuthRoleDAO)Initializer.theCtx.getServiceLocator().getInstance(IAuthRoleDAO.class);
 	t.setRole(roleDAO.createModelFromEntity(entity.role));
 	TicketDAO ticketDAO = (TicketDAO)Initializer.theCtx.getServiceLocator().getInstance(ITicketDAO.class);
 	t.setTicket(ticketDAO.createModelFromEntity(entity.ticket));
@@ -167,7 +163,7 @@ protected static void touchAll(AuthRule entity, AuthRuleModel t)
 {
 	UserDAO userDAO = (UserDAO)Initializer.theCtx.getServiceLocator().getInstance(IUserDAO.class);
 	entity.user = userDAO.createEntityFromModel(t.getUser());
-	AuthRoleDAO roleDAO = (AuthRoleDAO)Initializer.theCtx.getServiceLocator().getInstance(IAuthRoleDAO.class);
+	AuthRoleDAO authRoleDAO = (AuthRoleDAO)Initializer.theCtx.getServiceLocator().getInstance(IAuthRoleDAO.class);
 	entity.role = roleDAO.createEntityFromModel(t.getRole());
 	TicketDAO ticketDAO = (TicketDAO)Initializer.theCtx.getServiceLocator().getInstance(ITicketDAO.class);
 	entity.ticket = ticketDAO.createEntityFromModel(t.getTicket());

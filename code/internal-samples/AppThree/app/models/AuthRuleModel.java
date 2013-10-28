@@ -63,7 +63,7 @@ public class AuthRuleModel extends Model
     }
     public void setRole(AuthRoleModel val) {
 		this.role = val;
-		this.entity.role = AuthRoleDAO.createEntityFromModel(val);
+		this.entity.role = RoleDAO.createEntityFromModel(val);
 
     }
 

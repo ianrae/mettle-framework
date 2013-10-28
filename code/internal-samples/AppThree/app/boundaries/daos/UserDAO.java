@@ -22,7 +22,7 @@ import models.UserModel;
 import play.db.ebean.Model.Finder;
 
 import mef.daos.*;
-import mef.entities.User;
+import mef.entities.*;
 import com.avaje.ebean.Page;
 public class UserDAO implements IUserDAO 
 {

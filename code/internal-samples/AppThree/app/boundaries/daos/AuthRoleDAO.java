@@ -22,7 +22,7 @@ import models.AuthRoleModel;
 import play.db.ebean.Model.Finder;
 
 import mef.daos.*;
-import mef.entities.AuthRole;
+import mef.entities.*;
 import com.avaje.ebean.Page;
 public class AuthRoleDAO implements IAuthRoleDAO 
 {

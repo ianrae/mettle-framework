@@ -11,6 +11,7 @@ import org.stringtemplate.v4.ST;
 
 
 
+
 public class RealDAOCodeGen extends CodeGenBase
 {
 	public RealDAOCodeGen(SfxContext ctx)
@@ -58,7 +59,9 @@ public class RealDAOCodeGen extends CodeGenBase
 			if (isEntity)
 			{
 				s = createDAOString(fdef);
-				s += String.format("t.set%s(%sDAO.createModelFromEntity(entity.%s));", uppify(fdef.name), fdef.name, fdef.name);
+				String daoName = lowify(fdef.typeName);
+				
+				s += String.format("t.set%s(%sDAO.createModelFromEntity(entity.%s));", uppify(fdef.name), daoName, fdef.name);
 			}
 			else
 			{
@@ -75,8 +78,11 @@ public class RealDAOCodeGen extends CodeGenBase
 	
 	private String createDAOString(FieldDef fdef)
 	{
-		String name = fdef.name;
-		String upname = uppify(fdef.name);
+		String name = lowify(fdef.typeName);
+		String upname = uppify(fdef.typeName);
+		
+		//RoleDAO roleDAO = (RoleDAO)Initializer.theCtx.getServiceLocator().getInstance(IRoleDAO.class);
+		
 		String s = String.format("%sDAO %sDAO = (%sDAO)Initializer.theCtx.getServiceLocator().getInstance(I%sDAO.class);\n",
 				upname, name, upname, upname);
 		return s;
@@ -101,7 +107,8 @@ public class RealDAOCodeGen extends CodeGenBase
 			if (isEntity)
 			{
 				s = createDAOString(fdef);
-				s += String.format("entity.%s = %sDAO.createEntityFromModel(t.get%s());", fdef.name, fdef.name, uppify(fdef.name));
+				String daoName = lowify(fdef.typeName);
+				s += String.format("entity.%s = %sDAO.createEntityFromModel(t.get%s());", fdef.name, daoName, uppify(fdef.name));
 			}
 			else
 			{

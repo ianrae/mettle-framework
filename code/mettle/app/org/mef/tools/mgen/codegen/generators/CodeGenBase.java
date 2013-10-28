@@ -71,7 +71,7 @@ public abstract class CodeGenBase extends SfxBaseObj
 			return s;
 		}
 		
-		protected Object lowify(String name) 
+		protected String lowify(String name) 
 		{
 			String upper = name.toLowerCase();
 			String s = upper.substring(0, 1);

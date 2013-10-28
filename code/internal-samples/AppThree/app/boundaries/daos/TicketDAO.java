@@ -22,7 +22,7 @@ import models.TicketModel;
 import play.db.ebean.Model.Finder;
 
 import mef.daos.*;
-import mef.entities.Ticket;
+import mef.entities.*;
 import com.avaje.ebean.Page;
 public class TicketDAO implements ITicketDAO 
 {
