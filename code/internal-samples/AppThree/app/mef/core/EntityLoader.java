@@ -5,9 +5,11 @@ import java.util.List;
 import java.util.Set;
 
 import mef.daos.IAuthRoleDAO;
+import mef.daos.IAuthRuleDAO;
 import mef.daos.IAuthTicketDAO;
 import mef.daos.IUserDAO;
 import mef.entities.AuthRole;
+import mef.entities.AuthRule;
 import mef.entities.AuthTicket;
 import mef.entities.User;
 import mef.gen.EntityLoaderSaver_GEN;
@@ -23,6 +25,7 @@ public class EntityLoader extends SfxBaseObj
 	private IUserDAO userDal; 
 	private IAuthTicketDAO ticketDal;
 	private IAuthRoleDAO roleDal;
+	private IAuthRuleDAO ruleDal;
 	
 	public EntityLoader(SfxContext ctx)
 	{
@@ -30,6 +33,7 @@ public class EntityLoader extends SfxBaseObj
 		userDal = (IUserDAO) Initializer.getDAO(IUserDAO.class); 
 		ticketDal = (IAuthTicketDAO) Initializer.getDAO(IAuthTicketDAO.class);
 		roleDal = (IAuthRoleDAO) Initializer.getDAO(IAuthRoleDAO.class);
+		ruleDal = (IAuthRuleDAO) Initializer.getDAO(IAuthRuleDAO.class);
 	}
 	
 	public void loadAll(String json) throws Exception
@@ -52,7 +56,10 @@ public class EntityLoader extends SfxBaseObj
     	
     	List<AuthRole> roleL = loader.loadAuthRoles(rootNode);
     	saveAuthRoles(roleL, map);
- 	}
+
+    	List<AuthRule> ruleL = loader.loadAuthRules(rootNode);
+    	saveAuthRules(ruleL, map);
+	}
 
 
 	private void saveUsers(List<User> phoneL, HashMap<String, Long> map) 
@@ -84,6 +91,26 @@ public class EntityLoader extends SfxBaseObj
     		long id = EntityLoaderSaver_GEN.saveOrUpdate(ph, existing, roleDal);
     		map.put(key, id);
     	}
+	}
+	private void saveAuthRules(List<AuthRule> phoneL, HashMap<String, Long> map) 
+	{
+		for(AuthRule rule : phoneL)
+    	{
+    		if (rule.role != null)
+    		{
+    			long existingId = findIdInMap(rule.role, rule.role.id, map);
+				if (existingId != 0L)
+				{
+		    		AuthRole existing = roleDal.findById(existingId);
+					rule.role = existing;
+				}
+    		}    		
+    		
+    		String key = makeKey(rule, rule.id);
+    		AuthRule existing = null; //computerDal.find_by_name(computer.name); //use seedWith field
+    		long id = EntityLoaderSaver_GEN.saveOrUpdate(rule, existing, ruleDal);
+    		map.put(key, id);
+    	}		
 	}
 	
 	private String makeKey(Entity entity, Long id)

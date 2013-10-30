@@ -15,7 +15,12 @@
 	
 	"AuthRole":
 	[
-    { "id": "0", "name": "Full"  }
+    { "id": "1", "name": "Full"  }
+	],
+	
+	"AuthRule":
+	[
+    { "id": "0",  "role": {"id": "1" } }
 	]
 	
 	
