@@ -4,7 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
+import mef.daos.IAuthTicketDAO;
 import mef.daos.IUserDAO;
+import mef.entities.AuthTicket;
 import mef.entities.User;
 import mef.gen.EntityLoaderSaver_GEN;
 
@@ -17,11 +19,13 @@ import org.mef.framework.sfx.SfxContext;
 public class EntityLoader extends SfxBaseObj
 {
 	private IUserDAO userDal; 
+	private IAuthTicketDAO ticketDal;
 	
 	public EntityLoader(SfxContext ctx)
 	{
 		super(ctx);
 		userDal = (IUserDAO) Initializer.getDAO(IUserDAO.class); 
+		ticketDal = (IAuthTicketDAO) Initializer.getDAO(IAuthTicketDAO.class);
 	}
 	
 	public void loadAll(String json) throws Exception
@@ -38,6 +42,9 @@ public class EntityLoader extends SfxBaseObj
     	
     	List<User> phoneL = loader.loadUsers(rootNode);
     	saveUsers(phoneL, map);
+    	
+    	List<AuthTicket> ticketL = loader.loadAuthTickets(rootNode);
+    	saveAuthTickets(ticketL, map);
  	}
 
 
@@ -48,6 +55,16 @@ public class EntityLoader extends SfxBaseObj
     		String key = makeKey(ph, ph.id);
     		User existing = userDal.find_by_name(ph.name); //use seedWith field
     		long id = EntityLoaderSaver_GEN.saveOrUpdate(ph, existing, userDal);
+    		map.put(key, id);
+    	}
+	}
+	private void saveAuthTickets(List<AuthTicket> phoneL, HashMap<String, Long> map) 
+	{
+    	for(AuthTicket ph : phoneL)
+    	{
+    		String key = makeKey(ph, ph.id);
+    		AuthTicket existing = null; //no find by name userDal.find_by_name(ph.name); //use seedWith field
+    		long id = EntityLoaderSaver_GEN.saveOrUpdate(ph, existing, ticketDal);
     		map.put(key, id);
     	}
 	}

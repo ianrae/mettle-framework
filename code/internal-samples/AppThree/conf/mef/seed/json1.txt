@@ -1,9 +1,9 @@
 
 {
-	"Ticket":
+	"AuthTicket":
 	[
 	
-   { "id": "1", "name": "su" }
+   { "id": "1" }
 	],
 
 	
