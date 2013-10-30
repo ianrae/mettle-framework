@@ -11,6 +11,11 @@
 	[
 	{ "id": "0", "name": "admin"  }
 	
+	],
+	
+	"AuthRole":
+	[
+    { "id": "0", "name": "Full"  }
 	]
 	
 	

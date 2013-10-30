@@ -4,8 +4,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
+import mef.daos.IAuthRoleDAO;
 import mef.daos.IAuthTicketDAO;
 import mef.daos.IUserDAO;
+import mef.entities.AuthRole;
 import mef.entities.AuthTicket;
 import mef.entities.User;
 import mef.gen.EntityLoaderSaver_GEN;
@@ -20,12 +22,14 @@ public class EntityLoader extends SfxBaseObj
 {
 	private IUserDAO userDal; 
 	private IAuthTicketDAO ticketDal;
+	private IAuthRoleDAO roleDal;
 	
 	public EntityLoader(SfxContext ctx)
 	{
 		super(ctx);
 		userDal = (IUserDAO) Initializer.getDAO(IUserDAO.class); 
 		ticketDal = (IAuthTicketDAO) Initializer.getDAO(IAuthTicketDAO.class);
+		roleDal = (IAuthRoleDAO) Initializer.getDAO(IAuthRoleDAO.class);
 	}
 	
 	public void loadAll(String json) throws Exception
@@ -45,6 +49,9 @@ public class EntityLoader extends SfxBaseObj
     	
     	List<AuthTicket> ticketL = loader.loadAuthTickets(rootNode);
     	saveAuthTickets(ticketL, map);
+    	
+    	List<AuthRole> roleL = loader.loadAuthRoles(rootNode);
+    	saveAuthRoles(roleL, map);
  	}
 
 
@@ -65,6 +72,16 @@ public class EntityLoader extends SfxBaseObj
     		String key = makeKey(ph, ph.id);
     		AuthTicket existing = null; //no find by name userDal.find_by_name(ph.name); //use seedWith field
     		long id = EntityLoaderSaver_GEN.saveOrUpdate(ph, existing, ticketDal);
+    		map.put(key, id);
+    	}
+	}
+	private void saveAuthRoles(List<AuthRole> phoneL, HashMap<String, Long> map) 
+	{
+    	for(AuthRole ph : phoneL)
+    	{
+    		String key = makeKey(ph, ph.id);
+    		AuthRole existing = roleDal.find_by_name(ph.name); //use seedWith field
+    		long id = EntityLoaderSaver_GEN.saveOrUpdate(ph, existing, roleDal);
     		map.put(key, id);
     	}
 	}
