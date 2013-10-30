@@ -4,22 +4,22 @@ package boundaries.binders;
 
 import java.util.Map;
 
-import mef.entities.AuthUser;
-import models.AuthUserModel;
+import mef.entities.AuthSubject;
+import models.AuthSubjectModel;
 
 import org.mef.framework.binder.IFormBinder;
 
-import boundaries.daos.AuthUserDAO;
+import boundaries.daos.AuthSubjectDAO;
 
 import play.Logger;
 import play.data.Form;
 
 public class UserFormBinder implements IFormBinder
 {
-	private Form<AuthUserModel> validationForm;
-	private Form<AuthUserModel> filledForm;
+	private Form<AuthSubjectModel> validationForm;
+	private Form<AuthSubjectModel> filledForm;
 
-	public UserFormBinder(Form<AuthUserModel> validationForm)
+	public UserFormBinder(Form<AuthSubjectModel> validationForm)
 	{
 		this.validationForm = validationForm;
 	}
@@ -28,7 +28,7 @@ public class UserFormBinder implements IFormBinder
 	{
 		this.filledForm = validationForm.bindFromRequest();
 		Logger.info("b0");
-		AuthUser entity = getObject();
+		AuthSubject entity = getObject();
 		if (entity != null)
 		{
 			Logger.info("b1");
@@ -44,7 +44,7 @@ public class UserFormBinder implements IFormBinder
 	}
 
 	@Override
-	public AuthUser getObject() 
+	public AuthSubject getObject() 
 	{
 		Logger.info("g0");
 		if (filledForm.hasErrors())
@@ -53,7 +53,7 @@ public class UserFormBinder implements IFormBinder
 			return null;
 		}
 
-		AuthUserModel model = filledForm.get();
+		AuthSubjectModel model = filledForm.get();
 		if (model == null)
 		{
 			Logger.info("g2");
@@ -61,7 +61,7 @@ public class UserFormBinder implements IFormBinder
 		}
 
 		Logger.info("g3");
-		AuthUser entity = AuthUserDAO.createEntityFromModel(model);
+		AuthSubject entity = AuthSubjectDAO.createEntityFromModel(model);
 		return entity;
 	}
 
@@ -71,12 +71,12 @@ public class UserFormBinder implements IFormBinder
 		return filledForm.errors();
 	}
 
-	public Form<AuthUserModel> getRawForm()
+	public Form<AuthSubjectModel> getRawForm()
 	{
 		return filledForm;
 	}
 	@Override
-	public AuthUserModel getRawObject() 
+	public AuthSubjectModel getRawObject() 
 	{
 		return filledForm.get();
 	}

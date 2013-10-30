@@ -12,10 +12,10 @@ import mef.gen.*;
 import org.mef.framework.entitydb.EntityDB;
 import java.util.Date;
 import com.avaje.ebean.Page;
-public class MockAuthUserDAO implements IAuthUserDAO
+public class MockAuthSubjectDAO implements IAuthSubjectDAO
 {
-    protected List<AuthUser> _L = new ArrayList<AuthUser>();
-    protected EntityDB<AuthUser> _entityDB = new EntityDB<AuthUser>();
+    protected List<AuthSubject> _L = new ArrayList<AuthSubject>();
+    protected EntityDB<AuthSubject> _entityDB = new EntityDB<AuthSubject>();
 
     @Override
     public int size() 
@@ -24,19 +24,19 @@ public class MockAuthUserDAO implements IAuthUserDAO
     }
 
     @Override
-    public AuthUser findById(long id) 
+    public AuthSubject findById(long id) 
     {
-    	AuthUser entity = this.findActualById(id);
+    	AuthSubject entity = this.findActualById(id);
     	if (entity != null)
     	{
-    		return new AuthUser(entity); //return copy
+    		return new AuthSubject(entity); //return copy
         }
         return null; //not found
     }
 
-    protected AuthUser findActualById(long id) 
+    protected AuthSubject findActualById(long id) 
     {
-        for(AuthUser entity : _L)
+        for(AuthSubject entity : _L)
         {
             if (entity.id == id)
             {
@@ -47,7 +47,7 @@ public class MockAuthUserDAO implements IAuthUserDAO
     }
 
     @Override
-    public List<AuthUser> all() 
+    public List<AuthSubject> all() 
     {
         return _L; //ret copy??!!
     }
@@ -55,7 +55,7 @@ public class MockAuthUserDAO implements IAuthUserDAO
     @Override
     public void delete(long id) 
     {
-        AuthUser entity = this.findActualById(id);
+        AuthSubject entity = this.findActualById(id);
         if (entity != null)
         {
             _L.remove(entity);
@@ -63,7 +63,7 @@ public class MockAuthUserDAO implements IAuthUserDAO
     }
 
     @Override
-    public void save(AuthUser entity) 
+    public void save(AuthSubject entity) 
     {
     	if (entity.id == null)
 		{
@@ -88,7 +88,7 @@ public class MockAuthUserDAO implements IAuthUserDAO
     private Long nextAvailIdNumber() 
     {
     	long used = 0;
-        for(AuthUser entity : _L)
+        for(AuthSubject entity : _L)
         {
             if (entity.id > used)
             {
@@ -99,7 +99,7 @@ public class MockAuthUserDAO implements IAuthUserDAO
 	}
 
 	@Override
-	public void update(AuthUser entity) 
+	public void update(AuthSubject entity) 
 	{
 		this.delete(entity.id);
 		this.save(entity);
@@ -108,7 +108,7 @@ public class MockAuthUserDAO implements IAuthUserDAO
     @Override
     public void updateFrom(IFormBinder binder) 
     {
-    	AuthUser entity = (AuthUser) binder.getObject();
+    	AuthSubject entity = (AuthSubject) binder.getObject();
 		this.delete(entity.id);
     	save(entity);
 
@@ -117,9 +117,9 @@ public class MockAuthUserDAO implements IAuthUserDAO
 
 	//query
     @Override
-    public AuthUser find_by_name(String val) 
+    public AuthSubject find_by_name(String val) 
     {
-		AuthUser user = _entityDB.findFirstMatch(_L, "name", val);
+		AuthSubject user = _entityDB.findFirstMatch(_L, "name", val);
 		return user;
     }
 

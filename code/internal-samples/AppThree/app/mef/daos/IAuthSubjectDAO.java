@@ -9,13 +9,13 @@ import org.mef.framework.dao.IDAO;
 import mef.gen.*;
 import java.util.Date;
 import com.avaje.ebean.Page;
-public interface IAuthUserDAO  extends IDAO
+public interface IAuthSubjectDAO  extends IDAO
 {
-	AuthUser findById(long id);
-	List<AuthUser> all();
-	void save(AuthUser entity);        
-	void update(AuthUser entity);
+	AuthSubject findById(long id);
+	List<AuthSubject> all();
+	void save(AuthSubject entity);        
+	void update(AuthSubject entity);
 
-    public AuthUser find_by_name(String val);
+    public AuthSubject find_by_name(String val);
 
 }

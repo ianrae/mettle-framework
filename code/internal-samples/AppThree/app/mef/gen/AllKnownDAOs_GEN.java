@@ -18,14 +18,14 @@ public List<IDAO> registerDAOs(SfxContext ctx, boolean createMocks)
 	ArrayList<IDAO> L = new ArrayList<IDAO>();
     if (createMocks)
 {
-	IAuthUserDAO dal = new MockAuthUserDAO();
-	ctx.getServiceLocator().registerSingleton(IAuthUserDAO.class, dal);
+	IAuthSubjectDAO dal = new MockAuthSubjectDAO();
+	ctx.getServiceLocator().registerSingleton(IAuthSubjectDAO.class, dal);
 	L.add(dal);
 }
 else
 {
-	IAuthUserDAO dal = new AuthUserDAO();
-	ctx.getServiceLocator().registerSingleton(IAuthUserDAO.class, dal);
+	IAuthSubjectDAO dal = new AuthSubjectDAO();
+	ctx.getServiceLocator().registerSingleton(IAuthSubjectDAO.class, dal);
 	L.add(dal);
 }	if (createMocks)
 {

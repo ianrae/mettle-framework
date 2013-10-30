@@ -21,18 +21,18 @@ import org.mef.framework.replies.Reply;
 import org.mef.framework.sfx.SfxBaseObj;
 import org.mef.framework.sfx.SfxContext;
 
-import mef.daos.IAuthUserDAO;
-import mef.entities.AuthUser;
+import mef.daos.IAuthSubjectDAO;
+import mef.entities.AuthSubject;
 import mef.presenters.replies.UserReply;
 public class UserPresenter extends Presenter
 {
-	private IAuthUserDAO _dao;
+	private IAuthSubjectDAO _dao;
 	private UserReply _reply;
 
 	public UserPresenter(SfxContext ctx)
 	{
 		super(ctx); 
-		_dao = (IAuthUserDAO) getInstance(IAuthUserDAO.class);
+		_dao = (IAuthSubjectDAO) getInstance(IAuthSubjectDAO.class);
 	}
 	@Override
 	protected UserReply createReply()
@@ -53,7 +53,7 @@ public class UserPresenter extends Presenter
 	{
 		UserReply reply = createReply();
 		reply.setDestination(Reply.VIEW_NEW);
-		reply._entity = new AuthUser();
+		reply._entity = new AuthSubject();
 		return reply; 
 	}
 
@@ -66,12 +66,12 @@ public class UserPresenter extends Presenter
 		if (! binder.bind())
 		{
 			reply.setFlashFail("binding failed!");
-			reply._entity = (AuthUser) binder.getObject();
+			reply._entity = (AuthSubject) binder.getObject();
 			return reply;
 		}
 		else
 		{
-			AuthUser entity = (AuthUser) binder.getObject();
+			AuthSubject entity = (AuthSubject) binder.getObject();
 			if (entity == null)
 			{
 				reply.setFailed(true);
@@ -92,7 +92,7 @@ public class UserPresenter extends Presenter
 		UserReply reply = createReply();
 		reply.setDestination(Reply.VIEW_EDIT);
 
-		AuthUser entity = _dao.findById(cmd.id);
+		AuthSubject entity = _dao.findById(cmd.id);
 		if (entity == null)
 		{
 			reply.setDestination(Reply.FORWARD_NOT_FOUND);
@@ -112,7 +112,7 @@ public class UserPresenter extends Presenter
 		if (! binder.bind())
 		{
 			reply.setFlashFail("binding failed!");
-			reply._entity = (AuthUser) binder.getObject();
+			reply._entity = (AuthSubject) binder.getObject();
 			if (reply._entity == null)
 			{
 				Logger.info("failbinding null entity!");
@@ -123,7 +123,7 @@ public class UserPresenter extends Presenter
 		else
 		{
 			//ensure id is a valid id
-			AuthUser entity = _dao.findById(cmd.id);
+			AuthSubject entity = _dao.findById(cmd.id);
 			if (entity == null)
 			{
 				reply.setDestination(Reply.FORWARD_NOT_FOUND);
@@ -141,7 +141,7 @@ public class UserPresenter extends Presenter
 	{
 		UserReply reply = createReply();
 		reply.setDestination(Reply.FORWARD_INDEX);
-		AuthUser entity = _dao.findById(cmd.id);
+		AuthSubject entity = _dao.findById(cmd.id);
 		if (entity == null)
 		{
 			reply.setDestination(Reply.FORWARD_NOT_FOUND);
@@ -158,7 +158,7 @@ public class UserPresenter extends Presenter
 	{
 		UserReply reply = createReply();
 		reply.setDestination(Reply.VIEW_SHOW);
-		AuthUser entity = _dao.findById(cmd.id);
+		AuthSubject entity = _dao.findById(cmd.id);
 		if (entity == null)
 		{
 			reply.setDestination(Reply.FORWARD_NOT_FOUND);

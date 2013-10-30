@@ -44,14 +44,14 @@ public class AuthRuleModel extends Model
     }
 
    @ManyToOne 
-    private AuthUserModel user;
+    private AuthSubjectModel user;
 
-    public AuthUserModel getUser() {
+    public AuthSubjectModel getUser() {
         return this.user;
     }
-    public void setUser(AuthUserModel val) {
+    public void setUser(AuthSubjectModel val) {
 		this.user = val;
-		this.entity.user = AuthUserDAO.createEntityFromModel(val);
+		this.entity.user = AuthSubjectDAO.createEntityFromModel(val);
 
     }
 

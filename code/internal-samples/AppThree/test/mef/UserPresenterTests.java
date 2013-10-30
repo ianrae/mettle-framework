@@ -19,9 +19,9 @@ import org.mef.framework.replies.Reply;
 import org.mef.framework.sfx.SfxContext;
 
 import mef.core.Initializer;
-import mef.daos.IAuthUserDAO;
-import mef.daos.mocks.MockAuthUserDAO;
-import mef.entities.AuthUser;
+import mef.daos.IAuthSubjectDAO;
+import mef.daos.mocks.MockAuthSubjectDAO;
+import mef.entities.AuthSubject;
 import mef.presenters.UserPresenter;
 import mef.presenters.replies.UserReply;
 import org.mef.framework.test.helpers.MockFormBinder;
@@ -52,7 +52,7 @@ public class UserPresenterTests extends BasePresenterTest
 	@Test
 	public void indexTestOne() 
 	{
-		AuthUser u = createUser("bob");
+		AuthSubject u = createUser("bob");
 		_dao.save(u);
 		assertEquals("bob", _dao.all().get(0).name);
 		UserReply reply = (UserReply) _presenter.process(new IndexCommand());
@@ -77,7 +77,7 @@ public class UserPresenterTests extends BasePresenterTest
 	@Test
 	public void testCreateUser() 
 	{
-		AuthUser t = initUser();
+		AuthSubject t = initUser();
 		chkDalSize(0);
 		Command cmd = createWithBinder(new CreateCommand(), t, true);
 
@@ -93,7 +93,7 @@ public class UserPresenterTests extends BasePresenterTest
 	@Test
 	public void testCreateUser_ValFail() 
 	{
-		AuthUser t = initUser();
+		AuthSubject t = initUser();
 		Command cmd = createWithBinder(new CreateCommand(), t, false);
 
 		UserReply reply = (UserReply) _presenter.process(cmd);
@@ -107,7 +107,7 @@ public class UserPresenterTests extends BasePresenterTest
 	@Test
 	public void testEditUser() 
 	{
-		AuthUser t = initAndSaveUser();
+		AuthSubject t = initAndSaveUser();
 		UserReply reply = (UserReply) _presenter.process(new EditCommand(t.id));
 
 		chkReplySucessful(reply, Reply.VIEW_EDIT, null);
@@ -117,7 +117,7 @@ public class UserPresenterTests extends BasePresenterTest
 	@Test
 	public void testEditUser_NotFound() 
 	{
-		AuthUser t = initAndSaveUser();
+		AuthSubject t = initAndSaveUser();
 		UserReply reply = (UserReply) _presenter.process(new EditCommand(99L));
 
 		chkReplySucessful(reply, Reply.FORWARD_NOT_FOUND, null);
@@ -129,7 +129,7 @@ public class UserPresenterTests extends BasePresenterTest
 	@Test
 	public void testUpdateUser() 
 	{
-		AuthUser t = initAndSaveUser();
+		AuthSubject t = initAndSaveUser();
 		chkDalSize(1);
 		t.name = "user2"; //simulate user edit
 		Command cmd = createWithBinder(new UpdateCommand(t.id), t, true);
@@ -140,13 +140,13 @@ public class UserPresenterTests extends BasePresenterTest
 		chkDalSize(1);
 		chkReplyForwardOnly(reply);
 
-		AuthUser t2 = _dao.findById(t.id);
+		AuthSubject t2 = _dao.findById(t.id);
 		assertEquals("user2", t2.name);
 	}
 	@Test
 	public void testUpdateUser_ValFail() 
 	{
-		AuthUser t = initAndSaveUser();
+		AuthSubject t = initAndSaveUser();
 		t.name = "user2"; //simulate user edit
 		Command cmd = createWithBinder(new UpdateCommand(t.id), t, false);
 
@@ -156,13 +156,13 @@ public class UserPresenterTests extends BasePresenterTest
 		chkDalSize(1);
 		chkReplyWithEntity(reply);
 
-		AuthUser t2 = _dao.findById(t.id);
+		AuthSubject t2 = _dao.findById(t.id);
 		assertEquals("bob", t2.name); //unchanged (but mock dal kinda broken)
 	}
 	@Test
 	public void testUpdateUser_NotFound() 
 	{
-		AuthUser t = initAndSaveUser();
+		AuthSubject t = initAndSaveUser();
 		Command cmd = createWithBinder(new UpdateCommand(99L), t, true);
 		UserReply reply = (UserReply) _presenter.process(cmd);
 
@@ -176,7 +176,7 @@ public class UserPresenterTests extends BasePresenterTest
 	@Test
 	public void testDeleteUser() 
 	{
-		AuthUser t = initAndSaveUser();
+		AuthSubject t = initAndSaveUser();
 		UserReply reply = (UserReply) _presenter.process( new DeleteCommand(t.id));
 
 		chkReplySucessful(reply, Reply.FORWARD_INDEX, null);
@@ -187,7 +187,7 @@ public class UserPresenterTests extends BasePresenterTest
 	@Test
 	public void testBadDeleteUser() 
 	{
-		AuthUser t = initAndSaveUser();
+		AuthSubject t = initAndSaveUser();
 		UserReply reply = (UserReply) _presenter.process(new DeleteCommand(99L)); //not exist
 
 		chkReplySucessful(reply, Reply.FORWARD_NOT_FOUND, "could not find entity");
@@ -199,7 +199,7 @@ public class UserPresenterTests extends BasePresenterTest
 	@Test
 	public void testShowUser() 
 	{
-		AuthUser t = initAndSaveUser();
+		AuthSubject t = initAndSaveUser();
 		UserReply reply = (UserReply) _presenter.process(new ShowCommand(t.id));
 
 		chkReplySucessful(reply, Reply.VIEW_SHOW, null);
@@ -209,7 +209,7 @@ public class UserPresenterTests extends BasePresenterTest
 	@Test
 	public void testShowUser_NotFound() 
 	{
-		AuthUser t = initAndSaveUser();
+		AuthSubject t = initAndSaveUser();
 		UserReply reply = (UserReply) _presenter.process(new ShowCommand(99L));
 
 		chkReplySucessful(reply, Reply.FORWARD_NOT_FOUND, "could not find entity");
@@ -259,7 +259,7 @@ public class UserPresenterTests extends BasePresenterTest
 		assertNull(reply._allL);
 	}
 
-	private MockAuthUserDAO _dao;
+	private MockAuthSubjectDAO _dao;
 	private UserPresenter _presenter;
 	@Before
 	public void init()
@@ -269,45 +269,45 @@ public class UserPresenterTests extends BasePresenterTest
 		this._presenter = new UserPresenter(_ctx);
 	}
 
-	private MockAuthUserDAO getDAO()
+	private MockAuthSubjectDAO getDAO()
 	{
-		MockAuthUserDAO dal = (MockAuthUserDAO) Initializer.getDAO(IAuthUserDAO.class); 
+		MockAuthSubjectDAO dal = (MockAuthSubjectDAO) Initializer.getDAO(IAuthSubjectDAO.class); 
 		return dal;
 	}
 
-	private AuthUser initUser()
+	private AuthSubject initUser()
 	{
 		return initUser("bob");
 	}
-	private AuthUser initUser(String name)
+	private AuthSubject initUser(String name)
 	{
-		AuthUser t = new AuthUser();
+		AuthSubject t = new AuthSubject();
 		t.id = 0L; //dal will assign id
 		t.name = name;
 		assertEquals(0, _dao.size());
 		return t;
 	}
 
-	private AuthUser initAndSaveUser()
+	private AuthSubject initAndSaveUser()
 	{
 		return initAndSaveUser("bob");
 	}
 
-	private AuthUser initAndSaveUser(String name)
+	private AuthSubject initAndSaveUser(String name)
 	{
-		AuthUser t = initUser(name);
+		AuthSubject t = initUser(name);
 		_dao.save(t);
 		assertEquals(1, _dao.size());
 		return _dao.findById(t.id);
 	}
-	private AuthUser createUser(String name)
+	private AuthSubject createUser(String name)
 	{
-		AuthUser u = new AuthUser();
+		AuthSubject u = new AuthSubject();
 		u.name = name;
 		return u;
 	}
 
-	protected Command createWithBinder(Command cmd, AuthUser t, boolean bindingIsValid)
+	protected Command createWithBinder(Command cmd, AuthSubject t, boolean bindingIsValid)
 	{
 		MockFormBinder binder = new MockFormBinder(t);
 		cmd.setFormBinder(binder);

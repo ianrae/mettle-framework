@@ -16,9 +16,9 @@ public class DaoJsonLoader_GEN extends BaseDaoJsonLoader
 {
 
 
-	public AuthUser readUser(JsonNode node)
+	public AuthSubject readUser(JsonNode node)
 	{
-		AuthUser obj = new AuthUser();
+		AuthSubject obj = new AuthSubject();
 		JsonNode jj = node.get("id");
 		obj.id = jj.asLong();
 
@@ -29,9 +29,9 @@ public class DaoJsonLoader_GEN extends BaseDaoJsonLoader
 
 		return obj;
 	}
-	public List<AuthUser> loadUsers(JsonNode rootNode) 
+	public List<AuthSubject> loadUsers(JsonNode rootNode) 
 	{
-		List<AuthUser> phoneL = new ArrayList<AuthUser>();
+		List<AuthSubject> phoneL = new ArrayList<AuthSubject>();
 
     	JsonNode msgNode = rootNode.path("User");
 		Iterator<JsonNode> ite = msgNode.getElements();
@@ -39,7 +39,7 @@ public class DaoJsonLoader_GEN extends BaseDaoJsonLoader
 		int i = 0;
 		while (ite.hasNext()) {
 			JsonNode temp = ite.next();
-			AuthUser ph = readUser(temp);
+			AuthSubject ph = readUser(temp);
 
 			phoneL.add(ph);
 			i++;
@@ -47,9 +47,9 @@ public class DaoJsonLoader_GEN extends BaseDaoJsonLoader
 
 		return phoneL;
 	}
-	protected AuthUser findUserWithId(long id, List<AuthUser> phoneL) 
+	protected AuthSubject findUserWithId(long id, List<AuthSubject> phoneL) 
 	{
-		for (AuthUser ph : phoneL)
+		for (AuthSubject ph : phoneL)
 		{
 			if (ph.id == id)
 			{

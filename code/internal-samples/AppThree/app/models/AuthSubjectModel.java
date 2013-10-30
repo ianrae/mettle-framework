@@ -13,17 +13,17 @@ import mef.entities.*;
 import boundaries.daos.*;
 import java.util.Date;
 @Entity
-public class AuthUserModel extends Model
+public class AuthSubjectModel extends Model
 {
 	@Transient
-    public AuthUser entity = new AuthUser(); //needed else get illegalStateException
+    public AuthSubject entity = new AuthSubject(); //needed else get illegalStateException
 
 
-	public static Finder<Long,AuthUserModel> find = new Finder(
-			Long.class, AuthUserModel.class
+	public static Finder<Long,AuthSubjectModel> find = new Finder(
+			Long.class, AuthSubjectModel.class
 			);  
 
-	public static List<AuthUserModel> all() {
+	public static List<AuthSubjectModel> all() {
 		return find.all();
 	}
 	public static void delete(Long id) {

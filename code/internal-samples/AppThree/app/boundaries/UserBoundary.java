@@ -4,7 +4,7 @@ package boundaries;
 
 import mef.presenters.UserPresenter;
 import mef.presenters.replies.UserReply;
-import models.AuthUserModel;
+import models.AuthSubjectModel;
 import mef.core.Initializer;
 import org.mef.framework.boundaries.BoundaryBase;
 import org.mef.framework.commands.Command;
@@ -14,7 +14,7 @@ import play.Logger;
 import play.data.Form;
 import play.mvc.Controller;
 import boundaries.binders.UserFormBinder;
-import boundaries.daos.AuthUserDAO;
+import boundaries.daos.AuthSubjectDAO;
 public class UserBoundary extends BoundaryBase
 {
 	public static UserBoundary create() 
@@ -32,13 +32,13 @@ public class UserBoundary extends BoundaryBase
 
 	public UserReply addFormAndProcess(Command cmd)
 	{
-		Form<AuthUserModel> validationForm =  Form.form(AuthUserModel.class);
+		Form<AuthSubjectModel> validationForm =  Form.form(AuthSubjectModel.class);
 		binder = new UserFormBinder(validationForm);
 		cmd.setFormBinder(binder);
 		return process(cmd);
 	}
 
-	public Form<AuthUserModel> makeForm(UserReply reply)
+	public Form<AuthSubjectModel> makeForm(UserReply reply)
 	{
 		if (binder != null)
 		{
@@ -46,8 +46,8 @@ public class UserBoundary extends BoundaryBase
 			return binder.getRawForm();
 		}
 		Logger.info("mf-make");
-		Form<AuthUserModel> frm = Form.form(AuthUserModel.class);
-		AuthUserModel model = AuthUserDAO.createModelFromEntity(reply._entity);
+		Form<AuthSubjectModel> frm = Form.form(AuthSubjectModel.class);
+		AuthSubjectModel model = AuthSubjectDAO.createModelFromEntity(reply._entity);
 		frm = frm.fill(model);
 		return frm;
 	}
