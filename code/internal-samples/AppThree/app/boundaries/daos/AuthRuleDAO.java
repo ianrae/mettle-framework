@@ -151,8 +151,8 @@ public class AuthRuleDAO implements IAuthRuleDAO
        protected static void touchAll(AuthRuleModel t, AuthRule entity)
 {
 	t.setId(entity.id);
-	AuthSubjectDAO userDAO = (AuthSubjectDAO)Initializer.theCtx.getServiceLocator().getInstance(IAuthSubjectDAO.class);
-	t.setUser(userDAO.createModelFromEntity(entity.user));
+	AuthSubjectDAO authSubjectDAO = (AuthSubjectDAO)Initializer.theCtx.getServiceLocator().getInstance(IAuthSubjectDAO.class);
+	t.setSubject(authSubjectDAO.createModelFromEntity(entity.subject));
 	AuthRoleDAO authRoleDAO = (AuthRoleDAO)Initializer.theCtx.getServiceLocator().getInstance(IAuthRoleDAO.class);
 	t.setRole(authRoleDAO.createModelFromEntity(entity.role));
 	AuthTicketDAO authTicketDAO = (AuthTicketDAO)Initializer.theCtx.getServiceLocator().getInstance(IAuthTicketDAO.class);
@@ -161,15 +161,15 @@ public class AuthRuleDAO implements IAuthRuleDAO
 
 protected static void touchAll(AuthRule entity, AuthRuleModel t)
 {
-	AuthSubjectDAO userDAO = (AuthSubjectDAO)Initializer.theCtx.getServiceLocator().getInstance(IAuthSubjectDAO.class);
-	entity.user = userDAO.createEntityFromModel(t.getUser());
+	AuthSubjectDAO authSubjectDAO = (AuthSubjectDAO)Initializer.theCtx.getServiceLocator().getInstance(IAuthSubjectDAO.class);
+	entity.subject = authSubjectDAO.createEntityFromModel(t.getSubject());
 	AuthRoleDAO authRoleDAO = (AuthRoleDAO)Initializer.theCtx.getServiceLocator().getInstance(IAuthRoleDAO.class);
 	entity.role = authRoleDAO.createEntityFromModel(t.getRole());
 	AuthTicketDAO authTicketDAO = (AuthTicketDAO)Initializer.theCtx.getServiceLocator().getInstance(IAuthTicketDAO.class);
 	entity.ticket = authTicketDAO.createEntityFromModel(t.getTicket());
 }
 
-public AuthRule find_by_user_and_role_and_ticket(AuthSubject u, AuthRole r, AuthTicket t)
+public AuthRule find_by_subject_and_role_and_ticket(AuthSubject s, AuthRole r, AuthTicket t)
 {
 	return null;
 }

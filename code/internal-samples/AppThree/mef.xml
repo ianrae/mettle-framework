@@ -15,6 +15,12 @@
 </entity>
 
 <!-- for auth -->
+<entity name="AuthSubject">
+	<field>@Id Long id</field>
+	<field>@Required String name</field>
+
+	<query>find_by_name</query>
+</entity>
 <entity name="AuthRole">
 	<field>@Id Long id</field>
 	<field>@Required String name</field>
@@ -28,11 +34,11 @@
 
 <entity name="AuthRule">
 	<field>@Id Long id</field>
-	<field>@ManyToOne User user</field>
+	<field>@ManyToOne AuthSubject subject</field>
 	<field>@ManyToOne AuthRole role</field>
 	<field>@ManyToOne AuthTicket ticket</field>
 	
-	<method><![CDATA[AuthRule find_by_user_and_role_and_ticket(User u, AuthRole r, AuthTicket t)]]></method>
+	<method><![CDATA[AuthRule find_by_subject_and_role_and_ticket(AuthSubject s, AuthRole r, AuthTicket t)]]></method>
 	<codegen what="dal_mock" extend="true" />
 </entity>
 

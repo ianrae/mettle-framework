@@ -1,6 +1,6 @@
 //THIS FILE HAS BEEN AUTO-GENERATED. DO NOT MODIFY.
 
-package mef.gen;
+package mef.daos.mocks;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -12,10 +12,10 @@ import mef.gen.*;
 import org.mef.framework.entitydb.EntityDB;
 import java.util.Date;
 import com.avaje.ebean.Page;
-public class MockAuthRuleDAO_GEN implements IAuthRuleDAO
+public class MockUserDAO implements IUserDAO
 {
-    protected List<AuthRule> _L = new ArrayList<AuthRule>();
-    protected EntityDB<AuthRule> _entityDB = new EntityDB<AuthRule>();
+    protected List<User> _L = new ArrayList<User>();
+    protected EntityDB<User> _entityDB = new EntityDB<User>();
 
     @Override
     public int size() 
@@ -24,19 +24,19 @@ public class MockAuthRuleDAO_GEN implements IAuthRuleDAO
     }
 
     @Override
-    public AuthRule findById(long id) 
+    public User findById(long id) 
     {
-    	AuthRule entity = this.findActualById(id);
+    	User entity = this.findActualById(id);
     	if (entity != null)
     	{
-    		return new AuthRule(entity); //return copy
+    		return new User(entity); //return copy
         }
         return null; //not found
     }
 
-    protected AuthRule findActualById(long id) 
+    protected User findActualById(long id) 
     {
-        for(AuthRule entity : _L)
+        for(User entity : _L)
         {
             if (entity.id == id)
             {
@@ -47,7 +47,7 @@ public class MockAuthRuleDAO_GEN implements IAuthRuleDAO
     }
 
     @Override
-    public List<AuthRule> all() 
+    public List<User> all() 
     {
         return _L; //ret copy??!!
     }
@@ -55,7 +55,7 @@ public class MockAuthRuleDAO_GEN implements IAuthRuleDAO
     @Override
     public void delete(long id) 
     {
-        AuthRule entity = this.findActualById(id);
+        User entity = this.findActualById(id);
         if (entity != null)
         {
             _L.remove(entity);
@@ -63,7 +63,7 @@ public class MockAuthRuleDAO_GEN implements IAuthRuleDAO
     }
 
     @Override
-    public void save(AuthRule entity) 
+    public void save(User entity) 
     {
     	if (entity.id == null)
 		{
@@ -88,7 +88,7 @@ public class MockAuthRuleDAO_GEN implements IAuthRuleDAO
     private Long nextAvailIdNumber() 
     {
     	long used = 0;
-        for(AuthRule entity : _L)
+        for(User entity : _L)
         {
             if (entity.id > used)
             {
@@ -99,7 +99,7 @@ public class MockAuthRuleDAO_GEN implements IAuthRuleDAO
 	}
 
 	@Override
-	public void update(AuthRule entity) 
+	public void update(User entity) 
 	{
 		this.delete(entity.id);
 		this.save(entity);
@@ -108,17 +108,19 @@ public class MockAuthRuleDAO_GEN implements IAuthRuleDAO
     @Override
     public void updateFrom(IFormBinder binder) 
     {
-    	AuthRule entity = (AuthRule) binder.getObject();
+    	User entity = (User) binder.getObject();
 		this.delete(entity.id);
     	save(entity);
 
     }
 
 
-	//method
-public AuthRule find_by_subject_and_role_and_ticket(AuthSubject s, AuthRole r, AuthTicket t)
-{
-	return null;
-}
+	//query
+    @Override
+    public User find_by_name(String val) 
+    {
+		User user = _entityDB.findFirstMatch(_L, "name", val);
+		return user;
+    }
 
 }

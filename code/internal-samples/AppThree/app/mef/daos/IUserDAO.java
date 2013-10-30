@@ -9,13 +9,13 @@ import org.mef.framework.dao.IDAO;
 import mef.gen.*;
 import java.util.Date;
 import com.avaje.ebean.Page;
-public interface IAuthRuleDAO  extends IDAO
+public interface IUserDAO  extends IDAO
 {
-	AuthRule findById(long id);
-	List<AuthRule> all();
-	void save(AuthRule entity);        
-	void update(AuthRule entity);
+	User findById(long id);
+	List<User> all();
+	void save(User entity);        
+	void update(User entity);
 
-    AuthRule find_by_subject_and_role_and_ticket(AuthSubject s, AuthRole r, AuthTicket t);
+    public User find_by_name(String val);
 
 }

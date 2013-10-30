@@ -15,6 +15,24 @@ public class EntityLoaderSaver_GEN
 {
 
 
+	public static long saveOrUpdate(User obj, User existing, IUserDAO dao)
+	{
+		if (existing != null)
+		{
+			obj.id = existing.id;
+			//copy everything 
+						existing.name = obj.name;
+			
+
+			dao.update(existing); //inserts or updates 
+		}
+		else
+		{
+			obj.id = 0L;
+			dao.save(obj); //inserts or updates 
+		}
+		return obj.id;
+	}
 	public static long saveOrUpdate(AuthSubject obj, AuthSubject existing, IAuthSubjectDAO dao)
 	{
 		if (existing != null)
@@ -74,7 +92,7 @@ public class EntityLoaderSaver_GEN
 		{
 			obj.id = existing.id;
 			//copy everything 
-						existing.user = obj.user;
+						existing.subject = obj.subject;
 
 						existing.role = obj.role;
 

@@ -16,7 +16,49 @@ public class DaoJsonLoader_GEN extends BaseDaoJsonLoader
 {
 
 
-	public AuthSubject readUser(JsonNode node)
+	public User readUser(JsonNode node)
+	{
+		User obj = new User();
+		JsonNode jj = node.get("id");
+		obj.id = jj.asLong();
+
+				jj = node.get("name");
+				obj.name = jj.getTextValue();
+
+
+
+		return obj;
+	}
+	public List<User> loadUsers(JsonNode rootNode) 
+	{
+		List<User> phoneL = new ArrayList<User>();
+
+    	JsonNode msgNode = rootNode.path("User");
+		Iterator<JsonNode> ite = msgNode.getElements();
+
+		int i = 0;
+		while (ite.hasNext()) {
+			JsonNode temp = ite.next();
+			User ph = readUser(temp);
+
+			phoneL.add(ph);
+			i++;
+		}    	
+
+		return phoneL;
+	}
+	protected User findUserWithId(long id, List<User> phoneL) 
+	{
+		for (User ph : phoneL)
+		{
+			if (ph.id == id)
+			{
+				return ph;
+			}
+		}
+		return null;
+	}
+	public AuthSubject readAuthSubject(JsonNode node)
 	{
 		AuthSubject obj = new AuthSubject();
 		JsonNode jj = node.get("id");
@@ -29,17 +71,17 @@ public class DaoJsonLoader_GEN extends BaseDaoJsonLoader
 
 		return obj;
 	}
-	public List<AuthSubject> loadUsers(JsonNode rootNode) 
+	public List<AuthSubject> loadAuthSubjects(JsonNode rootNode) 
 	{
 		List<AuthSubject> phoneL = new ArrayList<AuthSubject>();
 
-    	JsonNode msgNode = rootNode.path("User");
+    	JsonNode msgNode = rootNode.path("AuthSubject");
 		Iterator<JsonNode> ite = msgNode.getElements();
 
 		int i = 0;
 		while (ite.hasNext()) {
 			JsonNode temp = ite.next();
-			AuthSubject ph = readUser(temp);
+			AuthSubject ph = readAuthSubject(temp);
 
 			phoneL.add(ph);
 			i++;
@@ -47,7 +89,7 @@ public class DaoJsonLoader_GEN extends BaseDaoJsonLoader
 
 		return phoneL;
 	}
-	protected AuthSubject findUserWithId(long id, List<AuthSubject> phoneL) 
+	protected AuthSubject findAuthSubjectWithId(long id, List<AuthSubject> phoneL) 
 	{
 		for (AuthSubject ph : phoneL)
 		{
@@ -145,7 +187,7 @@ public class DaoJsonLoader_GEN extends BaseDaoJsonLoader
 		JsonNode jj = node.get("id");
 		obj.id = jj.asLong();
 
-				jj = node.get("user");
+				jj = node.get("subject");
 
 				jj = node.get("role");
 

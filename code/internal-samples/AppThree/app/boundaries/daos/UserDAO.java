@@ -18,18 +18,18 @@ import boundaries.Boundary;
 import boundaries.daos.*;
 import mef.core.Initializer;
 
-import models.AuthSubjectModel;
+import models.UserModel;
 import play.db.ebean.Model.Finder;
 
 import mef.daos.*;
 import mef.entities.*;
 import com.avaje.ebean.Page;
-public class AuthSubjectDAO implements IAuthSubjectDAO 
+public class UserDAO implements IUserDAO 
 {
 	@Override
-	public void save(AuthSubject entity) 
+	public void save(User entity) 
 	{
-		AuthSubjectModel t = (AuthSubjectModel)entity.cc; 
+		UserModel t = (UserModel)entity.cc; 
 		if (t == null) //not yet known by db? (newly created)
 		{
 			System.out.println("save-auto-create");
@@ -44,9 +44,9 @@ public class AuthSubjectDAO implements IAuthSubjectDAO
 	}
 
 	@Override
-	public AuthSubject findById(long id) 
+	public User findById(long id) 
 	{
-		AuthSubjectModel t = AuthSubjectModel.find.byId(id);
+		UserModel t = UserModel.find.byId(id);
 		if (t == null)
 		{
 			return null;
@@ -57,42 +57,42 @@ public class AuthSubjectDAO implements IAuthSubjectDAO
 	}
 
 	@Override
-	public List<AuthSubject> all() 
+	public List<User> all() 
 	{
-		List<AuthSubjectModel> L = AuthSubjectModel.all();
-		List<AuthSubject> entityL = createEntityFromModel(L);
+		List<UserModel> L = UserModel.all();
+		List<User> entityL = createEntityFromModel(L);
 		return entityL;
 	}
 
 	@Override
 	public int size() 
 	{
-		return AuthSubjectModel.all().size();
+		return UserModel.all().size();
 	}
 
 	@Override
 	public void delete(long id) 
 	{
-		AuthSubjectModel t = AuthSubjectModel.find.byId(id);
+		UserModel t = UserModel.find.byId(id);
 		t.delete();
 	}
 
-	//AuthSubject
+	//User
 	//create model, set entity, and call all setters
-	public static AuthSubjectModel createModelFromEntity(AuthSubject entity)
+	public static UserModel createModelFromEntity(User entity)
 	{
 		if (entity == null)
 		{
 			return null;
 		}
-		AuthSubjectModel t = new AuthSubjectModel();
+		UserModel t = new UserModel();
 		entity.cc = t;
 		t.entity = entity;
 		touchAll(t, entity);
 		return t;
 	}
 	//create entity, set m.cc and t.entity, copy all fields from model to entity
-	public static AuthSubject createEntityFromModel(AuthSubjectModel t)
+	public static User createEntityFromModel(UserModel t)
 	{
 		if (t == null)
 		{
@@ -103,19 +103,19 @@ public class AuthSubjectDAO implements IAuthSubjectDAO
 		{
 			return t.entity; //already exists
 		}
-		AuthSubject entity = new AuthSubject();
+		User entity = new User();
 		entity.cc = t;
 		entity.id = (t.getId() == null) ? 0 : t.getId();		
 		t.entity = entity;
 		touchAll(entity, t);
 		return entity;
 	}
-	public static List<AuthSubject> createEntityFromModel(List<AuthSubjectModel> L)
+	public static List<User> createEntityFromModel(List<UserModel> L)
 	{
-		ArrayList<AuthSubject> entityL = new ArrayList<AuthSubject>();
-		for(AuthSubjectModel t : L)
+		ArrayList<User> entityL = new ArrayList<User>();
+		for(UserModel t : L)
 		{
-			AuthSubject entity = createEntityFromModel(t);
+			User entity = createEntityFromModel(t);
 			if (entity != null) //why??!!
 			{
 				entityL.add(entity);
@@ -128,15 +128,15 @@ public class AuthSubjectDAO implements IAuthSubjectDAO
 	@Override
 	public void updateFrom(IFormBinder binder) 
 	{
-		AuthSubjectModel model = (AuthSubjectModel) binder.getRawObject();
+		UserModel model = (UserModel) binder.getRawObject();
 		model.update();
 	}
 
 
 	@Override
-	public void update(AuthSubject entity) 
+	public void update(User entity) 
 	{
-		AuthSubjectModel t = (AuthSubjectModel)entity.cc; 
+		UserModel t = (UserModel)entity.cc; 
 		if (t == null) //not yet known by db? (newly created)
 		{
 			t.entity = null; //throw exception
@@ -148,26 +148,26 @@ public class AuthSubjectDAO implements IAuthSubjectDAO
 		t.update();
 	}
 
-       protected static void touchAll(AuthSubjectModel t, AuthSubject entity)
+       protected static void touchAll(UserModel t, User entity)
 {
 	t.setId(entity.id);
 	t.setName(entity.name);
 }
 
-protected static void touchAll(AuthSubject entity, AuthSubjectModel t)
+protected static void touchAll(User entity, UserModel t)
 {
 	entity.name = t.getName();
 }
 
     @Override
-    public AuthSubject find_by_name(String val) 
+    public User find_by_name(String val) 
     {
-      AuthSubjectModel model = AuthSubjectModel.find.where().eq("name", val).findUnique();
+      UserModel model = UserModel.find.where().eq("name", val).findUnique();
 	  if (model == null)
 	  {
 		return null;
 	  }
-	  AuthSubject entity = createEntityFromModel(model);
+	  User entity = createEntityFromModel(model);
 	  return entity;
     }
 
