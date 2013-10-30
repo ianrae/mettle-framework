@@ -34,14 +34,14 @@ public class Initializer
 	
 	public static void loadSeedData(SfxContext ctx)
 	{
-//		String json = ResourceReader.readSeedFile("json-user1.txt");
-//		EntityLoader loader = new EntityLoader(ctx);
-//		try {
-//			loader.loadUser(json);
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		String json = ResourceReader.readSeedFile("json1.txt");
+		EntityLoader loader = new EntityLoader(ctx);
+		try {
+			loader.loadAll(json);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public static IDAO getDAO(Class clazz)
