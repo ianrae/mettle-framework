@@ -28,6 +28,12 @@ create table auth_ticket_model (
   constraint pk_auth_ticket_model primary key (id))
 ;
 
+create table blog_model (
+  id                        bigint not null,
+  name                      varchar(255),
+  constraint pk_blog_model primary key (id))
+;
+
 create table ticket_model (
   id                        bigint not null,
   constraint pk_ticket_model primary key (id))
@@ -46,6 +52,8 @@ create sequence auth_rule_model_seq;
 create sequence auth_subject_model_seq;
 
 create sequence auth_ticket_model_seq;
+
+create sequence blog_model_seq;
 
 create sequence ticket_model_seq;
 
@@ -72,6 +80,8 @@ drop table if exists auth_subject_model;
 
 drop table if exists auth_ticket_model;
 
+drop table if exists blog_model;
+
 drop table if exists ticket_model;
 
 drop table if exists user_model;
@@ -85,6 +95,8 @@ drop sequence if exists auth_rule_model_seq;
 drop sequence if exists auth_subject_model_seq;
 
 drop sequence if exists auth_ticket_model_seq;
+
+drop sequence if exists blog_model_seq;
 
 drop sequence if exists ticket_model_seq;
 

@@ -1,0 +1,38 @@
+@(entities: List[mef.entities.Blog])
+
+@import helper._
+
+
+
+@main("Blog list") {
+
+ @if(flash.containsKey("success")) {
+        <div 
+        <strong>Done!</strong> @flash.get("success")
+        </div>
+    }  else {
+    <div> no flash </div>
+    } 
+
+    <h1>@entities.size() Blog(s). </h1>
+
+    <ul>
+        @for(cc <- entities) {
+            <li>
+				<div>
+                @cc.name  @cc.id   
+                </div>
+				<br/>
+
+            </li>
+        }
+    </ul>
+
+        <br/>
+
+
+
+
+
+
+}

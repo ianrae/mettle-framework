@@ -58,6 +58,48 @@ public class DaoJsonLoader_GEN extends BaseDaoJsonLoader
 		}
 		return null;
 	}
+	public Blog readBlog(JsonNode node)
+	{
+		Blog obj = new Blog();
+		JsonNode jj = node.get("id");
+		obj.id = jj.asLong();
+
+				jj = node.get("name");
+				obj.name = jj.getTextValue();
+
+
+
+		return obj;
+	}
+	public List<Blog> loadBlogs(JsonNode rootNode) 
+	{
+		List<Blog> phoneL = new ArrayList<Blog>();
+
+    	JsonNode msgNode = rootNode.path("Blog");
+		Iterator<JsonNode> ite = msgNode.getElements();
+
+		int i = 0;
+		while (ite.hasNext()) {
+			JsonNode temp = ite.next();
+			Blog ph = readBlog(temp);
+
+			phoneL.add(ph);
+			i++;
+		}    	
+
+		return phoneL;
+	}
+	protected Blog findBlogWithId(long id, List<Blog> phoneL) 
+	{
+		for (Blog ph : phoneL)
+		{
+			if (ph.id == id)
+			{
+				return ph;
+			}
+		}
+		return null;
+	}
 	public AuthSubject readAuthSubject(JsonNode node)
 	{
 		AuthSubject obj = new AuthSubject();

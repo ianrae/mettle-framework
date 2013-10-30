@@ -29,6 +29,17 @@ else
 	L.add(dal);
 }	if (createMocks)
 {
+	IBlogDAO dal = new MockBlogDAO();
+	ctx.getServiceLocator().registerSingleton(IBlogDAO.class, dal);
+	L.add(dal);
+}
+else
+{
+	IBlogDAO dal = new BlogDAO();
+	ctx.getServiceLocator().registerSingleton(IBlogDAO.class, dal);
+	L.add(dal);
+}	if (createMocks)
+{
 	IAuthSubjectDAO dal = new MockAuthSubjectDAO();
 	ctx.getServiceLocator().registerSingleton(IAuthSubjectDAO.class, dal);
 	L.add(dal);
