@@ -26,7 +26,7 @@ public class RoleTests extends BaseTest
 	public interface IAuthorizer
 	{
 		void init(IAuthSubjectDAO userDao, IAuthRoleDAO roleDao, IAuthTicketDAO ticketDao, IAuthRuleDAO ruleDao);
-		boolean isAuth(AuthSubject u, AuthRole role, AuthTicket ticket);
+		boolean isAuth(AuthSubject subj, AuthRole role, AuthTicket ticket);
 	}
 	
 	public static class MyAuthorizer extends SfxBaseObj implements IAuthorizer
@@ -34,7 +34,7 @@ public class RoleTests extends BaseTest
 		private IAuthRoleDAO _roleDao;
 		private IAuthTicketDAO _ticketDao;
 		private IAuthRuleDAO _ruleDao;
-		private IAuthSubjectDAO _userDao;
+		private IAuthSubjectDAO _subjectDao;
 		
 		public MyAuthorizer(SfxContext ctx)
 		{
@@ -42,17 +42,17 @@ public class RoleTests extends BaseTest
 		}
 		
 		@Override
-		public boolean isAuth(AuthSubject u, AuthRole role, AuthTicket ticket) 
+		public boolean isAuth(AuthSubject subj, AuthRole role, AuthTicket ticket) 
 		{
-			AuthRule rule = _ruleDao.find_by_user_and_role_and_ticket(u, role, ticket);
+			AuthRule rule = _ruleDao.find_by_subject_and_role_and_ticket(subj, role, ticket);
 			return (rule != null);
 		}
 
 		@Override
-		public void init(IAuthSubjectDAO userDao, IAuthRoleDAO roleDao,
+		public void init(IAuthSubjectDAO subjectDao, IAuthRoleDAO roleDao,
 				IAuthTicketDAO ticketDao, IAuthRuleDAO ruleDao) 
 		{
-			this._userDao = userDao;
+			this._subjectDao = subjectDao;
 			this._roleDao = roleDao;
 			this._ticketDao = ticketDao;
 			this._ruleDao = ruleDao;
@@ -78,26 +78,26 @@ public class RoleTests extends BaseTest
 	{
 		init();
 		buildRoles();
-		buildUsers();
+		buildSubjects();
 		buildTickets();
 		AuthRole role = _roleDao.find_by_name("Viewer");
-		AuthSubject u = _userDao.find_by_name("alice");
+		AuthSubject subj = _userDao.find_by_name("alice");
 		AuthTicket t = _ticketDao.findById(1L);
 		assertNotNull(t);
 		
-		AuthRule rule = new AuthRule(u, role, t);
+		AuthRule rule = new AuthRule(subj, role, t);
 		_ruleDao.save(rule);
 		
 		MyAuthorizer auth = createAuthorizer();
 		assertFalse(auth.isAuth(null, null, null));
 
-		assertTrue(auth.isAuth(u, role, t));
+		assertTrue(auth.isAuth(subj, role, t));
 		
-		AuthSubject u2 = _userDao.find_by_name("bob");
-		assertFalse(auth.isAuth(u2, role, t));
+		AuthSubject subj2 = _userDao.find_by_name("bob");
+		assertFalse(auth.isAuth(subj2, role, t));
 		
 		AuthTicket t2 = _ticketDao.findById(2L);
-		assertFalse(auth.isAuth(u, role, t2));
+		assertFalse(auth.isAuth(subj, role, t2));
 		
 		
 	}
@@ -107,7 +107,7 @@ public class RoleTests extends BaseTest
 	{
 		init();
 		buildRoles();
-		buildUsers();
+		buildSubjects();
 		buildTickets();
 		AuthRole role = _roleDao.find_by_name("Viewer");
 		AuthTicket t = _ticketDao.findById(1L);
@@ -123,8 +123,8 @@ public class RoleTests extends BaseTest
 		assertTrue(auth.isAuth(null, role, t));
 		assertFalse(auth.isAuth(null, role, null));
 		
-		AuthSubject u2 = _userDao.find_by_name("bob");
-		assertFalse(auth.isAuth(u2, role, t));
+		AuthSubject subj2 = _userDao.find_by_name("bob");
+		assertFalse(auth.isAuth(subj2, role, t));
 		
 	}
 	
@@ -139,12 +139,12 @@ public class RoleTests extends BaseTest
 		assertEquals(2, _roleDao.size());
 	}
 	
-	private void buildUsers()
+	private void buildSubjects()
 	{
-		AuthSubject u = new AuthSubject("alice");
-		_userDao.save(u);
-		u = new AuthSubject("bob");
-		_userDao.save(u);
+		AuthSubject subj = new AuthSubject("alice");
+		_userDao.save(subj);
+		subj = new AuthSubject("bob");
+		_userDao.save(subj);
 		
 		assertEquals(2, _userDao.size());
 	}

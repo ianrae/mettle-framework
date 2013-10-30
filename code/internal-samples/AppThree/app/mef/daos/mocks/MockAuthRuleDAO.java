@@ -19,10 +19,10 @@ public class MockAuthRuleDAO extends MockAuthRuleDAO_GEN
 
 
 	//method
-public AuthRule find_by_user_and_role_and_ticket(AuthSubject u, AuthRole r, AuthTicket t)
+public AuthRule find_by_subject_and_role_and_ticket(AuthSubject subj, AuthRole r, AuthTicket t)
 {
 	List<AuthRule> L = this.all();
-	L = this._entityDB.findMatchesEntity(L, "user", u);
+	L = this._entityDB.findMatchesEntity(L, "subject", subj);
 	L = this._entityDB.findMatchesEntity(L, "role", r);
 	L = this._entityDB.findMatchesEntity(L, "ticket", t);
 	
