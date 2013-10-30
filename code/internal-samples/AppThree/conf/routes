@@ -8,6 +8,9 @@ GET     /                           controllers.Application.index()
 # Users
 GET     /users                  controllers.UserController.index()
 
+# Blog
+GET     /blogs                  controllers.BlogController.index()
+
 # Error
 GET 	/logout                 controllers.ErrorController.logout()
 
