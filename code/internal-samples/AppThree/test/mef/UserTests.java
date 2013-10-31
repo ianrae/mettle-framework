@@ -5,10 +5,12 @@ import static org.junit.Assert.assertNotNull;
 import mef.core.Initializer;
 import mef.daos.IAuthRoleDAO;
 import mef.daos.IAuthRuleDAO;
+import mef.daos.IAuthSubjectDAO;
 import mef.daos.IAuthTicketDAO;
 import mef.daos.IUserDAO;
 import mef.daos.mocks.MockAuthRoleDAO;
 import mef.daos.mocks.MockAuthRuleDAO;
+import mef.daos.mocks.MockAuthSubjectDAO;
 import mef.daos.mocks.MockAuthTicketDAO;
 import mef.daos.mocks.MockUserDAO;
 import mef.entities.AuthRule;
@@ -33,6 +35,8 @@ public class UserTests extends BaseTest
 		
 		assertEquals(1, _roleDao.size());
 		assertEquals(1, _ruleDao.size());
+		assertEquals(1, _subjectDao.size());
+		assertEquals("Admin", _subjectDao.all().get(0).name);
 		
 		AuthRule rule = _ruleDao.all().get(0);
 		assertEquals(null, rule.subject);
@@ -46,6 +50,7 @@ public class UserTests extends BaseTest
 	private MockAuthTicketDAO _ticketDao;
 	private MockAuthRoleDAO _roleDao;
 	private MockAuthRuleDAO _ruleDao;
+	private MockAuthSubjectDAO _subjectDao;
 	
 	
 	@Before
@@ -56,6 +61,7 @@ public class UserTests extends BaseTest
 		_ticketDao = (MockAuthTicketDAO) Initializer.getDAO(IAuthTicketDAO.class);
 		_roleDao = (MockAuthRoleDAO) Initializer.getDAO(IAuthRoleDAO.class);
 		_ruleDao = (MockAuthRuleDAO) Initializer.getDAO(IAuthRuleDAO.class);
+		_subjectDao = (MockAuthSubjectDAO) Initializer.getDAO(IAuthSubjectDAO.class);
 	}
 	
 

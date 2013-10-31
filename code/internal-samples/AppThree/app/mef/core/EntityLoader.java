@@ -6,10 +6,12 @@ import java.util.Set;
 
 import mef.daos.IAuthRoleDAO;
 import mef.daos.IAuthRuleDAO;
+import mef.daos.IAuthSubjectDAO;
 import mef.daos.IAuthTicketDAO;
 import mef.daos.IUserDAO;
 import mef.entities.AuthRole;
 import mef.entities.AuthRule;
+import mef.entities.AuthSubject;
 import mef.entities.AuthTicket;
 import mef.entities.User;
 import mef.gen.EntityLoaderSaver_GEN;
@@ -26,6 +28,7 @@ public class EntityLoader extends SfxBaseObj
 	private IAuthTicketDAO ticketDal;
 	private IAuthRoleDAO roleDal;
 	private IAuthRuleDAO ruleDal;
+	private IAuthSubjectDAO subjectDal;
 	
 	public EntityLoader(SfxContext ctx)
 	{
@@ -34,6 +37,7 @@ public class EntityLoader extends SfxBaseObj
 		ticketDal = (IAuthTicketDAO) Initializer.getDAO(IAuthTicketDAO.class);
 		roleDal = (IAuthRoleDAO) Initializer.getDAO(IAuthRoleDAO.class);
 		ruleDal = (IAuthRuleDAO) Initializer.getDAO(IAuthRuleDAO.class);
+		subjectDal = (IAuthSubjectDAO) Initializer.getDAO(IAuthSubjectDAO.class);
 	}
 	
 	public void loadAll(String json) throws Exception
@@ -57,6 +61,9 @@ public class EntityLoader extends SfxBaseObj
     	List<AuthRole> roleL = loader.loadAuthRoles(rootNode);
     	saveAuthRoles(roleL, map);
 
+    	List<AuthSubject> subjectL = loader.loadAuthSubjects(rootNode);
+    	saveAuthSubjects(subjectL, map);
+    	
     	List<AuthRule> ruleL = loader.loadAuthRules(rootNode);
     	saveAuthRules(ruleL, map);
 	}
@@ -69,6 +76,16 @@ public class EntityLoader extends SfxBaseObj
     		String key = makeKey(ph, ph.id);
     		User existing = userDal.find_by_name(ph.name); //use seedWith field
     		long id = EntityLoaderSaver_GEN.saveOrUpdate(ph, existing, userDal);
+    		map.put(key, id);
+    	}
+	}
+	private void saveAuthSubjects(List<AuthSubject> phoneL, HashMap<String, Long> map) 
+	{
+    	for(AuthSubject ph : phoneL)
+    	{
+    		String key = makeKey(ph, ph.id);
+    		AuthSubject existing = subjectDal.find_by_name(ph.name); //use seedWith field
+    		long id = EntityLoaderSaver_GEN.saveOrUpdate(ph, existing, subjectDal);
     		map.put(key, id);
     	}
 	}

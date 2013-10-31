@@ -13,6 +13,12 @@
 	
 	],
 	
+	"AuthSubject":
+	[
+	{ "id": "0", "name": "Admin"  }
+	
+	],
+	
 	"AuthRole":
 	[
     { "id": "1", "name": "Full"  }
