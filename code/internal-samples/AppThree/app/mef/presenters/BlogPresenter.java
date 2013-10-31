@@ -21,6 +21,7 @@ import org.mef.framework.replies.Reply;
 import org.mef.framework.sfx.SfxBaseObj;
 import org.mef.framework.sfx.SfxContext;
 
+import mef.core.DaoFinder;
 import mef.core.IAuthorizer;
 import mef.core.Initializer;
 import mef.daos.IAuthRoleDAO;
@@ -67,7 +68,7 @@ public class BlogPresenter extends Presenter
 	{
 		IAuthorizer auth = (IAuthorizer) this.getInstance(IAuthorizer.class);
 		
-		IAuthRoleDAO roleDAO = (IAuthRoleDAO) Initializer.getDAO(IAuthRoleDAO.class);
+		IAuthRoleDAO roleDAO = DaoFinder.getAuthRoleDao();
 		IAuthSubjectDAO subjectDAO = (IAuthSubjectDAO) Initializer.getDAO(IAuthSubjectDAO.class);
 		AuthRole role = roleDAO.find_by_name(roleName);
 		AuthSubject subj = subjectDAO.all().get(0);
