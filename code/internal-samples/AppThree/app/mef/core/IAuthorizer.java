@@ -11,7 +11,8 @@ import mef.entities.AuthTicket;
 public interface IAuthorizer
 {
 	void init(IAuthSubjectDAO userDao, IAuthRoleDAO roleDao, IAuthTicketDAO ticketDao, IAuthRuleDAO ruleDao);
-	boolean isAuth(AuthSubject subj, AuthRole role, AuthTicket ticket);
+	boolean isAuthEx(AuthSubject subj, AuthRole role, AuthTicket ticket);
 	
 	AuthSubject findSubject(String identityId);
+	boolean isAuth(AuthSubject subj, String roleName, AuthTicket ticket);
 }

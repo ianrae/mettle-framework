@@ -53,13 +53,13 @@ public class RoleTests extends BaseTest
 		MyAuthorizer auth = createAuthorizer();
 		assertFalse(auth.isAuth(null, null, null));
 
-		assertTrue(auth.isAuth(subj, role, t));
+		assertTrue(auth.isAuthEx(subj, role, t));
 		
 		AuthSubject subj2 = _userDao.find_by_name("bob");
-		assertFalse(auth.isAuth(subj2, role, t));
+		assertFalse(auth.isAuthEx(subj2, role, t));
 		
 		AuthTicket t2 = _ticketDao.findById(2L);
-		assertFalse(auth.isAuth(subj, role, t2));
+		assertFalse(auth.isAuthEx(subj, role, t2));
 		
 		
 	}
@@ -82,11 +82,11 @@ public class RoleTests extends BaseTest
 		MyAuthorizer auth = createAuthorizer();
 		assertFalse(auth.isAuth(null, null, null));
 
-		assertTrue(auth.isAuth(null, role, t));
-		assertFalse(auth.isAuth(null, role, null));
+		assertTrue(auth.isAuthEx(null, role, t));
+		assertFalse(auth.isAuthEx(null, role, null));
 		
 		AuthSubject subj2 = _userDao.find_by_name("bob");
-		assertFalse(auth.isAuth(subj2, role, t));
+		assertFalse(auth.isAuthEx(subj2, role, t));
 		
 	}
 	

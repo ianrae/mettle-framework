@@ -68,10 +68,6 @@ public class BlogPresenter extends Presenter
 	{
 		IAuthorizer auth = (IAuthorizer) this.getInstance(IAuthorizer.class);
 		
-		IAuthRoleDAO roleDAO = DaoFinder.getAuthRoleDao();
-		IAuthSubjectDAO subjectDAO = DaoFinder.getAuthSubjectDao();
-		AuthRole role = roleDAO.find_by_name(roleName);
-		
 		if (cmd.identityId == null || cmd.identityId.isEmpty())
 		{
 			_reply.setDestination(Reply.FOWARD_NOT_AUTHENTICATED);
@@ -79,7 +75,7 @@ public class BlogPresenter extends Presenter
 		}
 		
 		AuthSubject subj = auth.findSubject(cmd.identityId);
-		boolean b = auth.isAuth(subj, role, null);
+		boolean b = auth.isAuth(subj, roleName, null);
 		if (! b)
 		{
 			_reply.setDestination(Reply.FOWARD_NOT_AUTHORIZED);
