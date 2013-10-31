@@ -5,8 +5,6 @@ package mef.gen;
 import java.util.ArrayList;
 import java.util.List;
 import org.mef.framework.dao.IDAO;
-
-import mef.core.Initializer;
 import mef.daos.*;
 import mef.daos.mocks.*;
 import boundaries.daos.*;
@@ -87,5 +85,4 @@ else
 }	
 	return L;
 }
-
 }

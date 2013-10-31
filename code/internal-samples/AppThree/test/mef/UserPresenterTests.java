@@ -18,6 +18,7 @@ import org.mef.framework.presenters.Presenter;
 import org.mef.framework.replies.Reply;
 import org.mef.framework.sfx.SfxContext;
 
+import mef.core.DaoFinder;
 import mef.core.Initializer;
 import mef.daos.IAuthSubjectDAO;
 import mef.daos.mocks.MockAuthSubjectDAO;
@@ -271,7 +272,7 @@ public class UserPresenterTests extends BasePresenterTest
 
 	private MockAuthSubjectDAO getDAO()
 	{
-		MockAuthSubjectDAO dal = (MockAuthSubjectDAO) Initializer.getDAO(IAuthSubjectDAO.class); 
+		MockAuthSubjectDAO dal = (MockAuthSubjectDAO)DaoFinder.getAuthSubjectDao(); 
 		return dal;
 	}
 

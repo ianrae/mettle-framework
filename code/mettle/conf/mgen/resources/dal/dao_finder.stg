@@ -1,0 +1,38 @@
+header(package) ::= <<
+//THIS FILE HAS BEEN AUTO-GENERATED. DO NOT MODIFY.
+
+package <package>;
+
+import java.util.ArrayList;
+import java.util.List;
+import org.mef.framework.dao.IDAO;
+import mef.daos.*;
+import mef.daos.mocks.*;
+import boundaries.daos.*;
+import org.mef.framework.sfx.SfxContext;
+import java.util.Date;
+
+
+>>
+
+
+classdecl(type, name) ::= <<
+public class <name>  
+{
+    
+>>
+
+adddal(type, name) ::= <<
+
+	public static <type> <name>()
+	{
+		<type> dao = (<type>) Initializer.getDAO(<type>.class);
+		return dao;
+	}
+
+>>
+
+endclassdecl() ::= <<
+}
+>>
+

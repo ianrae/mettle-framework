@@ -2,6 +2,7 @@ package mef;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import mef.core.DaoFinder;
 import mef.core.Initializer;
 import mef.daos.IAuthRoleDAO;
 import mef.daos.IAuthRuleDAO;
@@ -57,11 +58,12 @@ public class UserTests extends BaseTest
 	public void init()
 	{
 		super.init();
-		_userDao = (MockUserDAO) Initializer.getDAO(IUserDAO.class);
-		_ticketDao = (MockAuthTicketDAO) Initializer.getDAO(IAuthTicketDAO.class);
-		_roleDao = (MockAuthRoleDAO) Initializer.getDAO(IAuthRoleDAO.class);
-		_ruleDao = (MockAuthRuleDAO) Initializer.getDAO(IAuthRuleDAO.class);
-		_subjectDao = (MockAuthSubjectDAO) Initializer.getDAO(IAuthSubjectDAO.class);
+		_roleDao = (MockAuthRoleDAO) DaoFinder.getAuthRoleDao();
+		_subjectDao = (MockAuthSubjectDAO) DaoFinder.getAuthSubjectDao();
+		
+		_ticketDao = (MockAuthTicketDAO) DaoFinder.getAuthTicketDao();
+		_ruleDao = (MockAuthRuleDAO) DaoFinder.getAuthRuleDao();
+		_userDao = (MockUserDAO) DaoFinder.getUserDao();
 	}
 	
 

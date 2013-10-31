@@ -69,7 +69,7 @@ public class BlogPresenter extends Presenter
 		IAuthorizer auth = (IAuthorizer) this.getInstance(IAuthorizer.class);
 		
 		IAuthRoleDAO roleDAO = DaoFinder.getAuthRoleDao();
-		IAuthSubjectDAO subjectDAO = (IAuthSubjectDAO) Initializer.getDAO(IAuthSubjectDAO.class);
+		IAuthSubjectDAO subjectDAO = DaoFinder.getAuthSubjectDao();
 		AuthRole role = roleDAO.find_by_name(roleName);
 		AuthSubject subj = subjectDAO.all().get(0);
 		return auth.isAuth(subj, role, null);

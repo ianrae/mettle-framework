@@ -7,6 +7,7 @@ import org.mef.tools.mgen.codegen.generators.BoundaryCodeGen;
 import org.mef.tools.mgen.codegen.generators.CodeGenBase;
 import org.mef.tools.mgen.codegen.generators.DAOIntefaceCodeGen;
 import org.mef.tools.mgen.codegen.generators.DaoEntityLoaderCodeGen;
+import org.mef.tools.mgen.codegen.generators.DaoFinderCodeGen;
 import org.mef.tools.mgen.codegen.generators.EntityCodeGen;
 import org.mef.tools.mgen.codegen.generators.EntityLoaderSaverCodeGen;
 import org.mef.tools.mgen.codegen.generators.FormBinderCodeGen;
@@ -73,10 +74,20 @@ public class CodeGenTests extends BaseCodeGenTest
 	public void testKnownDALS() throws Exception
 	{
 		log("--testKnownDALS--");
-		String path = this.getTemplateFile("dao_all_known.stg");
-		String packageName = "mef.gen";
+//		String path = this.getTemplateFile("dao_all_known.stg");
+//		String packageName = "mef.gen";
 		KnownDAOsCodeGen gen = new KnownDAOsCodeGen(_ctx);
 		genAndLog(gen, "dao_all_known.stg", "mef.gen");
+	}
+	
+	@Test
+	public void testDaoFinder() throws Exception
+	{
+		log("--testDaoFinder--");
+//		String path = this.getTemplateFile("dao_finder.stg");
+//		String packageName = "mef.core";
+		DaoFinderCodeGen gen = new DaoFinderCodeGen(_ctx);
+		genAndLog(gen, "dao_finder.stg", "mef.gen");
 	}
 	
 	@Test

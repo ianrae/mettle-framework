@@ -33,11 +33,11 @@ public class EntityLoader extends SfxBaseObj
 	public EntityLoader(SfxContext ctx)
 	{
 		super(ctx);
-		userDal = (IUserDAO) Initializer.getDAO(IUserDAO.class); 
-		ticketDal = (IAuthTicketDAO) Initializer.getDAO(IAuthTicketDAO.class);
-		roleDal = (IAuthRoleDAO) Initializer.getDAO(IAuthRoleDAO.class);
-		ruleDal = (IAuthRuleDAO) Initializer.getDAO(IAuthRuleDAO.class);
-		subjectDal = (IAuthSubjectDAO) Initializer.getDAO(IAuthSubjectDAO.class);
+		userDal = DaoFinder.getUserDao();
+		ticketDal = DaoFinder.getAuthTicketDao();
+		roleDal = DaoFinder.getAuthRoleDao();
+		ruleDal = DaoFinder.getAuthRuleDao();
+		subjectDal = DaoFinder.getAuthSubjectDao();
 	}
 	
 	public void loadAll(String json) throws Exception

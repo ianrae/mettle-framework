@@ -12,6 +12,7 @@ import org.mef.framework.sfx.SfxTextWriter;
 import org.mef.tools.mgen.codegen.generators.CodeGenBase;
 import org.mef.tools.mgen.codegen.generators.DAOIntefaceCodeGen;
 import org.mef.tools.mgen.codegen.generators.DaoEntityLoaderCodeGen;
+import org.mef.tools.mgen.codegen.generators.DaoFinderCodeGen;
 import org.mef.tools.mgen.codegen.generators.EntityCodeGen;
 import org.mef.tools.mgen.codegen.generators.EntityLoaderSaverCodeGen;
 import org.mef.tools.mgen.codegen.generators.KnownDAOsCodeGen;
@@ -169,6 +170,16 @@ public class DalCodeGenerator extends CodeGenerator
 		KnownDAOsCodeGen gen5 = new KnownDAOsCodeGen(_ctx);
 		gen5.init(path, "mef.gen");
 		boolean b = generateOneFile(def, gen5, "mef\\gen");
+		if (!b )
+		{
+			return false; //!!
+		}
+
+		baseDir = "/mgen/resources/dal/";
+		path = getResourceOrFilePath(baseDir, "dao_finder.stg");
+		DaoFinderCodeGen gen6 = new DaoFinderCodeGen(_ctx);
+		gen6.init(path, "mef.core");
+		b = generateOneFile(def, gen6, "app\\mef\\core");
 		if (!b )
 		{
 			return false; //!!

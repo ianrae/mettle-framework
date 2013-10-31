@@ -36,10 +36,10 @@ public class Initializer
 		theCtx = ctx;
 		
 		IAuthorizer auth = new MyAuthorizer(ctx);
-		auth.init((IAuthSubjectDAO)getDAO(IAuthSubjectDAO.class), 
-				(IAuthRoleDAO)getDAO(IAuthRoleDAO.class), 
-				(IAuthTicketDAO)getDAO(IAuthTicketDAO.class), 
-				(IAuthRuleDAO)getDAO(IAuthRuleDAO.class));
+		auth.init(DaoFinder.getAuthSubjectDao(), 
+				DaoFinder.getAuthRoleDao(), 
+				DaoFinder.getAuthTicketDao(), 
+				DaoFinder.getAuthRuleDao());
 		ctx.getServiceLocator().registerSingleton(IAuthorizer.class, auth);
 		
 		return ctx;

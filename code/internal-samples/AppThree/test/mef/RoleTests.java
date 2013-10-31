@@ -2,6 +2,7 @@ package mef;
 
 import static org.junit.Assert.*;
 
+import mef.core.DaoFinder;
 import mef.core.Initializer;
 import mef.core.MyAuthorizer;
 import mef.daos.IAuthRuleDAO;
@@ -128,24 +129,24 @@ public class RoleTests extends BaseTest
 	{
 		super.init();
 		_roleDao = getDAO();
-		_ticketDao = (MockAuthTicketDAO) Initializer.getDAO(IAuthTicketDAO.class);
-		_ruleDao = (MockAuthRuleDAO) Initializer.getDAO(IAuthRuleDAO.class);
-		_userDao = (MockAuthSubjectDAO) Initializer.getDAO(IAuthSubjectDAO.class);
+		_ticketDao = (MockAuthTicketDAO) DaoFinder.getAuthTicketDao();
+		_ruleDao = (MockAuthRuleDAO) DaoFinder.getAuthRuleDao();
+		_userDao = (MockAuthSubjectDAO) DaoFinder.getAuthSubjectDao();
 	}
 	
 	private MockAuthRoleDAO getDAO()
 	{
-		MockAuthRoleDAO dal = (MockAuthRoleDAO) Initializer.getDAO(IAuthRoleDAO.class); 
+		MockAuthRoleDAO dal = (MockAuthRoleDAO) DaoFinder.getAuthRoleDao(); 
 		return dal;
 	}
 	
 	private MyAuthorizer createAuthorizer()
 	{
 		MyAuthorizer auth = new MyAuthorizer(_ctx);
-		auth.init((IAuthSubjectDAO)Initializer.getDAO(IAuthSubjectDAO.class), 
-				(IAuthRoleDAO)Initializer.getDAO(IAuthRoleDAO.class),
-				(IAuthTicketDAO) Initializer.getDAO(IAuthTicketDAO.class),
-				(IAuthRuleDAO) Initializer.getDAO(IAuthRuleDAO.class));
+		auth.init(DaoFinder.getAuthSubjectDao(), 
+				DaoFinder.getAuthRoleDao(), 
+				DaoFinder.getAuthTicketDao(), 
+				DaoFinder.getAuthRuleDao());
 		
 		return auth;
 	}	

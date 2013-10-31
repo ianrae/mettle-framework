@@ -18,6 +18,7 @@ import org.mef.framework.presenters.Presenter;
 import org.mef.framework.replies.Reply;
 import org.mef.framework.sfx.SfxContext;
 
+import mef.core.DaoFinder;
 import mef.core.Initializer;
 import mef.daos.IBlogDAO;
 import mef.daos.mocks.MockBlogDAO;
@@ -273,7 +274,7 @@ public class BlogPresenterTests extends BasePresenterTest
 
 	private MockBlogDAO getDAO()
 	{
-		MockBlogDAO dal = (MockBlogDAO) Initializer.getDAO(IBlogDAO.class); 
+		MockBlogDAO dal = (MockBlogDAO) DaoFinder.getBlogDao(); 
 		return dal;
 	}
 
