@@ -21,7 +21,13 @@ import org.mef.framework.replies.Reply;
 import org.mef.framework.sfx.SfxBaseObj;
 import org.mef.framework.sfx.SfxContext;
 
+import mef.core.IAuthorizer;
+import mef.core.Initializer;
+import mef.daos.IAuthRoleDAO;
+import mef.daos.IAuthTicketDAO;
 import mef.daos.IBlogDAO;
+import mef.entities.AuthRole;
+import mef.entities.AuthTicket;
 import mef.entities.Blog;
 import mef.presenters.replies.BlogReply;
 public class BlogPresenter extends Presenter
@@ -43,10 +49,27 @@ public class BlogPresenter extends Presenter
 
 	public BlogReply onIndexCommand(IndexCommand cmd)
 	{
-		BlogReply reply = createReply(); 
+		BlogReply reply = createReply();
+		if (! isAuth("Full"))
+		{
+			reply.setDestination(99); //!!
+			return reply;
+		}
+		
 		reply.setDestination(Reply.VIEW_INDEX);
 		reply._allL = _dao.all();
 		return reply;
+	}
+	
+	private boolean isAuth(String roleName)
+	{
+		IAuthorizer auth = (IAuthorizer) this.getInstance(IAuthorizer.class);
+		
+		IAuthRoleDAO roleDAO = (IAuthRoleDAO) Initializer.getDAO(IAuthRoleDAO.class);
+		IAuthTicketDAO ticketDAO = (IAuthTicketDAO) Initializer.getDAO(IAuthTicketDAO.class);
+		AuthRole role = roleDAO.find_by_name(roleName);
+		AuthTicket t = ticketDAO.all().get(0);
+		return auth.isAuth(null, role, t);
 	}
 
 	public BlogReply onNewCommand(NewCommand cmd)

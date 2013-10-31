@@ -3,6 +3,7 @@ package mef;
 import static org.junit.Assert.*;
 
 import mef.core.Initializer;
+import mef.core.MyAuthorizer;
 import mef.daos.IAuthRuleDAO;
 import mef.daos.IAuthRoleDAO;
 import mef.daos.IAuthTicketDAO;
@@ -18,49 +19,9 @@ import mef.entities.AuthSubject;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mef.framework.sfx.SfxBaseObj;
-import org.mef.framework.sfx.SfxContext;
 
 public class RoleTests extends BaseTest
 {
-	public interface IAuthorizer
-	{
-		void init(IAuthSubjectDAO userDao, IAuthRoleDAO roleDao, IAuthTicketDAO ticketDao, IAuthRuleDAO ruleDao);
-		boolean isAuth(AuthSubject subj, AuthRole role, AuthTicket ticket);
-	}
-	
-	public static class MyAuthorizer extends SfxBaseObj implements IAuthorizer
-	{
-		private IAuthRoleDAO _roleDao;
-		private IAuthTicketDAO _ticketDao;
-		private IAuthRuleDAO _ruleDao;
-		private IAuthSubjectDAO _subjectDao;
-		
-		public MyAuthorizer(SfxContext ctx)
-		{
-			super(ctx);
-		}
-		
-		@Override
-		public boolean isAuth(AuthSubject subj, AuthRole role, AuthTicket ticket) 
-		{
-			AuthRule rule = _ruleDao.find_by_subject_and_role_and_ticket(subj, role, ticket);
-			return (rule != null);
-		}
-
-		@Override
-		public void init(IAuthSubjectDAO subjectDao, IAuthRoleDAO roleDao,
-				IAuthTicketDAO ticketDao, IAuthRuleDAO ruleDao) 
-		{
-			this._subjectDao = subjectDao;
-			this._roleDao = roleDao;
-			this._ticketDao = ticketDao;
-			this._ruleDao = ruleDao;
-			
-		}
-		
-	}
-
 	@Test
 	public void test() 
 	{

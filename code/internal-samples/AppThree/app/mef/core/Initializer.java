@@ -6,6 +6,11 @@ import org.mef.framework.dao.IDAO;
 import org.mef.framework.sfx.SfxContext;
 import org.mef.framework.utils.ResourceReader;
 
+import mef.daos.IAuthRoleDAO;
+import mef.daos.IAuthRuleDAO;
+import mef.daos.IAuthSubjectDAO;
+import mef.daos.IAuthTicketDAO;
+import mef.daos.IUserDAO;
 import mef.gen.AllKnownDAOs_GEN; //will be undefined until you run Presenter and DAO code-generation
 
 
@@ -29,6 +34,14 @@ public class Initializer
 		AllKnownDAOs_GEN knownDAOs = new AllKnownDAOs_GEN();
 		knownDAOs.registerDAOs(ctx, createMocks);
 		theCtx = ctx;
+		
+		IAuthorizer auth = new MyAuthorizer(ctx);
+		auth.init((IAuthSubjectDAO)getDAO(IAuthSubjectDAO.class), 
+				(IAuthRoleDAO)getDAO(IAuthRoleDAO.class), 
+				(IAuthTicketDAO)getDAO(IAuthTicketDAO.class), 
+				(IAuthRuleDAO)getDAO(IAuthRuleDAO.class));
+		ctx.getServiceLocator().registerSingleton(IAuthorizer.class, auth);
+		
 		return ctx;
 	}
 	

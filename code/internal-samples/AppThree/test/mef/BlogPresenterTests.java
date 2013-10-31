@@ -266,6 +266,8 @@ public class BlogPresenterTests extends BasePresenterTest
 	{
 		super.init();
 		_dao = getDAO();
+		Initializer.loadSeedData(Initializer.theCtx);
+		
 		this._presenter = new BlogPresenter(_ctx);
 	}
 
