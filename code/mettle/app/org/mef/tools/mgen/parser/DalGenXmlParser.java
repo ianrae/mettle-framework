@@ -132,7 +132,7 @@ public class DalGenXmlParser extends SfxBaseObj
 			String s = tmp.getAttribute("what");
 			if (s != null && s.equals(name))
 			{
-				return getBool(tmp, "extend", false);
+				return getBool(tmp, "extend", true); //if a <codegen> node exists its default is true
 			}
 		}
 		

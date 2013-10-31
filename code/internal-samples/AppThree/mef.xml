@@ -7,11 +7,7 @@
 
 	<query>find_by_name</query>
 
-	<codegen what="entity" extend="false" />
-	<codegen what="model" extend="false" />
-	<codegen what="dal_interface" extend="false" />
-	<codegen what="dal_mock" extend="false" />
-	<codegen what="dal_real" extend="false" />
+	<codegen what="presenter" />
 </entity>
 
 <entity name="Blog">
@@ -19,6 +15,7 @@
 	<field>@Required String name</field>
 
 	<query>find_by_name</query>
+	<codegen what="presenter" />
 </entity>
 
 
