@@ -12,4 +12,6 @@ public interface IAuthorizer
 {
 	void init(IAuthSubjectDAO userDao, IAuthRoleDAO roleDao, IAuthTicketDAO ticketDao, IAuthRuleDAO ruleDao);
 	boolean isAuth(AuthSubject subj, AuthRole role, AuthTicket ticket);
+	
+	AuthSubject findSubject(String identityId);
 }

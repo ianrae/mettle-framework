@@ -24,6 +24,7 @@ import mef.daos.IBlogDAO;
 import mef.daos.mocks.MockBlogDAO;
 import mef.entities.Blog;
 import mef.presenters.BlogPresenter;
+import mef.presenters.commands.IndexBlogCommand;
 import mef.presenters.replies.BlogReply;
 import org.mef.framework.test.helpers.MockFormBinder;
 
@@ -43,7 +44,8 @@ public class BlogPresenterTests extends BasePresenterTest
 	@Test
 	public void indexTest() 
 	{
-		BlogReply reply = (BlogReply) _presenter.process(new IndexCommand());
+		IndexBlogCommand cmd = new IndexBlogCommand("Admin");
+		BlogReply reply = (BlogReply) _presenter.process(cmd);
 
 		chkReplySucessful(reply, Reply.VIEW_INDEX, null);
 		chkDalSize(0);
@@ -56,7 +58,8 @@ public class BlogPresenterTests extends BasePresenterTest
 		Blog u = createBlog("bob");
 		_dao.save(u);
 		assertEquals("bob", _dao.all().get(0).name);
-		BlogReply reply = (BlogReply) _presenter.process(new IndexCommand());
+		IndexBlogCommand cmd = new IndexBlogCommand("Admin");
+		BlogReply reply = (BlogReply) _presenter.process(cmd);
 
 		chkReplySucessful(reply, Reply.VIEW_INDEX, null);
 		chkDalSize(1);

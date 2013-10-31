@@ -32,6 +32,7 @@ import mef.entities.AuthRole;
 import mef.entities.AuthSubject;
 import mef.entities.AuthTicket;
 import mef.entities.Blog;
+import mef.presenters.commands.IndexBlogCommand;
 import mef.presenters.replies.BlogReply;
 public class BlogPresenter extends Presenter
 {
@@ -50,12 +51,11 @@ public class BlogPresenter extends Presenter
 		return _reply;
 	}
 
-	public BlogReply onIndexCommand(IndexCommand cmd)
+	public BlogReply onIndexBlogCommand(IndexBlogCommand cmd)
 	{
 		BlogReply reply = createReply();
-		if (! isAuth("Full"))
+		if (! isAuth(cmd, "Full"))
 		{
-			reply.setDestination(99); //!!
 			return reply;
 		}
 		
@@ -64,15 +64,27 @@ public class BlogPresenter extends Presenter
 		return reply;
 	}
 	
-	private boolean isAuth(String roleName)
+	private boolean isAuth(IndexBlogCommand cmd, String roleName)
 	{
 		IAuthorizer auth = (IAuthorizer) this.getInstance(IAuthorizer.class);
 		
 		IAuthRoleDAO roleDAO = DaoFinder.getAuthRoleDao();
 		IAuthSubjectDAO subjectDAO = DaoFinder.getAuthSubjectDao();
 		AuthRole role = roleDAO.find_by_name(roleName);
-		AuthSubject subj = subjectDAO.all().get(0);
-		return auth.isAuth(subj, role, null);
+		
+		if (cmd.identityId == null || cmd.identityId.isEmpty())
+		{
+			_reply.setDestination(Reply.FOWARD_NOT_AUTHENTICATED);
+			return false;
+		}
+		
+		AuthSubject subj = auth.findSubject(cmd.identityId);
+		boolean b = auth.isAuth(subj, role, null);
+		if (! b)
+		{
+			_reply.setDestination(Reply.FOWARD_NOT_AUTHORIZED);
+		}
+		return b;
 	}
 
 	public BlogReply onNewCommand(NewCommand cmd)

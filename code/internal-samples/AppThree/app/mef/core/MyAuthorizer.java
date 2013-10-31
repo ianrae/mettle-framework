@@ -41,5 +41,16 @@ public class MyAuthorizer extends SfxBaseObj implements IAuthorizer
 		this._ruleDao = ruleDao;
 		
 	}
+
+	@Override
+	public AuthSubject findSubject(String identityId) 
+	{
+		if (identityId == null || identityId.isEmpty())
+		{
+			return null;
+		}
+		AuthSubject subject = _subjectDao.find_by_name(identityId);
+		return subject;
+	}
 	
 }

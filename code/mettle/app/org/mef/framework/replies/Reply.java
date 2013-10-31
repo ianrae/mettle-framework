@@ -27,6 +27,8 @@ public class Reply
 	public static final int FORWARD_DELETE = 106;
 	public static final int FORWARD_NOT_FOUND = 107;
 	public static final int FOWARD_ERROR = 108;
+	public static final int FOWARD_NOT_AUTHORIZED = 109;
+	public static final int FOWARD_NOT_AUTHENTICATED = 110;
 	
 	public Reply()
 	{
