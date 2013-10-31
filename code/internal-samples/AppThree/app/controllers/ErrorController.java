@@ -13,6 +13,10 @@ public class ErrorController extends Controller {
         return ok("hello Play!");
     }
 	
+    public static Result showError(String error)
+    {
+    	return ok(views.html.error.render(error));
+    }
 
 	public static Result logout() {
 	return ok(

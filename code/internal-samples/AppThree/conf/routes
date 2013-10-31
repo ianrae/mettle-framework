@@ -13,6 +13,7 @@ GET     /blogs                  controllers.BlogController.index()
 
 # Error
 GET 	/logout                 controllers.ErrorController.logout()
+GET 	/showError                 controllers.ErrorController.showError(msg:String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
