@@ -71,7 +71,10 @@ public class PresenterScaffoldCodeGenerator extends CodeGenerator
 	public boolean generate(int index) throws Exception
 	{
 		EntityDef def = parser._entityL.get(index);
-		
+		if (! def.genPresenter)
+		{
+			return true; //do nothing
+		}
 		
 		String baseDir = "/mgen/resources/presenter/";
 		String path = getResourceOrFilePath(baseDir, "presenter.stg");

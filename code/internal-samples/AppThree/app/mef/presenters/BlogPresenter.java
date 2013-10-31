@@ -54,7 +54,7 @@ public class BlogPresenter extends Presenter
 	public BlogReply onIndexBlogCommand(IndexBlogCommand cmd)
 	{
 		BlogReply reply = createReply();
-		if (! isAuth(cmd, "Full"))
+		if (! userHasRole(cmd, "Full"))
 		{
 			return reply;
 		}
@@ -64,16 +64,15 @@ public class BlogPresenter extends Presenter
 		return reply;
 	}
 	
-	private boolean isAuth(IndexBlogCommand cmd, String roleName)
+	private boolean userHasRole(IndexBlogCommand cmd, String roleName)
 	{
-		IAuthorizer auth = (IAuthorizer) this.getInstance(IAuthorizer.class);
-		
 		if (cmd.identityId == null || cmd.identityId.isEmpty())
 		{
 			_reply.setDestination(Reply.FOWARD_NOT_AUTHENTICATED);
 			return false;
 		}
 		
+		IAuthorizer auth = (IAuthorizer) this.getInstance(IAuthorizer.class);
 		AuthSubject subj = auth.findSubject(cmd.identityId);
 		boolean b = auth.isAuth(subj, roleName, null);
 		if (! b)

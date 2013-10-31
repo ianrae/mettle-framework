@@ -20,6 +20,7 @@
 
 	<codegen what="dal_mock" extend="true" />
 	<codegen what="dal_real" extend="true" />
+	<codegen what="presenter" extend="true" />
 </entity>
 
 </entities>

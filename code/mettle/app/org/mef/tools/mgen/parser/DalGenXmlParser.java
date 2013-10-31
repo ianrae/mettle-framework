@@ -116,6 +116,7 @@ public class DalGenXmlParser extends SfxBaseObj
 		def.extendInterface = getExtend(p, entityEl, "dal_interface");
 		def.extendMock = getExtend(p, entityEl,  "dal_mock");
 		def.extendReal = getExtend(p, entityEl, "dal_real");
+		def.genPresenter = getExtend(p, entityEl, "presenter"); //default is fale
 	}
 	
 	private boolean getExtend(SfxXmlParser p, Element entityEl, String name)

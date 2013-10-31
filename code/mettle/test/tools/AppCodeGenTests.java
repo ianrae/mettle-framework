@@ -52,7 +52,7 @@ public class AppCodeGenTests extends BaseTest
 		boolean b = false;
 //		boolean b = gen.generate(0);
 		b = gen.generate("Company");
-//		b = gen.generate("Computer");
+		b = gen.generate("Computer");
 //		b = gen.generate("Role");
 //		if (b)
 //		{}
