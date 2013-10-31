@@ -39,7 +39,7 @@ public class UserTests extends BaseTest
 		assertEquals("Admin", _subjectDao.all().get(0).name);
 		
 		AuthRule rule = _ruleDao.all().get(0);
-		assertEquals(null, rule.subject);
+		assertEquals("Admin", rule.subject.name);
 		assertEquals("Full", rule.role.name);
 		assertEquals(null, rule.ticket);
 	}

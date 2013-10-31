@@ -123,6 +123,16 @@ public class EntityLoader extends SfxBaseObj
 				}
     		}    		
     		
+    		if (rule.subject != null)
+    		{
+    			long existingId = findIdInMap(rule.subject, rule.subject.id, map);
+				if (existingId != 0L)
+				{
+		    		AuthSubject existing = subjectDal.findById(existingId);
+					rule.subject = existing;
+				}
+    		}    		
+    		
     		String key = makeKey(rule, rule.id);
     		AuthRule existing = null; //computerDal.find_by_name(computer.name); //use seedWith field
     		long id = EntityLoaderSaver_GEN.saveOrUpdate(rule, existing, ruleDal);
