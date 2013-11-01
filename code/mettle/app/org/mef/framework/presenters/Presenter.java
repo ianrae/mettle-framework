@@ -118,6 +118,7 @@ public class Presenter extends SfxBaseObj
 	
 	protected void ensureHasRole(Command cmd, String roleName) throws Exception
 	{
+		ensureIsLoggedIn(cmd);
 		if (! hasRole(cmd, roleName))
 		{
 			throw new NotAuthorizedException();
@@ -125,6 +126,7 @@ public class Presenter extends SfxBaseObj
 	}
 	protected void ensureIsAuth(Command cmd, String roleName, AuthTicket ticket) throws Exception
 	{
+		ensureIsLoggedIn(cmd);
 		if (! isAuthorized(cmd, roleName, ticket))
 		{
 			throw new NotAuthorizedException();
