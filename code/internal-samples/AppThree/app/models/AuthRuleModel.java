@@ -9,6 +9,11 @@ import play.db.ebean.*;
 import play.data.format.*;
 import play.data.validation.Constraints.*;
 import javax.persistence.*;
+
+import org.mef.framework.auth.AuthRule;
+import org.mef.framework.auth.AuthSubject;
+import org.mef.framework.auth.AuthTicket;
+
 import mef.entities.*;
 import boundaries.daos.*;
 import java.util.Date;

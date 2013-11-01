@@ -2,6 +2,8 @@ package mef.core;
 
 import java.util.List;
 import play.Logger;
+
+import org.mef.framework.auth.IAuthorizer;
 import org.mef.framework.dao.IDAO;
 import org.mef.framework.sfx.SfxContext;
 import org.mef.framework.utils.ResourceReader;
@@ -35,7 +37,7 @@ public class Initializer
 		knownDAOs.registerDAOs(ctx, createMocks);
 		theCtx = ctx;
 		
-		IAuthorizer auth = new MyAuthorizer(ctx);
+		MyAuthorizer auth = new MyAuthorizer(ctx);
 		auth.init(DaoFinder.getAuthSubjectDao(), 
 				DaoFinder.getAuthRoleDao(), 
 				DaoFinder.getAuthTicketDao(), 

@@ -7,11 +7,12 @@ import mef.daos.IAuthRoleDAO;
 import mef.daos.IAuthRuleDAO;
 import mef.daos.IAuthSubjectDAO;
 import mef.daos.IAuthTicketDAO;
-import mef.entities.AuthRole;
-import mef.entities.AuthRule;
-import mef.entities.AuthSubject;
-import mef.entities.AuthTicket;
 
+import org.mef.framework.auth.AuthRole;
+import org.mef.framework.auth.AuthRule;
+import org.mef.framework.auth.AuthSubject;
+import org.mef.framework.auth.AuthTicket;
+import org.mef.framework.auth.IAuthorizer;
 import org.mef.framework.sfx.SfxBaseObj;
 import org.mef.framework.sfx.SfxContext;
 
@@ -50,7 +51,6 @@ public class MyAuthorizer extends SfxBaseObj implements IAuthorizer
 		return (rule != null);
 	}
 
-	@Override
 	public void init(IAuthSubjectDAO subjectDao, IAuthRoleDAO roleDao,
 			IAuthTicketDAO ticketDao, IAuthRuleDAO ruleDao) 
 	{

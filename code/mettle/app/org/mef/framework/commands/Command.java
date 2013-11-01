@@ -8,6 +8,7 @@ public class Command
 {
 	private Map<String, String> map;
 	private IFormBinder binder;
+	public String identityId; //some sort of string that SecureSocial sets. null means not authenticated
 
 	public Command()
 	{}

@@ -1,11 +1,10 @@
 //THIS FILE HAS BEEN AUTO-GENERATED. DO NOT MODIFY.
 
-package mef.entities;
+package org.mef.framework.auth;
 
 import org.mef.framework.entities.Entity;
-import mef.gen.*;
-import mef.entities.*;
-import java.util.Date;
+
+
 public class AuthRole extends Entity
 {
 	public AuthRole()

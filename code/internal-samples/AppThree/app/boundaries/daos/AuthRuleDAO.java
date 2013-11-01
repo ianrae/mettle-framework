@@ -6,6 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.codehaus.jackson.map.ObjectMapper;
+import org.mef.framework.auth.AuthRole;
+import org.mef.framework.auth.AuthRule;
+import org.mef.framework.auth.AuthSubject;
+import org.mef.framework.auth.AuthTicket;
 import org.mef.framework.binder.IFormBinder;
 
 import com.avaje.ebean.Ebean;

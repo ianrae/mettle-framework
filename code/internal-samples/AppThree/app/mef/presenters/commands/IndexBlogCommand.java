@@ -4,7 +4,7 @@ import org.mef.framework.commands.IndexCommand;
 
 public class IndexBlogCommand extends IndexCommand 
 {
-	public String identityId; //some sort of string that SecureSocial sets. null means not authenticated
+//	public String identityId; //some sort of string that SecureSocial sets. null means not authenticated
 	
 	public IndexBlogCommand()
 	{

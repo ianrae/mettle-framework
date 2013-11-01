@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.ArrayList;
 import mef.entities.*;
 import mef.daos.*;
+
+import org.mef.framework.auth.AuthSubject;
 import org.mef.framework.binder.IFormBinder;
 import org.codehaus.jackson.map.ObjectMapper;
 import mef.gen.*;

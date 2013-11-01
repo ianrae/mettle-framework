@@ -22,15 +22,11 @@ import org.mef.framework.sfx.SfxBaseObj;
 import org.mef.framework.sfx.SfxContext;
 
 import mef.core.DaoFinder;
-import mef.core.IAuthorizer;
 import mef.core.Initializer;
 import mef.daos.IAuthRoleDAO;
 import mef.daos.IAuthSubjectDAO;
 import mef.daos.IAuthTicketDAO;
 import mef.daos.IBlogDAO;
-import mef.entities.AuthRole;
-import mef.entities.AuthSubject;
-import mef.entities.AuthTicket;
 import mef.entities.Blog;
 import mef.presenters.commands.IndexBlogCommand;
 import mef.presenters.replies.BlogReply;
@@ -72,14 +68,12 @@ public class BlogPresenter extends Presenter
 			return false;
 		}
 		
-		IAuthorizer auth = (IAuthorizer) this.getInstance(IAuthorizer.class);
-		AuthSubject subj = auth.findSubject(cmd.identityId);
-		boolean b = auth.isAuth(subj, roleName, null);
-		if (! b)
+		if (! hasRole(cmd, roleName))
 		{
 			_reply.setDestination(Reply.FOWARD_NOT_AUTHORIZED);
+			return false;
 		}
-		return b;
+		return true;
 	}
 
 	public BlogReply onNewCommand(NewCommand cmd)

@@ -1,8 +1,9 @@
 package org.mef.framework.presenters;
 
-
-
 import org.mef.framework.Logger;
+import org.mef.framework.auth.AuthSubject;
+import org.mef.framework.auth.AuthTicket;
+import org.mef.framework.auth.IAuthorizer;
 import org.mef.framework.commands.Command;
 import org.mef.framework.replies.Reply;
 import org.mef.framework.sfx.SfxBaseObj;
@@ -58,5 +59,26 @@ public class Presenter extends SfxBaseObj
 		return reply;
 	}
 
+	//---auth---
+	protected boolean hasRole(Command cmd, String roleName)
+	{
+		IAuthorizer auth = (IAuthorizer) this.getInstance(IAuthorizer.class);
+		AuthSubject subj = auth.findSubject(cmd.identityId);
+		boolean b = auth.isAuth(subj, roleName, null);
+		return b;
+	}
+	protected boolean isAuthorized(Command cmd, String roleName, AuthTicket ticket)
+	{
+		IAuthorizer auth = (IAuthorizer) this.getInstance(IAuthorizer.class);
+		AuthSubject subj = auth.findSubject(cmd.identityId);
+		boolean b = auth.isAuth(subj, roleName, ticket);
+		return b;
+	}
+	protected boolean isLoggedIn(Command cmd)
+	{
+		return (cmd.identityId != null);
+	}
+	
+	//later add ensurexxx that throws exception@@
 
 }

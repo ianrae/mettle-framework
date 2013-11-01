@@ -1,10 +1,10 @@
 package mef.core;
 
 import org.codehaus.jackson.JsonNode;
+import org.mef.framework.auth.AuthRole;
+import org.mef.framework.auth.AuthRule;
+import org.mef.framework.auth.AuthSubject;
 
-import mef.entities.AuthRole;
-import mef.entities.AuthRule;
-import mef.entities.AuthSubject;
 import mef.gen.DaoJsonLoader_GEN;
 
 public class DaoJsonLoader extends DaoJsonLoader_GEN

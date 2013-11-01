@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.mef.framework.Logger;
+import org.mef.framework.auth.AuthSubject;
 import org.mef.framework.binder.IFormBinder;
 import org.mef.framework.commands.CreateCommand;
 import org.mef.framework.commands.DeleteCommand;
@@ -22,7 +23,6 @@ import org.mef.framework.sfx.SfxBaseObj;
 import org.mef.framework.sfx.SfxContext;
 
 import mef.daos.IAuthSubjectDAO;
-import mef.entities.AuthSubject;
 import mef.presenters.replies.UserReply;
 public class UserPresenter extends Presenter
 {

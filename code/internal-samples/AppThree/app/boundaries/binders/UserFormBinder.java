@@ -4,9 +4,9 @@ package boundaries.binders;
 
 import java.util.Map;
 
-import mef.entities.AuthSubject;
 import models.AuthSubjectModel;
 
+import org.mef.framework.auth.AuthSubject;
 import org.mef.framework.binder.IFormBinder;
 
 import boundaries.daos.AuthSubjectDAO;
