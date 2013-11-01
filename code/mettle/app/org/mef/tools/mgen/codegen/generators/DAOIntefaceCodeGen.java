@@ -1,5 +1,8 @@
 package org.mef.tools.mgen.codegen.generators;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.mef.framework.sfx.SfxContext;
 import org.mef.tools.mgen.parser.EntityDef;
 import org.mef.tools.mgen.parser.FieldDef;
@@ -34,7 +37,7 @@ public class DAOIntefaceCodeGen extends CodeGenBase
 			return result;
 		}
 		
-		
+
 		@Override
 		public String getClassName(EntityDef def)
 		{

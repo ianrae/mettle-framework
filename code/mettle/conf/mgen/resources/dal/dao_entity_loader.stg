@@ -1,4 +1,4 @@
-header(package) ::= <<
+header(package, extras) ::= <<
 //THIS FILE HAS BEEN AUTO-GENERATED. DO NOT MODIFY.
 
 package <package>;
@@ -10,6 +10,7 @@ import org.codehaus.jackson.JsonNode;
 import mef.entities.*;
 import java.util.Date;
 import org.mef.framework.loaders.BaseDaoJsonLoader;
+<extras; separator="\n">
 
 
 

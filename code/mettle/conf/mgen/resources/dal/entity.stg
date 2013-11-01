@@ -1,4 +1,5 @@
-header(package) ::= <<
+header(package, extras) ::= <<
+
 //THIS FILE HAS BEEN AUTO-GENERATED. DO NOT MODIFY.
 
 package <package>;

@@ -1,4 +1,4 @@
-header(package) ::= <<
+header(package, extras) ::= <<
 //THIS FILE HAS BEEN AUTO-GENERATED. DO NOT MODIFY.
 
 package <package>;
@@ -13,6 +13,7 @@ import mef.gen.*;
 import org.mef.framework.entitydb.EntityDB;
 import java.util.Date;
 import com.avaje.ebean.Page;
+<extras; separator="\n">
 
 >>
 

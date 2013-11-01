@@ -1,10 +1,12 @@
-header(package) ::= <<
+header(package, extras) ::= <<
+
 package <package>;
 
 import java.util.List;
 import java.util.ArrayList;
 import mef.entities.*;
 import mef.daos.*;
+<extras; separator="\n">
 
 
 >>

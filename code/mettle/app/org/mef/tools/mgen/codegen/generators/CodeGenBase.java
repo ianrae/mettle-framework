@@ -1,5 +1,8 @@
 package org.mef.tools.mgen.codegen.generators;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.mef.framework.sfx.SfxBaseObj;
 import org.mef.framework.sfx.SfxContext;
 import org.mef.tools.mgen.parser.EntityDef;
@@ -15,6 +18,7 @@ public abstract class CodeGenBase extends SfxBaseObj
 		protected STGroup _group;
 		public String _packageName;
 		protected boolean isExtended;
+		public List<String> extraImportsL = new ArrayList<String>();
 
 		public boolean forUnitTest;
 
@@ -29,6 +33,13 @@ public abstract class CodeGenBase extends SfxBaseObj
 		{
 			super(ctx);
 		}
+		
+		
+		protected List<String> getExtraImports() 
+		{
+			return extraImportsL;
+		}
+		
 		
 		public void init(String path, String packageName)
 		{
@@ -119,6 +130,8 @@ public abstract class CodeGenBase extends SfxBaseObj
 			{
 				st.add("type", type);
 			}
+			
+			st.add("extras", this.extraImportsL);
 			String result = st.render(); 
 			return result;
 		}

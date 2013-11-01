@@ -1,4 +1,5 @@
-header(package, type) ::= <<
+header(package, type, extras) ::= <<
+
 //THIS FILE HAS BEEN AUTO-GENERATED. DO NOT MODIFY.
 package <package>;
 
@@ -25,6 +26,7 @@ import play.db.ebean.Model.Finder;
 import mef.daos.*;
 import mef.entities.*;
 import com.avaje.ebean.Page;
+<extras; separator="\n">
 
 >>
 

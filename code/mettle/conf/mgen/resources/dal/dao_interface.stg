@@ -1,4 +1,4 @@
-header(package) ::= <<
+header(package, extras) ::= <<
 //THIS FILE HAS BEEN AUTO-GENERATED. DO NOT MODIFY.
 
 package <package>;
@@ -10,6 +10,7 @@ import org.mef.framework.dao.IDAO;
 import mef.gen.*;
 import java.util.Date;
 import com.avaje.ebean.Page;
+<extras; separator="\n">
 
 >>
 

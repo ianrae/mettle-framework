@@ -1,4 +1,5 @@
-header(package,type) ::= <<
+header(package, type, extras) ::= <<
+
 
 >>
 

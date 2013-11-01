@@ -3,7 +3,9 @@ package org.mef.tools.mgen.codegen;
 import static org.junit.Assert.assertEquals;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.mef.framework.sfx.SfxBaseObj;
 import org.mef.framework.sfx.SfxContext;
@@ -33,6 +35,7 @@ public class DalCodeGenerator extends CodeGenerator
 	public boolean genRealDAO = false; //for now
 	public boolean genDaoLoader = false;
 	private SfxErrorTracker _tracker;
+	private List<String> extraImportsL = new ArrayList<String>();
 	
 	public DalCodeGenerator(SfxContext ctx)
 	{
@@ -58,6 +61,11 @@ public class DalCodeGenerator extends CodeGenerator
 				return 0;
 			}
 			map.put(def.name, def.name);
+			
+			if (def.useExistingPackage != null)
+			{
+				extraImportsL.add(String.format("import %s.%s;", def.useExistingPackage, def.name));
+			}
 		}
 		
 		
@@ -226,6 +234,11 @@ public class DalCodeGenerator extends CodeGenerator
 		{
 			log(def.name + " disabled -- no files generated.");
 			return true; //do nothing
+		}
+		
+		if (this.extraImportsL.size() > 0)
+		{
+			gen.extraImportsL = this.extraImportsL;
 		}
 		
 		String originalRelPath = relPath;

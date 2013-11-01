@@ -1,4 +1,5 @@
-header(package) ::= <<
+header(package, extras) ::= <<
+
 //THIS FILE HAS BEEN AUTO-GENERATED. DO NOT MODIFY.
 
 package <package>;
@@ -11,6 +12,7 @@ import mef.daos.mocks.*;
 import boundaries.daos.*;
 import org.mef.framework.sfx.SfxContext;
 import java.util.Date;
+<extras; separator="\n">
 
 
 >>

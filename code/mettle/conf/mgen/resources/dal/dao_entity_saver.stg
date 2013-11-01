@@ -1,4 +1,5 @@
-header(package) ::= <<
+header(package, extras) ::= <<
+
 //THIS FILE HAS BEEN AUTO-GENERATED. DO NOT MODIFY.
 
 package <package>;
@@ -9,6 +10,7 @@ import java.util.List;
 import mef.entities.*;
 import mef.daos.*;
 import java.util.Date;
+<extras; separator="\n">
 
 
 
