@@ -113,7 +113,7 @@ public class Presenter extends SfxBaseObj
 	}
 	protected boolean isLoggedIn(Command cmd)
 	{
-		return (cmd.identityId != null);
+		return (cmd.identityId != null && ! cmd.identityId.isEmpty());
 	}
 	
 	protected void ensureHasRole(Command cmd, String roleName) throws Exception
