@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<entities orm="ebean">
+
+<entity name="Task">
+<field>long id</field>
+<field>boolean enabled</field>
+<query>find_by_label</query>
+
+<codegen what="entity" useExisting="com.abc" />
+</entity>
+
+<entity name="Entry">
+<field>long id</field>
+
+</entity>
+</entities>

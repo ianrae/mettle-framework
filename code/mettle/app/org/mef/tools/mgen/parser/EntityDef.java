@@ -16,6 +16,7 @@ public class EntityDef
 	public boolean extendEntity;
 	public boolean extendModel;
 	public boolean genPresenter;
+	public String useExistingPackage;
 	
 	
 	public List<EntityDef> allEntityTypes = new ArrayList<EntityDef>();

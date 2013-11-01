@@ -10,9 +10,9 @@ import org.mef.tools.mgen.parser.EntityDef;
 public class BaseCodeGenTest extends BaseTest
 {
 	// ----------- helper fns ---------------
-	protected EntityDef readEntityDef() throws Exception
+	protected EntityDef readEntityDef(String mefFile) throws Exception
 	{
-		String path = this.getTestFile("dalgen.xml");
+		String path = this.getTestFile(mefFile);
 		DalGenXmlParser parser = new DalGenXmlParser(_ctx);
 		boolean b = parser.parse(path);
 
@@ -26,6 +26,6 @@ public class BaseCodeGenTest extends BaseTest
 	public void init() throws Exception
 	{
 		createContext();
-		def = readEntityDef();
+		def = readEntityDef("dalgen.xml");
 	}
 }

@@ -104,20 +104,10 @@ public class DalCodeGenerator extends CodeGenerator
 	{
 		EntityDef def = parser._entityL.get(index);
 		
-		boolean b = doGen(def, "entity.stg", "mef.entities", "app\\mef\\entities", new EntityCodeGen(_ctx));
+		boolean b = this.generateEntityClasses(def);
 		if (!b )
 		{
 			return false; //!!
-		}
-		
-		if (_needParentClass)
-		{
-			def.extendEntity = false;
-			b = doGen(def, "entity-based-on-gen.stg", "mef.entities", "app\\mef\\entities", new EntityCodeGen(_ctx));
-			if (!b )
-			{
-				return false; //!!
-			}
 		}
 		
 		b = doGen(def, "model.stg", "models", "app\\models", new ModelCodeGen(_ctx));
@@ -149,7 +139,34 @@ public class DalCodeGenerator extends CodeGenerator
 		
 		return b;
 	}
-
+	
+	
+	protected boolean generateEntityClasses(EntityDef def) throws Exception
+	{
+		if (def.useExistingPackage != null)
+		{
+			this.log(String.format("useExistingPackage %s for %s", def.useExistingPackage, def.name));
+			return true; //don't generate
+		}
+		
+		boolean b = doGen(def, "entity.stg", "mef.entities", "app\\mef\\entities", new EntityCodeGen(_ctx));
+		if (!b )
+		{
+			return false; //!!
+		}
+		
+		if (_needParentClass)
+		{
+			def.extendEntity = false;
+			b = doGen(def, "entity-based-on-gen.stg", "mef.entities", "app\\mef\\entities", new EntityCodeGen(_ctx));
+			if (!b )
+			{
+				return false; //!!
+			}
+		}
+		return true;
+	}
+	
 	private boolean doGen(EntityDef def, String stgFilename, String packageName, 
 			String relPath, CodeGenBase gen) throws Exception
 	{

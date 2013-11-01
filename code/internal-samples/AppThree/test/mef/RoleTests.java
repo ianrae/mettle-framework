@@ -13,13 +13,13 @@ import mef.daos.mocks.MockAuthRuleDAO;
 import mef.daos.mocks.MockAuthRoleDAO;
 import mef.daos.mocks.MockAuthTicketDAO;
 import mef.daos.mocks.MockAuthSubjectDAO;
-import mef.entities.AuthRule;
-import mef.entities.AuthRole;
-import mef.entities.AuthTicket;
-import mef.entities.AuthSubject;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mef.framework.auth.AuthRole;
+import org.mef.framework.auth.AuthRule;
+import org.mef.framework.auth.AuthSubject;
+import org.mef.framework.auth.AuthTicket;
 
 public class RoleTests extends BaseTest
 {

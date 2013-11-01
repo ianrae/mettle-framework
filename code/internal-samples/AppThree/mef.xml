@@ -25,16 +25,19 @@
 	<field>@Required String name</field>
 
 	<query>find_by_name</query>
+	<codegen what="entity" useExisting="org.mef.framework.auth" />
 </entity>
 <entity name="AuthRole">
 	<field>@Id Long id</field>
 	<field>@Required String name</field>
 
 	<query>find_by_name</query>
+	<codegen what="entity" useExisting="org.mef.framework.auth" />
 </entity>
 
 <entity name="AuthTicket">
 	<field>@Id Long id</field>
+	<codegen what="entity" useExisting="org.mef.framework.auth" />
 </entity>
 
 <entity name="AuthRule">
@@ -45,6 +48,7 @@
 	
 	<method><![CDATA[AuthRule find_by_subject_and_role_and_ticket(AuthSubject s, AuthRole r, AuthTicket t)]]></method>
 	<codegen what="dal_mock" extend="true" />
+	<codegen what="entity" useExisting="org.mef.framework.auth" />
 </entity>
 
 </entities>
