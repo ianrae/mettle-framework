@@ -4,6 +4,8 @@ import org.mef.framework.Logger;
 import org.mef.framework.auth.AuthSubject;
 import org.mef.framework.auth.AuthTicket;
 import org.mef.framework.auth.IAuthorizer;
+import org.mef.framework.auth.NotAuthorizedException;
+import org.mef.framework.auth.NotLoggedInException;
 import org.mef.framework.commands.Command;
 import org.mef.framework.replies.Reply;
 import org.mef.framework.sfx.SfxBaseObj;
@@ -44,6 +46,11 @@ public class Presenter extends SfxBaseObj
 			return reply;
 		}
 		
+		reply = doBeforeAction(cmd);
+		if (reply != null)
+		{
+			return reply;
+		}
 		
 		MethodInvoker invoker = new MethodInvoker(_ctx, this, methodName, Command.class);
 		
@@ -57,6 +64,36 @@ public class Presenter extends SfxBaseObj
 
 		reply = (Reply)res;
 		return reply;
+	}
+	
+	protected Reply doBeforeAction(Command cmd)
+	{
+		Reply reply = null;
+		
+		try 
+		{
+			reply = beforeAction(cmd);
+		}
+		catch(NotLoggedInException ex)
+		{
+			reply = createReply();
+			reply.setDestination(Reply.FOWARD_NOT_AUTHENTICATED);
+		}
+		catch(NotAuthorizedException ex)
+		{
+			reply = createReply();
+			reply.setDestination(Reply.FOWARD_NOT_AUTHORIZED);
+		}
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+		}
+		return reply;
+	}
+	
+	protected Reply beforeAction(Command cmd) throws Exception
+	{
+		return null;
 	}
 
 	//---auth---
@@ -79,6 +116,26 @@ public class Presenter extends SfxBaseObj
 		return (cmd.identityId != null);
 	}
 	
-	//later add ensurexxx that throws exception@@
+	protected void ensureHasRole(Command cmd, String roleName) throws Exception
+	{
+		if (! hasRole(cmd, roleName))
+		{
+			throw new NotAuthorizedException();
+		}
+	}
+	protected void ensureIsAuth(Command cmd, String roleName, AuthTicket ticket) throws Exception
+	{
+		if (! isAuthorized(cmd, roleName, ticket))
+		{
+			throw new NotAuthorizedException();
+		}
+	}
+	protected void ensureIsLoggedIn(Command cmd) throws Exception
+	{
+		if (! isLoggedIn(cmd))
+		{
+			throw new NotLoggedInException();
+		}
+	}
 
 }
