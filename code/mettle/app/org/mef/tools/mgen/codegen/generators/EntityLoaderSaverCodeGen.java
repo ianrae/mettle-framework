@@ -54,6 +54,8 @@ public class EntityLoaderSaverCodeGen extends CodeGenBase
 			st.add("package", _packageName);
 		}
 
+		st.add("extras", this.extraImportsL);
+		
 		//			st.add("type", def.name);
 
 		//			List<String> daoTypeL = new ArrayList<String>();

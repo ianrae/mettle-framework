@@ -6,14 +6,16 @@ import java.util.List;
 import java.util.ArrayList;
 import mef.entities.*;
 import mef.daos.*;
-
-import org.mef.framework.auth.AuthRole;
 import org.mef.framework.binder.IFormBinder;
 import org.codehaus.jackson.map.ObjectMapper;
 import mef.gen.*;
 import org.mef.framework.entitydb.EntityDB;
 import java.util.Date;
 import com.avaje.ebean.Page;
+import org.mef.framework.auth.AuthSubject;
+import org.mef.framework.auth.AuthRole;
+import org.mef.framework.auth.AuthTicket;
+import org.mef.framework.auth.AuthRule;
 public class MockAuthRoleDAO implements IAuthRoleDAO
 {
     protected List<AuthRole> _L = new ArrayList<AuthRole>();

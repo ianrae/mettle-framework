@@ -10,6 +10,10 @@ import mef.daos.mocks.*;
 import boundaries.daos.*;
 import org.mef.framework.sfx.SfxContext;
 import java.util.Date;
+import org.mef.framework.auth.AuthSubject;
+import org.mef.framework.auth.AuthRole;
+import org.mef.framework.auth.AuthTicket;
+import org.mef.framework.auth.AuthRule;
 
 public class AllKnownDAOs_GEN  
 {

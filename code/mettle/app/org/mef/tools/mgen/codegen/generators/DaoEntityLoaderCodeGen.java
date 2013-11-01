@@ -55,6 +55,7 @@ public class DaoEntityLoaderCodeGen extends CodeGenBase
 		{
 			st.add("package", _packageName);
 		}
+		st.add("extras", this.extraImportsL);
 
 //		st.add("type", def.name);
 		
