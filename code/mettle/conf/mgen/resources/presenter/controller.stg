@@ -40,6 +40,13 @@ public class <name> extends Controller
 		case Reply.VIEW_INDEX:
 			return ok(views.html.<type>.index.render(reply._allL));    	
 
+		case Reply.FOWARD_NOT_AUTHENTICATED:
+			return play.mvc.Results.redirect(routes.ErrorController.showError("Not logged in!"));	
+
+		case Reply.FOWARD_NOT_AUTHORIZED:
+			return play.mvc.Results.redirect(routes.ErrorController.showError("Not authorized to do that!"));	
+
+
 		default:
 			return play.mvc.Results.redirect(routes.ErrorController.logout());	
     	}
