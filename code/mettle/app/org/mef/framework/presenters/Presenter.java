@@ -46,15 +46,15 @@ public class Presenter extends SfxBaseObj
 			return reply;
 		}
 		
-		reply = doBeforeAction(cmd);
-		if (reply != null)
+		Reply tmpReply = doBeforeAction(cmd);
+		if (tmpReply != null)
 		{
-			return reply;
+			return tmpReply;
 		}
 		
 		MethodInvoker invoker = new MethodInvoker(_ctx, this, methodName, Command.class);
 		
-		Object res = invoker.call(cmd);
+		Object res = invoker.call(cmd, reply);
 		if (res == null)
 		{
 			Logger.warn("null from invoker.call!!");

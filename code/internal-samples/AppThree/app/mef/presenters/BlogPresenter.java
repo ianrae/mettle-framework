@@ -47,13 +47,14 @@ public class BlogPresenter extends Presenter
 		return _reply;
 	}
 
-	public BlogReply onIndexBlogCommand(IndexBlogCommand cmd)
+	public BlogReply onIndexBlogCommand(IndexBlogCommand cmd) throws Exception
 	{
 		BlogReply reply = createReply();
-		if (! userHasRole(cmd, "Full"))
-		{
-			return reply;
-		}
+//		if (! userHasRole(cmd, "Full"))
+//		{
+//			return reply;
+//		}
+		this.ensureHasRole(cmd, "Full");
 		
 		reply.setDestination(Reply.VIEW_INDEX);
 		reply._allL = _dao.all();

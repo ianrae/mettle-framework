@@ -3,6 +3,9 @@ package org.mef.framework.utils;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import org.mef.framework.auth.NotAuthorizedException;
+import org.mef.framework.auth.NotLoggedInException;
+import org.mef.framework.replies.Reply;
 import org.mef.framework.sfx.SfxBaseObj;
 import org.mef.framework.sfx.SfxContext;
 
@@ -55,7 +58,7 @@ public class MethodInvoker extends SfxBaseObj
 			}
 		}
 		
-		public Object call(Object param1)
+		public Object call(Object param1, Reply reply)
 		{
 			if (_method == null)
 			{
@@ -80,8 +83,40 @@ public class MethodInvoker extends SfxBaseObj
 			{
 				log("EXCEPTION in presenter!");
 //				e.printStackTrace();
-				e.getCause().printStackTrace();
-			}
+				Reply tmp = this.handleInnerException(e, reply);
+				if (tmp != null)
+				{
+					result = tmp;
+				}
+				else
+				{
+					e.getCause().printStackTrace();
+				}
+			}	
 			return result;
+		}
+		
+		Reply handleInnerException(InvocationTargetException e, Reply reply)
+		{
+			Throwable ex = e.getCause();
+			if (ex == null)
+			{
+				return null;
+			}
+			
+			if (ex instanceof NotLoggedInException)
+			{
+				reply.setDestination(Reply.FOWARD_NOT_AUTHENTICATED);
+				return reply;
+			}
+			else if (ex instanceof NotAuthorizedException)
+			{
+				reply.setDestination(Reply.FOWARD_NOT_AUTHORIZED);
+				return reply;
+			}
+			else
+			{
+				return null;
+			}
 		}
 	}
