@@ -16,5 +16,5 @@ public class AuthTicket extends Entity
 		this.id = entity.id;
 	}
     public Long id;
-
+    public String name;
 }

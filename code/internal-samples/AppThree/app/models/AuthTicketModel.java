@@ -45,4 +45,15 @@ public class AuthTicketModel extends Model
 
     }
 
+    private String name;
+
+    public String getName() {
+        return this.name;
+    }
+    public void setName(String val) {
+		this.name = val;
+		this.entity.name = val;
+
+    }
+
 }

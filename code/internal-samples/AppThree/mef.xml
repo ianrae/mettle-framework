@@ -37,6 +37,7 @@
 
 <entity name="AuthTicket">
 	<field>@Id Long id</field>
+	<field>String name</field>
 	<codegen what="entity" useExisting="org.mef.framework.auth" />
 </entity>
 

@@ -97,6 +97,7 @@ public class EntityLoaderSaver_GEN
 		{
 			obj.id = existing.id;
 			//copy everything 
+						existing.name = obj.name;
 			
 
 			dao.update(existing); //inserts or updates 

@@ -153,10 +153,12 @@ public class AuthTicketDAO implements IAuthTicketDAO
        protected static void touchAll(AuthTicketModel t, AuthTicket entity)
 {
 	t.setId(entity.id);
+	t.setName(entity.name);
 }
 
 protected static void touchAll(AuthTicket entity, AuthTicketModel t)
 {
+	entity.name = t.getName();
 }
 
 }
