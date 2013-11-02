@@ -12,10 +12,8 @@ import javax.persistence.*;
 import mef.entities.*;
 import boundaries.daos.*;
 import java.util.Date;
-import org.mef.framework.auth.AuthSubject;
 import org.mef.framework.auth.AuthRole;
 import org.mef.framework.auth.AuthTicket;
-import org.mef.framework.auth.AuthRule;
 @Entity
 public class AuthTicketModel extends Model
 {

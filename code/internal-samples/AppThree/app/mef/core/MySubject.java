@@ -1,6 +1,7 @@
 package mef.core;
 
-import org.mef.framework.auth.AuthSubject;
+import mef.entities.AuthSubject;
+
 import org.mef.framework.auth.IAuthSubject;
 
 public class MySubject implements IAuthSubject

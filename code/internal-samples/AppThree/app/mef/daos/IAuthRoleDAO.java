@@ -9,10 +9,8 @@ import org.mef.framework.dao.IDAO;
 import mef.gen.*;
 import java.util.Date;
 import com.avaje.ebean.Page;
-import org.mef.framework.auth.AuthSubject;
 import org.mef.framework.auth.AuthRole;
 import org.mef.framework.auth.AuthTicket;
-import org.mef.framework.auth.AuthRule;
 public interface IAuthRoleDAO  extends IDAO
 {
 	AuthRole findById(long id);

@@ -6,7 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 
-import org.mef.framework.auth.AuthSubject;
+import mef.entities.AuthSubject;
+
 import org.mef.framework.replies.Reply;
 public class UserReply extends Reply
 {

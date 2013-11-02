@@ -12,10 +12,8 @@ import mef.gen.*;
 import org.mef.framework.entitydb.EntityDB;
 import java.util.Date;
 import com.avaje.ebean.Page;
-import org.mef.framework.auth.AuthSubject;
 import org.mef.framework.auth.AuthRole;
 import org.mef.framework.auth.AuthTicket;
-import org.mef.framework.auth.AuthRule;
 public class MockAuthSubjectDAO implements IAuthSubjectDAO
 {
     protected List<AuthSubject> _L = new ArrayList<AuthSubject>();

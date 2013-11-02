@@ -7,10 +7,10 @@ import mef.daos.IAuthRoleDAO;
 import mef.daos.IAuthRuleDAO;
 import mef.daos.IAuthSubjectDAO;
 import mef.daos.IAuthTicketDAO;
+import mef.entities.AuthRule;
+import mef.entities.AuthSubject;
 
 import org.mef.framework.auth.AuthRole;
-import org.mef.framework.auth.AuthRule;
-import org.mef.framework.auth.AuthSubject;
 import org.mef.framework.auth.AuthTicket;
 import org.mef.framework.auth.IAuthSubject;
 import org.mef.framework.auth.IAuthorizer;

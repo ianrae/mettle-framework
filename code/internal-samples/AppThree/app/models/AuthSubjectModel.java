@@ -12,10 +12,8 @@ import javax.persistence.*;
 import mef.entities.*;
 import boundaries.daos.*;
 import java.util.Date;
-import org.mef.framework.auth.AuthSubject;
 import org.mef.framework.auth.AuthRole;
 import org.mef.framework.auth.AuthTicket;
-import org.mef.framework.auth.AuthRule;
 @Entity
 public class AuthSubjectModel extends Model
 {
@@ -56,6 +54,17 @@ public class AuthSubjectModel extends Model
     public void setName(String val) {
 		this.name = val;
 		this.entity.name = val;
+
+    }
+
+    private Long userId;
+
+    public Long getUserId() {
+        return this.userId;
+    }
+    public void setUserId(Long val) {
+		this.userId = val;
+		this.entity.userId = val;
 
     }
 

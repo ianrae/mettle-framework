@@ -14,12 +14,12 @@ import mef.daos.mocks.MockAuthRuleDAO;
 import mef.daos.mocks.MockAuthRoleDAO;
 import mef.daos.mocks.MockAuthTicketDAO;
 import mef.daos.mocks.MockAuthSubjectDAO;
+import mef.entities.AuthRule;
+import mef.entities.AuthSubject;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mef.framework.auth.AuthRole;
-import org.mef.framework.auth.AuthRule;
-import org.mef.framework.auth.AuthSubject;
 import org.mef.framework.auth.AuthTicket;
 import org.mef.framework.auth.IAuthSubject;
 
@@ -110,9 +110,9 @@ public class RoleTests extends BaseTest
 	
 	private void buildSubjects()
 	{
-		AuthSubject subj = new AuthSubject("alice");
+		AuthSubject subj = new AuthSubject("alice", 0L);
 		_userDao.save(subj);
-		subj = new AuthSubject("bob");
+		subj = new AuthSubject("bob", 0L);
 		_userDao.save(subj);
 		
 		assertEquals(2, _userDao.size());

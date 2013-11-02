@@ -7,8 +7,6 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.mef.framework.auth.AuthRole;
-import org.mef.framework.auth.AuthRule;
-import org.mef.framework.auth.AuthSubject;
 import org.mef.framework.commands.Command;
 import org.mef.framework.commands.CreateCommand;
 import org.mef.framework.commands.DeleteCommand;
@@ -28,6 +26,8 @@ import mef.daos.IAuthRuleDAO;
 import mef.daos.IBlogDAO;
 import mef.daos.mocks.MockAuthSubjectDAO;
 import mef.daos.mocks.MockBlogDAO;
+import mef.entities.AuthRule;
+import mef.entities.AuthSubject;
 import mef.entities.Blog;
 import mef.presenters.BlogPresenter;
 import mef.presenters.commands.IndexBlogCommand;
@@ -335,9 +335,9 @@ public class BlogPresenterTests extends BasePresenterTest
 
 	private void buildSubjects()
 	{
-		AuthSubject subj = new AuthSubject("alice");
+		AuthSubject subj = new AuthSubject("alice", 0L);
 		_authSubjDAO.save(subj);
-		subj = new AuthSubject("bob");
+		subj = new AuthSubject("bob", 0L);
 		_authSubjDAO.save(subj);
 		
 		assertEquals(3, _authSubjDAO.size());

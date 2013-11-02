@@ -9,10 +9,8 @@ import org.codehaus.jackson.JsonNode;
 import mef.entities.*;
 import java.util.Date;
 import org.mef.framework.loaders.BaseDaoJsonLoader;
-import org.mef.framework.auth.AuthSubject;
 import org.mef.framework.auth.AuthRole;
 import org.mef.framework.auth.AuthTicket;
-import org.mef.framework.auth.AuthRule;
 
 
 
@@ -112,6 +110,8 @@ public class DaoJsonLoader_GEN extends BaseDaoJsonLoader
 
 				jj = node.get("name");
 				obj.name = jj.getTextValue();
+
+				jj = node.get("userId");
 
 
 

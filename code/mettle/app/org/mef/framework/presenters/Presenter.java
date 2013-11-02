@@ -1,7 +1,6 @@
 package org.mef.framework.presenters;
 
 import org.mef.framework.Logger;
-import org.mef.framework.auth.AuthSubject;
 import org.mef.framework.auth.AuthTicket;
 import org.mef.framework.auth.IAuthorizer;
 import org.mef.framework.auth.NotAuthorizedException;

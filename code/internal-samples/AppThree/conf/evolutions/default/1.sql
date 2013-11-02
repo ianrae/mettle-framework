@@ -20,6 +20,7 @@ create table auth_rule_model (
 create table auth_subject_model (
   id                        bigint not null,
   name                      varchar(255),
+  user_id                   bigint,
   constraint pk_auth_subject_model primary key (id))
 ;
 

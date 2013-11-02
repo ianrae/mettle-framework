@@ -1,9 +1,13 @@
 //THIS FILE HAS BEEN AUTO-GENERATED. DO NOT MODIFY.
 
-package org.mef.framework.auth;
+package mef.entities;
 
+import org.mef.framework.auth.AuthRole;
+import org.mef.framework.auth.AuthTicket;
 import org.mef.framework.entities.Entity;
-
+import mef.gen.*;
+import mef.entities.*;
+import java.util.Date;
 public class AuthRule extends Entity
 {
 	public AuthRule()

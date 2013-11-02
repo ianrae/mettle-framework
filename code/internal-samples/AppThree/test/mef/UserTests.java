@@ -14,10 +14,10 @@ import mef.daos.mocks.MockAuthRuleDAO;
 import mef.daos.mocks.MockAuthSubjectDAO;
 import mef.daos.mocks.MockAuthTicketDAO;
 import mef.daos.mocks.MockUserDAO;
+import mef.entities.AuthRule;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mef.framework.auth.AuthRule;
 
 public class UserTests extends BaseTest
 {

@@ -8,10 +8,8 @@ import java.util.List;
 import mef.entities.*;
 import mef.daos.*;
 import java.util.Date;
-import org.mef.framework.auth.AuthSubject;
 import org.mef.framework.auth.AuthRole;
 import org.mef.framework.auth.AuthTicket;
-import org.mef.framework.auth.AuthRule;
 
 
 
@@ -62,6 +60,8 @@ public class EntityLoaderSaver_GEN
 			obj.id = existing.id;
 			//copy everything 
 						existing.name = obj.name;
+
+						existing.userId = obj.userId;
 			
 
 			dao.update(existing); //inserts or updates 

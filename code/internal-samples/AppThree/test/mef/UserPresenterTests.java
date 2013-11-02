@@ -6,7 +6,6 @@ import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mef.framework.auth.AuthSubject;
 import org.mef.framework.commands.Command;
 import org.mef.framework.commands.CreateCommand;
 import org.mef.framework.commands.DeleteCommand;
@@ -23,6 +22,7 @@ import mef.core.DaoFinder;
 import mef.core.Initializer;
 import mef.daos.IAuthSubjectDAO;
 import mef.daos.mocks.MockAuthSubjectDAO;
+import mef.entities.AuthSubject;
 import mef.presenters.UserPresenter;
 import mef.presenters.replies.UserReply;
 import org.mef.framework.test.helpers.MockFormBinder;
