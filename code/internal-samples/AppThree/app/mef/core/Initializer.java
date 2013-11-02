@@ -38,10 +38,6 @@ public class Initializer
 		theCtx = ctx;
 		
 		MyAuthorizer auth = new MyAuthorizer(ctx);
-		auth.init(DaoFinder.getAuthSubjectDao(), 
-				DaoFinder.getAuthRoleDao(), 
-				DaoFinder.getAuthTicketDao(), 
-				DaoFinder.getAuthRuleDao());
 		ctx.getServiceLocator().registerSingleton(IAuthorizer.class, auth);
 		
 		return ctx;

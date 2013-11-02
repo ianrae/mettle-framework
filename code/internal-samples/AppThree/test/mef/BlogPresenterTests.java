@@ -64,10 +64,13 @@ public class BlogPresenterTests extends BasePresenterTest
 	@Test
 	public void indexTestOne() 
 	{
+		buildSubjects();
+		AuthSubject subj = this._authSubjDAO.all().get(0);
+		buildRoles(subj);
+
 		Blog u = createBlog("bob");
 		_dao.save(u);
 		assertEquals("bob", _dao.all().get(0).name);
-		AuthSubject subj = this._authSubjDAO.all().get(0);
 		IndexBlogCommand cmd = new IndexBlogCommand(subj);
 		BlogReply reply = (BlogReply) _presenter.process(cmd);
 
@@ -282,7 +285,7 @@ public class BlogPresenterTests extends BasePresenterTest
 		super.init();
 		_dao = getDAO();
 		_authSubjDAO = (MockAuthSubjectDAO) DaoFinder.getAuthSubjectDao();
-		Initializer.loadSeedData(Initializer.theCtx);
+		//Initializer.loadSeedData(Initializer.theCtx);
 		
 		this._presenter = new BlogPresenter(_ctx);
 	}
@@ -340,7 +343,7 @@ public class BlogPresenterTests extends BasePresenterTest
 		subj = new AuthSubject("bob", 0L);
 		_authSubjDAO.save(subj);
 		
-		assertEquals(3, _authSubjDAO.size());
+		assertEquals(2, _authSubjDAO.size());
 	}
 
 	private void buildRoles(AuthSubject subj)
@@ -352,7 +355,7 @@ public class BlogPresenterTests extends BasePresenterTest
 		role = new AuthRole("Full");
 		roleDao.save(role);
 		
-		assertEquals(3, roleDao.size());
+		assertEquals(2, roleDao.size());
 		
 		IAuthRuleDAO ruleDao = DaoFinder.getAuthRuleDao();
 		AuthRule rule = new AuthRule(subj, role, null);

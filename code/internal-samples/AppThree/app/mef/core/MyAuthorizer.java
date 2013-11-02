@@ -29,6 +29,11 @@ public class MyAuthorizer extends SfxBaseObj implements IAuthorizer
 	public MyAuthorizer(SfxContext ctx)
 	{
 		super(ctx);
+		
+		_subjectDao = DaoFinder.getAuthSubjectDao();
+		_roleDao = DaoFinder.getAuthRoleDao();
+		_ticketDao = DaoFinder.getAuthTicketDao();
+		_ruleDao = DaoFinder.getAuthRuleDao();		
 	}
 	
 	private AuthRole findRole(String roleName)
@@ -57,16 +62,6 @@ public class MyAuthorizer extends SfxBaseObj implements IAuthorizer
 		
 		AuthRule rule = _ruleDao.find_by_subject_and_role_and_ticket(model, role, ticket);
 		return (rule != null);
-	}
-
-	public void init(IAuthSubjectDAO subjectDao, IAuthRoleDAO roleDao,
-			IAuthTicketDAO ticketDao, IAuthRuleDAO ruleDao) 
-	{
-		this._subjectDao = subjectDao;
-		this._roleDao = roleDao;
-		this._ticketDao = ticketDao;
-		this._ruleDao = ruleDao;
-		
 	}
 
 	@Override

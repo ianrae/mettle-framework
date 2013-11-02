@@ -150,11 +150,6 @@ public class RoleTests extends BaseTest
 	private MyAuthorizer createAuthorizer()
 	{
 		MyAuthorizer auth = new MyAuthorizer(_ctx);
-		auth.init(DaoFinder.getAuthSubjectDao(), 
-				DaoFinder.getAuthRoleDao(), 
-				DaoFinder.getAuthTicketDao(), 
-				DaoFinder.getAuthRuleDao());
-		
 		return auth;
 	}	
 
