@@ -6,6 +6,8 @@ import org.mef.framework.entities.Entity;
 import mef.gen.*;
 import mef.entities.*;
 import java.util.Date;
+import org.mef.framework.auth.AuthRole;
+import org.mef.framework.auth.AuthTicket;
 public class Blog extends Entity
 {
 	public Blog()
