@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import mef.core.DaoFinder;
 import mef.core.Initializer;
 import mef.core.MyAuthorizer;
+import mef.core.MySubject;
 import mef.daos.IAuthRuleDAO;
 import mef.daos.IAuthRoleDAO;
 import mef.daos.IAuthTicketDAO;
@@ -20,6 +21,7 @@ import org.mef.framework.auth.AuthRole;
 import org.mef.framework.auth.AuthRule;
 import org.mef.framework.auth.AuthSubject;
 import org.mef.framework.auth.AuthTicket;
+import org.mef.framework.auth.IAuthSubject;
 
 public class RoleTests extends BaseTest
 {
@@ -43,11 +45,13 @@ public class RoleTests extends BaseTest
 		buildSubjects();
 		buildTickets();
 		AuthRole role = _roleDao.find_by_name("Viewer");
-		AuthSubject subj = _userDao.find_by_name("alice");
+		
+		AuthSubject subjEntity = _userDao.find_by_name("alice");
+		IAuthSubject subj = MySubject.createFrom(subjEntity);
 		AuthTicket t = _ticketDao.findById(1L);
 		assertNotNull(t);
 		
-		AuthRule rule = new AuthRule(subj, role, t);
+		AuthRule rule = new AuthRule(subjEntity, role, t);
 		_ruleDao.save(rule);
 		
 		MyAuthorizer auth = createAuthorizer();
@@ -55,7 +59,9 @@ public class RoleTests extends BaseTest
 
 		assertTrue(auth.isAuthEx(subj, role, t));
 		
-		AuthSubject subj2 = _userDao.find_by_name("bob");
+		AuthSubject subjEntity2 = _userDao.find_by_name("bob");
+		IAuthSubject subj2 = MySubject.createFrom(subjEntity2);
+		
 		assertFalse(auth.isAuthEx(subj2, role, t));
 		
 		AuthTicket t2 = _ticketDao.findById(2L);
@@ -85,7 +91,8 @@ public class RoleTests extends BaseTest
 		assertTrue(auth.isAuthEx(null, role, t));
 		assertFalse(auth.isAuthEx(null, role, null));
 		
-		AuthSubject subj2 = _userDao.find_by_name("bob");
+		AuthSubject subjEntity2 = _userDao.find_by_name("bob");
+		IAuthSubject subj2 = MySubject.createFrom(subjEntity2);
 		assertFalse(auth.isAuthEx(subj2, role, t));
 		
 	}

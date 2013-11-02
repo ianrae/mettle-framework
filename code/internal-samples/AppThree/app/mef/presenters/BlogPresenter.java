@@ -63,7 +63,7 @@ public class BlogPresenter extends Presenter
 	
 	private boolean userHasRole(IndexBlogCommand cmd, String roleName)
 	{
-		if (cmd.identityId == null || cmd.identityId.isEmpty())
+		if (cmd.authSubject == null || (! cmd.authSubject.isLoggedIn()))
 		{
 			_reply.setDestination(Reply.FOWARD_NOT_AUTHENTICATED);
 			return false;

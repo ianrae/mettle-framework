@@ -6,6 +6,9 @@ import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mef.framework.auth.AuthRole;
+import org.mef.framework.auth.AuthRule;
+import org.mef.framework.auth.AuthSubject;
 import org.mef.framework.commands.Command;
 import org.mef.framework.commands.CreateCommand;
 import org.mef.framework.commands.DeleteCommand;
@@ -20,7 +23,10 @@ import org.mef.framework.sfx.SfxContext;
 
 import mef.core.DaoFinder;
 import mef.core.Initializer;
+import mef.daos.IAuthRoleDAO;
+import mef.daos.IAuthRuleDAO;
 import mef.daos.IBlogDAO;
+import mef.daos.mocks.MockAuthSubjectDAO;
 import mef.daos.mocks.MockBlogDAO;
 import mef.entities.Blog;
 import mef.presenters.BlogPresenter;
@@ -44,7 +50,10 @@ public class BlogPresenterTests extends BasePresenterTest
 	@Test
 	public void indexTest() 
 	{
-		IndexBlogCommand cmd = new IndexBlogCommand("Admin");
+		buildSubjects();
+		AuthSubject subj = this._authSubjDAO.all().get(0);
+		buildRoles(subj);
+		IndexBlogCommand cmd = new IndexBlogCommand(subj);
 		BlogReply reply = (BlogReply) _presenter.process(cmd);
 
 		chkReplySucessful(reply, Reply.VIEW_INDEX, null);
@@ -58,7 +67,8 @@ public class BlogPresenterTests extends BasePresenterTest
 		Blog u = createBlog("bob");
 		_dao.save(u);
 		assertEquals("bob", _dao.all().get(0).name);
-		IndexBlogCommand cmd = new IndexBlogCommand("Admin");
+		AuthSubject subj = this._authSubjDAO.all().get(0);
+		IndexBlogCommand cmd = new IndexBlogCommand(subj);
 		BlogReply reply = (BlogReply) _presenter.process(cmd);
 
 		chkReplySucessful(reply, Reply.VIEW_INDEX, null);
@@ -264,12 +274,14 @@ public class BlogPresenterTests extends BasePresenterTest
 	}
 
 	private MockBlogDAO _dao;
+	private MockAuthSubjectDAO _authSubjDAO;
 	private BlogPresenter _presenter;
 	@Before
 	public void init()
 	{
 		super.init();
 		_dao = getDAO();
+		_authSubjDAO = (MockAuthSubjectDAO) DaoFinder.getAuthSubjectDao();
 		Initializer.loadSeedData(Initializer.theCtx);
 		
 		this._presenter = new BlogPresenter(_ctx);
@@ -321,7 +333,32 @@ public class BlogPresenterTests extends BasePresenterTest
 		return cmd;
 	}
 
+	private void buildSubjects()
+	{
+		AuthSubject subj = new AuthSubject("alice");
+		_authSubjDAO.save(subj);
+		subj = new AuthSubject("bob");
+		_authSubjDAO.save(subj);
+		
+		assertEquals(3, _authSubjDAO.size());
+	}
 
+	private void buildRoles(AuthSubject subj)
+	{
+		IAuthRoleDAO roleDao = DaoFinder.getAuthRoleDao();
+		
+		AuthRole role = new AuthRole("Viewer");
+		roleDao.save(role);
+		role = new AuthRole("Full");
+		roleDao.save(role);
+		
+		assertEquals(3, roleDao.size());
+		
+		IAuthRuleDAO ruleDao = DaoFinder.getAuthRuleDao();
+		AuthRule rule = new AuthRule(subj, role, null);
+		ruleDao.save(rule);
+		
+	}
 
 
 

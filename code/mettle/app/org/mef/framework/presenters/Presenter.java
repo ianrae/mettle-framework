@@ -100,20 +100,22 @@ public class Presenter extends SfxBaseObj
 	protected boolean hasRole(Command cmd, String roleName)
 	{
 		IAuthorizer auth = (IAuthorizer) this.getInstance(IAuthorizer.class);
-		AuthSubject subj = auth.findSubject(cmd.identityId);
-		boolean b = auth.isAuth(subj, roleName, null);
+		boolean b = auth.isAuth(cmd.authSubject, roleName, null);
 		return b;
 	}
 	protected boolean isAuthorized(Command cmd, String roleName, AuthTicket ticket)
 	{
 		IAuthorizer auth = (IAuthorizer) this.getInstance(IAuthorizer.class);
-		AuthSubject subj = auth.findSubject(cmd.identityId);
-		boolean b = auth.isAuth(subj, roleName, ticket);
+		boolean b = auth.isAuth(cmd.authSubject, roleName, ticket);
 		return b;
 	}
 	protected boolean isLoggedIn(Command cmd)
 	{
-		return (cmd.identityId != null && ! cmd.identityId.isEmpty());
+		if (cmd.authSubject == null)
+		{
+			return false;
+		}
+		return cmd.authSubject.isLoggedIn();
 	}
 	
 	protected void ensureHasRole(Command cmd, String roleName) throws Exception

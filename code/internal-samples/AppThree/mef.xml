@@ -23,6 +23,7 @@
 <entity name="AuthSubject">
 	<field>@Id Long id</field>
 	<field>@Required String name</field>
+	<field>Long userId</field>
 
 	<query>find_by_name</query>
 	<codegen what="entity" useExisting="org.mef.framework.auth" />

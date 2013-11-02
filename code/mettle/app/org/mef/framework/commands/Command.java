@@ -2,13 +2,14 @@ package org.mef.framework.commands;
 
 import java.util.Map;
 
+import org.mef.framework.auth.IAuthSubject;
 import org.mef.framework.binder.IFormBinder;
 
 public class Command 
 {
 	private Map<String, String> map;
 	private IFormBinder binder;
-	public String identityId; //some sort of string that SecureSocial sets. null means not authenticated
+	public IAuthSubject authSubject; //null means not authenticated
 
 	public Command()
 	{}

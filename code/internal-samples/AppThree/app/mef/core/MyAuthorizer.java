@@ -12,6 +12,7 @@ import org.mef.framework.auth.AuthRole;
 import org.mef.framework.auth.AuthRule;
 import org.mef.framework.auth.AuthSubject;
 import org.mef.framework.auth.AuthTicket;
+import org.mef.framework.auth.IAuthSubject;
 import org.mef.framework.auth.IAuthorizer;
 import org.mef.framework.sfx.SfxBaseObj;
 import org.mef.framework.sfx.SfxContext;
@@ -44,10 +45,17 @@ public class MyAuthorizer extends SfxBaseObj implements IAuthorizer
 		return allRoles.get(roleName);
 	}
 	
+	@SuppressWarnings("null")
 	@Override
-	public boolean isAuthEx(AuthSubject subj, AuthRole role, AuthTicket ticket) 
+	public boolean isAuthEx(IAuthSubject subj, AuthRole role, AuthTicket ticket) 
 	{
-		AuthRule rule = _ruleDao.find_by_subject_and_role_and_ticket(subj, role, ticket);
+		AuthSubject model = null;
+		if (subj != null)
+		{
+			model = (AuthSubject) subj.getUserObject();
+		}
+		
+		AuthRule rule = _ruleDao.find_by_subject_and_role_and_ticket(model, role, ticket);
 		return (rule != null);
 	}
 
@@ -62,18 +70,7 @@ public class MyAuthorizer extends SfxBaseObj implements IAuthorizer
 	}
 
 	@Override
-	public AuthSubject findSubject(String identityId) 
-	{
-		if (identityId == null || identityId.isEmpty())
-		{
-			return null;
-		}
-		AuthSubject subject = _subjectDao.find_by_name(identityId);
-		return subject;
-	}
-
-	@Override
-	public boolean isAuth(AuthSubject subj, String roleName, AuthTicket ticket) 
+	public boolean isAuth(IAuthSubject subj, String roleName, AuthTicket ticket) 
 	{
 		AuthRole role = this.findRole(roleName);
 		if (role == null)
