@@ -54,13 +54,22 @@ public abstract class CodeGenerator extends SfxBaseObj
 	
 	protected String getResourceOrFilePath(String baseDir, String filename) throws Exception
 	{
+		//check for user-defined templates
+		String userDefinedPath = getUserDefined(baseDir + filename);
+		if (userDefinedPath != null)
+		{
+			log("using: " + userDefinedPath);
+			return userDefinedPath;
+		}
+				
+		
 		InputStream stream = this.getClass().getResourceAsStream(baseDir + filename);
 		if (stream != null)
 		{
 			List<String> linesL = readInputStream(stream);
 			String path = FileUtils.getTempDirectoryPath();
 			path = FilenameUtils.concat(path, filename);
-			log("TO: " + path);
+//			log("TO: " + path);
 			SfxTextWriter w = new SfxTextWriter(path, linesL);
 			w.writeFile(); //track error later!!
 			
@@ -75,6 +84,23 @@ public abstract class CodeGenerator extends SfxBaseObj
 			return tmp;
 		}
 		
+	}
+
+	private String getUserDefined(String filePath) 
+	{
+		filePath = filePath.replace("/", "\\");
+		if (filePath.startsWith("\\"))
+		{
+			filePath = filePath.substring(1); //trim
+		}
+		
+		String path = pathCombine(appDir, filePath);
+		File f = new File(path);
+		if (f.exists())
+		{
+			return path;
+		}
+		return null;
 	}
 
 	protected boolean copyFile(InputStream stream, String filename, String appDir) throws Exception

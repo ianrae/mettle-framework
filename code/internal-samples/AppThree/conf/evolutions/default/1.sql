@@ -26,6 +26,7 @@ create table auth_subject_model (
 
 create table auth_ticket_model (
   id                        bigint not null,
+  name                      varchar(255),
   constraint pk_auth_ticket_model primary key (id))
 ;
 

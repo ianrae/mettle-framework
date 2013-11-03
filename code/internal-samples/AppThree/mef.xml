@@ -49,6 +49,7 @@
 	
 	<method><![CDATA[AuthRule find_by_subject_and_role_and_ticket(AuthSubject s, AuthRole r, AuthTicket t)]]></method>
 	<codegen what="dal_mock" extend="true" />
+	<codegen what="dal_real" extend="true" />
 </entity>
 
 </entities>

@@ -1,5 +1,5 @@
 //THIS FILE HAS BEEN AUTO-GENERATED. DO NOT MODIFY.
-
+//THIS IS A CUSTOM FILE
 package mef.entities;
 
 import org.mef.framework.entities.Entity;
