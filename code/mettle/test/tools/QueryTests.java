@@ -10,6 +10,69 @@ import org.junit.Test;
 
 public class QueryTests extends BaseTest
 {
+	public static class QueryRenderer
+	{
+		public QueryRenderer()
+		{}
+		
+		public String render(List<QueryParser.Clause> resultsL)
+		{
+			String s = "";
+			int i = 0;
+			boolean findUnique = false;
+			boolean whereAdded = false;
+			QueryParser.Clause prev = null;
+			
+			for(QueryParser.Clause clause : resultsL)
+			{
+				boolean skip = false;
+				if (i == 0)
+				{
+					if (clause.is("findUnique"))
+					{
+						findUnique = true;
+					}
+				}
+				else
+				{
+					//  .eq("status", Order.Status.SHIPPED)  
+					if (! whereAdded)
+					{
+						whereAdded = true;
+						s += ".where";
+					}
+					else if (clause.is("or"))
+					{
+						s += ".or";
+						skip = true;
+					}
+					else if (clause.is("and"))
+					{
+						s += ".and";
+						skip = true;
+					}
+					else if (prev.is("whereEq"))
+					{
+						s += ".and";
+					}
+					
+					if (clause.is("whereEq"))
+					{
+						s += String.format(".eq(\"%s\", %s)", clause.value, clause.value);
+					}
+				}
+				i++;
+				prev = clause;
+			}
+			
+			if (findUnique)
+			{
+				s += ".findUnique()";
+			}
+			
+			return s;
+		}
+	}
 	public static class QueryParser
 	{
 		public static class Clause
@@ -20,6 +83,11 @@ public class QueryTests extends BaseTest
 			public Clause(String clause)
 			{
 				this.clause = clause;
+			}
+			
+			public boolean is(String clauseName)
+			{
+				return (clause.equals(clauseName));
 			}
 		}
 
@@ -53,11 +121,80 @@ public class QueryTests extends BaseTest
 					this.clauseL.add(c);
 					
 					s = s.substring(field.length());
+					
+					if (s.startsWith("_dot_"))
+					{
+						s = s.substring(5);
+						int pos = s.indexOf('_');
+						if (pos <= 0)
+						{
+							String name = s;
+							c.value += "." + name;
+						}
+						else
+						{
+							String name = s.substring(0, pos);
+							c.value += "." + name;
+							s = s.substring(pos + 1);
+						}
+					}
+					
+					if (s.startsWith("_eq"))
+					{}
+					else if (s.startsWith("_gt"))
+					{
+						c.clause = "whereGt";
+					}
+					else if (s.startsWith("_ge"))
+					{
+						c.clause = "whereGe";
+					}
+					else if (s.startsWith("_lt"))
+					{
+						c.clause = "whereLt";
+					}
+					else if (s.startsWith("_le"))
+					{
+						c.clause = "whereLe";
+					}
+					else if (s.startsWith("_like"))
+					{
+						c.clause = "whereLike";
+					}
+					else if (s.startsWith("_ilike"))
+					{
+						c.clause = "whereILike";
+					}
+					
 					if (s.startsWith("_and_"))
 					{
 						s = s.substring(5);
 					}
+					if (s.startsWith("_or_"))
+					{
+						c = new Clause("or");
+						clauseL.add(c);
+						s = s.substring(4);
+					}
 				}
+			}
+			
+			target = "_orderBy";
+			if (s.startsWith(target))
+			{
+				Clause c = new Clause("orderBy");
+				clauseL.add(c);
+				
+				s = s.substring(target.length());
+			}
+			
+			target = "_maxRows";
+			if (s.startsWith(target))
+			{
+				Clause c = new Clause("maxRows");
+				clauseL.add(c);
+				
+				s = s.substring(target.length());
 			}
 			
 			return true;
@@ -73,41 +210,113 @@ public class QueryTests extends BaseTest
 	public void test() 
 	{
 		String query = "find_by_name";
-		List<String> fieldNames = Arrays.asList("name", "birthDate");
+		QueryParser parser = startParse(query);
+		chkClause(parser, 1, "whereEq", "name");
 		
-		QueryParser parser = new QueryParser(fieldNames);
-		Boolean b = parser.parse(query);
-		assertEquals(true, b);
-		
-		List<QueryParser.Clause> results = parser.getResults();
-		assertNotNull(results);
-		assertEquals(2, results.size());
-		
-		QueryParser.Clause clause = results.get(1);
-		assertEquals("whereEq", clause.clause);
-		
+		chkRender(".where.eq(\"name\", name).findUnique()", parser);
+	}
+	
+	private void chkRender(String expected, QueryParser parser)
+	{
+		QueryRenderer r = new QueryRenderer();
+		assertEquals(expected, r.render(parser.getResults()));
 	}
 
 	@Test
 	public void test2() 
 	{
 		String query = "find_by_name_and_birthDate";
-		List<String> fieldNames = Arrays.asList("name", "birthDate");
+		QueryParser parser = startParse(query);
+		
+		List<QueryParser.Clause> results = parser.getResults();
+		assertEquals(3, results.size());
+		chkClause(parser, 1, "whereEq", "name");
+		chkClause(parser, 2, "whereEq", "birthDate");
+		
+		chkRender(".where.eq(\"name\", name).and.eq(\"birthDate\", birthDate).findUnique()", parser);
+	}
+	
+	@Test
+	public void test3() 
+	{
+		String query = "find_by_name_or_birthDate";
+		QueryParser parser = startParse(query);
+		
+		List<QueryParser.Clause> results = parser.getResults();
+		assertEquals(4, results.size());
+		chkClause(parser, 1, "whereEq", "name");
+		chkClause(parser, 2, "or", null);
+		chkClause(parser, 3, "whereEq", "birthDate");
+		chkRender(".where.eq(\"name\", name).or.eq(\"birthDate\", birthDate).findUnique()", parser);
+	}
+	
+	@Test
+	public void test4() 
+	{
+		String query = "find_by_name_or_birthDate_orderBy";
+		QueryParser parser = startParse(query);
+		
+		List<QueryParser.Clause> results = parser.getResults();
+		assertEquals(5, results.size());
+		chkClause(parser, 1, "whereEq", "name");
+		chkClause(parser, 2, "or", null);
+		chkClause(parser, 3, "whereEq", "birthDate");
+		chkClause(parser, 4, "orderBy", null);
+	}
+	
+	@Test
+	public void test5() 
+	{
+		String query = "find_by_name_or_birthDate_maxRows";
+		QueryParser parser = startParse(query);
+		
+		List<QueryParser.Clause> results = parser.getResults();
+		assertEquals(5, results.size());
+		chkClause(parser, 1, "whereEq", "name");
+		chkClause(parser, 2, "or", null);
+		chkClause(parser, 3, "whereEq", "birthDate");
+		chkClause(parser, 4, "maxRows", null);
+	}
+	
+	@Test
+	public void test6() 
+	{
+		String query = "find_by_name_gt";
+		QueryParser parser = startParse(query);
+		
+		List<QueryParser.Clause> results = parser.getResults();
+		assertEquals(2, results.size());
+		chkClause(parser, 1, "whereGt", "name");
+	}
+	
+	@Test
+	public void test7() 
+	{
+		String query = "find_by_customer_dot_name";
+		QueryParser parser = startParse(query);
+		
+		List<QueryParser.Clause> results = parser.getResults();
+		assertEquals(2, results.size());
+		chkClause(parser, 1, "whereEq", "customer.name");
+	}
+	
+	//--helper--
+	private QueryParser startParse(String query)
+	{
+		List<String> fieldNames = Arrays.asList("name", "birthDate", "customer");
 		
 		QueryParser parser = new QueryParser(fieldNames);
 		Boolean b = parser.parse(query);
 		assertEquals(true, b);
-		
+		return parser;
+	}
+	
+	private void chkClause(QueryParser parser, int index, String expect, String value)
+	{
 		List<QueryParser.Clause> results = parser.getResults();
-		assertNotNull(results);
-		assertEquals(3, results.size());
-		
-		QueryParser.Clause clause = results.get(1);
-		assertEquals("whereEq", clause.clause);
-		assertEquals("name", clause.value);
-		clause = results.get(2);
-		assertEquals("whereEq", clause.clause);
-		assertEquals("birthDate", clause.value);
+		QueryParser.Clause clause = results.get(index);
+		assertEquals(expect, clause.clause);
+		assertEquals(value, clause.value);
 		
 	}
 }
