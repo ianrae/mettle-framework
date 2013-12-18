@@ -44,6 +44,26 @@ public class CommitLogTests extends BaseTest
 		{
 			this.L = L;
 		}
+	}
+	
+	public static class BugLoader extends SfxBaseObj
+	{
+		private List<Bug> L;
+		
+		public BugLoader(SfxContext ctx)
+		{
+			super(ctx);
+		}
+		
+		public List<Bug> load(int commitId)
+		{
+			return L;
+		}
+		
+		public void force(List<Bug> L)
+		{
+			this.L = L;
+		}
 
 	}
 	
@@ -51,26 +71,48 @@ public class CommitLogTests extends BaseTest
 	public static class BugManager extends SfxBaseObj
 	{
 		BugCache cache;
+		BugLoader loader;
 		private List<Bug> L;
 		
-		public BugManager(SfxContext ctx, BugCache cache)
+		public BugManager(SfxContext ctx, BugCache cache, BugLoader loader)
 		{
 			super(ctx);
 			this.cache = cache;
+			this.loader = loader;
 		}
-
-		private boolean loadCacheIfNeeded()
+		private void logDetails(String title)
+		{
+			if (L == null)
+			{
+				log(String.format("%s: miss", title));
+			}
+			else
+			{
+				log(String.format("%s: load %d", title, L.size()));
+			}
+			
+		}
+		private boolean loadIfNeeded()
 		{
 			if (L == null)
 			{
 				L = cache.getFromCache();
+				logDetails("cache");
+			}
+			
+			if (L == null)
+			{
+				L = this.loader.load(0); //!!
+				logDetails("cache");
 			}
 			
 			return (L != null);
 		}
+		
+		
 		public Bug findById(int id) 
 		{
-			if (! loadCacheIfNeeded())
+			if (! loadIfNeeded())
 			{
 				return null;
 			}
@@ -86,36 +128,62 @@ public class CommitLogTests extends BaseTest
 		}
 	}
 	
+
 	
 	@Test
 	public void testEmptyCache() 
 	{
-		this.createContext();
-		BugCache cache = new BugCache(_ctx);
-		BugManager mgr = new BugManager(_ctx, cache);
-		
-		Bug bug = mgr.findById(1);
+		init();
+		Bug bug = _mgr.findById(1);
 		assertNull(bug);
 	}
 
 	@Test
 	public void testCache() 
 	{
-		this.createContext();
+		init();
 		ArrayList<Bug> L = new ArrayList<CommitLogTests.Bug>();
 		Bug bug1 = new Bug(1, "abc");
 		L.add(bug1);
+		_cache.saveToCache(L);
 		
-		BugCache cache = new BugCache(_ctx);
-		cache.saveToCache(L);
-		
-		BugManager mgr = new BugManager(_ctx, cache);
-		
-		Bug bug = mgr.findById(1);
+		Bug bug = _mgr.findById(1);
 		assertNotNull(bug);
 		assertEquals(1, bug.id);
 
-		bug = mgr.findById(2);
+		bug = _mgr.findById(2);
 		assertNull(bug);
 	}
+	
+	@Test
+	public void testLoad() 
+	{
+		init();
+		ArrayList<Bug> L = new ArrayList<CommitLogTests.Bug>();
+		Bug bug1 = new Bug(1, "abc");
+		L.add(bug1);
+		_loader.force(L);
+		
+		Bug bug = _mgr.findById(1);
+		assertNotNull(bug);
+		assertEquals(1, bug.id);
+
+		bug = _mgr.findById(2);
+		assertNull(bug);
+	}
+	
+	//------------- helpers ------------
+	//vars
+	BugCache _cache;
+	BugLoader _loader;
+	BugManager _mgr;
+
+	private void init()
+	{
+		this.createContext();
+		_cache = new BugCache(_ctx);
+		_loader = new BugLoader(_ctx);
+		_mgr = new BugManager(_ctx, _cache, _loader);
+	}
 }
+
