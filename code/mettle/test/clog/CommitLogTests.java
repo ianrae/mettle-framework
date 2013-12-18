@@ -14,23 +14,41 @@ import tools.BaseTest;
 
 public class CommitLogTests extends BaseTest
 {
-	public static class Bug extends Entity
+	public static class BaseSO
 	{
 		public int id;
+		
+		public BaseSO(int id)
+		{
+			this.id = id;
+		}
+	}
+	public static class Bug extends BaseSO
+	{
 		public String title;
 		
 		public Bug(int id, String title)
 		{
-			this.id = id;
+			super(id);
 			this.title = title;
 		}
 	}
+	public static class BugState extends BaseSO
+	{
+		public String stateName;
+		
+		public BugState(int id, String stateName)
+		{
+			super(id);
+			this.stateName = stateName;
+		}
+	}
 	
-	public static class BugCache extends SfxBaseObj
+	public static class CacheFacade extends SfxBaseObj
 	{
 		private List<Bug> L;
 		
-		public BugCache(SfxContext ctx)
+		public CacheFacade(SfxContext ctx)
 		{
 			super(ctx);
 		}
@@ -70,11 +88,11 @@ public class CommitLogTests extends BaseTest
 	
 	public static class BugManager extends SfxBaseObj
 	{
-		BugCache cache;
+		CacheFacade cache;
 		BugLoader loader;
 		private List<Bug> L;
 		
-		public BugManager(SfxContext ctx, BugCache cache, BugLoader loader)
+		public BugManager(SfxContext ctx, CacheFacade cache, BugLoader loader)
 		{
 			super(ctx);
 			this.cache = cache;
@@ -126,6 +144,8 @@ public class CommitLogTests extends BaseTest
 			}
 			return null;
 		}
+		
+		//full query api, getall, find_by_xxx, order,sort
 	}
 	
 
@@ -174,14 +194,14 @@ public class CommitLogTests extends BaseTest
 	
 	//------------- helpers ------------
 	//vars
-	BugCache _cache;
+	CacheFacade _cache;
 	BugLoader _loader;
 	BugManager _mgr;
 
 	private void init()
 	{
 		this.createContext();
-		_cache = new BugCache(_ctx);
+		_cache = new CacheFacade(_ctx);
 		_loader = new BugLoader(_ctx);
 		_mgr = new BugManager(_ctx, _cache, _loader);
 	}
