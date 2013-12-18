@@ -44,21 +44,21 @@ public class CommitLogTests extends BaseTest
 		}
 	}
 	
-	public static class CacheFacade extends SfxBaseObj
+	public static class CacheFacade<T> extends SfxBaseObj
 	{
-		private List<Bug> L;
+		private List<T> L;
 		
 		public CacheFacade(SfxContext ctx)
 		{
 			super(ctx);
 		}
 		
-		public List<Bug> getFromCache()
+		public List<T> getFromCache()
 		{
 			return L;
 		}
 		
-		public void saveToCache(List<Bug> L)
+		public void saveToCache(List<T> L)
 		{
 			this.L = L;
 		}
@@ -88,11 +88,11 @@ public class CommitLogTests extends BaseTest
 	
 	public static class BugManager extends SfxBaseObj
 	{
-		CacheFacade cache;
+		CacheFacade<Bug> cache;
 		BugLoader loader;
 		private List<Bug> L;
 		
-		public BugManager(SfxContext ctx, CacheFacade cache, BugLoader loader)
+		public BugManager(SfxContext ctx, CacheFacade<Bug> cache, BugLoader loader)
 		{
 			super(ctx);
 			this.cache = cache;
@@ -191,17 +191,33 @@ public class CommitLogTests extends BaseTest
 		bug = _mgr.findById(2);
 		assertNull(bug);
 	}
+
+	//---------- bug state ---
+	@Test
+	public void testCacheBugState() 
+	{
+		init();
+		ArrayList<BugState> L = new ArrayList<CommitLogTests.BugState>();
+		BugState bug1 = new BugState(1, "fixed");
+		L.add(bug1);
+		
+		CacheFacade<BugState> cache = new CacheFacade<BugState>(_ctx);
+		cache.saveToCache(L);
+		
+		List<BugState> L2 = cache.getFromCache();
+		assertNotNull(L2);
+	}
 	
 	//------------- helpers ------------
 	//vars
-	CacheFacade _cache;
+	CacheFacade<Bug> _cache;
 	BugLoader _loader;
 	BugManager _mgr;
 
 	private void init()
 	{
 		this.createContext();
-		_cache = new CacheFacade(_ctx);
+		_cache = new CacheFacade<Bug>(_ctx);
 		_loader = new BugLoader(_ctx);
 		_mgr = new BugManager(_ctx, _cache, _loader);
 	}
