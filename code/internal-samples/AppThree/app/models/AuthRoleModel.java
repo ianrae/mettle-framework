@@ -25,7 +25,8 @@ public class AuthRoleModel extends Model
 			Long.class, AuthRoleModel.class
 			);  
 
-	public static List<AuthRoleModel> all() {
+	public static List<AuthRoleModel> all() 
+	{
 		return find.all();
 	}
 	public static void delete(Long id) {

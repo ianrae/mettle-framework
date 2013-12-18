@@ -51,6 +51,14 @@ public class QueryTests extends BaseTest
 						s += ".and";
 						skip = true;
 					}
+					else if (clause.is("orderBy"))
+					{
+						s += ".orderBy(orderBy)"; //what if multiple orderBy?? need param orderBy2
+					}
+					else if (clause.is("maxRows"))
+					{
+						s += ".maxRows(maxRows)"; //what if multiple orderBy?? need param orderBy2
+					}
 					else if (prev.is("whereEq"))
 					{
 						s += ".and";
@@ -58,7 +66,27 @@ public class QueryTests extends BaseTest
 					
 					if (clause.is("whereEq"))
 					{
-						s += String.format(".eq(\"%s\", %s)", clause.value, clause.value);
+						s += renderExpr("eq", clause);
+					}
+					else if (clause.is("whereGt"))
+					{
+						s += renderExpr("gt", clause);
+					}
+					else if (clause.is("whereLt"))
+					{
+						s += renderExpr("lt", clause);
+					}
+					else if (clause.is("whereGe"))
+					{
+						s += renderExpr("ge", clause);
+					}
+					else if (clause.is("whereLe"))
+					{
+						s += renderExpr("le", clause);
+					}
+					else if (clause.is("whereNe"))
+					{
+						s += renderExpr("ne", clause);
 					}
 				}
 				i++;
@@ -71,6 +99,14 @@ public class QueryTests extends BaseTest
 			}
 			
 			return s;
+		}
+		
+		private String renderExpr(String op, QueryParser.Clause clause)
+		{
+			String param = clause.value;
+			param = param.replace(".", "_");
+			return String.format(".%s(\"%s\", %s)", op, clause.value, param);
+			
 		}
 	}
 	public static class QueryParser
@@ -156,6 +192,10 @@ public class QueryTests extends BaseTest
 					else if (s.startsWith("_le"))
 					{
 						c.clause = "whereLe";
+					}
+					else if (s.startsWith("_ne"))
+					{
+						c.clause = "whereNe";
 					}
 					else if (s.startsWith("_like"))
 					{
@@ -247,6 +287,7 @@ public class QueryTests extends BaseTest
 		chkClause(parser, 1, "whereEq", "name");
 		chkClause(parser, 2, "or", null);
 		chkClause(parser, 3, "whereEq", "birthDate");
+		
 		chkRender(".where.eq(\"name\", name).or.eq(\"birthDate\", birthDate).findUnique()", parser);
 	}
 	
@@ -262,6 +303,8 @@ public class QueryTests extends BaseTest
 		chkClause(parser, 2, "or", null);
 		chkClause(parser, 3, "whereEq", "birthDate");
 		chkClause(parser, 4, "orderBy", null);
+		
+		chkRender(".where.eq(\"name\", name).or.eq(\"birthDate\", birthDate).orderBy(orderBy).findUnique()", parser);
 	}
 	
 	@Test
@@ -276,6 +319,8 @@ public class QueryTests extends BaseTest
 		chkClause(parser, 2, "or", null);
 		chkClause(parser, 3, "whereEq", "birthDate");
 		chkClause(parser, 4, "maxRows", null);
+		
+		chkRender(".where.eq(\"name\", name).or.eq(\"birthDate\", birthDate).maxRows(maxRows).findUnique()", parser);
 	}
 	
 	@Test
@@ -287,6 +332,51 @@ public class QueryTests extends BaseTest
 		List<QueryParser.Clause> results = parser.getResults();
 		assertEquals(2, results.size());
 		chkClause(parser, 1, "whereGt", "name");
+		chkRender(".where.gt(\"name\", name).findUnique()", parser);
+	}
+	@Test
+	public void test6a() 
+	{
+		String query = "find_by_name_lt";
+		QueryParser parser = startParse(query);
+		
+		List<QueryParser.Clause> results = parser.getResults();
+		assertEquals(2, results.size());
+		chkClause(parser, 1, "whereLt", "name");
+		chkRender(".where.lt(\"name\", name).findUnique()", parser);
+	}
+	@Test
+	public void test6b() 
+	{
+		String query = "find_by_name_ge";
+		QueryParser parser = startParse(query);
+		
+		List<QueryParser.Clause> results = parser.getResults();
+		assertEquals(2, results.size());
+		chkClause(parser, 1, "whereGe", "name");
+		chkRender(".where.ge(\"name\", name).findUnique()", parser);
+	}
+	@Test
+	public void test6c() 
+	{
+		String query = "find_by_name_le";
+		QueryParser parser = startParse(query);
+		
+		List<QueryParser.Clause> results = parser.getResults();
+		assertEquals(2, results.size());
+		chkClause(parser, 1, "whereLe", "name");
+		chkRender(".where.le(\"name\", name).findUnique()", parser);
+	}
+	@Test
+	public void test6d() 
+	{
+		String query = "find_by_name_ne";
+		QueryParser parser = startParse(query);
+		
+		List<QueryParser.Clause> results = parser.getResults();
+		assertEquals(2, results.size());
+		chkClause(parser, 1, "whereNe", "name");
+		chkRender(".where.ne(\"name\", name).findUnique()", parser);
 	}
 	
 	@Test
@@ -298,6 +388,7 @@ public class QueryTests extends BaseTest
 		List<QueryParser.Clause> results = parser.getResults();
 		assertEquals(2, results.size());
 		chkClause(parser, 1, "whereEq", "customer.name");
+		chkRender(".where.eq(\"customer.name\", customer_name).findUnique()", parser);
 	}
 	
 	//--helper--
