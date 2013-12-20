@@ -3,6 +3,7 @@ package clog;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -97,6 +98,11 @@ public class JsonTests extends BaseTest
 			JSONObject val = (JSONObject) obj.get(name);
 			return val; //can be null
 		}
+		public JSONArray getArray(String name)
+		{
+			JSONArray val = (JSONArray) obj.get(name);
+			return val; //can be null
+		}
 		
 	}
 	
@@ -110,9 +116,16 @@ public class JsonTests extends BaseTest
 		
 		private ArrayList<Gate> gateL = new ArrayList<JsonTests.Gate>();
 		
+		@SuppressWarnings("rawtypes")
+		private HashMap<String,BaseParser> parserMap = new HashMap<String, JsonTests.BaseParser>();
+		
 		public WorldParser(SfxContext ctx)
 		{
 			super(ctx);
+			
+			parserMap.put("Airport", new AirportParser(_ctx));
+			parserMap.put("BigAirport", new BigAirportParser(_ctx));
+			parserMap.put("Gate", new GateParser(_ctx));
 		}
 		
 		protected JSONObject startParse(String input) throws Exception
@@ -127,12 +140,19 @@ public class JsonTests extends BaseTest
 			Object obj = doParse(input);
 			if (obj != null)
 			{
-				JSONObject val = helper.getEntity("gate");
-				if (val != null)
+				JSONArray ooo = helper.getArray("refs");
+				if (ooo != null)
 				{
-					GateParser gp = new GateParser(_ctx);
-					Gate gate = gp.parseFromJO(val);
-					gateL.add(gate);
+					for(int i = 0; i < ooo.size(); i++)
+					{
+						JSONObject val = (JSONObject) ooo.get(i);
+						if (val != null)
+						{
+							GateParser gp = new GateParser(_ctx);
+							Gate gate = gp.parseFromJO(val);
+							gateL.add(gate);
+						}
+					}
 				}
 				
 				resolveRefs();
@@ -148,13 +168,13 @@ public class JsonTests extends BaseTest
 			JSONObject val = helper.getEntity("root");
 			if (s.equals("Airport"))
 			{
-				AirportParser aparser = new AirportParser(_ctx);
+				AirportParser aparser = (AirportParser) parserMap.get("Airport");
 				Airport target = aparser.parseFromJO(val);
 				return target;
 			}
 			if (s.equals("BigAirport"))
 			{
-				BigAirportParser aparser = new BigAirportParser(_ctx);
+				BigAirportParser aparser = (BigAirportParser) parserMap.get("BigAirport");
 				aparser.refL = refL;
 				BigAirport target = (BigAirport) aparser.parseFromJO(val);
 				return target;
@@ -256,7 +276,6 @@ public class JsonTests extends BaseTest
 		public AirportParser(SfxContext ctx)
 		{
 			super(ctx);
-			
 		}
 		
 		protected Airport createObj()
@@ -414,7 +433,7 @@ public class JsonTests extends BaseTest
 		log("--test3c---");
 		init();
 		WorldParser parser = new WorldParser(_ctx);
-		String s = "{'rootType':'BigAirport','root': RRR, 'gate': {'id':2, 'name':'gate1'}}";
+		String s = "{'rootType':'BigAirport','root': RRR, 'refs': [ {'id':2, 'name':'gate1'}]  }";
 		s = s.replace("RRR", "{'id':1,'flag':true,'name':'bob','size':56,'gate':{'id':2} }");
 		BigAirport airport = (BigAirport) parser.parse(fix(s));
 		assertNotNull(airport);
