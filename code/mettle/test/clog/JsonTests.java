@@ -147,6 +147,7 @@ public class JsonTests extends BaseTest
 		public Object parse(String input) throws Exception
 		{
 			Object obj = doParse(input);
+			
 			if (obj != null)
 			{
 				JSONArray ooo = helper.getArray("refs");
@@ -157,8 +158,9 @@ public class JsonTests extends BaseTest
 						JSONObject val = (JSONObject) ooo.get(i);
 						if (val != null)
 						{
-							JSONArray ggg = (JSONArray) val.get("Gate");
-							doGates(ggg);
+							String type = (String)val.get("type");
+							JSONArray ggg = (JSONArray) val.get("things");
+							doGates(type, ggg);
 						}
 					}
 				}
@@ -168,20 +170,20 @@ public class JsonTests extends BaseTest
 			return obj;
 		}
 
-		private void doGates(JSONArray ggg) throws Exception
+		private void doGates(String type, JSONArray ggg) throws Exception
 		{
 			if (ggg == null)
 			{
 				return;
 			}
-			ParserDesc desc = this.parserMap.get("Gate");
+			ParserDesc desc = this.parserMap.get(type);
 			
 			for(int i = 0; i < ggg.size(); i++)
 			{
 				JSONObject val = (JSONObject) ggg.get(i);
 				if (val != null)
 				{
-					GateParser gp = (GateParser) desc.parser; //re-using parser, careful!!
+					BaseParser gp = (BaseParser) desc.parser; //re-using parser, careful!!
 					Thing target = gp.parseFromJO(val);
 					desc.refL.add(target);
 				}
@@ -474,7 +476,7 @@ public class JsonTests extends BaseTest
 		String s = "{'rootType':'BigAirport','root': RRR, 'refs': EEE  }";
 		s = s.replace("RRR", "{'id':1,'flag':true,'name':'bob','size':56,'gate':{'id':2} }");
 		s = s.replace("EEE", "[ GGG ]");
-		s = s.replace("GGG", "{ 'Gate': [{'id':2, 'name':'gate1'}] }");
+		s = s.replace("GGG", "{ 'type': 'Gate', 'things': [{'id':2, 'name':'gate1'}] }");
 		BigAirport airport = (BigAirport) parser.parse(fix(s));
 		assertNotNull(airport);
 		assertEquals(true, airport.flag);
