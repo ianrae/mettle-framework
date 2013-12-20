@@ -37,7 +37,9 @@ public class JsonTests extends BaseTest
 	
 	public static class ReferenceDesc
 	{
+		@SuppressWarnings("rawtypes")
 		public BaseParser parser;
+		
 		public String refId;
 		public Object target;
 	}
@@ -123,10 +125,23 @@ public class JsonTests extends BaseTest
 			log(s);
 			
 			JSONObject val = helper.getEntity("root");
-			
-			AirportParser aparser = new AirportParser(_ctx);
-			Airport target = aparser.parseFromJO(val);
-			return target;
+			if (s.equals("Airport"))
+			{
+				AirportParser aparser = new AirportParser(_ctx);
+				Airport target = aparser.parseFromJO(val);
+				return target;
+			}
+			if (s.equals("BigAirport"))
+			{
+				BigAirportParser aparser = new BigAirportParser(_ctx);
+				BigAirport target = (BigAirport) aparser.parseFromJO(val);
+				return target;
+			}
+			else
+			{
+				helper.errorOccured("unknown rootType: " + s);
+				return null;
+			}
 		}
 	}
 	
@@ -175,7 +190,10 @@ public class JsonTests extends BaseTest
 			return target;
 		}
 		
-		
+		protected void parseId(BaseThing target)
+		{
+			target.id = helper.getInt("id");
+		}
 		public void resolveRefs() throws Exception
 		{
 			for(ReferenceDesc desc : refL)
@@ -205,7 +223,7 @@ public class JsonTests extends BaseTest
 		
 		protected void onParse(Airport target) throws Exception
 		{
-			target.id = helper.getInt("id");
+			parseId(target);
 			target.flag = helper.getBool("flag");
 			target.name = helper.getString("name");
 			target.size = helper.getInt("size");
@@ -225,7 +243,7 @@ public class JsonTests extends BaseTest
 		
 		protected void onParse(Gate target) throws Exception
 		{
-			target.id = helper.getInt("id");
+			parseId(target);
 			target.name = helper.getString("name");
 		}
 	}
@@ -342,6 +360,23 @@ public class JsonTests extends BaseTest
 		chkErrors(0);
 	}
 	
+	@Test
+	public void test3c() throws Exception
+	{
+		log("--test3c---");
+		init();
+		WorldParser parser = new WorldParser(_ctx);
+		String s = "{'rootType':'BigAirport','root': RRR, 'gate': {'id':2, 'name':'gate1'}}";
+		s = s.replace("RRR", "{'id':1,'flag':true,'name':'bob','size':56}");
+		Airport airport = (Airport) parser.parse(fix(s));
+		assertNotNull(airport);
+		assertEquals(true, airport.flag);
+		assertEquals("bob", airport.name);
+		assertEquals(56, airport.size);
+		assertEquals(1, airport.id);
+		chkErrors(0);
+	}
+	
 	
 	@Test
 	public void test4() throws Exception
@@ -349,12 +384,13 @@ public class JsonTests extends BaseTest
 		log("--test4---");
 		init();
 		AirportParser parser = new AirportParser(_ctx);
-		String s = "{'id':1,'flag':true,'name':'bob','size':56}";
+		String s = "{'id':12,'flag':true,'name':'bob','size':56}";
 		Airport obj = parser.parse(fix(s));
 		assertNotNull(obj);
 		assertEquals(true, obj.flag);
 		assertEquals("bob", obj.name);
 		assertEquals(56, obj.size);
+		assertEquals(12, obj.id);
 		
 		chkErrors(0);
 	}
@@ -375,6 +411,8 @@ public class JsonTests extends BaseTest
 		Gate obj = parser.parse(fix(s));
 		assertNotNull(obj);
 		assertEquals("bob", obj.name);
+		assertEquals(1, obj.id);
+		
 		chkErrors(0);
 	}
 	
@@ -384,16 +422,18 @@ public class JsonTests extends BaseTest
 		log("--test6---");
 		this.init();
 		BigAirportParser parser = new BigAirportParser(_ctx);
-		String s = "{'id':1,'flag':true,'name':'bob','size':56,'gate':{'name':'gate1'}}"; //works with extra stuff!
+		String s = "{'id':1,'flag':true,'name':'bob','size':56,'gate':{'id':2, 'name':'gate1'}}"; //works with extra stuff!
 		BigAirport obj = (BigAirport) parser.parse(fix(s));
 		assertNotNull(obj);
 		assertEquals(true, obj.flag);
 		assertEquals("bob", obj.name);
 		assertEquals(56, obj.size);
 		assertNull(obj.gate);
+		assertEquals(1, obj.id);
 		
 		parser.resolveRefs();
 		assertNotNull(obj.gate);
+		assertEquals(2, obj.gate.id);
 		chkErrors(0);
 	}
 	
