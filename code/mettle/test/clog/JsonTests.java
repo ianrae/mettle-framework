@@ -108,6 +108,8 @@ public class JsonTests extends BaseTest
 		protected ArrayList<ReferenceDesc> refL = new ArrayList<JsonTests.ReferenceDesc>();
 		protected ParserHelper helper;
 		
+		private ArrayList<Gate> gateL = new ArrayList<JsonTests.Gate>();
+		
 		public WorldParser(SfxContext ctx)
 		{
 			super(ctx);
@@ -125,6 +127,14 @@ public class JsonTests extends BaseTest
 			Object obj = doParse(input);
 			if (obj != null)
 			{
+				JSONObject val = helper.getEntity("gate");
+				if (val != null)
+				{
+					GateParser gp = new GateParser(_ctx);
+					Gate gate = gp.parseFromJO(val);
+					gateL.add(gate);
+				}
+				
 				resolveRefs();
 			}
 			return obj;
@@ -162,8 +172,21 @@ public class JsonTests extends BaseTest
 			log(String.format("resolveRefs: %d", refL.size()));
 			for(ReferenceDesc desc : refL)
 			{
-				desc.parser.resolve(desc.refName, desc.refId, desc.target);
+				Gate gate = findByRefId(desc.refId);
+				desc.parser.resolve(desc.refName, gate, desc.target);
 			}
+		}
+
+		private Gate findByRefId(int refId) 
+		{
+			for(Gate gate : gateL)
+			{
+				if (gate.id == refId)
+				{
+					return gate;
+				}
+			}
+			return null;
 		}
 	}
 	
@@ -223,7 +246,7 @@ public class JsonTests extends BaseTest
 			target.id = helper.getInt("id");
 		}
 		
-		protected void resolve(String refName, int refId, Object targetParam) throws Exception
+		protected void resolve(String refName, BaseThing refObj, Object targetParam) throws Exception
 		{
 		}
 	}
@@ -292,14 +315,18 @@ public class JsonTests extends BaseTest
 		}
 		
 		@Override
-		protected void resolve(String refName, int refId, Object targetParam) throws Exception
+		protected void resolve(String refName, BaseThing refObj, Object targetParam) throws Exception
 		{
 			if (refName.equals("gate"))
 			{
-				GateParser inner1 = new GateParser(_ctx);
-				JSONObject jo = helper.getEntity("gate");
+//				GateParser inner1 = new GateParser(_ctx);
+//				JSONObject jo = helper.getEntity("gate");
+//				BigAirport target = (BigAirport) targetParam;
+//				target.gate = inner1.parseFromJO(jo);
+				
 				BigAirport target = (BigAirport) targetParam;
-				target.gate = inner1.parseFromJO(jo);
+				target.gate = (Gate) refObj;
+				
 			}
 		}
 	}
@@ -399,6 +426,7 @@ public class JsonTests extends BaseTest
 		//parser.resolveRefs();
 		assertNotNull(airport.gate);
 		assertEquals(2, airport.gate.id);
+		assertEquals("gate1", airport.gate.name);
 
 		chkErrors(0);
 	}
