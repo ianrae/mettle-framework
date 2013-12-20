@@ -209,11 +209,11 @@ public class JsonTests extends BaseTest
 		{
 			for(ReferenceDesc desc : refL)
 			{
-				resolve(desc.parser, desc.refId, desc.target);
+				desc.parser.resolve(desc.refId, desc.target);
 			}
 		}
 		
-		protected void resolve(BaseParser parser, String refId, Object targetParam) throws Exception
+		protected void resolve(String refId, Object targetParam) throws Exception
 		{
 			
 		}
@@ -240,57 +240,57 @@ public class JsonTests extends BaseTest
 		}
 	}
 	
-//	public static class GateParser extends BaseParser<Gate>
-//	{
-//		public GateParser(SfxContext ctx)
-//		{
-//			super(ctx);
-//		}
-//		protected Gate createObj()
-//		{
-//			return new Gate();
-//		}
-//		
-//		protected void onParse(Gate target) throws Exception
-//		{
-//			target.name = getString("name");
-//		}
-//	}
-//	
-//	public static class BigAirportParser extends AirportParser
-//	{
-//		public BigAirportParser(SfxContext ctx)
-//		{
-//			super(ctx);
-//		}
-//		
-//		protected Airport createObj()
-//		{
-//			return new BigAirport();
-//		}
-//		
-//		protected void onParse(Airport targetParam) throws Exception
-//		{
-//			super.onParse(targetParam);
-//			
-//			this.addRef(targetParam, "gate");
-////			BigAirport target = (BigAirport) targetParam;
-////			JSONObject jo = getEntity("gate");
-////			GateParser inner1 = new GateParser(_ctx);
-////			target.gate = inner1.parseFromJO(jo);
-//		}
-//		
-//		protected void resolve(BaseParser parser, String refId, Object targetParam) throws Exception
-//		{
-//			if (refId.equals("gate"))
-//			{
-//				GateParser inner1 = new GateParser(_ctx);
-//				JSONObject jo = getEntity("gate");
-//				BigAirport target = (BigAirport) targetParam;
-//				target.gate = inner1.parseFromJO(jo);
-//			}
-//		}
-//	}
+	public static class GateParser extends BaseParser<Gate>
+	{
+		public GateParser(SfxContext ctx)
+		{
+			super(ctx);
+		}
+		protected Gate createObj()
+		{
+			return new Gate();
+		}
+		
+		protected void onParse(Gate target) throws Exception
+		{
+			target.name = getString("name");
+		}
+	}
+	
+	public static class BigAirportParser extends AirportParser
+	{
+		public BigAirportParser(SfxContext ctx)
+		{
+			super(ctx);
+		}
+		
+		protected Airport createObj()
+		{
+			return new BigAirport();
+		}
+		
+		protected void onParse(Airport targetParam) throws Exception
+		{
+			super.onParse(targetParam);
+			
+			this.addRef(targetParam, "gate");
+//			BigAirport target = (BigAirport) targetParam;
+//			JSONObject jo = getEntity("gate");
+//			GateParser inner1 = new GateParser(_ctx);
+//			target.gate = inner1.parseFromJO(jo);
+		}
+		
+		protected void resolve(String refId, Object targetParam) throws Exception
+		{
+			if (refId.equals("gate"))
+			{
+				GateParser inner1 = new GateParser(_ctx);
+				JSONObject jo = getEntity("gate");
+				BigAirport target = (BigAirport) targetParam;
+				target.gate = inner1.parseFromJO(jo);
+			}
+		}
+	}
 	
 	@Test
 	public void test() 
@@ -391,36 +391,37 @@ public class JsonTests extends BaseTest
 		assertEquals(i, tracker.getErrorCount());
 	}
 
-//	@Test
-//	public void test5() throws Exception
-//	{
-//		log("--test5---");
-//		this.createContext();
-//		GateParser parser = new GateParser(_ctx);
-//		String s = "{'flag':true,'name':'bob','size':56}"; //works with extra stuff!
-//		Gate obj = parser.parse(fix(s));
-//		assertNotNull(obj);
-//		assertEquals("bob", obj.name);
-//	}
-//	
-//	@Test
-//	public void test6() throws Exception
-//	{
-//		log("--test6---");
-//		this.createContext();
-//		BigAirportParser parser = new BigAirportParser(_ctx);
-//		String s = "{'flag':true,'name':'bob','size':56,'gate':{'name':'gate1'}}"; //works with extra stuff!
-//		BigAirport obj = (BigAirport) parser.parse(fix(s));
-//		assertNotNull(obj);
-//		assertEquals(true, obj.flag);
-//		assertEquals("bob", obj.name);
-//		assertEquals(56, obj.size);
-//		assertNull(obj.gate);
-//		
-//		parser.resolveRefs();
-//		assertNotNull(obj.gate);
-//	}
-//	
+	@Test
+	public void test5() throws Exception
+	{
+		log("--test5---");
+		this.init();
+		GateParser parser = new GateParser(_ctx);
+		String s = "{'flag':true,'name':'bob','size':56}"; //works with extra stuff!
+		Gate obj = parser.parse(fix(s));
+		assertNotNull(obj);
+		assertEquals("bob", obj.name);
+		chkErrors(0);
+	}
+	
+	@Test
+	public void test6() throws Exception
+	{
+		log("--test6---");
+		this.createContext();
+		BigAirportParser parser = new BigAirportParser(_ctx);
+		String s = "{'flag':true,'name':'bob','size':56,'gate':{'name':'gate1'}}"; //works with extra stuff!
+		BigAirport obj = (BigAirport) parser.parse(fix(s));
+		assertNotNull(obj);
+		assertEquals(true, obj.flag);
+		assertEquals("bob", obj.name);
+		assertEquals(56, obj.size);
+		assertNull(obj.gate);
+		
+		parser.resolveRefs();
+		assertNotNull(obj.gate);
+	}
+	
 	
 	//------- helpers---------
 	private String fix(String s)
