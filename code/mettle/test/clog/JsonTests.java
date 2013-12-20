@@ -42,7 +42,7 @@ public class JsonTests extends BaseTest
 		
 		public String refName;  //name of file
 		public Class refClass;
-		public Object target;
+		public Thing target;
 
 		public int refId;
 	}
@@ -226,12 +226,16 @@ public class JsonTests extends BaseTest
 			}
 		}
 
-		private Thing findByRefId(ReferenceDesc desc) 
+		private ParserDesc findParserFor(ReferenceDesc desc) 
 		{
 			String name = desc.refClass.getSimpleName();
-			log(name);
-			
+//			log(name);
 			ParserDesc d2 = parserMap.get(name);
+			return d2;
+		}
+		private Thing findByRefId(ReferenceDesc desc) 
+		{
+			ParserDesc d2 = findParserFor(desc);
 			if (d2 == null)
 			{
 				return null;
@@ -257,13 +261,32 @@ public class JsonTests extends BaseTest
 				return null;
 			}
 			
+			desc.parser.refL = refL;
 			String rootStr = desc.parser.render(thing);
 			
-			String output = String.format("{'rootType':'%s','root': %s, 'refs':  }", name, rootStr);
+			String refString = resolveRenderRefs();
+			
+			String output = String.format("{'rootType':'%s','root': %s, 'refs': %s }", name, rootStr, refString);
 //			s = s.replace("RRR", "{'id':1,'flag':true,'name':'bob','size':56,'gate':{'id':2} }");
 //			s = s.replace("EEE", "[ GGG ]");
 //			s = s.replace("GGG", "{ 'type': 'Gate', 'things': [{'id':2, 'name':'gate1'}] }");
 			
+			return output;
+		}
+
+		private String resolveRenderRefs() 
+		{
+			String output = "";
+			log(String.format("resolveRenderRefs: %d", refL.size()));
+			for(ReferenceDesc desc : refL)
+			{
+				ParserDesc d2 = findParserFor(desc);
+				if (d2 == null)
+				{
+					return null;
+				}
+				output += d2.parser.render(desc.target);
+			}
 			return output;
 		}
 	}
@@ -287,7 +310,7 @@ public class JsonTests extends BaseTest
 			return obj;
 		}
 		
-		protected void addRef(Object target, String refName, Class clazz)
+		protected void addRef(Thing target, String refName, Class clazz)
 		{
 			JSONObject oo = helper.getEntity(refName);
 			ParserHelper h2 = new ParserHelper(_ctx, oo);
@@ -338,6 +361,22 @@ public class JsonTests extends BaseTest
 		}
 		
 		protected abstract void onRender(Thing target);
+		
+		@SuppressWarnings("unchecked")
+		protected void renderRef(String refName, Thing thing)
+		{
+			HashMap <String,Object> map = new HashMap<String, Object>();
+			map.put("id", thing.id);
+			obj.put(refName, map);
+			
+			ReferenceDesc desc = new ReferenceDesc();
+			desc.parser = this;
+			desc.refName = refName;
+			desc.refClass = thing.getClass();
+			desc.refId = thing.id;
+			desc.target = thing;
+			this.refL.add(desc);
+		}
 	}
 
 	public static class AirportParser extends BaseParser
@@ -436,6 +475,8 @@ public class JsonTests extends BaseTest
 		{
 			super.onRender(targetParam);
 			BigAirport target = (BigAirport) targetParam;
+			this.renderRef("gate", target.gate);
+			
 		}
 	}
 	
