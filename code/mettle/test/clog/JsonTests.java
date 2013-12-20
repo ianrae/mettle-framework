@@ -3,6 +3,8 @@ package clog;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 
 import org.json.simple.JSONArray;
@@ -108,7 +110,7 @@ public class JsonTests extends BaseTest
 	public static class ParserDesc
 	{
 		public BaseParser parser;
-		public ArrayList<Thing> refL = new ArrayList<JsonTests.Thing>();
+		public ArrayList<Thing> thingL = new ArrayList<JsonTests.Thing>();
 		
 		public ParserDesc(BaseParser parser)
 		{
@@ -185,7 +187,7 @@ public class JsonTests extends BaseTest
 				{
 					BaseParser gp = (BaseParser) desc.parser; //re-using parser, careful!!
 					Thing target = gp.parseFromJO(val);
-					desc.refL.add(target);
+					desc.thingL.add(target);
 				}
 			}
 		}
@@ -241,7 +243,7 @@ public class JsonTests extends BaseTest
 				return null;
 			}
 			
-			for(Thing thing : d2.refL)
+			for(Thing thing : d2.thingL)
 			{
 				if (thing.id == desc.refId)
 				{
@@ -587,7 +589,51 @@ public class JsonTests extends BaseTest
 		log(output);
 		assertEquals("ss", output);
 	}
-	
+	@Test
+	public void testRefSort()
+	{
+		ArrayList<ReferenceDesc> L = new ArrayList<JsonTests.ReferenceDesc>();
+		
+		ReferenceDesc desc = new ReferenceDesc();
+		desc.refClass = Gate.class;
+		L.add(desc);
+		desc = new ReferenceDesc();
+		desc.refClass = BigAirport.class;
+		L.add(desc);
+		desc = new ReferenceDesc();
+		desc.refClass = Airport.class;
+		L.add(desc);
+		desc = new ReferenceDesc();
+		desc.refClass = BigAirport.class;
+		L.add(desc);
+		
+		Comparator<ReferenceDesc> comparator = new Comparator<ReferenceDesc>() {
+		    public int compare(ReferenceDesc c1, ReferenceDesc c2) {
+		        String s1 = c1.refClass.getSimpleName();
+		        String s2 = c2.refClass.getSimpleName();
+		        return s1.compareTo(s2);
+		    }
+		};		
+		
+		Collections.sort(L, comparator);
+		
+		
+		ArrayList<String> nameL = new ArrayList<String>();
+		for(ReferenceDesc dd : L)
+		{
+			String s = dd.refClass.getSimpleName();
+			log(s);
+			if (! nameL.contains(s))
+			{
+				nameL.add(s);
+			}
+		}
+//		
+		for(String tmp : nameL)
+		{
+			log("name: " + tmp);
+		}
+	}
 	
 	@Test
 	public void test4() throws Exception
