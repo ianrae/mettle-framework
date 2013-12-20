@@ -6,6 +6,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.junit.Test;
+import org.mef.framework.sfx.SfxBaseObj;
+import org.mef.framework.sfx.SfxContext;
 
 import tools.BaseTest;
 
@@ -17,14 +19,24 @@ public class JsonTests extends BaseTest
 		public String name;
 		public int size;
 	}
+	public static class Gate
+	{
+		public String name;
+	}
+	public static class BigAirport extends Airport
+	{
+		public Gate gate;
+	}
 	
-	public static class BaseParser
+	public static class BaseParser extends SfxBaseObj
 	{
 		private JSONParser parser=new JSONParser();
 		private JSONObject obj;
 		
-		public BaseParser()
-		{}
+		public BaseParser(SfxContext ctx)
+		{
+			super(ctx);
+		}
 		
 		protected JSONObject startParse(String input) throws Exception
 		{
@@ -58,24 +70,79 @@ public class JsonTests extends BaseTest
 			int n = val.intValue();
 			return n;
 		}
+		
+		protected JSONObject getEntity(String name)
+		{
+			JSONObject val = (JSONObject) obj.get(name);
+			return val; //can be null
+		}
 	}
 
 	public static class AirportParser extends BaseParser
 	{
-		public AirportParser()
-		{}
+		public AirportParser(SfxContext ctx)
+		{
+			super(ctx);
+		}
+		
+		protected Object createObj()
+		{
+			return new Airport();
+		}
 		
 		Airport parse(String input) throws Exception
 		{
 			startParse(input);
 			
-			Airport target = new Airport();
+			Airport target = (Airport) onParse();
+			return target;
+		}
+		protected Object onParse() throws Exception
+		{
+			Airport target = (Airport) createObj();
 			target.flag = getBool("flag");
 			target.name = getString("name");
 			target.size = getInt("size");
 			return target;
 		}
+	}
+	public static class GateParser extends BaseParser
+	{
+		public GateParser(SfxContext ctx)
+		{
+			super(ctx);
+		}
 		
+		Gate parse(String input) throws Exception
+		{
+			startParse(input);
+			
+			Gate target = new Gate();
+			target.name = getString("name");
+			return target;
+		}
+	}
+	public static class BigAirportParser extends AirportParser
+	{
+		public BigAirportParser(SfxContext ctx)
+		{
+			super(ctx);
+		}
+		
+		protected Object createObj()
+		{
+			return new BigAirport();
+		}
+		
+		BigAirport parse(String input) throws Exception
+		{
+			startParse(input);
+			BigAirport target = (BigAirport) onParse();
+			
+			JSONObject jo = getEntity("gate");
+			target.gate = null;
+			return target;
+		}
 	}
 	
 	@Test
@@ -143,7 +210,8 @@ public class JsonTests extends BaseTest
 	public void test4() throws Exception
 	{
 		log("--test4---");
-		AirportParser parser = new AirportParser();
+		this.createContext();
+		AirportParser parser = new AirportParser(_ctx);
 		String s = "{'flag':true,'name':'bob','size':56}";
 		Airport obj = parser.parse(fix(s));
 		assertNotNull(obj);
@@ -151,6 +219,34 @@ public class JsonTests extends BaseTest
 		assertEquals("bob", obj.name);
 		assertEquals(56, obj.size);
 	}
+
+	@Test
+	public void test5() throws Exception
+	{
+		log("--test5---");
+		this.createContext();
+		GateParser parser = new GateParser(_ctx);
+		String s = "{'flag':true,'name':'bob','size':56}"; //works with extra stuff!
+		Gate obj = parser.parse(fix(s));
+		assertNotNull(obj);
+		assertEquals("bob", obj.name);
+	}
+	
+	@Test
+	public void test6() throws Exception
+	{
+		log("--test6---");
+		this.createContext();
+		BigAirportParser parser = new BigAirportParser(_ctx);
+		String s = "{'flag':true,'name':'bob','size':56,'gate':{'name':'gate1'}}"; //works with extra stuff!
+		BigAirport obj = parser.parse(fix(s));
+		assertNotNull(obj);
+		assertEquals(true, obj.flag);
+		assertEquals("bob", obj.name);
+		assertEquals(56, obj.size);
+		assertNotNull(obj.gate);
+	}
+	
 	
 	//------- helpers---------
 	private String fix(String s)
