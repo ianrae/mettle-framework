@@ -1,23 +1,17 @@
 package clog;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.junit.Test;
 import org.mef.framework.sfx.SfxContext;
 import org.mef.framework.sfx.SfxErrorTracker;
 
 import persistence.BaseParser;
-import persistence.ReferenceDesc;
+import persistence.IIdGenerator;
 import persistence.ReferenceList;
 import persistence.WorldParser;
-
 import tools.BaseTest;
 
 public class JsonTests extends BaseTest
@@ -63,7 +57,7 @@ public class JsonTests extends BaseTest
 		}
 
 		@Override
-		protected void onRender(Thing targetParam) 
+		protected void onRender(Thing targetParam, IIdGenerator generator) 
 		{
 			Airport target = (Airport)targetParam;
 			obj.put("id", target.id);
@@ -92,7 +86,7 @@ public class JsonTests extends BaseTest
 		}
 		
 		@Override
-		protected void onRender(Thing targetParam) 
+		protected void onRender(Thing targetParam, IIdGenerator generator) 
 		{
 			Gate target = (Gate) targetParam;
 			obj.put("id", target.id);
@@ -133,9 +127,9 @@ public class JsonTests extends BaseTest
 		}
 		
 		@Override
-		protected void onRender(Thing targetParam) 
+		protected void onRender(Thing targetParam, IIdGenerator generator) 
 		{
-			super.onRender(targetParam);
+			super.onRender(targetParam, generator);
 			BigAirport target = (BigAirport) targetParam;
 			this.renderRef("gate", target.gate);
 			
@@ -194,17 +188,18 @@ public class JsonTests extends BaseTest
 		log("--test4---");
 		init();
 		AirportParser parser = new AirportParser(_ctx);
-		String s = "{'id':12,'flag':true,'name':'bob','size':56}";
+		String s = "{'id':1,'flag':true,'name':'bob','size':56}";
 		s = fix(s);
 		Airport obj = (Airport) parser.parse(s);
 		assertNotNull(obj);
 		chkAirport(obj, true, "bob", 56);		
-		assertEquals(12, obj.id);
+		assertEquals(1, obj.id);
 		
 		chkErrors(0);
 		log("render..");
 		
-		String output = parser.render(obj);
+		WorldParser pp = new WorldParser(_ctx);
+		String output = parser.render(obj, pp);
 		log(output);
 		assertEquals(s, output);
 	}
@@ -246,7 +241,28 @@ public class JsonTests extends BaseTest
 		chkErrors(0);
 	}
 	
-	
+	@Test
+	public void test7() throws Exception
+	{
+		log("--test7---");
+		init();
+		Gate g1 = new Gate();
+		g1.name = "gate1";
+		Gate g2 = new Gate();
+		g2.name = "gate2";
+		BigAirport airport = new BigAirport();
+		airport.flag = false;
+		airport.name = "halifax";
+		airport.gate = g1;
+		
+		log("render..");
+		WorldParser parser = new WorldParser(_ctx);
+		parser = new WorldParser(_ctx);
+		String output = parser.render(airport);
+		log(output);
+		chkErrors(0);
+		
+	}	
 	//------- helpers---------
 	private String fix(String s)
 	{

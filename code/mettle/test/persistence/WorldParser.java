@@ -15,21 +15,20 @@ import clog.JsonTests.BigAirportParser;
 import clog.JsonTests.GateParser;
 import clog.JsonTests.Thing;
 
-public class WorldParser extends SfxBaseObj
+public class WorldParser extends SfxBaseObj implements IIdGenerator
 	{
 		private JSONParser parser=new JSONParser();
 		protected JSONObject obj;
 		protected ReferenceList refL = new ReferenceList();
 		protected ParserHelper helper;
-		
-//		private ArrayList<Gate> gateL = new ArrayList<JsonTests.Gate>();
-		
 		private HashMap<String,ParserDesc> parserMap = new HashMap<String, ParserDesc>();
+		
+		//render
+		protected int nextId = 1;
 		
 		public WorldParser(SfxContext ctx)
 		{
 			super(ctx);
-			
 			parserMap.put("Airport", new ParserDesc(new AirportParser(_ctx)));
 			parserMap.put("BigAirport", new ParserDesc(new BigAirportParser(_ctx)));
 			parserMap.put("Gate", new ParserDesc(new GateParser(_ctx)));
@@ -149,8 +148,11 @@ public class WorldParser extends SfxBaseObj
 			return null;
 		}
 
+		//--render--
 		public String render(Thing thing) 
 		{
+			nextId = 1; //reset
+			
 			String name = thing.getClass().getSimpleName();
 			ParserDesc desc = parserMap.get(name);
 			if (desc == null)
@@ -159,8 +161,9 @@ public class WorldParser extends SfxBaseObj
 				return null;
 			}
 			
+//			assignId(thing);
 			desc.parser.refL = refL;
-			String rootStr = desc.parser.render(thing);
+			String rootStr = desc.parser.render(thing, this);
 			
 			String refString = resolveRenderRefs();
 			
@@ -198,9 +201,16 @@ public class WorldParser extends SfxBaseObj
 				{
 					return null;
 				}
-				output += d2.parser.render(desc.target);
+				output += d2.parser.render(desc.target, this);
 			}
 			output += " ] }";
 			return output;
+		}
+
+		@Override
+		public int assignId(Thing thing) 
+		{
+			thing.id = nextId++;
+			return thing.id;
 		}
 	}

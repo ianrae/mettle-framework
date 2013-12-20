@@ -72,14 +72,15 @@ public abstract class BaseParser extends SfxBaseObj
 	}
 	
 	//render
-	public String render(Thing target) 
+	public String render(Thing target, IIdGenerator generator) 
 	{
 		obj=new JSONObject();
-		onRender(target);
+		generator.assignId(target);
+		onRender(target, generator);
 		return obj.toJSONString();
 	}
 	
-	protected abstract void onRender(Thing target);
+	protected abstract void onRender(Thing target, IIdGenerator generator);
 	
 	@SuppressWarnings("unchecked")
 	protected void renderRef(String refName, Thing thing)
