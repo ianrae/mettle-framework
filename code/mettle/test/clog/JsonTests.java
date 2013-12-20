@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -49,6 +50,37 @@ public class JsonTests extends BaseTest
 		public int refId;
 	}
 	
+	public static class ReferenceList
+	{
+		public ArrayList<ReferenceDesc> refL = new ArrayList<JsonTests.ReferenceDesc>();
+
+		public List<String> getAllTypes()
+		{
+			ArrayList<String> nameL = new ArrayList<String>();
+			for(ReferenceDesc dd : refL)
+			{
+				String s = dd.refClass.getSimpleName();
+				if (! nameL.contains(s))
+				{
+					nameL.add(s);
+				}
+			}
+			return nameL;
+		}
+		public List<ReferenceDesc> getListFor(String className)
+		{
+			ArrayList<ReferenceDesc> resultL = new ArrayList<ReferenceDesc>();
+			for(ReferenceDesc desc : refL)
+			{
+				String s = desc.refClass.getSimpleName();
+				if (s.equals(className))
+				{
+					resultL.add(desc);
+				}
+			}
+			return resultL;
+		}
+	}
 	
 	public static class ParserHelper extends SfxBaseObj
 	{
@@ -123,7 +155,7 @@ public class JsonTests extends BaseTest
 	{
 		private JSONParser parser=new JSONParser();
 		protected JSONObject obj;
-		protected ArrayList<ReferenceDesc> refL = new ArrayList<JsonTests.ReferenceDesc>();
+		protected ReferenceList refL = new ReferenceList();
 		protected ParserHelper helper;
 		
 //		private ArrayList<Gate> gateL = new ArrayList<JsonTests.Gate>();
@@ -220,8 +252,8 @@ public class JsonTests extends BaseTest
 		
 		private void resolveRefs() throws Exception
 		{
-			log(String.format("resolveRefs: %d", refL.size()));
-			for(ReferenceDesc desc : refL)
+			log(String.format("resolveRefs: %d", refL.refL.size()));
+			for(ReferenceDesc desc : refL.refL)
 			{
 				Thing thing = findByRefId(desc);
 				desc.parser.resolve(desc.refName, thing, desc.target);
@@ -268,7 +300,7 @@ public class JsonTests extends BaseTest
 			
 			String refString = resolveRenderRefs();
 			
-			String output = String.format("{'rootType':'%s','root': %s, 'refs': %s }", name, rootStr, refString);
+			String output = String.format("{\"rootType\":\"%s\",\"root\": %s, \"refs\": [ %s ] }", name, rootStr, refString);
 //			s = s.replace("RRR", "{'id':1,'flag':true,'name':'bob','size':56,'gate':{'id':2} }");
 //			s = s.replace("EEE", "[ GGG ]");
 //			s = s.replace("GGG", "{ 'type': 'Gate', 'things': [{'id':2, 'name':'gate1'}] }");
@@ -279,8 +311,23 @@ public class JsonTests extends BaseTest
 		private String resolveRenderRefs() 
 		{
 			String output = "";
-			log(String.format("resolveRenderRefs: %d", refL.size()));
-			for(ReferenceDesc desc : refL)
+			log(String.format("resolveRenderRefs: %d", refL.refL.size()));
+			
+			List<String> typeL = refL.getAllTypes();		
+			for(String className : typeL)
+			{
+				output += resolveRenderRefsFor(className);
+			}
+			return output;
+		}
+		private String resolveRenderRefsFor(String className) 
+		{
+			String output = String.format("{\"type\": \"%s\"", className);
+			List<ReferenceDesc> L = refL.getListFor(className);
+			log(String.format("resolveRenderRefs: %s %d", className, L.size()));
+			
+			output += ", \"things\": [ ";
+			for(ReferenceDesc desc : L)
 			{
 				ParserDesc d2 = findParserFor(desc);
 				if (d2 == null)
@@ -289,6 +336,7 @@ public class JsonTests extends BaseTest
 				}
 				output += d2.parser.render(desc.target);
 			}
+			output += " ] }";
 			return output;
 		}
 	}
@@ -297,7 +345,7 @@ public class JsonTests extends BaseTest
 	{
 		private JSONParser parser=new JSONParser();
 		protected JSONObject obj;
-		public ArrayList<ReferenceDesc> refL;
+		public ReferenceList refL;
 		protected ParserHelper helper;
 		
 		public BaseParser(SfxContext ctx)
@@ -325,7 +373,7 @@ public class JsonTests extends BaseTest
 			desc.refClass = clazz;
 			desc.refId = idd;
 			desc.target = target;
-			this.refL.add(desc);
+			this.refL.refL.add(desc);
 		}
 		
 		abstract protected Thing createObj();
@@ -377,7 +425,7 @@ public class JsonTests extends BaseTest
 			desc.refClass = thing.getClass();
 			desc.refId = thing.id;
 			desc.target = thing;
-			this.refL.add(desc);
+			this.refL.refL.add(desc);
 		}
 	}
 
@@ -587,7 +635,21 @@ public class JsonTests extends BaseTest
 		parser = new WorldParser(_ctx);
 		String output = parser.render(airport);
 		log(output);
-		assertEquals("ss", output);
+		//assertEquals("ss", output);
+		
+		log("re-parse");
+		parser = new WorldParser(_ctx);
+		airport = (BigAirport) parser.parse(output);
+		assertNotNull(airport);
+		assertEquals(true, airport.flag);
+		assertEquals("bob", airport.name);
+		assertEquals(56, airport.size);
+		assertEquals(1, airport.id);
+		
+		//parser.resolveRefs();
+		assertNotNull(airport.gate);
+		assertEquals(2, airport.gate.id);
+		assertEquals("gate1", airport.gate.name);
 	}
 	@Test
 	public void testRefSort()
@@ -685,7 +747,7 @@ public class JsonTests extends BaseTest
 		log("--test6---");
 		this.init();
 		BigAirportParser parser = new BigAirportParser(_ctx);
-		parser.refL = new ArrayList<JsonTests.ReferenceDesc>();
+		parser.refL = new ReferenceList();
 		String s = "{'id':1,'flag':true,'name':'bob','size':56,'gate':{'id':2, 'name':'gate1'}}"; //works with extra stuff!
 		BigAirport obj = (BigAirport) parser.parse(fix(s));
 		assertNotNull(obj);
