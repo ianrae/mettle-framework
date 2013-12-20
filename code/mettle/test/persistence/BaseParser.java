@@ -8,7 +8,6 @@ import org.mef.framework.sfx.SfxBaseObj;
 import org.mef.framework.sfx.SfxContext;
 
 import clog.JsonTests;
-import clog.JsonTests.Thing;
 
 public abstract class BaseParser extends SfxBaseObj
 {
@@ -72,19 +71,25 @@ public abstract class BaseParser extends SfxBaseObj
 	}
 	
 	//render
+	IIdGenerator currentGenerator;
+	
 	public String render(Thing target, IIdGenerator generator) 
 	{
 		obj=new JSONObject();
 		generator.assignId(target);
-		onRender(target, generator);
+		currentGenerator = generator;
+		
+		onRender(target);
 		return obj.toJSONString();
 	}
 	
-	protected abstract void onRender(Thing target, IIdGenerator generator);
+	protected abstract void onRender(Thing target);
 	
 	@SuppressWarnings("unchecked")
 	protected void renderRef(String refName, Thing thing)
 	{
+		currentGenerator.assignId(thing);
+		
 		HashMap <String,Object> map = new HashMap<String, Object>();
 		map.put("id", thing.id);
 		obj.put(refName, map);

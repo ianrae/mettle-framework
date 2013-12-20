@@ -1,7 +1,6 @@
 package persistence;
 
 import clog.JsonTests;
-import clog.JsonTests.Thing;
 
 public class ReferenceDesc
 {

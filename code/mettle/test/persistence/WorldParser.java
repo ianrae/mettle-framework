@@ -8,12 +8,12 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.mef.framework.sfx.SfxBaseObj;
 import org.mef.framework.sfx.SfxContext;
+import org.mef.framework.sfx.SfxErrorTracker;
 
 import clog.JsonTests;
 import clog.JsonTests.AirportParser;
 import clog.JsonTests.BigAirportParser;
 import clog.JsonTests.GateParser;
-import clog.JsonTests.Thing;
 
 public class WorldParser extends SfxBaseObj implements IIdGenerator
 	{
@@ -29,9 +29,6 @@ public class WorldParser extends SfxBaseObj implements IIdGenerator
 		public WorldParser(SfxContext ctx)
 		{
 			super(ctx);
-			parserMap.put("Airport", new ParserDesc(new AirportParser(_ctx)));
-			parserMap.put("BigAirport", new ParserDesc(new BigAirportParser(_ctx)));
-			parserMap.put("Gate", new ParserDesc(new GateParser(_ctx)));
 		}
 		
 		protected JSONObject startParse(String input) throws Exception
@@ -157,7 +154,7 @@ public class WorldParser extends SfxBaseObj implements IIdGenerator
 			ParserDesc desc = parserMap.get(name);
 			if (desc == null)
 			{
-				//err
+				errorOccured("render: unknown type: " + name);
 				return null;
 			}
 			
@@ -208,9 +205,25 @@ public class WorldParser extends SfxBaseObj implements IIdGenerator
 		}
 
 		@Override
-		public int assignId(Thing thing) 
+		public void assignId(Thing thing) 
 		{
+			if (thing.id != 0)
+			{
+				return; //already assigned
+			}
 			thing.id = nextId++;
-			return thing.id;
 		}
+		
+		
+		public void errorOccured(String errMsg)
+		{
+			SfxErrorTracker tracker = (SfxErrorTracker) _ctx.getServiceLocator().getInstance(SfxErrorTracker.class);
+			tracker.addError(errMsg);
+		}
+
+		public void addParser(String name, BaseParser parser) 
+		{
+			parserMap.put(name, new ParserDesc(parser));
+		}
+		
 	}

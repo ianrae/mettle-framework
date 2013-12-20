@@ -4,22 +4,23 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Test;
 import org.mef.framework.sfx.SfxContext;
 import org.mef.framework.sfx.SfxErrorTracker;
 
 import persistence.BaseParser;
 import persistence.IIdGenerator;
+import persistence.ParserDesc;
 import persistence.ReferenceList;
+import persistence.Thing;
 import persistence.WorldParser;
 import tools.BaseTest;
 
 public class JsonTests extends BaseTest
 {
-	public static class Thing
-	{
-		public int id;
-	}
 	public static class Airport extends Thing
 	{
 		public boolean flag;
@@ -33,6 +34,10 @@ public class JsonTests extends BaseTest
 	public static class BigAirport extends Airport
 	{
 		public Gate gate;
+	}
+	public static class MultiAirport extends Airport
+	{
+		public List<Gate> gateL = new ArrayList<Gate>();
 	}
 	
 	public static class AirportParser extends BaseParser
@@ -57,7 +62,7 @@ public class JsonTests extends BaseTest
 		}
 
 		@Override
-		protected void onRender(Thing targetParam, IIdGenerator generator) 
+		protected void onRender(Thing targetParam) 
 		{
 			Airport target = (Airport)targetParam;
 			obj.put("id", target.id);
@@ -86,7 +91,7 @@ public class JsonTests extends BaseTest
 		}
 		
 		@Override
-		protected void onRender(Thing targetParam, IIdGenerator generator) 
+		protected void onRender(Thing targetParam) 
 		{
 			Gate target = (Gate) targetParam;
 			obj.put("id", target.id);
@@ -127,22 +132,58 @@ public class JsonTests extends BaseTest
 		}
 		
 		@Override
-		protected void onRender(Thing targetParam, IIdGenerator generator) 
+		protected void onRender(Thing targetParam) 
 		{
-			super.onRender(targetParam, generator);
+			super.onRender(targetParam);
 			BigAirport target = (BigAirport) targetParam;
 			this.renderRef("gate", target.gate);
-			
 		}
 	}
 	
 
+	public static class MultiAirportParser extends AirportParser
+	{
+		public MultiAirportParser(SfxContext ctx)
+		{
+			super(ctx);
+		}
+		
+		protected Thing createObj()
+		{
+			return new MultiAirport();
+		}
+		
+		protected void onParse(Thing targetParam) throws Exception
+		{
+			super.onParse(targetParam);
+			this.addRef(targetParam, "gate", Gate.class);
+		}
+		
+		@Override
+		protected void resolve(String refName, Thing refObj, Object targetParam) throws Exception
+		{
+			if (refName.equals("gate"))
+			{
+				MultiAirport target = (MultiAirport) targetParam;
+				//target.gate = (Gate) refObj;
+			}
+		}
+		
+		@Override
+		protected void onRender(Thing targetParam) 
+		{
+			super.onRender(targetParam);
+			MultiAirport target = (MultiAirport) targetParam;
+			//this.renderRef("gate", target.gate);
+		}
+	}
+	
 	@Test
 	public void test3b() throws Exception
 	{
 		log("--test3b---");
 		init();
-		WorldParser parser = new WorldParser(_ctx);
+		WorldParser parser = createWorldParser();
 		String s = "{'rootType':'Airport','root': RRR }";
 		s = s.replace("RRR", "{'id':1,'flag':true,'name':'bob','size':56}");
 		Airport airport = (Airport) parser.parse(fix(s));
@@ -156,7 +197,7 @@ public class JsonTests extends BaseTest
 	{
 		log("--test3c---");
 		init();
-		WorldParser parser = new WorldParser(_ctx);
+		WorldParser parser = createWorldParser();
 		String s = "{'rootType':'BigAirport','root': RRR, 'refs': EEE  }";
 		s = s.replace("RRR", "{'id':1,'flag':true,'name':'bob','size':56,'gate':{'id':2} }");
 		s = s.replace("EEE", "[ GGG ]");
@@ -168,13 +209,13 @@ public class JsonTests extends BaseTest
 		chkErrors(0);
 		
 		log("render..");
-		parser = new WorldParser(_ctx);
+		parser = createWorldParser();
 		String output = parser.render(airport);
 		log(output);
 		chkErrors(0);
 		
 		log("re-parse");
-		parser = new WorldParser(_ctx);
+		parser = createWorldParser();
 		airport = (BigAirport) parser.parse(output);
 		chkAirport(airport, true, "bob", 56);		
 		assertEquals(1, airport.id);
@@ -198,7 +239,7 @@ public class JsonTests extends BaseTest
 		chkErrors(0);
 		log("render..");
 		
-		WorldParser pp = new WorldParser(_ctx);
+		WorldParser pp = createWorldParser();
 		String output = parser.render(obj, pp);
 		log(output);
 		assertEquals(s, output);
@@ -250,14 +291,14 @@ public class JsonTests extends BaseTest
 		g1.name = "gate1";
 		Gate g2 = new Gate();
 		g2.name = "gate2";
-		BigAirport airport = new BigAirport();
+		MultiAirport airport = new MultiAirport();
 		airport.flag = false;
 		airport.name = "halifax";
-		airport.gate = g1;
+		airport.gateL.add(g1);
+		airport.gateL.add(g2);
 		
 		log("render..");
-		WorldParser parser = new WorldParser(_ctx);
-		parser = new WorldParser(_ctx);
+		WorldParser parser = createWorldParser();
 		String output = parser.render(airport);
 		log(output);
 		chkErrors(0);
@@ -275,6 +316,16 @@ public class JsonTests extends BaseTest
 		this.createContext();
 		SfxErrorTracker tracker = new SfxErrorTracker(_ctx);
 		_ctx.getServiceLocator().registerSingleton(SfxErrorTracker.class, tracker);
+	}
+	
+	private WorldParser createWorldParser()
+	{
+		WorldParser parser = new WorldParser(_ctx);
+		parser.addParser("Airport", new AirportParser(_ctx));
+		parser.addParser("BigAirport", new BigAirportParser(_ctx));
+		parser.addParser("Gate", new GateParser(_ctx));
+		parser.addParser("MultiAirport", new MultiAirportParser(_ctx));
+		return parser;
 	}
 	
 	private void chkAirport(Airport airport, boolean b, String name, int size)
