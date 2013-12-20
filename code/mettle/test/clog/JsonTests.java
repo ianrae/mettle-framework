@@ -28,10 +28,10 @@ public class JsonTests extends BaseTest
 		public Gate gate;
 	}
 	
-	public static class BaseParser extends SfxBaseObj
+	public static abstract class BaseParser extends SfxBaseObj
 	{
 		private JSONParser parser=new JSONParser();
-		private JSONObject obj;
+		protected JSONObject obj;
 		
 		public BaseParser(SfxContext ctx)
 		{
@@ -43,6 +43,8 @@ public class JsonTests extends BaseTest
 			this.obj = (JSONObject) parser.parse(input);
 			return obj;
 		}
+		
+		abstract protected Object createObj();
 		
 		protected boolean getBool(String name)
 		{
@@ -93,7 +95,6 @@ public class JsonTests extends BaseTest
 		Airport parse(String input) throws Exception
 		{
 			startParse(input);
-			
 			Airport target = (Airport) onParse();
 			return target;
 		}
@@ -112,12 +113,27 @@ public class JsonTests extends BaseTest
 		{
 			super(ctx);
 		}
+		protected Object createObj()
+		{
+			return new Gate();
+		}
 		
 		Gate parse(String input) throws Exception
 		{
 			startParse(input);
-			
-			Gate target = new Gate();
+			Gate target = (Gate) onParse();
+			return target;
+		}
+		Gate parseFromJO(JSONObject jo) throws Exception
+		{
+			this.obj = jo;
+			Gate target = (Gate) onParse();
+			return target;
+		}
+		
+		protected Object onParse() throws Exception
+		{
+			Gate target = (Gate) createObj();
 			target.name = getString("name");
 			return target;
 		}
@@ -140,7 +156,8 @@ public class JsonTests extends BaseTest
 			BigAirport target = (BigAirport) onParse();
 			
 			JSONObject jo = getEntity("gate");
-			target.gate = null;
+			GateParser inner1 = new GateParser(_ctx);
+			target.gate = inner1.parseFromJO(jo);
 			return target;
 		}
 	}
