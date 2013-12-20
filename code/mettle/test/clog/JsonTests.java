@@ -246,6 +246,26 @@ public class JsonTests extends BaseTest
 			}
 			return null;
 		}
+
+		public String render(Thing thing) 
+		{
+			String name = thing.getClass().getSimpleName();
+			ParserDesc desc = parserMap.get(name);
+			if (desc == null)
+			{
+				//err
+				return null;
+			}
+			
+			String rootStr = desc.parser.render(thing);
+			
+			String output = String.format("{'rootType':'%s','root': %s, 'refs':  }", name, rootStr);
+//			s = s.replace("RRR", "{'id':1,'flag':true,'name':'bob','size':56,'gate':{'id':2} }");
+//			s = s.replace("EEE", "[ GGG ]");
+//			s = s.replace("GGG", "{ 'type': 'Gate', 'things': [{'id':2, 'name':'gate1'}] }");
+			
+			return output;
+		}
 	}
 	
 	public static abstract class BaseParser extends SfxBaseObj
@@ -308,6 +328,16 @@ public class JsonTests extends BaseTest
 		protected void resolve(String refName, Thing refObj, Object targetParam) throws Exception
 		{
 		}
+		
+		//render
+		public String render(Thing target) 
+		{
+			obj=new JSONObject();
+			onRender(target);
+			return obj.toJSONString();
+		}
+		
+		protected abstract void onRender(Thing target);
 	}
 
 	public static class AirportParser extends BaseParser
@@ -331,16 +361,14 @@ public class JsonTests extends BaseTest
 			target.size = helper.getInt("size");
 		}
 
-		public String render(Airport target) 
+		@Override
+		protected void onRender(Thing targetParam) 
 		{
-			// TODO Auto-generated method stub
-			obj=new JSONObject();
+			Airport target = (Airport)targetParam;
 			obj.put("id", target.id);
 			obj.put("flag", target.flag);
 			obj.put("name", target.name);
 			obj.put("size", target.size);
-
-			return obj.toJSONString();
 		}
 	}
 	
@@ -360,6 +388,14 @@ public class JsonTests extends BaseTest
 			Gate target = (Gate) targetParam;
 			parseId(target);
 			target.name = helper.getString("name");
+		}
+		
+		@Override
+		protected void onRender(Thing targetParam) 
+		{
+			Gate target = (Gate) targetParam;
+			obj.put("id", target.id);
+			obj.put("name", target.name);
 		}
 	}
 	
@@ -393,6 +429,13 @@ public class JsonTests extends BaseTest
 				BigAirport target = (BigAirport) targetParam;
 				target.gate = (Gate) refObj;
 			}
+		}
+		
+		@Override
+		protected void onRender(Thing targetParam) 
+		{
+			super.onRender(targetParam);
+			BigAirport target = (BigAirport) targetParam;
 		}
 	}
 	
@@ -496,6 +539,12 @@ public class JsonTests extends BaseTest
 		assertEquals("gate1", airport.gate.name);
 
 		chkErrors(0);
+		
+		log("render..");
+		parser = new WorldParser(_ctx);
+		String output = parser.render(airport);
+		log(output);
+		assertEquals("ss", output);
 	}
 	
 	
