@@ -11,7 +11,73 @@ import tools.BaseTest;
 
 public class JsonTests extends BaseTest
 {
+	public static class Airport
+	{
+		public boolean flag;
+		public String name;
+		public int size;
+	}
+	
+	public static class BaseParser
+	{
+		private JSONParser parser=new JSONParser();
+		private JSONObject obj;
+		
+		public BaseParser()
+		{}
+		
+		protected JSONObject startParse(String input) throws Exception
+		{
+			this.obj = (JSONObject) parser.parse(input);
+			return obj;
+		}
+		
+		protected boolean getBool(String name)
+		{
+			Boolean b = (Boolean) obj.get(name);
+			if (b == null)
+			{
+				//err
+				return false;
+			}
+			return b;
+		}
+		protected String getString(String name)
+		{
+			String s = (String) obj.get(name);
+			return s; //can be null
+		}
+		protected int getInt(String name)
+		{
+			Long val = (Long) obj.get(name);
+			if (val == null)
+			{
+				//err
+				return 0;
+			}
+			int n = val.intValue();
+			return n;
+		}
+	}
 
+	public static class AirportParser extends BaseParser
+	{
+		public AirportParser()
+		{}
+		
+		Airport parse(String input) throws Exception
+		{
+			startParse(input);
+			
+			Airport target = new Airport();
+			target.flag = getBool("flag");
+			target.name = getString("name");
+			target.size = getInt("size");
+			return target;
+		}
+		
+	}
+	
 	@Test
 	public void test() 
 	{
@@ -69,7 +135,23 @@ public class JsonTests extends BaseTest
 
 		Boolean b = (Boolean) obj3.get("enabled");
 		assertEquals(true, b);
+		boolean bb = b;
 	}
+	
+	
+	@Test
+	public void test4() throws Exception
+	{
+		log("--test4---");
+		AirportParser parser = new AirportParser();
+		String s = "{'flag':true,'name':'bob','size':56}";
+		Airport obj = parser.parse(fix(s));
+		assertNotNull(obj);
+		assertEquals(true, obj.flag);
+		assertEquals("bob", obj.name);
+		assertEquals(56, obj.size);
+	}
+	
 	//------- helpers---------
 	private String fix(String s)
 	{
