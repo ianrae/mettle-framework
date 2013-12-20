@@ -148,9 +148,8 @@ public class JsonTests extends BaseTest
 						JSONObject val = (JSONObject) ooo.get(i);
 						if (val != null)
 						{
-							GateParser gp = new GateParser(_ctx);
-							Gate gate = gp.parseFromJO(val);
-							gateL.add(gate);
+							JSONArray ggg = (JSONArray) val.get("Gate");
+							doGates(ggg);
 						}
 					}
 				}
@@ -159,6 +158,27 @@ public class JsonTests extends BaseTest
 			}
 			return obj;
 		}
+
+		private void doGates(JSONArray ggg) throws Exception
+		{
+			if (ggg == null)
+			{
+				return;
+			}
+			for(int i = 0; i < ggg.size(); i++)
+			{
+				JSONObject val = (JSONObject) ggg.get(i);
+				if (val != null)
+				{
+					GateParser gp = new GateParser(_ctx);
+					Gate gate = gp.parseFromJO(val);
+					gateL.add(gate);
+				}
+			}
+		}
+		
+		
+		
 		private Object doParse(String input) throws Exception
 		{
 			startParse(input);
@@ -433,8 +453,10 @@ public class JsonTests extends BaseTest
 		log("--test3c---");
 		init();
 		WorldParser parser = new WorldParser(_ctx);
-		String s = "{'rootType':'BigAirport','root': RRR, 'refs': [ {'id':2, 'name':'gate1'}]  }";
+		String s = "{'rootType':'BigAirport','root': RRR, 'refs': EEE  }";
 		s = s.replace("RRR", "{'id':1,'flag':true,'name':'bob','size':56,'gate':{'id':2} }");
+		s = s.replace("EEE", "[ GGG ]");
+		s = s.replace("GGG", "{ 'Gate': [{'id':2, 'name':'gate1'}] }");
 		BigAirport airport = (BigAirport) parser.parse(fix(s));
 		assertNotNull(airport);
 		assertEquals(true, airport.flag);
