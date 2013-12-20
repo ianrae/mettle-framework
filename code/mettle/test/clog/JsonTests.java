@@ -16,13 +16,17 @@ import tools.BaseTest;
 
 public class JsonTests extends BaseTest
 {
-	public static class Airport
+	public static class BaseThing
+	{
+		public int id;
+	}
+	public static class Airport extends BaseThing
 	{
 		public boolean flag;
 		public String name;
 		public int size;
 	}
-	public static class Gate
+	public static class Gate extends BaseThing
 	{
 		public String name;
 	}
@@ -234,6 +238,7 @@ public class JsonTests extends BaseTest
 		
 		protected void onParse(Airport target) throws Exception
 		{
+			target.id = getInt("id");
 			target.flag = getBool("flag");
 			target.name = getString("name");
 			target.size = getInt("size");
@@ -359,12 +364,13 @@ public class JsonTests extends BaseTest
 		init();
 		WorldParser parser = new WorldParser(_ctx);
 		String s = "{'rootType':'Airport','root': RRR }";
-		s = s.replace("RRR", "{'flag':true,'name':'bob','size':56}");
+		s = s.replace("RRR", "{'id':1,'flag':true,'name':'bob','size':56}");
 		Airport airport = (Airport) parser.parse(fix(s));
 		assertNotNull(airport);
 		assertEquals(true, airport.flag);
 		assertEquals("bob", airport.name);
 		assertEquals(56, airport.size);
+		assertEquals(1, airport.id);
 		chkErrors(0);
 	}
 	
@@ -375,7 +381,7 @@ public class JsonTests extends BaseTest
 		log("--test4---");
 		init();
 		AirportParser parser = new AirportParser(_ctx);
-		String s = "{'flag':true,'name':'bob','size':56}";
+		String s = "{'id':1,'flag':true,'name':'bob','size':56}";
 		Airport obj = parser.parse(fix(s));
 		assertNotNull(obj);
 		assertEquals(true, obj.flag);
@@ -397,7 +403,7 @@ public class JsonTests extends BaseTest
 		log("--test5---");
 		this.init();
 		GateParser parser = new GateParser(_ctx);
-		String s = "{'flag':true,'name':'bob','size':56}"; //works with extra stuff!
+		String s = "{'id':1,'flag':true,'name':'bob','size':56}"; //works with extra stuff!
 		Gate obj = parser.parse(fix(s));
 		assertNotNull(obj);
 		assertEquals("bob", obj.name);
@@ -410,7 +416,7 @@ public class JsonTests extends BaseTest
 		log("--test6---");
 		this.createContext();
 		BigAirportParser parser = new BigAirportParser(_ctx);
-		String s = "{'flag':true,'name':'bob','size':56,'gate':{'name':'gate1'}}"; //works with extra stuff!
+		String s = "{'id':1,'flag':true,'name':'bob','size':56,'gate':{'name':'gate1'}}"; //works with extra stuff!
 		BigAirport obj = (BigAirport) parser.parse(fix(s));
 		assertNotNull(obj);
 		assertEquals(true, obj.flag);
