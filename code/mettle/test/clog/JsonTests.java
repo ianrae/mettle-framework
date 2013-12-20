@@ -17,17 +17,17 @@ import tools.BaseTest;
 
 public class JsonTests extends BaseTest
 {
-	public static class BaseThing
+	public static class Thing
 	{
 		public int id;
 	}
-	public static class Airport extends BaseThing
+	public static class Airport extends Thing
 	{
 		public boolean flag;
 		public String name;
 		public int size;
 	}
-	public static class Gate extends BaseThing
+	public static class Gate extends Thing
 	{
 		public String name;
 	}
@@ -38,10 +38,10 @@ public class JsonTests extends BaseTest
 	
 	public static class ReferenceDesc
 	{
-		@SuppressWarnings("rawtypes")
 		public BaseParser parser;
 		
-		public String refName;
+		public String refName;  //name of file
+		public Class refClass;
 		public Object target;
 
 		public int refId;
@@ -103,7 +103,17 @@ public class JsonTests extends BaseTest
 			JSONArray val = (JSONArray) obj.get(name);
 			return val; //can be null
 		}
+	}
+	
+	public static class ParserDesc
+	{
+		public BaseParser parser;
+		public ArrayList<Thing> refL = new ArrayList<JsonTests.Thing>();
 		
+		public ParserDesc(BaseParser parser)
+		{
+			this.parser = parser;
+		}
 	}
 	
 	
@@ -114,18 +124,17 @@ public class JsonTests extends BaseTest
 		protected ArrayList<ReferenceDesc> refL = new ArrayList<JsonTests.ReferenceDesc>();
 		protected ParserHelper helper;
 		
-		private ArrayList<Gate> gateL = new ArrayList<JsonTests.Gate>();
+//		private ArrayList<Gate> gateL = new ArrayList<JsonTests.Gate>();
 		
-		@SuppressWarnings("rawtypes")
-		private HashMap<String,BaseParser> parserMap = new HashMap<String, JsonTests.BaseParser>();
+		private HashMap<String,ParserDesc> parserMap = new HashMap<String, JsonTests.ParserDesc>();
 		
 		public WorldParser(SfxContext ctx)
 		{
 			super(ctx);
 			
-			parserMap.put("Airport", new AirportParser(_ctx));
-			parserMap.put("BigAirport", new BigAirportParser(_ctx));
-			parserMap.put("Gate", new GateParser(_ctx));
+			parserMap.put("Airport", new ParserDesc(new AirportParser(_ctx)));
+			parserMap.put("BigAirport", new ParserDesc(new BigAirportParser(_ctx)));
+			parserMap.put("Gate", new ParserDesc(new GateParser(_ctx)));
 		}
 		
 		protected JSONObject startParse(String input) throws Exception
@@ -165,38 +174,36 @@ public class JsonTests extends BaseTest
 			{
 				return;
 			}
+			ParserDesc desc = this.parserMap.get("Gate");
+			
 			for(int i = 0; i < ggg.size(); i++)
 			{
 				JSONObject val = (JSONObject) ggg.get(i);
 				if (val != null)
 				{
-					GateParser gp = new GateParser(_ctx);
-					Gate gate = (Gate) gp.parseFromJO(val);
-					gateL.add(gate);
+					GateParser gp = (GateParser) desc.parser; //re-using parser, careful!!
+					Thing target = gp.parseFromJO(val);
+					desc.refL.add(target);
 				}
 			}
 		}
 		
 		
 		
-		private BaseThing doParse(String input) throws Exception
+		private Thing doParse(String input) throws Exception
 		{
 			startParse(input);
 			String s = helper.getString("rootType");	
 			log(s);
 			
 			JSONObject val = helper.getEntity("root");
-			if (s.equals("Airport"))
+			ParserDesc desc = parserMap.get(s);
+			
+			if (desc != null)
 			{
-				AirportParser aparser = (AirportParser) parserMap.get("Airport");
-				BaseThing target = aparser.parseFromJO(val);
-				return target;
-			}
-			if (s.equals("BigAirport"))
-			{
-				BigAirportParser aparser = (BigAirportParser) parserMap.get("BigAirport");
+				BaseParser aparser = desc.parser;
 				aparser.refL = refL;
-				BaseThing target = (BigAirport) aparser.parseFromJO(val);
+				Thing target = aparser.parseFromJO(val);
 				return target;
 			}
 			else
@@ -212,18 +219,27 @@ public class JsonTests extends BaseTest
 			log(String.format("resolveRefs: %d", refL.size()));
 			for(ReferenceDesc desc : refL)
 			{
-				Gate gate = findByRefId(desc.refId);
-				desc.parser.resolve(desc.refName, gate, desc.target);
+				Thing thing = findByRefId(desc);
+				desc.parser.resolve(desc.refName, thing, desc.target);
 			}
 		}
 
-		private Gate findByRefId(int refId) 
+		private Thing findByRefId(ReferenceDesc desc) 
 		{
-			for(Gate gate : gateL)
+			String name = desc.refClass.getSimpleName();
+			log(name);
+			
+			ParserDesc d2 = parserMap.get(name);
+			if (d2 == null)
 			{
-				if (gate.id == refId)
+				return null;
+			}
+			
+			for(Thing thing : d2.refL)
+			{
+				if (thing.id == desc.refId)
 				{
-					return gate;
+					return thing;
 				}
 			}
 			return null;
@@ -249,7 +265,7 @@ public class JsonTests extends BaseTest
 			return obj;
 		}
 		
-		protected void addRef(Object target, String refName)
+		protected void addRef(Object target, String refName, Class clazz)
 		{
 			JSONObject oo = helper.getEntity(refName);
 			ParserHelper h2 = new ParserHelper(_ctx, oo);
@@ -259,34 +275,35 @@ public class JsonTests extends BaseTest
 			ReferenceDesc desc = new ReferenceDesc();
 			desc.parser = this;
 			desc.refName = refName;
+			desc.refClass = clazz;
 			desc.refId = idd;
 			desc.target = target;
 			this.refL.add(desc);
 		}
 		
-		abstract protected BaseThing createObj();
-		abstract protected void onParse(BaseThing t) throws Exception;
+		abstract protected Thing createObj();
+		abstract protected void onParse(Thing t) throws Exception;
 		
-		BaseThing parse(String input) throws Exception
+		Thing parse(String input) throws Exception
 		{
 			startParse(input);
 			return parseFromJO(this.obj);
 		}
-		BaseThing parseFromJO(JSONObject jo) throws Exception
+		Thing parseFromJO(JSONObject jo) throws Exception
 		{
 			this.obj = jo;
 			this.helper = new ParserHelper(_ctx, obj);
-			BaseThing target = createObj();
+			Thing target = createObj();
 			this.onParse(target);
 			return target;
 		}
 		
-		protected void parseId(BaseThing target)
+		protected void parseId(Thing target)
 		{
 			target.id = helper.getInt("id");
 		}
 		
-		protected void resolve(String refName, BaseThing refObj, Object targetParam) throws Exception
+		protected void resolve(String refName, Thing refObj, Object targetParam) throws Exception
 		{
 		}
 	}
@@ -298,12 +315,12 @@ public class JsonTests extends BaseTest
 			super(ctx);
 		}
 		
-		protected BaseThing createObj()
+		protected Thing createObj()
 		{
 			return new Airport();
 		}
 		
-		protected void onParse(BaseThing targetParam) throws Exception
+		protected void onParse(Thing targetParam) throws Exception
 		{
 			Airport target = (Airport)targetParam;
 			parseId(target);
@@ -319,12 +336,12 @@ public class JsonTests extends BaseTest
 		{
 			super(ctx);
 		}
-		protected BaseThing createObj()
+		protected Thing createObj()
 		{
 			return new Gate();
 		}
 		
-		protected void onParse(BaseThing targetParam) throws Exception
+		protected void onParse(Thing targetParam) throws Exception
 		{
 			Gate target = (Gate) targetParam;
 			parseId(target);
@@ -339,15 +356,15 @@ public class JsonTests extends BaseTest
 			super(ctx);
 		}
 		
-		protected BaseThing createObj()
+		protected Thing createObj()
 		{
 			return new BigAirport();
 		}
 		
-		protected void onParse(BaseThing targetParam) throws Exception
+		protected void onParse(Thing targetParam) throws Exception
 		{
 			super.onParse(targetParam);
-			this.addRef(targetParam, "gate");
+			this.addRef(targetParam, "gate", Gate.class);
 //			BigAirport target = (BigAirport) targetParam;
 //			JSONObject jo = getEntity("gate");
 //			GateParser inner1 = new GateParser(_ctx);
@@ -355,7 +372,7 @@ public class JsonTests extends BaseTest
 		}
 		
 		@Override
-		protected void resolve(String refName, BaseThing refObj, Object targetParam) throws Exception
+		protected void resolve(String refName, Thing refObj, Object targetParam) throws Exception
 		{
 			if (refName.equals("gate"))
 			{
