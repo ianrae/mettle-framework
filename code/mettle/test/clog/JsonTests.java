@@ -28,7 +28,7 @@ public class JsonTests extends BaseTest
 		public Gate gate;
 	}
 	
-	public static abstract class BaseParser extends SfxBaseObj
+	public static abstract class BaseParser<T> extends SfxBaseObj
 	{
 		private JSONParser parser=new JSONParser();
 		protected JSONObject obj;
@@ -44,7 +44,23 @@ public class JsonTests extends BaseTest
 			return obj;
 		}
 		
-		abstract protected Object createObj();
+		abstract protected T createObj();
+		abstract protected T onParse() throws Exception;
+		
+		T parse(String input) throws Exception
+		{
+			startParse(input);
+			T target = (T) onParse();
+			return target;
+		}
+		T parseFromJO(JSONObject jo) throws Exception
+		{
+			this.obj = jo;
+			T target = (T) onParse();
+			return target;
+		}
+		
+		
 		
 		protected boolean getBool(String name)
 		{
@@ -80,25 +96,19 @@ public class JsonTests extends BaseTest
 		}
 	}
 
-	public static class AirportParser extends BaseParser
+	public static class AirportParser extends BaseParser<Airport>
 	{
 		public AirportParser(SfxContext ctx)
 		{
 			super(ctx);
 		}
 		
-		protected Object createObj()
+		protected Airport createObj()
 		{
 			return new Airport();
 		}
 		
-		Airport parse(String input) throws Exception
-		{
-			startParse(input);
-			Airport target = (Airport) onParse();
-			return target;
-		}
-		protected Object onParse() throws Exception
+		protected Airport onParse() throws Exception
 		{
 			Airport target = (Airport) createObj();
 			target.flag = getBool("flag");
@@ -107,31 +117,18 @@ public class JsonTests extends BaseTest
 			return target;
 		}
 	}
-	public static class GateParser extends BaseParser
+	public static class GateParser extends BaseParser<Gate>
 	{
 		public GateParser(SfxContext ctx)
 		{
 			super(ctx);
 		}
-		protected Object createObj()
+		protected Gate createObj()
 		{
 			return new Gate();
 		}
 		
-		Gate parse(String input) throws Exception
-		{
-			startParse(input);
-			Gate target = (Gate) onParse();
-			return target;
-		}
-		Gate parseFromJO(JSONObject jo) throws Exception
-		{
-			this.obj = jo;
-			Gate target = (Gate) onParse();
-			return target;
-		}
-		
-		protected Object onParse() throws Exception
+		protected Gate onParse() throws Exception
 		{
 			Gate target = (Gate) createObj();
 			target.name = getString("name");
@@ -145,12 +142,12 @@ public class JsonTests extends BaseTest
 			super(ctx);
 		}
 		
-		protected Object createObj()
+		protected Airport createObj()
 		{
 			return new BigAirport();
 		}
 		
-		BigAirport parse(String input) throws Exception
+		Airport parse(String input) throws Exception
 		{
 			startParse(input);
 			BigAirport target = (BigAirport) onParse();
@@ -160,6 +157,7 @@ public class JsonTests extends BaseTest
 			target.gate = inner1.parseFromJO(jo);
 			return target;
 		}
+
 	}
 	
 	@Test
@@ -256,7 +254,7 @@ public class JsonTests extends BaseTest
 		this.createContext();
 		BigAirportParser parser = new BigAirportParser(_ctx);
 		String s = "{'flag':true,'name':'bob','size':56,'gate':{'name':'gate1'}}"; //works with extra stuff!
-		BigAirport obj = parser.parse(fix(s));
+		BigAirport obj = (BigAirport) parser.parse(fix(s));
 		assertNotNull(obj);
 		assertEquals(true, obj.flag);
 		assertEquals("bob", obj.name);
