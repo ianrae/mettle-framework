@@ -171,7 +171,7 @@ public class JsonTests extends BaseTest
 				if (val != null)
 				{
 					GateParser gp = new GateParser(_ctx);
-					Gate gate = gp.parseFromJO(val);
+					Gate gate = (Gate) gp.parseFromJO(val);
 					gateL.add(gate);
 				}
 			}
@@ -179,7 +179,7 @@ public class JsonTests extends BaseTest
 		
 		
 		
-		private Object doParse(String input) throws Exception
+		private BaseThing doParse(String input) throws Exception
 		{
 			startParse(input);
 			String s = helper.getString("rootType");	
@@ -189,14 +189,14 @@ public class JsonTests extends BaseTest
 			if (s.equals("Airport"))
 			{
 				AirportParser aparser = (AirportParser) parserMap.get("Airport");
-				Airport target = aparser.parseFromJO(val);
+				BaseThing target = aparser.parseFromJO(val);
 				return target;
 			}
 			if (s.equals("BigAirport"))
 			{
 				BigAirportParser aparser = (BigAirportParser) parserMap.get("BigAirport");
 				aparser.refL = refL;
-				BigAirport target = (BigAirport) aparser.parseFromJO(val);
+				BaseThing target = (BigAirport) aparser.parseFromJO(val);
 				return target;
 			}
 			else
@@ -230,7 +230,7 @@ public class JsonTests extends BaseTest
 		}
 	}
 	
-	public static abstract class BaseParser<T> extends SfxBaseObj
+	public static abstract class BaseParser extends SfxBaseObj
 	{
 		private JSONParser parser=new JSONParser();
 		protected JSONObject obj;
@@ -264,19 +264,19 @@ public class JsonTests extends BaseTest
 			this.refL.add(desc);
 		}
 		
-		abstract protected T createObj();
-		abstract protected void onParse(T t) throws Exception;
+		abstract protected BaseThing createObj();
+		abstract protected void onParse(BaseThing t) throws Exception;
 		
-		T parse(String input) throws Exception
+		BaseThing parse(String input) throws Exception
 		{
 			startParse(input);
 			return parseFromJO(this.obj);
 		}
-		T parseFromJO(JSONObject jo) throws Exception
+		BaseThing parseFromJO(JSONObject jo) throws Exception
 		{
 			this.obj = jo;
 			this.helper = new ParserHelper(_ctx, obj);
-			T target = createObj();
+			BaseThing target = createObj();
 			this.onParse(target);
 			return target;
 		}
@@ -291,20 +291,21 @@ public class JsonTests extends BaseTest
 		}
 	}
 
-	public static class AirportParser extends BaseParser<Airport>
+	public static class AirportParser extends BaseParser
 	{
 		public AirportParser(SfxContext ctx)
 		{
 			super(ctx);
 		}
 		
-		protected Airport createObj()
+		protected BaseThing createObj()
 		{
 			return new Airport();
 		}
 		
-		protected void onParse(Airport target) throws Exception
+		protected void onParse(BaseThing targetParam) throws Exception
 		{
+			Airport target = (Airport)targetParam;
 			parseId(target);
 			target.flag = helper.getBool("flag");
 			target.name = helper.getString("name");
@@ -312,19 +313,20 @@ public class JsonTests extends BaseTest
 		}
 	}
 	
-	public static class GateParser extends BaseParser<Gate>
+	public static class GateParser extends BaseParser
 	{
 		public GateParser(SfxContext ctx)
 		{
 			super(ctx);
 		}
-		protected Gate createObj()
+		protected BaseThing createObj()
 		{
 			return new Gate();
 		}
 		
-		protected void onParse(Gate target) throws Exception
+		protected void onParse(BaseThing targetParam) throws Exception
 		{
+			Gate target = (Gate) targetParam;
 			parseId(target);
 			target.name = helper.getString("name");
 		}
@@ -337,15 +339,14 @@ public class JsonTests extends BaseTest
 			super(ctx);
 		}
 		
-		protected Airport createObj()
+		protected BaseThing createObj()
 		{
 			return new BigAirport();
 		}
 		
-		protected void onParse(Airport targetParam) throws Exception
+		protected void onParse(BaseThing targetParam) throws Exception
 		{
 			super.onParse(targetParam);
-			
 			this.addRef(targetParam, "gate");
 //			BigAirport target = (BigAirport) targetParam;
 //			JSONObject jo = getEntity("gate");
@@ -480,7 +481,7 @@ public class JsonTests extends BaseTest
 		init();
 		AirportParser parser = new AirportParser(_ctx);
 		String s = "{'id':12,'flag':true,'name':'bob','size':56}";
-		Airport obj = parser.parse(fix(s));
+		Airport obj = (Airport) parser.parse(fix(s));
 		assertNotNull(obj);
 		assertEquals(true, obj.flag);
 		assertEquals("bob", obj.name);
@@ -503,7 +504,7 @@ public class JsonTests extends BaseTest
 		this.init();
 		GateParser parser = new GateParser(_ctx);
 		String s = "{'id':1,'flag':true,'name':'bob','size':56}"; //works with extra stuff!
-		Gate obj = parser.parse(fix(s));
+		Gate obj = (Gate) parser.parse(fix(s));
 		assertNotNull(obj);
 		assertEquals("bob", obj.name);
 		assertEquals(1, obj.id);
