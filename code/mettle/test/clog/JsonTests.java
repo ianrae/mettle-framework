@@ -40,8 +40,10 @@ public class JsonTests extends BaseTest
 		@SuppressWarnings("rawtypes")
 		public BaseParser parser;
 		
-		public String refId;
+		public String refName;
 		public Object target;
+
+		public int refId;
 	}
 	
 	
@@ -120,6 +122,15 @@ public class JsonTests extends BaseTest
 		
 		public Object parse(String input) throws Exception
 		{
+			Object obj = doParse(input);
+			if (obj != null)
+			{
+				resolveRefs();
+			}
+			return obj;
+		}
+		private Object doParse(String input) throws Exception
+		{
 			startParse(input);
 			String s = helper.getString("rootType");	
 			log(s);
@@ -134,6 +145,7 @@ public class JsonTests extends BaseTest
 			if (s.equals("BigAirport"))
 			{
 				BigAirportParser aparser = new BigAirportParser(_ctx);
+				aparser.refL = refL;
 				BigAirport target = (BigAirport) aparser.parseFromJO(val);
 				return target;
 			}
@@ -143,13 +155,23 @@ public class JsonTests extends BaseTest
 				return null;
 			}
 		}
+		
+		
+		private void resolveRefs() throws Exception
+		{
+			log(String.format("resolveRefs: %d", refL.size()));
+			for(ReferenceDesc desc : refL)
+			{
+				desc.parser.resolve(desc.refName, desc.refId, desc.target);
+			}
+		}
 	}
 	
 	public static abstract class BaseParser<T> extends SfxBaseObj
 	{
 		private JSONParser parser=new JSONParser();
 		protected JSONObject obj;
-		protected ArrayList<ReferenceDesc> refL = new ArrayList<JsonTests.ReferenceDesc>();
+		public ArrayList<ReferenceDesc> refL;
 		protected ParserHelper helper;
 		
 		public BaseParser(SfxContext ctx)
@@ -164,11 +186,17 @@ public class JsonTests extends BaseTest
 			return obj;
 		}
 		
-		protected void addRef(Object target, String refId)
+		protected void addRef(Object target, String refName)
 		{
+			JSONObject oo = helper.getEntity(refName);
+			ParserHelper h2 = new ParserHelper(_ctx, oo);
+			int idd = h2.getInt("id");
+			log("xx " + idd);
+			
 			ReferenceDesc desc = new ReferenceDesc();
 			desc.parser = this;
-			desc.refId = refId;
+			desc.refName = refName;
+			desc.refId = idd;
 			desc.target = target;
 			this.refL.add(desc);
 		}
@@ -194,17 +222,9 @@ public class JsonTests extends BaseTest
 		{
 			target.id = helper.getInt("id");
 		}
-		public void resolveRefs() throws Exception
-		{
-			for(ReferenceDesc desc : refL)
-			{
-				desc.parser.resolve(desc.refId, desc.target);
-			}
-		}
 		
-		protected void resolve(String refId, Object targetParam) throws Exception
+		protected void resolve(String refName, int refId, Object targetParam) throws Exception
 		{
-			
 		}
 	}
 
@@ -271,9 +291,10 @@ public class JsonTests extends BaseTest
 //			target.gate = inner1.parseFromJO(jo);
 		}
 		
-		protected void resolve(String refId, Object targetParam) throws Exception
+		@Override
+		protected void resolve(String refName, int refId, Object targetParam) throws Exception
 		{
-			if (refId.equals("gate"))
+			if (refName.equals("gate"))
 			{
 				GateParser inner1 = new GateParser(_ctx);
 				JSONObject jo = helper.getEntity("gate");
@@ -367,13 +388,18 @@ public class JsonTests extends BaseTest
 		init();
 		WorldParser parser = new WorldParser(_ctx);
 		String s = "{'rootType':'BigAirport','root': RRR, 'gate': {'id':2, 'name':'gate1'}}";
-		s = s.replace("RRR", "{'id':1,'flag':true,'name':'bob','size':56}");
-		Airport airport = (Airport) parser.parse(fix(s));
+		s = s.replace("RRR", "{'id':1,'flag':true,'name':'bob','size':56,'gate':{'id':2} }");
+		BigAirport airport = (BigAirport) parser.parse(fix(s));
 		assertNotNull(airport);
 		assertEquals(true, airport.flag);
 		assertEquals("bob", airport.name);
 		assertEquals(56, airport.size);
 		assertEquals(1, airport.id);
+		
+		//parser.resolveRefs();
+		assertNotNull(airport.gate);
+		assertEquals(2, airport.gate.id);
+
 		chkErrors(0);
 	}
 	
@@ -422,6 +448,7 @@ public class JsonTests extends BaseTest
 		log("--test6---");
 		this.init();
 		BigAirportParser parser = new BigAirportParser(_ctx);
+		parser.refL = new ArrayList<JsonTests.ReferenceDesc>();
 		String s = "{'id':1,'flag':true,'name':'bob','size':56,'gate':{'id':2, 'name':'gate1'}}"; //works with extra stuff!
 		BigAirport obj = (BigAirport) parser.parse(fix(s));
 		assertNotNull(obj);
@@ -431,9 +458,8 @@ public class JsonTests extends BaseTest
 		assertNull(obj.gate);
 		assertEquals(1, obj.id);
 		
-		parser.resolveRefs();
-		assertNotNull(obj.gate);
-		assertEquals(2, obj.gate.id);
+//		assertNotNull(obj.gate);
+//		assertEquals(2, obj.gate.id);
 		chkErrors(0);
 	}
 	
