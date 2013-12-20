@@ -160,7 +160,7 @@ public class JsonTests extends BaseTest
 						{
 							String type = (String)val.get("type");
 							JSONArray ggg = (JSONArray) val.get("things");
-							doGates(type, ggg);
+							loadThings(type, ggg);
 						}
 					}
 				}
@@ -170,7 +170,7 @@ public class JsonTests extends BaseTest
 			return obj;
 		}
 
-		private void doGates(String type, JSONArray ggg) throws Exception
+		private void loadThings(String type, JSONArray ggg) throws Exception
 		{
 			if (ggg == null)
 			{
@@ -330,6 +330,18 @@ public class JsonTests extends BaseTest
 			target.name = helper.getString("name");
 			target.size = helper.getInt("size");
 		}
+
+		public String render(Airport target) 
+		{
+			// TODO Auto-generated method stub
+			obj=new JSONObject();
+			obj.put("id", target.id);
+			obj.put("flag", target.flag);
+			obj.put("name", target.name);
+			obj.put("size", target.size);
+
+			return obj.toJSONString();
+		}
 	}
 	
 	public static class GateParser extends BaseParser
@@ -378,14 +390,8 @@ public class JsonTests extends BaseTest
 		{
 			if (refName.equals("gate"))
 			{
-//				GateParser inner1 = new GateParser(_ctx);
-//				JSONObject jo = helper.getEntity("gate");
-//				BigAirport target = (BigAirport) targetParam;
-//				target.gate = inner1.parseFromJO(jo);
-				
 				BigAirport target = (BigAirport) targetParam;
 				target.gate = (Gate) refObj;
-				
 			}
 		}
 	}
@@ -500,7 +506,8 @@ public class JsonTests extends BaseTest
 		init();
 		AirportParser parser = new AirportParser(_ctx);
 		String s = "{'id':12,'flag':true,'name':'bob','size':56}";
-		Airport obj = (Airport) parser.parse(fix(s));
+		s = fix(s);
+		Airport obj = (Airport) parser.parse(s);
 		assertNotNull(obj);
 		assertEquals(true, obj.flag);
 		assertEquals("bob", obj.name);
@@ -508,6 +515,11 @@ public class JsonTests extends BaseTest
 		assertEquals(12, obj.id);
 		
 		chkErrors(0);
+		log("render..");
+		
+		String output = parser.render(obj);
+		log(output);
+		assertEquals(s, output);
 	}
 
 	private void chkErrors(int i) 
