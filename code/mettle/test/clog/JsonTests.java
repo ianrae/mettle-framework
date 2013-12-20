@@ -156,16 +156,16 @@ public class JsonTests extends BaseTest
 		protected void onParse(Thing targetParam) throws Exception
 		{
 			super.onParse(targetParam);
-			this.addRef(targetParam, "gate", Gate.class);
+			this.addListRef(targetParam, "gate", Gate.class);
 		}
 		
 		@Override
 		protected void resolve(String refName, Thing refObj, Object targetParam) throws Exception
 		{
-			if (refName.equals("gate"))
+			if (refName.startsWith("gate."))
 			{
 				MultiAirport target = (MultiAirport) targetParam;
-				//target.gate = (Gate) refObj;
+				target.gateL.add((Gate) refObj);
 			}
 		}
 		
@@ -283,6 +283,39 @@ public class JsonTests extends BaseTest
 	}
 	
 	@Test
+	public void test7a() throws Exception
+	{
+		log("--test7a---");
+		init();
+		WorldParser parser = createWorldParser();
+		String s = "{'rootType':'MultiAirport','root': RRR, 'refs': EEE  }";
+		s = s.replace("RRR", "{'id':1,'flag':true,'name':'bob','size':56,'gate':[{'id':2}] }");
+		s = s.replace("EEE", "[ GGG ]");
+		s = s.replace("GGG", "{ 'type': 'Gate', 'things': [{'id':2, 'name':'gate1'}] }");
+		MultiAirport airport = (MultiAirport) parser.parse(fix(s));
+		chkAirport(airport, true, "bob", 56);		
+		assertEquals(1, airport.id);
+		
+		assertEquals(1, airport.gateL.size());
+		chkGate(airport.gateL.get(0), 2, "gate1");
+		chkErrors(0);
+//		
+//		log("render..");
+//		parser = createWorldParser();
+//		String output = parser.render(airport);
+//		log(output);
+//		chkErrors(0);
+//		
+//		log("re-parse");
+//		parser = createWorldParser();
+//		airport = (BigAirport) parser.parse(output);
+//		chkAirport(airport, true, "bob", 56);		
+//		assertEquals(1, airport.id);
+//		chkAirportGate(airport, 2, "gate1");
+//		chkErrors(0);
+	}
+	
+	@Test
 	public void test7() throws Exception
 	{
 		log("--test7---");
@@ -337,8 +370,12 @@ public class JsonTests extends BaseTest
 	}
 	private void chkAirportGate(BigAirport airport, int id, String name)
 	{
-		assertNotNull(airport.gate);
-		assertEquals(id, airport.gate.id);
-		assertEquals(name, airport.gate.name);
+		chkGate(airport.gate, id, name);
+	}
+	private void chkGate(Gate gate, int id, String name)
+	{
+		assertNotNull(gate);
+		assertEquals(id, gate.id);
+		assertEquals(name, gate.name);
 	}
 }

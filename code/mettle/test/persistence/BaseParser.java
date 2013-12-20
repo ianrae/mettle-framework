@@ -2,6 +2,7 @@ package persistence;
 
 import java.util.HashMap;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.mef.framework.sfx.SfxBaseObj;
@@ -31,6 +32,10 @@ public abstract class BaseParser extends SfxBaseObj
 	protected void addRef(Thing target, String refName, Class clazz)
 	{
 		JSONObject oo = helper.getEntity(refName);
+		addRefObj(oo, target, refName, clazz);
+	}
+	protected void addRefObj(JSONObject oo, Thing target, String refName, Class clazz)
+	{
 		ParserHelper h2 = new ParserHelper(_ctx, oo);
 		int idd = h2.getInt("id");
 		log("xx " + idd);
@@ -43,6 +48,18 @@ public abstract class BaseParser extends SfxBaseObj
 		desc.target = target;
 		this.refL.refL.add(desc);
 	}
+	protected void addListRef(Thing target, String refName, Class clazz)
+	{
+		JSONArray ar = helper.getArray(refName);
+		
+		for(int i = 0; i < ar.size(); i++)
+		{
+			String s = String.format("%s.%d", refName, i);
+			JSONObject el = (JSONObject) ar.get(i);
+			addRefObj(el, target, s, clazz);
+		}
+	}
+	
 	
 	abstract protected Thing createObj();
 	abstract protected void onParse(Thing t) throws Exception;
