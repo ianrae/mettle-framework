@@ -211,10 +211,7 @@ public class JsonTests extends BaseTest
 		String s = "{'rootType':'Airport','root': RRR }";
 		s = s.replace("RRR", "{'id':1,'flag':true,'name':'bob','size':56}");
 		Airport airport = (Airport) parser.parse(fix(s));
-		assertNotNull(airport);
-		assertEquals(true, airport.flag);
-		assertEquals("bob", airport.name);
-		assertEquals(56, airport.size);
+		chkAirport(airport, true, "bob", 56);		
 		assertEquals(1, airport.id);
 		chkErrors(0);
 	}
@@ -230,38 +227,24 @@ public class JsonTests extends BaseTest
 		s = s.replace("EEE", "[ GGG ]");
 		s = s.replace("GGG", "{ 'type': 'Gate', 'things': [{'id':2, 'name':'gate1'}] }");
 		BigAirport airport = (BigAirport) parser.parse(fix(s));
-		assertNotNull(airport);
-		assertEquals(true, airport.flag);
-		assertEquals("bob", airport.name);
-		assertEquals(56, airport.size);
+		chkAirport(airport, true, "bob", 56);		
 		assertEquals(1, airport.id);
-		
-		//parser.resolveRefs();
-		assertNotNull(airport.gate);
-		assertEquals(2, airport.gate.id);
-		assertEquals("gate1", airport.gate.name);
-
+		chkAirportGate(airport, 2, "gate1");
 		chkErrors(0);
 		
 		log("render..");
 		parser = new WorldParser(_ctx);
 		String output = parser.render(airport);
 		log(output);
-		//assertEquals("ss", output);
+		chkErrors(0);
 		
 		log("re-parse");
 		parser = new WorldParser(_ctx);
 		airport = (BigAirport) parser.parse(output);
-		assertNotNull(airport);
-		assertEquals(true, airport.flag);
-		assertEquals("bob", airport.name);
-		assertEquals(56, airport.size);
+		chkAirport(airport, true, "bob", 56);		
 		assertEquals(1, airport.id);
-		
-		//parser.resolveRefs();
-		assertNotNull(airport.gate);
-		assertEquals(2, airport.gate.id);
-		assertEquals("gate1", airport.gate.name);
+		chkAirportGate(airport, 2, "gate1");
+		chkErrors(0);
 	}
 	@Test
 	public void testRefSort()
@@ -319,9 +302,7 @@ public class JsonTests extends BaseTest
 		s = fix(s);
 		Airport obj = (Airport) parser.parse(s);
 		assertNotNull(obj);
-		assertEquals(true, obj.flag);
-		assertEquals("bob", obj.name);
-		assertEquals(56, obj.size);
+		chkAirport(obj, true, "bob", 56);		
 		assertEquals(12, obj.id);
 		
 		chkErrors(0);
@@ -363,14 +344,9 @@ public class JsonTests extends BaseTest
 		String s = "{'id':1,'flag':true,'name':'bob','size':56,'gate':{'id':2, 'name':'gate1'}}"; //works with extra stuff!
 		BigAirport obj = (BigAirport) parser.parse(fix(s));
 		assertNotNull(obj);
-		assertEquals(true, obj.flag);
-		assertEquals("bob", obj.name);
-		assertEquals(56, obj.size);
+		chkAirport(obj, true, "bob", 56);		
 		assertNull(obj.gate);
 		assertEquals(1, obj.id);
-		
-//		assertNotNull(obj.gate);
-//		assertEquals(2, obj.gate.id);
 		chkErrors(0);
 	}
 	
@@ -387,5 +363,19 @@ public class JsonTests extends BaseTest
 		this.createContext();
 		SfxErrorTracker tracker = new SfxErrorTracker(_ctx);
 		_ctx.getServiceLocator().registerSingleton(SfxErrorTracker.class, tracker);
+	}
+	
+	private void chkAirport(Airport airport, boolean b, String name, int size)
+	{
+		assertNotNull("nil", airport);
+		assertEquals(b, airport.flag);
+		assertEquals(name, airport.name);
+		assertEquals(size, airport.size);
+	}
+	private void chkAirportGate(BigAirport airport, int id, String name)
+	{
+		assertNotNull(airport.gate);
+		assertEquals(id, airport.gate.id);
+		assertEquals(name, airport.gate.name);
 	}
 }
