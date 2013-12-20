@@ -2,6 +2,8 @@ package clog;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -28,10 +30,18 @@ public class JsonTests extends BaseTest
 		public Gate gate;
 	}
 	
+	public static class ReferenceDesc
+	{
+		public BaseParser parser;
+		public String refId;
+		public Object target;
+	}
+	
 	public static abstract class BaseParser<T> extends SfxBaseObj
 	{
 		private JSONParser parser=new JSONParser();
 		protected JSONObject obj;
+		protected ArrayList<ReferenceDesc> refL = new ArrayList<JsonTests.ReferenceDesc>();
 		
 		public BaseParser(SfxContext ctx)
 		{
@@ -42,6 +52,15 @@ public class JsonTests extends BaseTest
 		{
 			this.obj = (JSONObject) parser.parse(input);
 			return obj;
+		}
+		
+		protected void addRef(Object target, String refId)
+		{
+			ReferenceDesc desc = new ReferenceDesc();
+			desc.parser = this;
+			desc.refId = refId;
+			desc.target = target;
+			this.refL.add(desc);
 		}
 		
 		abstract protected T createObj();
@@ -93,6 +112,19 @@ public class JsonTests extends BaseTest
 		{
 			JSONObject val = (JSONObject) obj.get(name);
 			return val; //can be null
+		}
+		
+		public void resolveRefs() throws Exception
+		{
+			for(ReferenceDesc desc : refL)
+			{
+				resolve(desc.parser, desc.refId, desc.target);
+			}
+		}
+		
+		protected void resolve(BaseParser parser, String refId, Object targetParam) throws Exception
+		{
+			
 		}
 	}
 
@@ -148,10 +180,22 @@ public class JsonTests extends BaseTest
 		{
 			super.onParse(targetParam);
 			
-			BigAirport target = (BigAirport) targetParam;
-			JSONObject jo = getEntity("gate");
-			GateParser inner1 = new GateParser(_ctx);
-			target.gate = inner1.parseFromJO(jo);
+			this.addRef(targetParam, "gate");
+//			BigAirport target = (BigAirport) targetParam;
+//			JSONObject jo = getEntity("gate");
+//			GateParser inner1 = new GateParser(_ctx);
+//			target.gate = inner1.parseFromJO(jo);
+		}
+		
+		protected void resolve(BaseParser parser, String refId, Object targetParam) throws Exception
+		{
+			if (refId.equals("gate"))
+			{
+				GateParser inner1 = new GateParser(_ctx);
+				JSONObject jo = getEntity("gate");
+				BigAirport target = (BigAirport) targetParam;
+				target.gate = inner1.parseFromJO(jo);
+			}
 		}
 	}
 	
@@ -254,6 +298,9 @@ public class JsonTests extends BaseTest
 		assertEquals(true, obj.flag);
 		assertEquals("bob", obj.name);
 		assertEquals(56, obj.size);
+		assertNull(obj.gate);
+		
+		parser.resolveRefs();
 		assertNotNull(obj.gate);
 	}
 	
