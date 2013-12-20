@@ -45,18 +45,18 @@ public class JsonTests extends BaseTest
 		}
 		
 		abstract protected T createObj();
-		abstract protected T onParse() throws Exception;
+		abstract protected void onParse(T t) throws Exception;
 		
 		T parse(String input) throws Exception
 		{
 			startParse(input);
-			T target = (T) onParse();
-			return target;
+			return parseFromJO(this.obj);
 		}
 		T parseFromJO(JSONObject jo) throws Exception
 		{
 			this.obj = jo;
-			T target = (T) onParse();
+			T target = createObj();
+			this.onParse(target);
 			return target;
 		}
 		
@@ -108,13 +108,11 @@ public class JsonTests extends BaseTest
 			return new Airport();
 		}
 		
-		protected Airport onParse() throws Exception
+		protected void onParse(Airport target) throws Exception
 		{
-			Airport target = (Airport) createObj();
 			target.flag = getBool("flag");
 			target.name = getString("name");
 			target.size = getInt("size");
-			return target;
 		}
 	}
 	public static class GateParser extends BaseParser<Gate>
@@ -128,13 +126,12 @@ public class JsonTests extends BaseTest
 			return new Gate();
 		}
 		
-		protected Gate onParse() throws Exception
+		protected void onParse(Gate target) throws Exception
 		{
-			Gate target = (Gate) createObj();
 			target.name = getString("name");
-			return target;
 		}
 	}
+	
 	public static class BigAirportParser extends AirportParser
 	{
 		public BigAirportParser(SfxContext ctx)
@@ -147,17 +144,15 @@ public class JsonTests extends BaseTest
 			return new BigAirport();
 		}
 		
-		Airport parse(String input) throws Exception
+		protected void onParse(Airport targetParam) throws Exception
 		{
-			startParse(input);
-			BigAirport target = (BigAirport) onParse();
+			super.onParse(targetParam);
 			
+			BigAirport target = (BigAirport) targetParam;
 			JSONObject jo = getEntity("gate");
 			GateParser inner1 = new GateParser(_ctx);
 			target.gate = inner1.parseFromJO(jo);
-			return target;
 		}
-
 	}
 	
 	@Test
