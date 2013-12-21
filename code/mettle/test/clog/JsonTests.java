@@ -156,13 +156,13 @@ public class JsonTests extends BaseTest
 		protected void onParse(Thing targetParam) throws Exception
 		{
 			super.onParse(targetParam);
-			this.addListRef(targetParam, "gate", Gate.class);
+			this.addListRef(targetParam, "gates", Gate.class);
 		}
 		
 		@Override
 		protected void resolve(String refName, Thing refObj, Object targetParam) throws Exception
 		{
-			if (refName.startsWith("gate."))
+			if (refName.startsWith("gates."))
 			{
 				MultiAirport target = (MultiAirport) targetParam;
 				target.gateL.add((Gate) refObj);
@@ -174,7 +174,7 @@ public class JsonTests extends BaseTest
 		{
 			super.onRender(targetParam);
 			MultiAirport target = (MultiAirport) targetParam;
-			//this.renderRef("gate", target.gate);
+			this.renderListRef("gates", target.gateL);
 		}
 	}
 	
@@ -289,23 +289,24 @@ public class JsonTests extends BaseTest
 		init();
 		WorldParser parser = createWorldParser();
 		String s = "{'rootType':'MultiAirport','root': RRR, 'refs': EEE  }";
-		s = s.replace("RRR", "{'id':1,'flag':true,'name':'bob','size':56,'gate':[{'id':2}] }");
+		s = s.replace("RRR", "{'id':1,'flag':true,'name':'bob','size':56,'gates':[{'id':2},{'id':3}] }");
 		s = s.replace("EEE", "[ GGG ]");
-		s = s.replace("GGG", "{ 'type': 'Gate', 'things': [{'id':2, 'name':'gate1'}] }");
+		s = s.replace("GGG", "{ 'type': 'Gate', 'things': [{'id':2, 'name':'gate1'},{'id':3, 'name':'gate2'}] }");
 		MultiAirport airport = (MultiAirport) parser.parse(fix(s));
 		chkAirport(airport, true, "bob", 56);		
 		assertEquals(1, airport.id);
 		
-		assertEquals(1, airport.gateL.size());
+		assertEquals(2, airport.gateL.size());
 		chkGate(airport.gateL.get(0), 2, "gate1");
+		chkGate(airport.gateL.get(1), 3, "gate2");
 		chkErrors(0);
-//		
-//		log("render..");
-//		parser = createWorldParser();
-//		String output = parser.render(airport);
-//		log(output);
-//		chkErrors(0);
-//		
+		
+		log("render..");
+		parser = createWorldParser();
+		String output = parser.render(airport);
+		log(output);
+		chkErrors(0);
+		
 //		log("re-parse");
 //		parser = createWorldParser();
 //		airport = (BigAirport) parser.parse(output);

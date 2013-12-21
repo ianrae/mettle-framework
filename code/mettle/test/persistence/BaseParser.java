@@ -1,6 +1,8 @@
 package persistence;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -118,5 +120,34 @@ public abstract class BaseParser extends SfxBaseObj
 		desc.refId = thing.id;
 		desc.target = thing;
 		this.refL.refL.add(desc);
+	}
+
+	protected void renderListRef(String refName, List<? extends Thing> L)
+	{
+		int i = 0;
+		ArrayList<HashMap> outputL = new ArrayList<HashMap>();
+		
+		for (Thing thing : L)
+		{
+			currentGenerator.assignId(thing);
+			
+			HashMap <String,Object> map = new HashMap<String, Object>();
+			map.put("id", thing.id);
+			outputL.add(map);
+//			obj.putAll(map);
+//			obj.put(refName, map);
+			
+			ReferenceDesc desc = new ReferenceDesc();
+			desc.parser = this;
+			desc.refName = String.format("%s.%d", refName, i);
+			desc.refClass = thing.getClass();
+			desc.refId = thing.id;
+			desc.target = thing;
+			this.refL.refL.add(desc);
+			
+			i++;
+		}
+		
+		obj.put(refName, outputL);
 	}
 }
