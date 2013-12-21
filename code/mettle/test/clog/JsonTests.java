@@ -307,13 +307,15 @@ public class JsonTests extends BaseTest
 		log(output);
 		chkErrors(0);
 		
-//		log("re-parse");
-//		parser = createWorldParser();
-//		airport = (BigAirport) parser.parse(output);
-//		chkAirport(airport, true, "bob", 56);		
-//		assertEquals(1, airport.id);
-//		chkAirportGate(airport, 2, "gate1");
-//		chkErrors(0);
+		log("re-parse");
+		parser = createWorldParser();
+		airport = (MultiAirport) parser.parse(output);
+		chkAirport(airport, true, "bob", 56);		
+		assertEquals(1, airport.id);
+		assertEquals(2, airport.gateL.size());
+		chkGate(airport.gateL.get(0), 2, "gate1");
+		chkGate(airport.gateL.get(1), 3, "gate2");
+		chkErrors(0);
 	}
 	
 	@Test
