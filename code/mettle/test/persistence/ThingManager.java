@@ -59,6 +59,7 @@ public class ThingManager<T extends Thing> extends SfxBaseObj
 		{
 			WorldParser parser = createWorldParser();
 			String json = parser.render(loadedObj);
+			log("save: " + json);
 			entity.blob = json;
 			dao.save(entity);
 			saveCounter++;

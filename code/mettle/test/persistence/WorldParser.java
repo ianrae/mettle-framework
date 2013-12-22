@@ -33,6 +33,11 @@ public class WorldParser extends SfxBaseObj implements IIdGenerator
 		
 		protected JSONObject startParse(String input) throws Exception
 		{
+			if (input == null || input.isEmpty())
+			{
+				input = "{}";
+			}
+			
 			this.obj = (JSONObject) parser.parse(input);
 			this.helper = new ParserHelper(_ctx, obj);
 			return obj;

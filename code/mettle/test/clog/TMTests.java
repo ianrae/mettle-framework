@@ -20,9 +20,9 @@ import clog.JsonTests.BigAirportParser;
 import clog.JsonTests.GateParser;
 import clog.JsonTests.MultiAirportParser;
 
-public class TMTests extends BaseJsonTest implements ICLOGDAO
+public class TMTests extends BaseJsonTest 
 {
-	public class ClogEntity extends Entity
+	public static class ClogEntity extends Entity
 	{
 		public ClogEntity()
 		{}
@@ -65,13 +65,24 @@ public class TMTests extends BaseJsonTest implements ICLOGDAO
 		}
 	}
 	
-	
+	@Test
+	public void test0() throws Exception
+	{
+		init();
+		mockDao.emptyDAO = true;
+		_ctx.getServiceLocator().registerSingleton(ICLOGDAO.class, mockDao);
+		
+		AirportThingManager tm = new AirportThingManager(_ctx);
+		
+		Long clogId = 1L;
+		BigAirport airport = tm.load(clogId);
+		assertEquals(null, airport);
+	}
 	@Test
 	public void test() throws Exception
 	{
 		init();
-		ICLOGDAO dao = this;
-		_ctx.getServiceLocator().registerSingleton(ICLOGDAO.class, dao);
+		_ctx.getServiceLocator().registerSingleton(ICLOGDAO.class, mockDao);
 		
 		AirportThingManager tm = new AirportThingManager(_ctx);
 		
@@ -91,6 +102,12 @@ public class TMTests extends BaseJsonTest implements ICLOGDAO
 	
 	
 	//--- helpers ---
+	@Override 
+	protected void init()
+	{
+		super.init();
+		mockDao = new MockClogDAO(getJson());
+	}
 	private String getJson() 
 	{
 		String s = "{'rootType':'BigAirport','root': {'id':1,'flag':true,'name':'bob','gate':{'id':2},'size':56}, 'refs': [ {'type': 'Gate', 'things': [ {'id':2,'name':'gate1'} ] } ] }";
@@ -99,39 +116,6 @@ public class TMTests extends BaseJsonTest implements ICLOGDAO
 
 
 	//------ implement ICLOGDAO ----
-	@Override
-	public int size() {
-		return 1;
-	}
-	@Override
-	public void delete(long id) {
-	}
-	@Override
-	public void updateFrom(IFormBinder binder) {
-	}
-	@Override
-	public ClogEntity findById(long id) 
-	{
-		ClogEntity entity = new ClogEntity();
-		entity.blob = this.getJson();
-		return entity;
-	}
-
-
-	@Override
-	public List<ClogEntity> all() 
-	{
-		ArrayList<ClogEntity> L = new ArrayList<TMTests.ClogEntity>();
-		L.add(findById(1));
-		return L;
-	}
-	@Override
-	public void save(ClogEntity entity) 
-	{
-	}
-	@Override
-	public void update(ClogEntity entity)
-	{
-	}
+	MockClogDAO mockDao;
 
 }
