@@ -49,6 +49,9 @@ public class TMTests extends BaseJsonTest implements ICLOGDAO
 		private BigAirport loadedObj;
 		private boolean loaded; //have attempted a load
 		ICLOGDAO dao;
+		private boolean dirtyFlag;
+		private ClogEntity entity;
+		public int saveCounter;
 		
 		public AirportThingManager(SfxContext ctx)
 		{
@@ -74,10 +77,30 @@ public class TMTests extends BaseJsonTest implements ICLOGDAO
 		{
 			if (! loaded)
 			{
-				ClogEntity entity = dao.findById(id);
+				entity = dao.findById(id);
 				load(entity.blob);
 			}
 			return loadedObj;
+		}
+		
+		public void setDirty()
+		{
+			dirtyFlag = true;
+		}
+		public boolean isDirty()
+		{
+			return dirtyFlag;
+		}
+		public void saveIfNeeded()
+		{
+			if (dirtyFlag)
+			{
+				WorldParser parser = createWorldParser();
+				String json = parser.render(loadedObj);
+				entity.blob = json;
+				dao.save(entity);
+				saveCounter++;
+			}
 		}
 		
 		
@@ -104,6 +127,14 @@ public class TMTests extends BaseJsonTest implements ICLOGDAO
 		Long clogId = 1L;
 		BigAirport airport = tm.load(clogId);
 		assertEquals(1, airport.id);
+		
+		assertEquals(0, tm.saveCounter);
+		tm.saveIfNeeded();
+		assertEquals(0, tm.saveCounter);
+		tm.setDirty();
+		assertEquals(0, tm.saveCounter); //no save yet
+		tm.saveIfNeeded();
+		assertEquals(1, tm.saveCounter); 
 	}
 	
 	
