@@ -19,7 +19,7 @@ import persistence.Thing;
 import persistence.WorldParser;
 import tools.BaseTest;
 
-public class JsonTests extends BaseTest
+public class JsonTests extends BaseJsonTest
 {
 	public static class Airport extends Thing
 	{
@@ -245,12 +245,6 @@ public class JsonTests extends BaseTest
 		assertEquals(s, output);
 	}
 
-	private void chkErrors(int i) 
-	{
-		SfxErrorTracker tracker = (SfxErrorTracker) _ctx.getServiceLocator().getInstance(SfxErrorTracker.class);
-		assertEquals(i, tracker.getErrorCount());
-	}
-
 	@Test
 	public void test5() throws Exception
 	{
@@ -341,18 +335,6 @@ public class JsonTests extends BaseTest
 		
 	}	
 	//------- helpers---------
-	private String fix(String s)
-	{
-		s = s.replace('\'', '"');
-		return s;
-	}
-	
-	private void init()
-	{
-		this.createContext();
-		SfxErrorTracker tracker = new SfxErrorTracker(_ctx);
-		_ctx.getServiceLocator().registerSingleton(SfxErrorTracker.class, tracker);
-	}
 	
 	private WorldParser createWorldParser()
 	{

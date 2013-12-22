@@ -10,5 +10,5 @@ public class ReferenceDesc
 	public Class refClass;
 	public Thing target;
 
-	public int refId;
+	public long refId;
 }

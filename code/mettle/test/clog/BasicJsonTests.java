@@ -19,7 +19,7 @@ import clog.JsonTests.Airport;
 import clog.JsonTests.BigAirport;
 import clog.JsonTests.Gate;
 
-public class BasicJsonTests extends BaseTest
+public class BasicJsonTests extends BaseJsonTest
 {
 	
 	@Test
@@ -130,26 +130,6 @@ public class BasicJsonTests extends BaseTest
 	
 	
 	//------- helpers---------
-	private String fix(String s)
-	{
-		s = s.replace('\'', '"');
-		return s;
-	}
-	
-	private void init()
-	{
-		this.createContext();
-		SfxErrorTracker tracker = new SfxErrorTracker(_ctx);
-		_ctx.getServiceLocator().registerSingleton(SfxErrorTracker.class, tracker);
-	}
-	
-	
-	private void chkErrors(int i) 
-	{
-		SfxErrorTracker tracker = (SfxErrorTracker) _ctx.getServiceLocator().getInstance(SfxErrorTracker.class);
-		assertEquals(i, tracker.getErrorCount());
-	}
-	
 	private void chkAirport(Airport airport, boolean b, String name, int size)
 	{
 		assertNotNull("nil", airport);

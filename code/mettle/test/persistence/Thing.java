@@ -2,5 +2,5 @@ package persistence;
 
 public class Thing
 {
-	public int id;
+	public long id;
 }
