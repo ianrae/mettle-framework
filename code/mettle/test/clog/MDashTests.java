@@ -28,6 +28,10 @@ public class MDashTests extends BaseJsonTest
 		public String title;
 		public Date createDate;
 	}
+	public static class DashState extends Thing
+	{
+		public DashItem item;
+	}
 	
 	public static class DashItemParser extends BaseParser
 	{
@@ -57,9 +61,44 @@ public class MDashTests extends BaseJsonTest
 			obj.put("createDate", Thing.dateToString(target.createDate));
 		}
 	}
+	public static class DashStateParser extends BaseParser
+	{
+		public DashStateParser(SfxContext ctx)
+		{
+			super(ctx);
+		}
+		protected Thing createObj()
+		{
+			return new DashState();
+		}
+		
+		protected void onParse(Thing targetParam) throws Exception
+		{
+			DashState target = (DashState) targetParam;
+			parseId(target);
+			this.addRef(targetParam, "item", DashItem.class);
+		}
+		@Override
+		protected void resolve(String refName, Thing refObj, Object targetParam) throws Exception
+		{
+			if (refName.equals("item"))
+			{
+				DashState target = (DashState) targetParam;
+				target.item = (DashItem) refObj;
+			}
+		}
+		
+		@Override
+		protected void onRender(Thing targetParam) 
+		{
+			DashState target = (DashState) targetParam;
+			obj.put("id", target.id);
+			this.renderRef("item", target.item);
+		}
+	}
 	
 	
-	public static class MDashThingManager extends ThingManager<DashItem>
+	public static class MDashThingManager extends ThingManager<DashState>
 	{
 		public MDashThingManager(SfxContext ctx)
 		{
@@ -70,6 +109,7 @@ public class MDashTests extends BaseJsonTest
 		protected WorldParser createWorldParser()
 		{
 			WorldParser parser = new WorldParser(_ctx);
+			parser.addParser("DashState", new DashStateParser(_ctx));
 			parser.addParser("DashItem", new DashItemParser(_ctx));
 			return parser;
 		}
@@ -84,10 +124,9 @@ public class MDashTests extends BaseJsonTest
 		MDashThingManager tm = new MDashThingManager(_ctx);
 		
 		Long clogId = 1L;
-		DashItem item = tm.load(clogId);
-		assertEquals(1, item.id);
-		assertEquals("bob", item.title);
-		
+		DashState state = tm.load(clogId);
+		assertEquals(1, state.id);
+		assertEquals(2, state.item.id);
 		
 		tm.setDirty();
 		tm.saveIfNeeded();
@@ -104,7 +143,9 @@ public class MDashTests extends BaseJsonTest
 	}
 	private String getJson() 
 	{
-		String s = "{'rootType':'DashItem','root': {'id':1,'title':'bob','createDate':'22 Dec 2013 20:56:05 GMT'}, 'refs': [ ] }";
+		String s = "{'rootType':'DashState','root': {'id':1,'item':{'id':2}}, 'refs': [ EEE ] }";
+		s = s.replace("EEE", "{ 'type': 'DashItem', 'things': [{'id':2, 'title':'bob','createDate':'22 Dec 2013 20:56:05 GMT'}] }");
+//		String s = "{'rootType':'DashState','root': {'id':1,'title':'bob','createDate':'22 Dec 2013 20:56:05 GMT'}, 'refs': [ ] }";
 		return fix(s);
 	}
 
