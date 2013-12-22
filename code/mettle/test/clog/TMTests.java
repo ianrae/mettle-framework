@@ -7,10 +7,12 @@ import java.util.List;
 
 import org.junit.Test;
 import org.mef.framework.binder.IFormBinder;
+import org.mef.framework.dao.IDAO;
 import org.mef.framework.entities.Entity;
-import org.mef.framework.sfx.SfxBaseObj;
 import org.mef.framework.sfx.SfxContext;
 
+import persistence.ICLOGDAO;
+import persistence.ThingManager;
 import persistence.WorldParser;
 import clog.JsonTests.AirportParser;
 import clog.JsonTests.BigAirport;
@@ -44,67 +46,15 @@ public class TMTests extends BaseJsonTest implements ICLOGDAO
 	}
 	
 	
-	public static class AirportThingManager extends SfxBaseObj
+	public static class AirportThingManager extends ThingManager<BigAirport>
 	{
-		private BigAirport loadedObj;
-		private boolean loaded; //have attempted a load
-		ICLOGDAO dao;
-		private boolean dirtyFlag;
-		private ClogEntity entity;
-		public int saveCounter;
-		
 		public AirportThingManager(SfxContext ctx)
 		{
 			super(ctx);
-			dao = (ICLOGDAO) ctx.getServiceLocator().getInstance(ICLOGDAO.class);
 		}
 
-		private boolean load(String json) throws Exception 
-		{
-			WorldParser parser = createWorldParser();
-			loadedObj = (BigAirport) parser.parse(json);
-			
-			loaded =  (loadedObj != null);
-			return loaded;
-		}
-		
-		public BigAirport getLoadedObj()
-		{
-			return loadedObj;
-		}
-		
-		public BigAirport load(Long id) throws Exception
-		{
-			if (! loaded)
-			{
-				entity = dao.findById(id);
-				load(entity.blob);
-			}
-			return loadedObj;
-		}
-		
-		public void setDirty()
-		{
-			dirtyFlag = true;
-		}
-		public boolean isDirty()
-		{
-			return dirtyFlag;
-		}
-		public void saveIfNeeded()
-		{
-			if (dirtyFlag)
-			{
-				WorldParser parser = createWorldParser();
-				String json = parser.render(loadedObj);
-				entity.blob = json;
-				dao.save(entity);
-				saveCounter++;
-			}
-		}
-		
-		
-		private WorldParser createWorldParser()
+		@Override
+		protected WorldParser createWorldParser()
 		{
 			WorldParser parser = new WorldParser(_ctx);
 			parser.addParser("Airport", new AirportParser(_ctx));
@@ -114,6 +64,7 @@ public class TMTests extends BaseJsonTest implements ICLOGDAO
 			return parser;
 		}
 	}
+	
 	
 	@Test
 	public void test() throws Exception
