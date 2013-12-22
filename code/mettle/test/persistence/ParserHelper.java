@@ -1,5 +1,9 @@
 package persistence;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.mef.framework.sfx.SfxBaseObj;
@@ -49,6 +53,25 @@ public class ParserHelper extends SfxBaseObj
 		}
 		int n = val.intValue();
 		return n;
+	}
+	public Date getDate(String name)
+	{
+		String s = getString(name);
+		if (s == null)
+		{
+			//err
+			return null;
+		}
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("d MMM yyyy H:m:s z"); //22 Dec 2013 20:56:05 GMT
+		Date dt = null;
+		try {
+			dt = sdf.parse(s);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return dt;
 	}
 	
 	public JSONObject getEntity(String name)

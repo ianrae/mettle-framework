@@ -4,7 +4,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Test;
@@ -33,6 +36,7 @@ public class JsonTests extends BaseJsonTest
 	}
 	public static class BigAirport extends Airport
 	{
+		public Date startDate;
 		public Gate gate;
 	}
 	public static class MultiAirport extends Airport
@@ -115,7 +119,9 @@ public class JsonTests extends BaseJsonTest
 		{
 			super.onParse(targetParam);
 			this.addRef(targetParam, "gate", Gate.class);
-//			BigAirport target = (BigAirport) targetParam;
+			
+			BigAirport target = (BigAirport) targetParam;
+			target.startDate = helper.getDate("startDate");
 //			JSONObject jo = getEntity("gate");
 //			GateParser inner1 = new GateParser(_ctx);
 //			target.gate = inner1.parseFromJO(jo);
@@ -137,6 +143,7 @@ public class JsonTests extends BaseJsonTest
 			super.onRender(targetParam);
 			BigAirport target = (BigAirport) targetParam;
 			this.renderRef("gate", target.gate);
+			obj.put("startDate", target.startDate.toGMTString());
 		}
 	}
 	
@@ -199,9 +206,11 @@ public class JsonTests extends BaseJsonTest
 		init();
 		WorldParser parser = createWorldParser();
 		String s = "{'rootType':'BigAirport','root': RRR, 'refs': EEE  }";
-		s = s.replace("RRR", "{'id':1,'flag':true,'name':'bob','size':56,'gate':{'id':2} }");
+		s = s.replace("RRR", "{'id':1,'flag':true,'name':'bob','size':56,'startDate':'22 Dec 2013 20:56:05 GMT','gate':{'id':2} }");
 		s = s.replace("EEE", "[ GGG ]");
 		s = s.replace("GGG", "{ 'type': 'Gate', 'things': [{'id':2, 'name':'gate1'}] }");
+		
+		log(fix(s));
 		BigAirport airport = (BigAirport) parser.parse(fix(s));
 		chkAirport(airport, true, "bob", 56);		
 		assertEquals(1, airport.id);
@@ -332,6 +341,18 @@ public class JsonTests extends BaseJsonTest
 		String output = parser.render(airport);
 		log(output);
 		chkErrors(0);
+		
+		Calendar cal = Calendar.getInstance();
+		String tz = cal.getTimeZone().getID();
+		log(tz);
+		Date dt = cal.getTime();
+		String dtstr = dt.toGMTString();
+		log(dtstr);
+		SimpleDateFormat sdf = new SimpleDateFormat("d MMM yyyy H:m:s z"); //22 Dec 2013 20:56:05 GMT
+		Date dt2 = sdf.parse(dtstr);
+		//assertEquals(dt, dt2);
+		dtstr = dt.toGMTString();
+		log(dtstr);
 		
 	}	
 	//------- helpers---------
