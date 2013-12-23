@@ -203,6 +203,7 @@ public class WorldParser extends SfxBaseObj implements IIdGenerator
 				{
 					return null;
 				}
+				d2.parser.refL = refL;
 				output += d2.parser.render(desc.target, this);
 			}
 			output += " ] }";

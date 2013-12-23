@@ -36,6 +36,7 @@ public class MDashTests extends BaseJsonTest
 		public String title;
 		public Date createDate;
 		public Date modDate;
+		public Subject subject;
 	}
 	public static class DashState extends Thing
 	{
@@ -92,6 +93,17 @@ public class MDashTests extends BaseJsonTest
 			target.title = helper.getString("title");
 			target.createDate = helper.getDate("createDate");
 			target.modDate = helper.getDate("modDate");
+			this.addRef(target, "subject", Subject.class);
+		}
+		
+		@Override
+		protected void resolve(String refName, Thing refObj, Object targetParam) throws Exception
+		{
+			DashItem target = (DashItem) targetParam;
+			if (refName.startsWith("subject"))
+			{
+				target.subject = (Subject)refObj;
+			}
 		}
 		
 		@Override
@@ -102,6 +114,7 @@ public class MDashTests extends BaseJsonTest
 			obj.put("title", target.title);
 			obj.put("createDate", ParserHelper.dateToString(target.createDate));
 			obj.put("modDate", ParserHelper.dateToString(target.modDate));
+			this.renderRef("subject", target.subject);
 		}
 	}
 	public static class DashStateParser extends BaseParser
@@ -207,6 +220,7 @@ public class MDashTests extends BaseJsonTest
 		Subject subj = new Subject();
 		state.subjects.add(subj);
 		subj.name = "math";
+		state.items.get(0).subject = subj;
 		
 		tm.setDirty();
 		tm.saveIfNeeded();
