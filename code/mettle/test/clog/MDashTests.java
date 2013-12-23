@@ -2,7 +2,9 @@ package clog;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.junit.Test;
 import org.mef.framework.sfx.SfxContext;
@@ -30,7 +32,7 @@ public class MDashTests extends BaseJsonTest
 	}
 	public static class DashState extends Thing
 	{
-		public DashItem item;
+		public List<DashItem> items = new ArrayList<DashItem>();
 	}
 	
 	public static class DashItemParser extends BaseParser
@@ -76,15 +78,15 @@ public class MDashTests extends BaseJsonTest
 		{
 			DashState target = (DashState) targetParam;
 			parseId(target);
-			this.addRef(targetParam, "item", DashItem.class);
+			this.addListRef(targetParam, "items", DashItem.class);
 		}
 		@Override
 		protected void resolve(String refName, Thing refObj, Object targetParam) throws Exception
 		{
-			if (refName.equals("item"))
+			if (refName.startsWith("items."))
 			{
 				DashState target = (DashState) targetParam;
-				target.item = (DashItem) refObj;
+				target.items.add((DashItem) refObj);
 			}
 		}
 		
@@ -93,7 +95,7 @@ public class MDashTests extends BaseJsonTest
 		{
 			DashState target = (DashState) targetParam;
 			obj.put("id", target.id);
-			this.renderRef("item", target.item);
+			this.renderListRef("items", target.items);
 		}
 	}
 	
@@ -126,7 +128,8 @@ public class MDashTests extends BaseJsonTest
 		Long clogId = 1L;
 		DashState state = tm.load(clogId);
 		assertEquals(1, state.id);
-		assertEquals(2, state.item.id);
+		assertEquals(1, state.items.size());
+		assertEquals(2, state.items.get(0).id);
 		
 		tm.setDirty();
 		tm.saveIfNeeded();
@@ -143,7 +146,7 @@ public class MDashTests extends BaseJsonTest
 	}
 	private String getJson() 
 	{
-		String s = "{'rootType':'DashState','root': {'id':1,'item':{'id':2}}, 'refs': [ EEE ] }";
+		String s = "{'rootType':'DashState','root': {'id':1,'items':[{'id':2}] }, 'refs': [ EEE ] }";
 		s = s.replace("EEE", "{ 'type': 'DashItem', 'things': [{'id':2, 'title':'bob','createDate':'22 Dec 2013 20:56:05 GMT'}] }");
 //		String s = "{'rootType':'DashState','root': {'id':1,'title':'bob','createDate':'22 Dec 2013 20:56:05 GMT'}, 'refs': [ ] }";
 		return fix(s);
