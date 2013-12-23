@@ -3,6 +3,7 @@ package clog;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -131,6 +132,11 @@ public class MDashTests extends BaseJsonTest
 		assertEquals(1, state.items.size());
 		assertEquals(2, state.items.get(0).id);
 		
+		DashItem item2 = new DashItem();
+		item2.title = "bob2";
+		item2.createDate = Calendar.getInstance().getTime();
+		state.items.add(item2);
+		
 		tm.setDirty();
 		tm.saveIfNeeded();
 		assertEquals(1, tm.saveCounter); 
@@ -148,10 +154,8 @@ public class MDashTests extends BaseJsonTest
 	{
 		String s = "{'rootType':'DashState','root': {'id':1,'items':[{'id':2}] }, 'refs': [ EEE ] }";
 		s = s.replace("EEE", "{ 'type': 'DashItem', 'things': [{'id':2, 'title':'bob','createDate':'22 Dec 2013 20:56:05 GMT'}] }");
-//		String s = "{'rootType':'DashState','root': {'id':1,'title':'bob','createDate':'22 Dec 2013 20:56:05 GMT'}, 'refs': [ ] }";
 		return fix(s);
 	}
-
 
 	//------ implement ICLOGDAO ----
 	MockClogDAO mockDao;

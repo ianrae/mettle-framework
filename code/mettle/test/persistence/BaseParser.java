@@ -127,6 +127,17 @@ public abstract class BaseParser extends SfxBaseObj
 		int i = 0;
 		ArrayList<HashMap> outputL = new ArrayList<HashMap>();
 		
+		Long maxId = 0L;
+		for(Thing thing : L)
+		{
+			if (thing.id > maxId)
+			{
+				maxId = thing.id;
+			}
+		}
+		
+		currentGenerator.forceNextId(maxId + 1);
+		
 		for (Thing thing : L)
 		{
 			currentGenerator.assignId(thing);

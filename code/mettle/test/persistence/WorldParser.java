@@ -24,7 +24,7 @@ public class WorldParser extends SfxBaseObj implements IIdGenerator
 		private HashMap<String,ParserDesc> parserMap = new HashMap<String, ParserDesc>();
 		
 		//render
-		protected int nextId = 1;
+		protected Long nextId = 1L;
 		
 		public WorldParser(SfxContext ctx)
 		{
@@ -153,7 +153,7 @@ public class WorldParser extends SfxBaseObj implements IIdGenerator
 		//--render--
 		public String render(Thing thing) 
 		{
-			nextId = 1; //reset
+			nextId = 1L; //reset
 			
 			String name = thing.getClass().getSimpleName();
 			ParserDesc desc = parserMap.get(name);
@@ -218,7 +218,11 @@ public class WorldParser extends SfxBaseObj implements IIdGenerator
 			}
 			thing.id = nextId++;
 		}
-		
+		@Override
+		public void forceNextId(Long id)
+		{
+			this.nextId = id;
+		}
 		
 		public void errorOccured(String errMsg)
 		{
