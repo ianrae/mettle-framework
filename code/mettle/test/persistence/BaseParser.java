@@ -56,6 +56,10 @@ public abstract class BaseParser extends SfxBaseObj
 	protected void addListRef(Thing target, String refName, Class clazz)
 	{
 		JSONArray ar = helper.getArray(refName);
+		if (ar == null)
+		{
+			return;
+		}
 		
 		for(int i = 0; i < ar.size(); i++)
 		{

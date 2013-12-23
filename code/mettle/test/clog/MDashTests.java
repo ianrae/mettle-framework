@@ -40,7 +40,7 @@ public class MDashTests extends BaseJsonTest
 	public static class DashState extends Thing
 	{
 		public List<DashItem> items = new ArrayList<DashItem>();
-		public Subject subject;
+		public List<Subject> subjects = new ArrayList<MDashTests.Subject>();
 	}
 	
 	
@@ -119,7 +119,7 @@ public class MDashTests extends BaseJsonTest
 		{
 			DashState target = (DashState) targetParam;
 			parseId(target);
-			this.addRef(targetParam, "subj", Subject.class);
+			this.addListRef(targetParam, "subjects", Subject.class);
 			this.addListRef(targetParam, "items", DashItem.class);
 		}
 		@Override
@@ -130,9 +130,9 @@ public class MDashTests extends BaseJsonTest
 			{
 				target.items.add((DashItem) refObj);
 			}
-			else if (refName.startsWith("subj"))
+			else if (refName.startsWith("subjects."))
 			{
-				target.subject = (Subject)refObj;
+				target.subjects.add((Subject)refObj);
 			}
 		}
 		
@@ -141,7 +141,7 @@ public class MDashTests extends BaseJsonTest
 		{
 			DashState target = (DashState) targetParam;
 			obj.put("id", target.id);
-			this.renderRef("subj", target.subject);
+			this.renderListRef("subjects", target.subjects);
 			this.renderListRef("items", target.items);
 		}
 	}
@@ -189,6 +189,28 @@ public class MDashTests extends BaseJsonTest
 		tm.saveIfNeeded();
 		assertEquals(1, tm.saveCounter); 
 		assertEquals(3, item2.id);
+		chkErrors(0);
+	}
+	
+	@Test
+	public void testSubj() throws Exception
+	{
+		init();
+		_ctx.getServiceLocator().registerSingleton(ICLOGDAO.class, mockDao);
+		
+		MDashThingManager tm = new MDashThingManager(_ctx);
+		
+		Long clogId = 1L;
+		DashState state = tm.load(clogId);
+		assertEquals(1, state.id);
+		
+		Subject subj = new Subject();
+		state.subjects.add(subj);
+		subj.name = "math";
+		
+		tm.setDirty();
+		tm.saveIfNeeded();
+		assertEquals(1, tm.saveCounter); 
 		chkErrors(0);
 	}
 	
