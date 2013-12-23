@@ -20,22 +20,60 @@ import clog.TMTests.AirportThingManager;
 
 import persistence.BaseParser;
 import persistence.ICLOGDAO;
+import persistence.ParserHelper;
 import persistence.Thing;
 import persistence.ThingManager;
 import persistence.WorldParser;
 
 public class MDashTests extends BaseJsonTest
 {
+	public static class Subject extends Thing
+	{
+		public String name;
+	}
 	public static class DashItem extends Thing
 	{
 		public String title;
 		public Date createDate;
+		public Date modDate;
 	}
 	public static class DashState extends Thing
 	{
 		public List<DashItem> items = new ArrayList<DashItem>();
+		public Subject subject;
 	}
 	
+	
+	public static class SubjectParser extends BaseParser
+	{
+		public SubjectParser(SfxContext ctx)
+		{
+			super(ctx);
+		}
+		protected Thing createObj()
+		{
+			return new Subject();
+		}
+		
+		protected void onParse(Thing targetParam) throws Exception
+		{
+			Subject target = (Subject) targetParam;
+			parseId(target);
+			target.name = helper.getString("name");
+//			target.createDate = helper.getDate("createDate");
+//			target.modDate = helper.getDate("modDate");
+		}
+		
+		@Override
+		protected void onRender(Thing targetParam) 
+		{
+			Subject target = (Subject) targetParam;
+			obj.put("id", target.id);
+			obj.put("title", target.name);
+//			obj.put("createDate", ParserHelper.dateToString(target.createDate));
+//			obj.put("modDate", ParserHelper.dateToString(target.modDate));
+		}
+	}
 	public static class DashItemParser extends BaseParser
 	{
 		public DashItemParser(SfxContext ctx)
@@ -53,6 +91,7 @@ public class MDashTests extends BaseJsonTest
 			parseId(target);
 			target.title = helper.getString("title");
 			target.createDate = helper.getDate("createDate");
+			target.modDate = helper.getDate("modDate");
 		}
 		
 		@Override
@@ -61,7 +100,8 @@ public class MDashTests extends BaseJsonTest
 			DashItem target = (DashItem) targetParam;
 			obj.put("id", target.id);
 			obj.put("title", target.title);
-			obj.put("createDate", Thing.dateToString(target.createDate));
+			obj.put("createDate", ParserHelper.dateToString(target.createDate));
+			obj.put("modDate", ParserHelper.dateToString(target.modDate));
 		}
 	}
 	public static class DashStateParser extends BaseParser
@@ -79,15 +119,20 @@ public class MDashTests extends BaseJsonTest
 		{
 			DashState target = (DashState) targetParam;
 			parseId(target);
+			this.addRef(targetParam, "subj", Subject.class);
 			this.addListRef(targetParam, "items", DashItem.class);
 		}
 		@Override
 		protected void resolve(String refName, Thing refObj, Object targetParam) throws Exception
 		{
+			DashState target = (DashState) targetParam;
 			if (refName.startsWith("items."))
 			{
-				DashState target = (DashState) targetParam;
 				target.items.add((DashItem) refObj);
+			}
+			else if (refName.startsWith("subj"))
+			{
+				target.subject = (Subject)refObj;
 			}
 		}
 		
@@ -96,6 +141,7 @@ public class MDashTests extends BaseJsonTest
 		{
 			DashState target = (DashState) targetParam;
 			obj.put("id", target.id);
+			this.renderRef("subj", target.subject);
 			this.renderListRef("items", target.items);
 		}
 	}
@@ -114,6 +160,7 @@ public class MDashTests extends BaseJsonTest
 			WorldParser parser = new WorldParser(_ctx);
 			parser.addParser("DashState", new DashStateParser(_ctx));
 			parser.addParser("DashItem", new DashItemParser(_ctx));
+			parser.addParser("Subject", new SubjectParser(_ctx));
 			return parser;
 		}
 	}
@@ -136,10 +183,12 @@ public class MDashTests extends BaseJsonTest
 		item2.title = "bob2";
 		item2.createDate = Calendar.getInstance().getTime();
 		state.items.add(item2);
+		assertEquals(0, item2.id);
 		
 		tm.setDirty();
 		tm.saveIfNeeded();
 		assertEquals(1, tm.saveCounter); 
+		assertEquals(3, item2.id);
 		chkErrors(0);
 	}
 	

@@ -17,6 +17,7 @@ import org.mef.framework.sfx.SfxErrorTracker;
 import persistence.BaseParser;
 import persistence.IIdGenerator;
 import persistence.ParserDesc;
+import persistence.ParserHelper;
 import persistence.ReferenceList;
 import persistence.Thing;
 import persistence.WorldParser;
@@ -143,7 +144,7 @@ public class JsonTests extends BaseJsonTest
 			super.onRender(targetParam);
 			BigAirport target = (BigAirport) targetParam;
 			this.renderRef("gate", target.gate);
-			obj.put("startDate", Thing.dateToString(target.startDate));
+			obj.put("startDate", helper.dateToString(target.startDate));
 		}
 	}
 	
@@ -213,7 +214,7 @@ public class JsonTests extends BaseJsonTest
 		log(fix(s));
 		BigAirport airport = (BigAirport) parser.parse(fix(s));
 		chkAirport(airport, true, "bob", 56);		
-		assertEquals("22 Dec 2013 20:56:05 GMT", Thing.dateToString(airport.startDate));
+		assertEquals("22 Dec 2013 20:56:05 GMT", ParserHelper.dateToString(airport.startDate));
 		assertEquals(1, airport.id);
 		chkAirportGate(airport, 2, "gate1");
 		chkErrors(0);

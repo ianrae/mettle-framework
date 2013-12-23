@@ -34,7 +34,10 @@ public abstract class BaseParser extends SfxBaseObj
 	protected void addRef(Thing target, String refName, Class clazz)
 	{
 		JSONObject oo = helper.getEntity(refName);
-		addRefObj(oo, target, refName, clazz);
+		if (oo != null)
+		{
+			addRefObj(oo, target, refName, clazz);
+		}
 	}
 	protected void addRefObj(JSONObject oo, Thing target, String refName, Class clazz)
 	{
@@ -107,6 +110,10 @@ public abstract class BaseParser extends SfxBaseObj
 	@SuppressWarnings("unchecked")
 	protected void renderRef(String refName, Thing thing)
 	{
+		if (thing == null)
+		{
+			return;
+		}
 		currentGenerator.assignId(thing);
 		
 		HashMap <String,Object> map = new HashMap<String, Object>();
