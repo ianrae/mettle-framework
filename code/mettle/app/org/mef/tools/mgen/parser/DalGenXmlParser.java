@@ -119,6 +119,10 @@ public class DalGenXmlParser extends SfxBaseObj
 		def.genPresenter = getExtend(p, entityEl, "presenter"); //default is false
 		
 		def.useExistingPackage = getExtendString(p, entityEl, "entity");
+		if (def.useExistingPackage != null && def.useExistingPackage.isEmpty())
+		{
+			def.useExistingPackage = null;
+		}
 		
 	}
 	
