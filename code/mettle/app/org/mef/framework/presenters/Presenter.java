@@ -54,6 +54,7 @@ public class Presenter extends SfxBaseObj
 		MethodInvoker invoker = new MethodInvoker(_ctx, this, methodName, Command.class);
 		
 		Object res = invoker.call(cmd, reply);
+		doAfterAction(cmd, (Reply)res);
 		if (res == null)
 		{
 			Logger.warn("null from invoker.call!!");
@@ -90,10 +91,24 @@ public class Presenter extends SfxBaseObj
 		return reply;
 	}
 	
+	protected void doAfterAction(Command cmd, Reply reply) 
+	{
+		try 
+		{
+			afterAction(cmd, reply);
+		}
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+		}
+	}
+	
 	protected Reply beforeAction(Command cmd) throws Exception
 	{
 		return null;
 	}
+	protected void afterAction(Command cmd, Reply reply) throws Exception
+	{}
 
 	//---auth---
 	protected boolean hasRole(Command cmd, String roleName)
