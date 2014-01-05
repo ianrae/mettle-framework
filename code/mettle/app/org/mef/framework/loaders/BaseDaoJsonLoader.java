@@ -4,7 +4,7 @@ import java.text.ParseException;
 import java.util.Date;
 import java.util.Locale;
 
-import org.codehaus.jackson.JsonNode;
+import com.fasterxml.jackson.databind.JsonNode;
 
 import play.data.format.Formats;
 import play.data.format.Formats.DateFormatter;
@@ -23,7 +23,7 @@ public class BaseDaoJsonLoader
 
 		Date dt = null;
 		try {
-			dt = fmt.parse(jj.getTextValue(), loc);
+			dt = fmt.parse(jj.textValue(), loc);
 		} catch (ParseException e) 
 		{
 			//log error!!

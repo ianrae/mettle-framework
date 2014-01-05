@@ -1,6 +1,6 @@
 package org.mef.tools.mgen.codegen;
 
-import static org.junit.Assert.assertEquals;
+//import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 import java.util.ArrayList;

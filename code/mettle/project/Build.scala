@@ -12,6 +12,7 @@ object ApplicationBuild extends Build {
     javaCore,
     javaJdbc,
     javaEbean,
+    cache,
     "commons-io" % "commons-io" % "2.3",
     "commons-lang" % "commons-lang" % "2.6"
     

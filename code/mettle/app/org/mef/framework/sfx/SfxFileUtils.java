@@ -1,6 +1,6 @@
 package org.mef.framework.sfx;
 
-import static org.junit.Assert.assertEquals;
+//import static org.junit.Assert.assertEquals;
 
 import java.io.BufferedWriter;
 import java.io.File;
