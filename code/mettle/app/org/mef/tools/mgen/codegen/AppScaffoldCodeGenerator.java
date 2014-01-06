@@ -52,7 +52,7 @@ public class AppScaffoldCodeGenerator extends CodeGenerator
 		}
 		
 		filename = "Global.txt";
-		String dest = appDir;
+		String dest = pathCombine(appDir, "app");
 		stream = getSourceFile(baseDir, filename);
 		b = copyFile(stream, filename, ".java", dest);
 		if (! b)
