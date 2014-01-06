@@ -32,6 +32,11 @@ public class Presenter extends SfxBaseObj
 		if (pos > 0)
 		{
 			methodName = methodName.substring(pos + 1);
+			pos = methodName.indexOf('$');
+			if (pos > 0)
+			{
+				methodName = methodName.substring(pos + 1);
+			}
 		}
 		methodName = "on" + methodName;
 		log("looking for: " + methodName);
