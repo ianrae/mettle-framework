@@ -10,9 +10,9 @@
 
 <codegen type="entity" extend="true" />
 <codegen type="model" extend="false" />
-<codegen type="dal_interface" extend="false" />
-<codegen type="dal_mock" extend="false" />
-<codegen type="dal_real" extend="false" />
+<codegen type="dao_interface" extend="false" />
+<codegen type="dao_mock" extend="false" />
+<codegen type="dao_real" extend="false" />
 </entity>
 <entity name="Note">
 <field>long id</field>
@@ -20,8 +20,8 @@
 
 <codegen type="entity" extend="false" />
 <codegen type="model" extend="false" />
-<codegen type="dal_interface" extend="false" />
-<codegen type="dal_mock" extend="false" />
-<codegen type="dal_real" extend="false" />
+<codegen type="dao_interface" extend="false" />
+<codegen type="dao_mock" extend="false" />
+<codegen type="dao_real" extend="false" />
 </entity>
 </entities>

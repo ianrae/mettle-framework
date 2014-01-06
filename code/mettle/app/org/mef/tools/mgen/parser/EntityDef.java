@@ -22,9 +22,9 @@ public class EntityDef
 	
 	public static final String ENTITY = "entity";
 	public static final String MODEL = "model";
-	public static final String DAL_INTERFACE = "dal_interface";
-	public static final String DAL_MOCK =  "dal_mock";
-	public static final String DAL_REAL = "dal_real";
+	public static final String DAO_INTERFACE = "dao_interface";
+	public static final String DAO_MOCK =  "dao_mock";
+	public static final String DAO_REAL = "dao_real";
 	public static final String PRESENTER = "presenter";
 	
 	public HashMap<String, GeneratorOptions> optionsMap = new HashMap<String, GeneratorOptions>();

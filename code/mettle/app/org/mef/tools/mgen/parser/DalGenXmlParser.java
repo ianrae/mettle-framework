@@ -111,12 +111,12 @@ public class DalGenXmlParser extends SfxBaseObj
 		}
 		
 		//more
-		addGeneratorOptions(def, p, entityEl, "entity");
-		addGeneratorOptions(def, p, entityEl, "model");
-		addGeneratorOptions(def, p, entityEl, "dal_interface");
-		addGeneratorOptions(def, p, entityEl,  "dal_mock");
-		addGeneratorOptions(def, p, entityEl, "dal_real");
-		addGeneratorOptions(def, p, entityEl, "presenter"); //default is false
+		addGeneratorOptions(def, p, entityEl, EntityDef.ENTITY);
+		addGeneratorOptions(def, p, entityEl, EntityDef.MODEL);
+		addGeneratorOptions(def, p, entityEl, EntityDef.DAO_INTERFACE);
+		addGeneratorOptions(def, p, entityEl,  EntityDef.DAO_MOCK);
+		addGeneratorOptions(def, p, entityEl, EntityDef.DAO_REAL);
+		addGeneratorOptions(def, p, entityEl, EntityDef.PRESENTER); //default is false
 		
 		def.useExistingPackage = getExtendString(p, entityEl, "entity");
 		if (def.useExistingPackage != null && def.useExistingPackage.isEmpty())

@@ -10,9 +10,9 @@
 
 	<codegen what="entity" extend="false" />
 	<codegen what="model" extend="false" />
-	<codegen what="dal_interface" extend="false" />
-	<codegen what="dal_mock" extend="false" />
-	<codegen what="dal_real" extend="false" />
+	<codegen what="dao_interface" extend="false" />
+	<codegen what="dao_mock" extend="false" />
+	<codegen what="dao_real" extend="false" />
 </entity>
 -->
 
