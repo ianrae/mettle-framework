@@ -45,16 +45,23 @@ public class AppScaffoldCodeGenerator extends CodeGenerator
 		String baseDir = "/mgen/resources/app/copy/";
 		InputStream stream = getSourceFile(baseDir, filename);
 		
-//		String resDir = FilenameUtils.concat(stDir, "copy");
-//		String resDir = pathCombine(stDir, "copy");
 		boolean b = copyFile(stream, filename, appDir);
 		if (! b)
 		{
 			return false;
 		}
 		
+		filename = "Global.txt";
+		String dest = appDir;
+		stream = getSourceFile(baseDir, filename);
+		b = copyFile(stream, filename, ".java", dest);
+		if (! b)
+		{
+			return false;
+		}
+		
 		filename = "Boundary.txt";
-		String dest = pathCombine(appDir, "app\\boundaries");
+		dest = pathCombine(appDir, "app\\boundaries");
 		stream = getSourceFile(baseDir, filename);
 		b = copyFile(stream, filename, ".java", dest);
 		if (! b)
