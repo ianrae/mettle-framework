@@ -152,7 +152,7 @@ public class PresenterScaffoldCodeGenerator extends CodeGenerator
 		File f = new File(path);
 		if (f.exists())
 		{
-			log(path  + ": skipping - already exists");
+			log(prettifyPath(path)  + ": skipping - already exists");
 			return true;
 		}
 		

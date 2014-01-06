@@ -267,7 +267,7 @@ public class DalCodeGenerator extends CodeGenerator
 			File f = new File(path);
 			if (! f.exists())
 			{
-				this.log("FFFFF");
+//				this.log("FFFFF");
 				_needParentClass = true;
 			}
 		}

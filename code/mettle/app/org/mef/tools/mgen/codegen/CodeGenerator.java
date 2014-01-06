@@ -173,7 +173,7 @@ public abstract class CodeGenerator extends SfxBaseObj
 		String outPath = this.pathCombine(appDir, subDir);
 //		outPath = this.pathCombine(outPath, String.format("%s.java", fileName));
 		outPath = this.pathCombine(outPath, fileName);
-		log(fileName + ": " + outPath);
+		log(fileName + ": " + prettifyPath(outPath));
 		if (disableFileIO)
 		{
 			return true;
