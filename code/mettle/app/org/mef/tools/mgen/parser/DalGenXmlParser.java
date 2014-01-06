@@ -136,7 +136,7 @@ public class DalGenXmlParser extends SfxBaseObj
 				break;
 			}
 			
-			String s = tmp.getAttribute("what");
+			String s = tmp.getAttribute("type");
 			if (s != null && s.equals(name))
 			{
 				return getBool(tmp, "extend", true); //if a <codegen> node exists its default is true
@@ -156,7 +156,7 @@ public class DalGenXmlParser extends SfxBaseObj
 				break;
 			}
 			
-			String s = tmp.getAttribute("what");
+			String s = tmp.getAttribute("type");
 			if (s != null && s.equals(name))
 			{
 				return this.getEl(tmp, "useExisting");
