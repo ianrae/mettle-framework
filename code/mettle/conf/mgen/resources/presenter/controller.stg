@@ -1,6 +1,5 @@
 header(package, type, extras) ::= <<
 
-//THIS FILE HAS BEEN AUTO-GENERATED. DO NOT MODIFY.
 
 package controllers;
 

@@ -107,6 +107,12 @@ public abstract class CodeGenerator extends SfxBaseObj
 	{
 		return copyFile(stream, filename, null, appDir);
 	}
+	protected String prettifyPath(String path)
+	{
+		String dest2 = path.replace(this.appDir, "");
+		dest2 = dest2.replace('\\', '/');
+		return dest2;
+	}
 	protected boolean copyFile(InputStream stream, String filename, String newExt, String appDir) throws Exception
 	{
 		String dest = pathCombine(appDir, filename);
@@ -119,7 +125,7 @@ public abstract class CodeGenerator extends SfxBaseObj
 		File fdest = new File(dest);
 		if (fdest.exists())
 		{
-			log(String.format("copy: (skipping, exists) => %s", dest));
+			log(String.format("copy: (skipping, exists) => %s", prettifyPath(dest)));
 			return true;
 		}
 		
