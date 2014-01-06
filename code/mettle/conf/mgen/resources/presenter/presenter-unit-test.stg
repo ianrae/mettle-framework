@@ -20,7 +20,7 @@ import org.mef.framework.presenters.Presenter;
 import org.mef.framework.replies.Reply;
 import org.mef.framework.sfx.SfxContext;
 
-import mef.core.Initializer;
+import mef.core.MettleInitializer;
 import mef.daos.I<type>DAO;
 import mef.daos.mocks.Mock<type>DAO;
 import mef.entities.<type>;

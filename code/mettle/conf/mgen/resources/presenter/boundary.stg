@@ -6,7 +6,7 @@ package <package>;
 import mef.presenters.<type>Presenter;
 import mef.presenters.replies.<type>Reply;
 import models.<type>Model;
-import mef.core.Initializer;
+import mef.core.MettleInitializer;
 import org.mef.framework.boundaries.BoundaryBase;
 import org.mef.framework.commands.Command;
 import org.mef.framework.sfx.SfxContext;
@@ -31,8 +31,7 @@ public class <type>Boundary extends BoundaryBase
 {
 	public static <type>Boundary create() 
 	{
-		Boundary.init();
-		return new <type>Boundary(Initializer.theCtx);
+		return new <type>Boundary(MettleInitializer.theCtx);
 	}
 	
 	public <type>FormBinder binder;

@@ -62,7 +62,7 @@ public class AppScaffoldCodeGenerator extends CodeGenerator
 			return false;
 		}
 		
-		filename = "Initializer.txt";
+		filename = "MettleInitializer.txt";
 		dest = pathCombine(appDir, "app\\mef\\core");
 		stream = getSourceFile(baseDir, filename);
 		b = copyFile(stream, filename, ".java", dest);

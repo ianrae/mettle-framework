@@ -28,7 +28,7 @@ adddal(type, name) ::= <<
 
 	public static <type> <name>()
 	{
-		<type> dao = (<type>) Initializer.getDAO(<type>.class);
+		<type> dao = (<type>) MettleInitializer.getDAO(<type>.class);
 		return dao;
 	}
 

@@ -1,27 +1,46 @@
 package mef;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.File;
 
-import mef.core.Initializer;
+import mef.core.MettleInitializer;
 
 import org.apache.commons.io.FilenameUtils;
 import org.mef.framework.sfx.SfxContext;
+import org.mef.framework.sfx.SfxErrorTracker;
 
 
 public class BaseTest 
 {
 	protected SfxContext _ctx;
+	protected boolean enabledConsoleLogging = true;
 	
 	public void init()
 	{
-		_ctx = Initializer.createContext(true);
-		Initializer.theCtx = _ctx;
+		MettleInitializer initializer = new MettleInitializer();
+		_ctx = initializer.createContext();
+		_ctx.setVar("UNITTEST", "true");
+		
+		//now register any mocks...
+
+		//finally, do onStart		
+		initializer.onStart();
+	}
+
+	protected void chkErrors(int i) 
+	{
+		SfxErrorTracker tracker = (SfxErrorTracker) _ctx.getServiceLocator().getInstance(SfxErrorTracker.class);
+		assertEquals(i, tracker.getErrorCount());
 	}
 
 	
 	protected void log(String s)
 	{
-		System.out.println(s);
+		if (enabledConsoleLogging)
+		{
+			System.out.println(s);
+		}
 	}
 	
 	protected String getTestFile(String filepath)

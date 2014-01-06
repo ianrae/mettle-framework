@@ -27,7 +27,7 @@ readentity(type, fields) ::= <<
 		<fields:{t| 
 		jj = node.get("<t.name>");
 		<if(t.stringType)>
-		obj.<t.name> = jj.getTextValue();
+		obj.<t.name> = jj.textValue();
 		<endif>
 		<if(t.booleanType)>
 		obj.<t.name> = jj.asBoolean();
@@ -49,7 +49,7 @@ loadentity(type) ::= <<
 		List\<<type>\> phoneL = new ArrayList\<<type>\>();
 		
     	JsonNode msgNode = rootNode.path("<type>");
-		Iterator\<JsonNode> ite = msgNode.getElements();
+		Iterator\<JsonNode> ite = msgNode.elements();
 
 		int i = 0;
 		while (ite.hasNext()) {
