@@ -165,7 +165,7 @@ public class DalCodeGenerator extends CodeGenerator
 		
 		if (_needParentClass)
 		{
-			def.extendEntity = false;
+			def.setShouldExtend(EntityDef.ENTITY, false);
 			b = doGen(def, "entity-based-on-gen.stg", "mef.entities", "app\\mef\\entities", new EntityCodeGen(_ctx));
 			if (!b )
 			{

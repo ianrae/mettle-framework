@@ -71,7 +71,7 @@ public class PresenterScaffoldCodeGenerator extends CodeGenerator
 	public boolean generate(int index) throws Exception
 	{
 		EntityDef def = parser._entityL.get(index);
-		if (! def.genPresenter)
+		if (! def.shouldGenerate(EntityDef.PRESENTER))
 		{
 			return true; //do nothing
 		}

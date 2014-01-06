@@ -22,7 +22,7 @@ public class RealDAOCodeGen extends CodeGenBase
 	@Override
 	public String generate(EntityDef def)
 	{
-		this.isExtended = def.extendReal;
+		this.isExtended = def.shouldExtend(EntityDef.DAL_REAL);
 		String result = genHeader(def.name); 
 		ST st = _group.getInstanceOf("classdecl");
 		
@@ -127,7 +127,7 @@ public class RealDAOCodeGen extends CodeGenBase
 	public String getClassName(EntityDef def)
 	{
 		String className = def.name + "DAO";
-		className = makeClassName(className, def.extendReal);
+		className = makeClassName(className, def.shouldExtend(EntityDef.DAL_REAL));
 		return className;
 	}
 	

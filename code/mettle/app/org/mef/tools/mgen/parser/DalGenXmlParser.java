@@ -111,12 +111,12 @@ public class DalGenXmlParser extends SfxBaseObj
 		}
 		
 		//more
-		def.extendEntity = getExtend(p, entityEl, "entity");
-		def.extendModel = getExtend(p, entityEl, "model");
-		def.extendInterface = getExtend(p, entityEl, "dal_interface");
-		def.extendMock = getExtend(p, entityEl,  "dal_mock");
-		def.extendReal = getExtend(p, entityEl, "dal_real");
-		def.genPresenter = getExtend(p, entityEl, "presenter"); //default is false
+		addGeneratorOptions(def, p, entityEl, "entity");
+		addGeneratorOptions(def, p, entityEl, "model");
+		addGeneratorOptions(def, p, entityEl, "dal_interface");
+		addGeneratorOptions(def, p, entityEl,  "dal_mock");
+		addGeneratorOptions(def, p, entityEl, "dal_real");
+		addGeneratorOptions(def, p, entityEl, "presenter"); //default is false
 		
 		def.useExistingPackage = getExtendString(p, entityEl, "entity");
 		if (def.useExistingPackage != null && def.useExistingPackage.isEmpty())
@@ -126,8 +126,13 @@ public class DalGenXmlParser extends SfxBaseObj
 		
 	}
 	
-	private boolean getExtend(SfxXmlParser p, Element entityEl, String name)
+	private void addGeneratorOptions(EntityDef def, SfxXmlParser p, Element entityEl, String name)
 	{
+		GeneratorOptions options = new GeneratorOptions();
+		options.name = name;
+		options.extend = false;
+		options.generate = false;
+		
 		for(int i = 0; i < 100; i++)
 		{
 			Element tmp = p.getIthByName(entityEl, "codegen", i);
@@ -139,11 +144,12 @@ public class DalGenXmlParser extends SfxBaseObj
 			String s = tmp.getAttribute("type");
 			if (s != null && s.equals(name))
 			{
-				return getBool(tmp, "extend", true); //if a <codegen> node exists its default is true
+				options.extend = getBool(tmp, "extend", false); //if a <codegen> node exists its default is false
+				options.generate = getBool(tmp, "generate", true);
 			}
 		}
 		
-		return false;
+		def.optionsMap.put(name, options);
 	}
 	
 	private String getExtendString(SfxXmlParser p, Element entityEl, String name)

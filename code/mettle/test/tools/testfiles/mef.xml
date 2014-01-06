@@ -6,7 +6,7 @@
 	<field>@Required String name</field>
 
 	<query>find_by_name</query>
-	<codegen what="entity" useExisting="org.mef.framework.auth" />
+	<codegen type="entity" useExisting="org.mef.framework.auth" />
 	
 </entity>
 
@@ -20,9 +20,9 @@
 	<query>find_by_name</query>
 	<method><![CDATA[Page<Computer> page(int page, int pageSize,String orderBy, String order, String filter)]]></method>
 
-	<codegen what="dal_mock" />
-	<codegen what="dal_real" extend="true" />
-	<codegen what="presenter"  />
+	<codegen type="dal_mock" />
+	<codegen type="dal_real" extend="true" />
+	<codegen type="presenter"  />
 </entity>
 
 </entities>

@@ -6,7 +6,7 @@
 <field>boolean enabled</field>
 <query>find_by_label</query>
 
-<codegen what="entity" useExisting="com.abc" />
+<codegen type="entity" useExisting="com.abc" />
 </entity>
 
 <entity name="Entry">

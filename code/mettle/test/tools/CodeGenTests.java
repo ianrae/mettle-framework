@@ -16,6 +16,7 @@ import org.mef.tools.mgen.codegen.generators.MockDAOCodeGen;
 import org.mef.tools.mgen.codegen.generators.ModelCodeGen;
 import org.mef.tools.mgen.codegen.generators.RealDAOCodeGen;
 import org.mef.tools.mgen.parser.EntityDef;
+import org.mef.tools.mgen.parser.GeneratorOptions;
 
 
 
@@ -33,11 +34,20 @@ public class CodeGenTests extends BaseCodeGenTest
 		EntityCodeGen gen = new EntityCodeGen(_ctx);
 		genAndLog(gen, "entity.stg", "org.mef.dalgen.unittests.gen");
 	}
+	
+	private void setOptionExtend(EntityDef def, String name)
+	{
+		GeneratorOptions options = new GeneratorOptions();
+		options.extend = true;
+		options.generate = true;
+		def.optionsMap.put(name, options);
+		
+	}
 	@Test
 	public void testModel() throws Exception
 	{
 		log("--testModel--");
-		def.extendModel = true;
+		setOptionExtend(def, EntityDef.MODEL);
 		ModelCodeGen gen = new ModelCodeGen(_ctx);
 		genAndLog(gen, "model.stg", "org.mef.dalgen.unittests.gen");
 		gen.forUnitTest = true;
@@ -47,7 +57,7 @@ public class CodeGenTests extends BaseCodeGenTest
 	public void testIDAL() throws Exception
 	{
 		log("--testIDAL--");
-		def.extendInterface = true;
+		setOptionExtend(def, EntityDef.DAL_INTERFACE);
 		DAOIntefaceCodeGen gen = new DAOIntefaceCodeGen(_ctx);
 		genAndLog(gen, "dao_interface.stg", "org.mef.dalgen.unittests.gen");
 	}
@@ -56,7 +66,7 @@ public class CodeGenTests extends BaseCodeGenTest
 	public void testMockDAL() throws Exception
 	{
 		log("--testMockDAL--");
-		def.extendMock = true;
+		setOptionExtend(def, EntityDef.DAL_MOCK);
 		MockDAOCodeGen gen = new MockDAOCodeGen(_ctx);
 		genAndLog(gen, "dao_mock.stg", "org.mef.dalgen.unittests.gen");
 	}
@@ -65,7 +75,7 @@ public class CodeGenTests extends BaseCodeGenTest
 	public void testRealDAL() throws Exception
 	{
 		log("--testRealDAL--");
-		def.extendReal = true;
+		setOptionExtend(def, EntityDef.DAL_REAL);
 		RealDAOCodeGen gen = new RealDAOCodeGen(_ctx);
 		genAndLog(gen, "dao_real.stg", "boundaries.dals");
 	}

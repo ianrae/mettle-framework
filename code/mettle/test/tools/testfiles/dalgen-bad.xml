@@ -7,11 +7,11 @@
 
 <query>find_by_label</query>
 
-<codegen what="entity" extend="true" />
-<codegen what="model" extend="false" />
-<codegen what="dal_interface" extend="false" />
-<codegen what="dal_mock" extend="false" />
-<codegen what="dal_real" extend="false" />
+<codegen type="entity" extend="true" />
+<codegen type="model" extend="false" />
+<codegen type="dal_interface" extend="false" />
+<codegen type="dal_mock" extend="false" />
+<codegen type="dal_real" extend="false" />
 
 </entity>
 </entities>
