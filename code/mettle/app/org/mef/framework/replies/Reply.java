@@ -1,5 +1,7 @@
 package org.mef.framework.replies;
 
+import org.mef.framework.auth2.AuthUser;
+
 public class Reply 
 {
 	private boolean _failed;
@@ -29,6 +31,9 @@ public class Reply
 	public static final int FOWARD_ERROR = 108;
 	public static final int FOWARD_NOT_AUTHORIZED = 109;
 	public static final int FOWARD_NOT_AUTHENTICATED = 110;
+
+	public AuthUser authUser; //null means not authenticated
+	
 	
 	public Reply()
 	{

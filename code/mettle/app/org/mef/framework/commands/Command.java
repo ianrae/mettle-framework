@@ -3,13 +3,14 @@ package org.mef.framework.commands;
 import java.util.Map;
 
 import org.mef.framework.auth.IAuthSubject;
+import org.mef.framework.auth2.AuthUser;
 import org.mef.framework.binder.IFormBinder;
 
 public class Command 
 {
 	private Map<String, String> map;
 	private IFormBinder binder;
-	public IAuthSubject authSubject; //null means not authenticated
+	public AuthUser authUser; //null means not authenticated
 
 	public Command()
 	{}
