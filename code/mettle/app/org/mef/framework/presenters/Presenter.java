@@ -130,7 +130,7 @@ public class Presenter extends SfxBaseObj
 	}
 	protected boolean isLoggedIn(Command cmd)
 	{
-		if (cmd.authUser == null)
+		if (cmd.authUser == null || cmd.authUser.getSubject() == null)
 		{
 			return false;
 		}
