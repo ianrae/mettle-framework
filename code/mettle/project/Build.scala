@@ -5,7 +5,7 @@ import play.Project._
 object ApplicationBuild extends Build {
 
   val appName         = "mettle"
-  val appVersion      = "1.1-SNAPSHOT"
+  val appVersion      = "0.2-SNAPSHOT"
 
   val appDependencies = Seq(
     // Add your project dependencies here,
