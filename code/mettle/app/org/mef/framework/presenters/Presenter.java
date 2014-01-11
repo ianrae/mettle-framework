@@ -13,6 +13,7 @@ import org.mef.framework.utils.MethodInvoker;
 
 public class Presenter extends SfxBaseObj 
 {
+	private IAuthorizer auth;
 	
 	public Presenter(SfxContext ctx)
 	{
@@ -22,6 +23,15 @@ public class Presenter extends SfxBaseObj
 	protected Reply createReply()
 	{
 		return null;
+	}
+	
+	public void setAuthorizer(IAuthorizer auth)
+	{
+		this.auth = auth;
+	}
+	public IAuthorizer getAuthorizer()
+	{
+		return this.auth;
 	}
 	
 	public Reply process(Command cmd)
@@ -117,13 +127,19 @@ public class Presenter extends SfxBaseObj
 	//---auth---
 	protected boolean hasRole(Command cmd, String roleName)
 	{
-		IAuthorizer auth = (IAuthorizer) this.getInstance(IAuthorizer.class);
+		if (auth == null)
+		{
+			return false;
+		}
 		boolean b = auth.isAuth(cmd.authUser, roleName, null);
 		return b;
 	}
 	protected boolean isAuthorized(Command cmd, String roleName, String targetName)
 	{
-		IAuthorizer auth = (IAuthorizer) this.getInstance(IAuthorizer.class);
+		if (auth == null)
+		{
+			return false;
+		}
 		boolean b = auth.isAuth(cmd.authUser, roleName, targetName);
 		return b;
 	}
