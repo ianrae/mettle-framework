@@ -1,7 +1,6 @@
 package org.mef.framework.presenters;
 
 import org.mef.framework.Logger;
-import org.mef.framework.auth.AuthTicket;
 import org.mef.framework.auth.IAuthorizer;
 import org.mef.framework.auth.NotAuthorizedException;
 import org.mef.framework.auth.NotLoggedInException;
@@ -119,13 +118,13 @@ public class Presenter extends SfxBaseObj
 	protected boolean hasRole(Command cmd, String roleName)
 	{
 		IAuthorizer auth = (IAuthorizer) this.getInstance(IAuthorizer.class);
-		boolean b = auth.isAuth(cmd.authUser.getSubject(), roleName, null);
+		boolean b = auth.isAuth(cmd.authUser, roleName, null);
 		return b;
 	}
-	protected boolean isAuthorized(Command cmd, String roleName, AuthTicket ticket)
+	protected boolean isAuthorized(Command cmd, String roleName, String targetName)
 	{
 		IAuthorizer auth = (IAuthorizer) this.getInstance(IAuthorizer.class);
-		boolean b = auth.isAuth(cmd.authUser.getSubject(), roleName, ticket);
+		boolean b = auth.isAuth(cmd.authUser, roleName, targetName);
 		return b;
 	}
 	protected boolean isLoggedIn(Command cmd)
@@ -145,10 +144,10 @@ public class Presenter extends SfxBaseObj
 			throw new NotAuthorizedException();
 		}
 	}
-	protected void ensureIsAuth(Command cmd, String roleName, AuthTicket ticket) throws Exception
+	protected void ensureIsAuth(Command cmd, String roleName, String ticketName) throws Exception
 	{
 		ensureIsLoggedIn(cmd);
-		if (! isAuthorized(cmd, roleName, ticket))
+		if (! isAuthorized(cmd, roleName, ticketName))
 		{
 			throw new NotAuthorizedException();
 		}

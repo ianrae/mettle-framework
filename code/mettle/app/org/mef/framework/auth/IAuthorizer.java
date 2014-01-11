@@ -1,11 +1,10 @@
 package org.mef.framework.auth;
 
+import org.mef.framework.auth2.AuthUser;
+
 
 public interface IAuthorizer
 {
-//	void init(IAuthSubjectDAO userDao, IAuthRoleDAO roleDao, IAuthTicketDAO ticketDao, IAuthRuleDAO ruleDao);
-	boolean isAuthEx(IAuthSubject subj, AuthRole role, AuthTicket ticket);
-	
-//	AuthSubject findSubject(String identityId);
-	boolean isAuth(IAuthSubject subj, String roleName, AuthTicket ticket);
+	//does currently logged in user have authorization
+	boolean isAuth(AuthUser user, String roleName, String ticketName);
 }

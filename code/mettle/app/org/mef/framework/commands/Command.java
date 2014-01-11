@@ -2,7 +2,6 @@ package org.mef.framework.commands;
 
 import java.util.Map;
 
-import org.mef.framework.auth.IAuthSubject;
 import org.mef.framework.auth2.AuthUser;
 import org.mef.framework.binder.IFormBinder;
 

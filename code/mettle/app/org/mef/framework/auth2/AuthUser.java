@@ -1,13 +1,13 @@
 package org.mef.framework.auth2;
 
-import org.mef.framework.auth.IAuthSubject;
 
 public class AuthUser 
 {
 	private String name;
 	private String userId;
 	private String sessionId;
-	private IAuthSubject subject;
+//	private IAuthSubject subject;
+	private Object subject;
 
 	public AuthUser()
 	{}
@@ -37,11 +37,11 @@ public class AuthUser
 		return val;
 	}
 	
-	public IAuthSubject getSubject()
+	public Object getSubject()
 	{
 		return this.subject;
 	}
-	public void setSubject(IAuthSubject subj)
+	public void setSubject(Object subj)
 	{
 		this.subject = subj;
 	}
