@@ -34,28 +34,44 @@ public class ResourceReader
 	{
 		StringBuilder sb = new StringBuilder();
 		BufferedReader br = null;
+		boolean succeeded = false;
+		
 	    try {
 	    	br = new BufferedReader(new FileReader(path));
 	        String line = br.readLine();
 
-	        while (line != null) {
+	        while (line != null) 
+	        {
 	            sb.append(line);
 	            sb.append('\n');
 	            line = br.readLine();
 	        }
-	    } catch (Exception e) {
-			// TODO Auto-generated catch block
+	        succeeded = true;	        
+	    } 
+	    catch (Exception e) 
+	    {
 			e.printStackTrace();
-		} finally {
+		}
+	    finally 
+	    {
 	    	if (br != null)
 	    	{
-	    		try {
+	    		try 
+	    		{
 					br.close();
-				} catch (IOException e) {
+				} 
+	    		catch (IOException e) 
+	    		{
 //					e.printStackTrace();
 				}
 	    	}
-	    }		
+	    }	
+	    
+	    if (! succeeded)
+	    {
+	    	return null;
+	    }
+	    
 	    String everything = sb.toString();
 	    return everything;
 	}

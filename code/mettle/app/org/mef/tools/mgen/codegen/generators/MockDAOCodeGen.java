@@ -60,7 +60,7 @@ public class MockDAOCodeGen extends CodeGenBase
 				st.add("eq", " == val");
 			}
 			st.add("name", fieldName);
-			result = st.render(); 
+			result += st.render(); 
 			result += "\n\n";
 		}
 		return result;

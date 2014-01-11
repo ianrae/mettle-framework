@@ -41,7 +41,7 @@ public class DALUtilsCodeGen extends CodeGenBase
 			st.add("type", def.name); //getFieldType(def, fieldName));
 			st.add("fieldType", getFieldType(def, fieldName));
 			st.add("name", fieldName);
-			result = st.render(); 
+			result += st.render(); 
 			result += "\n\n";
 		}
 		return result;

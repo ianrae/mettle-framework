@@ -154,7 +154,7 @@ public abstract class CodeGenBase extends SfxBaseObj
 			{
 				ST st = _group.getInstanceOf("methoddecl");
 				st.add("meth", method);
-				result = st.render(); 
+				result += st.render(); 
 				result += "\n\n";
 			}
 			return result;

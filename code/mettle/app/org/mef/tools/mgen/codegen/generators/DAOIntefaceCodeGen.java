@@ -56,7 +56,7 @@ public class DAOIntefaceCodeGen extends CodeGenBase
 				st.add("type", def.name); //getFieldType(def, fieldName));
 				st.add("fieldType", getFieldType(def, fieldName));
 				st.add("fullName", query);
-				result = st.render(); 
+				result += st.render(); 
 				result += "\n\n";
 			}
 			return result;
