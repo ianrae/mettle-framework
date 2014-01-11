@@ -7,4 +7,6 @@ public interface IAuthorizer
 {
 	//does currently logged in user have authorization
 	boolean isAuth(AuthUser user, String roleName, String ticketName);
+	
+	void close();
 }
