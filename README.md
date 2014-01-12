@@ -1,9 +1,9 @@
 Mettle Entity Framework (MEF)
 ===========================
 
-New Version (
+New Version 
 ----------
-(Janurary 2014) MEF framework "0.2-SNAPSHOT" has been released.  It supports Play 2.2.1 and EBean.
+(Janurary 2014) Version 0.2 has been released.  It supports Play 2.2.1 and has some new authentication and authorization features.
 
 Intro
 ----------
