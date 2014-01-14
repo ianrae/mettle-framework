@@ -277,7 +277,7 @@ public class <type>PresenterTests extends BasePresenterTest
 	
 	private Mock<type>DAO getDAO()
 	{
-		Mock<type>DAO dal = (Mock<type>DAO) Initializer.getDAO(I<type>DAO.class); 
+		Mock<type>DAO dal = (Mock<type>DAO) MettleInitializer.getDAO(I<type>DAO.class); 
 		return dal;
 	}
 	

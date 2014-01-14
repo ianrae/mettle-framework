@@ -328,14 +328,6 @@ public class BlogPresenterTests extends BasePresenterTest
 		return u;
 	}
 
-	protected Command createWithBinder(Command cmd, Blog t, boolean bindingIsValid)
-	{
-		MockFormBinder binder = new MockFormBinder(t);
-		cmd.setFormBinder(binder);
-		binder.isValid = bindingIsValid;
-		return cmd;
-	}
-
 	private void buildSubjects()
 	{
 		AuthSubject subj = new AuthSubject("alice", 0L);
