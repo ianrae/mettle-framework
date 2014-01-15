@@ -116,6 +116,7 @@ public class MethodInvoker extends SfxBaseObj
 			}
 			else
 			{
+				this.addError(String.format("PRESENTER EXCEPTION: " + ex.getMessage()));
 				return null;
 			}
 		}
