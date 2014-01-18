@@ -5,6 +5,7 @@ import org.mef.framework.auth.IAuthorizer;
 import org.mef.framework.auth.NotAuthorizedException;
 import org.mef.framework.auth.NotLoggedInException;
 import org.mef.framework.commands.Command;
+import org.mef.framework.formatters.IReplyFormatter;
 import org.mef.framework.replies.Reply;
 import org.mef.framework.sfx.SfxBaseObj;
 import org.mef.framework.sfx.SfxContext;
@@ -14,6 +15,7 @@ import org.mef.framework.utils.MethodInvoker;
 public class Presenter extends SfxBaseObj 
 {
 	private IAuthorizer auth;
+	private IReplyFormatter formatter;
 	
 	public Presenter(SfxContext ctx)
 	{
@@ -33,7 +35,14 @@ public class Presenter extends SfxBaseObj
 	{
 		return this.auth;
 	}
-	
+	public void setFormatter(IReplyFormatter formatter)
+	{
+		this.formatter = formatter;
+	}
+	public IReplyFormatter getFormatter()
+	{
+		return formatter;
+	}
 	public Reply process(Command cmd)
 	{
 		String methodName = cmd.getClass().getName();
@@ -74,6 +83,10 @@ public class Presenter extends SfxBaseObj
 			Logger.warn("null from invoker.call!!");
 			reply.setFailed(true);
 			return reply;
+		}
+		else
+		{
+			this.applyFormatter(reply);
 		}
 
 		reply = (Reply)res;
@@ -123,6 +136,14 @@ public class Presenter extends SfxBaseObj
 	}
 	protected void afterAction(Command cmd, Reply reply) throws Exception
 	{}
+	
+	protected void applyFormatter(Reply reply)
+	{
+		if (formatter != null)
+		{
+			formatter.format(reply);
+		}
+	}
 
 	//---auth---
 	protected boolean hasRole(Command cmd, String roleName)
