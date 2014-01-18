@@ -141,7 +141,15 @@ public class Presenter extends SfxBaseObj
 	{
 		if (formatter != null)
 		{
-			formatter.format(reply);
+			try 
+			{
+				formatter.format(reply);
+			} 
+			catch (Exception e) 
+			{
+				e.printStackTrace();
+				this.addError("EXCEPTION in formatter: " + e.getMessage());
+			}
 		}
 	}
 

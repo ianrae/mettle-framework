@@ -4,5 +4,5 @@ import org.mef.framework.replies.Reply;
 
 public interface IReplyFormatter 
 {
-	void format(Reply reply);
+	void format(Reply reply) throws Exception;
 }
