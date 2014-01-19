@@ -33,7 +33,7 @@ public class Reply
 	public static final int FOWARD_NOT_AUTHENTICATED = 110;
 
 	public AuthUser authUser; //null means not authenticated
-	
+	public String json; //used by json formatter (see IReplyFormatter)
 	
 	public Reply()
 	{
