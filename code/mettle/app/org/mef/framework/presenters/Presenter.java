@@ -86,7 +86,7 @@ public class Presenter extends SfxBaseObj
 		}
 		else
 		{
-			this.applyFormatter(reply);
+			this.applyFormatter((Reply)res);
 		}
 
 		reply = (Reply)res;
