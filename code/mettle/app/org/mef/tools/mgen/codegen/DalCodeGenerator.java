@@ -187,6 +187,11 @@ public class DalCodeGenerator extends CodeGenerator
 	
 	public boolean generateOnce() throws Exception
 	{
+		if (parser._entityL.size() == 0)
+		{
+			return true;
+		}
+		
 		EntityDef def = parser._entityL.get(0);
 		def.enabled = true;
 
