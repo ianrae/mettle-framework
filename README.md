@@ -36,12 +36,19 @@ MEF uses slightly different terminology.
  * Boundary -- same as above.
  * DAL -- Data Access Layer. Consists of one DAO per entity. database persistence.
  
-Advantages
+Sample Controller Action
 ------------------
-MEF apps are
- * faster to develop due to better TDD experience
- * easier to port if Play changes significantly or you want an Android version of your app
- * less boilerplate code to write. 
+
+Each controller action creates a boundary object and uses it to invoke the presenter, where all your business logic resides.  The return object is a reply
+which is used to generate a view (or JSON), or redirect.
+
+	public static Result index(int pageNum, int pageSize) 
+    {
+		NoteBoundary boundary = NoteBoundary.create();
+		NoteReply reply = boundary.process(new NoteIndexCommand(pageNum, pageSize));
+		return renderOrForward(boundary, reply);
+	}
+
  
 Getting Started
 ----------------
