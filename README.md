@@ -34,7 +34,7 @@ MEF uses slightly different terminology.
  * Entity -- POJO class. no code. only public fields
  * Presenter -- contains business logic. 
  * Boundary -- same as above.
- * DAL -- Data Access Layer. Consists of one DAO per entity. database persistence.
+ * Data Access Layer. Consists of one DAO per entity. database persistence.
  
 Sample Controller Action
 ------------------
