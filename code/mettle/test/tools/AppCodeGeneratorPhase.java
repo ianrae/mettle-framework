@@ -65,8 +65,13 @@ public class AppCodeGeneratorPhase extends CodeGeneratorPhase
 		String dest = pathCombine(appDir, "test/mef");
 		addJavaCopyGenerator(baseDir, filename, dest);
 		
-		filename = "BasePresenterTest.txt";
+		filename = "BaseMettleTest.txt";
 		dest = pathCombine(appDir, "test/mef");
+		addJavaCopyGenerator(baseDir, filename, dest);
+		
+		filename = "BasePresenterTest.txt";
+		dest = pathCombine(appDir, "test/mef/presenter");
+		baseDir = pathCombine(baseDir, "presenter");
 		addJavaCopyGenerator(baseDir, filename, dest);
 	}
 	private void addControllerGenerators(String baseDir)
@@ -125,5 +130,6 @@ public class AppCodeGeneratorPhase extends CodeGeneratorPhase
 		createDir("app\\mef\\presenters\\replies");
 		createDir("conf\\mef\\seed");
 		createDir("test\\mef");
+		createDir("test\\mef\\presenter");
 	}
 }

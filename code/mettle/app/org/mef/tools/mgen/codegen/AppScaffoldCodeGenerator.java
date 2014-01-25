@@ -98,10 +98,19 @@ public class AppScaffoldCodeGenerator extends CodeGenerator
 		{
 			return false;
 		}
-		
-		filename = "BasePresenterTest.txt";
+
+		filename = "BaseMettleTest.txt";
 		dest = pathCombine(appDir, "test/mef");
 		stream = getSourceFile(baseDir + "test/", filename);
+		b = copyFile(stream, filename, ".java", dest);
+		if (! b)
+		{
+			return false;
+		}
+		
+		filename = "BasePresenterTest.txt";
+		dest = pathCombine(appDir, "test/mef/presenter");
+		stream = getSourceFile(baseDir + "test/presenter/", filename);
 		b = copyFile(stream, filename, ".java", dest);
 		if (! b)
 		{
