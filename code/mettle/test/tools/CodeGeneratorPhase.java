@@ -47,7 +47,7 @@ public class CodeGeneratorPhase extends CodeGenerator implements ICodeGenPhase
 	{
 		for(ICodeGenerator gen : genL)
 		{
-			log(String.format("%s", gen.name()));
+//			log(String.format("%s", gen.name()));
 			if (! gen.run())
 			{
 				this.addError(String.format("Generator %s failed", gen.name()));
