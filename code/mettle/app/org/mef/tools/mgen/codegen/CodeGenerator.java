@@ -17,8 +17,7 @@ import org.mef.framework.sfx.SfxTextWriter;
 
 public abstract class CodeGenerator extends SfxBaseObj
 {
-	protected String appDir;
-//	private String stDir;
+	protected String appDir; //path to app root dir.  Generated files will be put under here
 	public boolean disableFileIO; //for unit testing
 	
 	public CodeGenerator(SfxContext ctx)

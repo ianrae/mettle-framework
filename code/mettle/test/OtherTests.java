@@ -36,9 +36,16 @@ public class OtherTests extends BaseTest
 		assertTrue(utils.fileExists(path));
 		
 		log("and resources..");
-		String baseDir = "mgen/resources/presenter/reply.stg";
-		InputStream stream = this.getClass().getResourceAsStream(baseDir);
+		String resPath = "mgen/resources/presenter/reply.stg";
+		InputStream stream = this.getClass().getResourceAsStream(resPath);
 		assertNull(stream); //not available in unit tests?
+
+		log("and resources..");
+		resPath = "mgen/resources/presenter/reply.stg";
+		path = utils.PathCombine(dir, "conf");
+		path = utils.PathCombine(path, resPath);
+		log(path);
+		assertTrue(utils.fileExists(path));
 	}
 
 }

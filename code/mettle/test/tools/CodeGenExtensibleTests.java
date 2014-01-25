@@ -19,16 +19,18 @@ public class CodeGenExtensibleTests extends BaseTest
 {
 	public static class MyCopyGen extends CodeGenerator implements ICodeGenerator
 	{
-		String filename;
-		String baseDir;
+		String filename;  //no path
+		String baseDir;   //location of source (StringTemplate file)
 		String newExt; //can be null
+		String destDir; //can be same as appDir or a directory underneath it
 
-		public MyCopyGen(SfxContext ctx, String baseDir, String filename, String newExt) 
+		public MyCopyGen(SfxContext ctx, String baseDir, String filename, String newExt, String destDir) 
 		{
 			super(ctx);
 			this.filename = filename;
 			this.baseDir = baseDir;
 			this.newExt = newExt;
+			this.destDir = destDir;
 		}
 
 		@Override
@@ -46,7 +48,7 @@ public class CodeGenExtensibleTests extends BaseTest
 		public boolean run() throws Exception 
 		{
 			InputStream stream = getSourceFile(baseDir, filename);
-			boolean b = copyFile(stream, filename, newExt, appDir);
+			boolean b = copyFile(stream, filename, newExt, destDir);
 			return b;
 		}
 
@@ -141,23 +143,84 @@ public class CodeGenExtensibleTests extends BaseTest
 		
 		private void addGenerators()
 		{
-			String filename = "mef.xml";
 			String baseDir = "/mgen/resources/app/copy/";
+			addAppGenerators(baseDir);
+			
+			baseDir = "/mgen/resources/app/copy/mgen/";
+			addMGenGenerators(baseDir);
+			
+			baseDir = "/mgen/resources/app/copy/test/";
+			addTestGenerators(baseDir);
+			
+			baseDir = "/mgen/resources/app/copy";
+			addControllerGenerators(baseDir);
+			
+			baseDir = "/mgen/resources/app/copy";
+			addViewGenerators(baseDir);
+			
+		}
+		private void addAppGenerators(String baseDir)
+		{
+			String filename = "mef.xml";
 			addCopyGenerator(baseDir, filename);
 			
 			filename = "Global.txt";
 			String dest = pathCombine(appDir, "app");
-			addCopyGenerator(dest, filename);
+			addJavaCopyGenerator(baseDir, filename, dest);
+			
+			filename = "Boundary.txt";
+			dest = pathCombine(appDir, "app\\boundaries");
+			addJavaCopyGenerator(baseDir, filename, dest);
+			
+			filename = "MettleInitializer.txt";
+			dest = pathCombine(appDir, "app\\mef\\core");
+			addJavaCopyGenerator(baseDir, filename, dest);
 		}
+		
+		private void addMGenGenerators(String baseDir)
+		{
+			String filename = "MGen.txt";
+			String dest = pathCombine(appDir, "mgen");
+			addJavaCopyGenerator(baseDir, filename, dest);
+		}
+		private void addTestGenerators(String baseDir)
+		{
+			String filename = "BaseTest.txt";
+			String dest = pathCombine(appDir, "test/mef");
+			addJavaCopyGenerator(baseDir, filename, dest);
+			
+			filename = "BasePresenterTest.txt";
+			dest = pathCombine(appDir, "test/mef");
+			addJavaCopyGenerator(baseDir, filename, dest);
+		}
+		private void addControllerGenerators(String baseDir)
+		{
+			String filename = "ErrorController.txt";
+			String dest = pathCombine(appDir, "app/controllers");
+			addJavaCopyGenerator(baseDir, filename, dest);
+		}
+		private void addViewGenerators(String baseDir)
+		{
+			String filename = "error.scala.html";
+			String dest = pathCombine(appDir, "app/views");
+			addJavaCopyGenerator(baseDir, filename, dest);
+		}
+
+		
 		
 		private void addCopyGenerator(String baseDir, String filename)
 		{
-			MyCopyGen gen = new MyCopyGen(_ctx, baseDir, filename, null);
+			MyCopyGen gen = new MyCopyGen(_ctx, baseDir, filename, null, appDir);
 			add(gen);
 		}
-		private void addCopyGenerator(String baseDir, String filename, String newExt)
+		private void addJavaCopyGenerator(String baseDir, String filename, String destDir)
 		{
-			MyCopyGen gen = new MyCopyGen(_ctx, baseDir, filename, newExt);
+			MyCopyGen gen = new MyCopyGen(_ctx, baseDir, filename, ".java", destDir);
+			add(gen);
+		}
+		private void addCopyGenerator(String baseDir, String filename, String newExt, String destDir)
+		{
+			MyCopyGen gen = new MyCopyGen(_ctx, baseDir, filename, newExt, destDir);
 			add(gen);
 		}
 
