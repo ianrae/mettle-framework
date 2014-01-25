@@ -19,10 +19,14 @@ public class CodeGenExtensibleTests extends BaseTest
 {
 	public static class MyCopyGen extends CodeGenerator implements ICodeGenerator
 	{
+		String filename;
+		String baseDir;
 
-		public MyCopyGen(SfxContext ctx) 
+		public MyCopyGen(SfxContext ctx, String baseDir, String filename) 
 		{
 			super(ctx);
+			this.filename = filename;
+			this.baseDir = baseDir;
 		}
 
 		@Override
@@ -35,8 +39,6 @@ public class CodeGenExtensibleTests extends BaseTest
 		public boolean run(String appDir) throws Exception 
 		{
 			init(appDir);
-			String filename = "mef.xml";
-			String baseDir = "/mgen/resources/app/copy/";
 			InputStream stream = getSourceFile(baseDir, filename);
 			
 			boolean b = copyFile(stream, filename, appDir);
@@ -77,13 +79,24 @@ public class CodeGenExtensibleTests extends BaseTest
 		{
 			genL.add(gen);
 		}
+		
+		private void addGenerators()
+		{
+			String filename = "mef.xml";
+			String baseDir = "/mgen/resources/app/copy/";
+			addCopyGenerator(baseDir, filename);
+		}
+		private void addCopyGenerator(String baseDir, String filename)
+		{
+			MyCopyGen gen = new MyCopyGen(_ctx, baseDir, filename);
+			add(gen);
+		}
 
 		@Override
 		public boolean run(String appDir) throws Exception
 		{
 			init(appDir);
-			MyCopyGen phase33 = new MyCopyGen(_ctx);
-			add(phase33);
+			addGenerators();
 			createDirStructure();
 			
 			for(ICodeGenerator gen : genL)
