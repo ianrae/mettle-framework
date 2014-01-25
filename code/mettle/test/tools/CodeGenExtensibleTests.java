@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
+import org.apache.commons.lang.NotImplementedException;
 import org.junit.Before;
 import org.junit.Test;
 import org.mef.framework.sfx.SfxBaseObj;
@@ -15,10 +16,11 @@ import org.mef.tools.mgen.codegen.ICodeGenerator;
 
 public class CodeGenExtensibleTests extends BaseTest
 {
-	public static class MyAppScaffoldCodeGenerator extends CodeGenerator implements ICodeGenPhase
+	public static class MyAppCodeGeneratorPhase extends CodeGenerator implements ICodeGenPhase
 	{
+		private ArrayList<ICodeGenerator> genL = new ArrayList<ICodeGenerator>();
 
-		public MyAppScaffoldCodeGenerator(SfxContext ctx) 
+		public MyAppCodeGeneratorPhase(SfxContext ctx) 
 		{
 			super(ctx);
 		}
@@ -30,33 +32,63 @@ public class CodeGenExtensibleTests extends BaseTest
 		}
 
 		@Override
-		public String name() {
-			// TODO Auto-generated method stub
-			return null;
+		public String name() 
+		{
+			return "app";
 		}
 
 		@Override
-		public void add(ICodeGenerator gen) {
-			// TODO Auto-generated method stub
+		public void add(ICodeGenerator gen) 
+		{
+			genL.add(gen);
+		}
+
+		@Override
+		public boolean run() throws Exception
+		{
+			createDirStructure();
+			
+			for(ICodeGenerator gen : genL)
+			{
+				if (! gen.run())
+				{
+					this.addError(String.format("Generator %s failed", gen.name()));
+					return false;
+				}
+			}
+			return true;
+		}
+		
+		
+		private void createDirStructure()
+		{
+			createDir("app\\boundaries");
+			createDir("app\\boundaries\\binders");
+			createDir("app\\boundaries\\daos");
+			createDir("app\\models");
+			createDir("app\\mef");
+			createDir("app\\mef\\core");
+			createDir("app\\mef\\daos");
+			createDir("app\\mef\\daos\\mocks");
+			createDir("app\\mef\\entities");
+			createDir("app\\mef\\gen");
+			createDir("app\\mef\\presenters");
+			createDir("app\\mef\\presenters\\replies");
+			createDir("conf\\mef\\seed");
+			createDir("test\\mef");
 			
 		}
 
 		@Override
-		public boolean run() {
-			// TODO Auto-generated method stub
-			return false;
+		public boolean generateAll() throws Exception 
+		{
+			throw new NotImplementedException();
 		}
 
 		@Override
-		public boolean generateAll() throws Exception {
-			// TODO Auto-generated method stub
-			return false;
-		}
-
-		@Override
-		public boolean generate(String name) throws Exception {
-			// TODO Auto-generated method stub
-			return false;
+		public boolean generate(String name) throws Exception 
+		{
+			throw new NotImplementedException();
 		}
 		
 	}
@@ -64,6 +96,7 @@ public class CodeGenExtensibleTests extends BaseTest
 	public static class MasterCodeGen extends SfxBaseObj
 	{
 		private ArrayList<ICodeGenPhase> phaseL = new ArrayList<ICodeGenPhase>();
+		private String appDir;
 
 		public MasterCodeGen(SfxContext ctx) 
 		{
@@ -78,6 +111,7 @@ public class CodeGenExtensibleTests extends BaseTest
 		{
 			for(ICodeGenPhase phase : phaseL)
 			{
+				phase.initx(appDir);
 				if (! phase.run())
 				{
 					this.addError(String.format("Phase %s failed", phase.name()));
@@ -86,6 +120,10 @@ public class CodeGenExtensibleTests extends BaseTest
 			}
 			
 			return true;
+		}
+		public void init(String appDir) 
+		{
+			this.appDir = appDir;
 		}
 	}
 	
@@ -187,6 +225,19 @@ public class CodeGenExtensibleTests extends BaseTest
 		assertFalse(b);
 	}
 
+	@Test
+	public void testNewAppPhase() throws Exception 
+	{
+		MasterCodeGen master = new MasterCodeGen(_ctx);
+		MyAppCodeGeneratorPhase phase = new MyAppCodeGeneratorPhase(_ctx);
+		master.addPhase(phase);
+		
+		String appDir = "c:\\tmp\\y";
+		master.init(appDir);
+		boolean b = master.run();
+		assertTrue(b);
+	}
+	
 	//-- helpers --
 	@Before
 	public void init()
