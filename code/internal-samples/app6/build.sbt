@@ -5,7 +5,8 @@ version := "1.0-SNAPSHOT"
 libraryDependencies ++= Seq(
   javaJdbc,
   javaEbean,
-  cache
+  cache,
+  "mettle" % "mettle_2.10" % "0.2-SNAPSHOT" 
 )     
 
 play.Project.playJavaSettings
