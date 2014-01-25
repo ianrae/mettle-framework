@@ -15,7 +15,7 @@ public class AppCodeGenTests extends BaseTest
 {
 
 	@Test
-	public void test() throws Exception
+	public void testAppPhase() throws Exception
 	{
 		AppScaffoldCodeGenerator gen = new AppScaffoldCodeGenerator();
 		
@@ -33,7 +33,7 @@ public class AppCodeGenTests extends BaseTest
 	}
 	
 	@Test
-	public void testPresenter() throws Exception
+	public void testPresenterPhase() throws Exception
 	{
 		createContext();
 		PresenterScaffoldCodeGenerator gen = new PresenterScaffoldCodeGenerator(_ctx);
@@ -60,7 +60,7 @@ public class AppCodeGenTests extends BaseTest
 	
 	
 	@Test
-	public void testDAL() throws Exception
+	public void testDALPhase() throws Exception
 	{
 		this.createContext();
 		DalCodeGenerator gen = new DalCodeGenerator(_ctx);

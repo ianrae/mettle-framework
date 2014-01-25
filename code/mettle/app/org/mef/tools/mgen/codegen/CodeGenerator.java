@@ -19,7 +19,7 @@ public abstract class CodeGenerator extends SfxBaseObj
 {
 	protected String appDir;
 //	private String stDir;
-	public boolean disableFileIO;
+	public boolean disableFileIO; //for unit testing
 	
 	public CodeGenerator(SfxContext ctx)
 	{

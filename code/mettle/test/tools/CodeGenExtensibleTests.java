@@ -9,25 +9,58 @@ import org.junit.Test;
 import org.mef.framework.sfx.SfxBaseObj;
 import org.mef.framework.sfx.SfxContext;
 import org.mef.framework.sfx.SfxErrorTracker;
+import org.mef.tools.mgen.codegen.CodeGenerator;
+import org.mef.tools.mgen.codegen.ICodeGenPhase;
+import org.mef.tools.mgen.codegen.ICodeGenerator;
 
 public class CodeGenExtensibleTests extends BaseTest
 {
-	public interface ICodeGenx
+	public static class MyAppScaffoldCodeGenerator extends CodeGenerator implements ICodeGenPhase
 	{
-		String name();
 
-		boolean run();
+		public MyAppScaffoldCodeGenerator(SfxContext ctx) 
+		{
+			super(ctx);
+		}
+
+		@Override
+		public void initx(String appDir) throws Exception 
+		{
+			this.init(appDir);
+		}
+
+		@Override
+		public String name() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public void add(ICodeGenerator gen) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public boolean run() {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+		@Override
+		public boolean generateAll() throws Exception {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+		@Override
+		public boolean generate(String name) throws Exception {
+			// TODO Auto-generated method stub
+			return false;
+		}
+		
 	}
 	
-	public interface ICodeGenPhase
-	{
-		String name();
-
-		boolean run();
-		
-		void add(ICodeGenx gen);
-	}
-
 	public static class MasterCodeGen extends SfxBaseObj
 	{
 		private ArrayList<ICodeGenPhase> phaseL = new ArrayList<ICodeGenPhase>();
@@ -41,7 +74,7 @@ public class CodeGenExtensibleTests extends BaseTest
 			phaseL.add(phase);
 		}
 		
-		public boolean run()
+		public boolean run() throws Exception 
 		{
 			for(ICodeGenPhase phase : phaseL)
 			{
@@ -56,7 +89,7 @@ public class CodeGenExtensibleTests extends BaseTest
 		}
 	}
 	
-	public static class MyGenX implements ICodeGenx
+	public static class MyGenX implements ICodeGenerator
 	{
 		private String name;
 		public boolean resultToReturn = true;
@@ -80,8 +113,8 @@ public class CodeGenExtensibleTests extends BaseTest
 	}
 	public static class MyPhase1 extends SfxBaseObj implements ICodeGenPhase
 	{
-		private ArrayList<ICodeGenx> genL = new ArrayList<ICodeGenx>();
-		
+		private ArrayList<ICodeGenerator> genL = new ArrayList<ICodeGenerator>();
+		private String appDir;
 		public boolean resultToReturn = true;
 		
 		public MyPhase1(SfxContext ctx) 
@@ -90,9 +123,9 @@ public class CodeGenExtensibleTests extends BaseTest
 		}
 		
 		@Override
-		public boolean run() 
+		public boolean run() throws Exception 
 		{
-			for(ICodeGenx gen : genL)
+			for(ICodeGenerator gen : genL)
 			{
 				if (! gen.run())
 				{
@@ -110,14 +143,20 @@ public class CodeGenExtensibleTests extends BaseTest
 		}
 
 		@Override
-		public void add(ICodeGenx gen) 
+		public void add(ICodeGenerator gen) 
 		{
 			this.genL.add(gen);
+		}
+
+		@Override
+		public void initx(String appDir) 
+		{
+			this.appDir = appDir;
 		}
 	}
 	
 	@Test
-	public void test() 
+	public void test() throws Exception 
 	{
 		assertNotNull(_ctx);
 		MasterCodeGen master = new MasterCodeGen(_ctx);
@@ -135,7 +174,7 @@ public class CodeGenExtensibleTests extends BaseTest
 
 	
 	@Test
-	public void testFail() 
+	public void testFail() throws Exception 
 	{
 		MasterCodeGen master = new MasterCodeGen(_ctx);
 		MyPhase1 phase1 = new MyPhase1(_ctx);
