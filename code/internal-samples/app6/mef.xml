@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<entities orm="ebean"> 
+
+<entity name="User">
+	<field>@Id Long id</field>
+	<field>@Required String name</field>
+
+	<query>find_by_name</query>
+
+	<codegen type="entity" extend="true" />
+	<codegen type="model" extend="false" />
+	<codegen type="dao_interface" extend="false" />
+	<codegen type="dao_mock" extend="true" />
+	<codegen type="dao_real" extend="true" />
+	<codegen type="presenter" generate="true" extend="false" />
+</entity>
+
+
+</entities>
