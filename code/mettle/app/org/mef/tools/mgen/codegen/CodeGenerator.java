@@ -40,12 +40,14 @@ public abstract class CodeGenerator extends SfxBaseObj
 	
 	protected InputStream getSourceFile(String baseDir, String filename) throws Exception
 	{
-		InputStream stream = this.getClass().getResourceAsStream(baseDir + filename);
+		SfxFileUtils utils = new SfxFileUtils();
+		String basePath = utils.PathCombine(baseDir, filename);
+
+		InputStream stream = this.getClass().getResourceAsStream(basePath);
 		if (stream == null)
 		{
-			SfxFileUtils utils = new SfxFileUtils();
 			String tmp = utils.getCurrentDir();
-			tmp = utils.PathCombine(tmp, "conf/" + baseDir + filename);
+			tmp = utils.PathCombine(tmp, "conf/" + basePath);
 			stream = new FileInputStream(tmp);
 //			log("found at: " + tmp);
 		}

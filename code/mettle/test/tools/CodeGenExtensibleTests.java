@@ -46,7 +46,6 @@ public class CodeGenExtensibleTests extends BaseTest
 		public boolean run() throws Exception 
 		{
 			InputStream stream = getSourceFile(baseDir, filename);
-			
 			boolean b = copyFile(stream, filename, newExt, appDir);
 			return b;
 		}
@@ -63,7 +62,6 @@ public class CodeGenExtensibleTests extends BaseTest
 			throw new NotImplementedException();
 		}
 	}
-	
 	
 	public static class CodeGeneratorPhase extends CodeGenerator implements ICodeGenPhase
 	{
@@ -346,7 +344,7 @@ public class CodeGenExtensibleTests extends BaseTest
 		MyAppCodeGeneratorPhase phase = new MyAppCodeGeneratorPhase(_ctx);
 		master.addPhase(phase);
 		
-		String appDir = "c:\\tmp\\y";
+		String appDir = "c:\\tmp\\cc";
 		master.initialize(appDir);
 		boolean b = master.run();
 		assertTrue(b);

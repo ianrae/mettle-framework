@@ -20,7 +20,7 @@ public class BaseTest
 	{
 		System.out.println(s);
 	}
-	private String getCurrentDirectory()
+	protected String getCurrentDirectory()
 	{
 		File f = new File(".");
 		return f.getAbsolutePath();
