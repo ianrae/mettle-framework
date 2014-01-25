@@ -2,6 +2,7 @@ package tools;
 
 import static org.junit.Assert.*;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import org.apache.commons.lang.NotImplementedException;
@@ -16,6 +17,46 @@ import org.mef.tools.mgen.codegen.ICodeGenerator;
 
 public class CodeGenExtensibleTests extends BaseTest
 {
+	public static class MyPhase33 extends CodeGenerator implements ICodeGenerator
+	{
+
+		public MyPhase33(SfxContext ctx) 
+		{
+			super(ctx);
+		}
+
+		@Override
+		public String name() 
+		{
+			return "phase33";
+		}
+
+		@Override
+		public boolean run() throws Exception 
+		{
+			String filename = "mef.xml";
+			String baseDir = "/mgen/resources/app/copy/";
+			InputStream stream = getSourceFile(baseDir, filename);
+			
+			boolean b = copyFile(stream, filename, appDir);
+			return b;
+		}
+
+		@Override
+		public boolean generateAll() throws Exception 
+		{
+			throw new NotImplementedException();
+		}
+
+		@Override
+		public boolean generate(String name) throws Exception 
+		{
+			throw new NotImplementedException();
+		}
+		
+	}
+	
+	
 	public static class MyAppCodeGeneratorPhase extends CodeGenerator implements ICodeGenPhase
 	{
 		private ArrayList<ICodeGenerator> genL = new ArrayList<ICodeGenerator>();
@@ -29,6 +70,8 @@ public class CodeGenExtensibleTests extends BaseTest
 		public void initx(String appDir) throws Exception 
 		{
 			this.init(appDir);
+			MyPhase33 phase33 = new MyPhase33(_ctx);
+			add(phase33);
 		}
 
 		@Override
