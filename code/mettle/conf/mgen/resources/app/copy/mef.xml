@@ -8,11 +8,12 @@
 
 	<query>find_by_name</query>
 
-	<codegen what="entity" extend="false" />
-	<codegen what="model" extend="false" />
-	<codegen what="dao_interface" extend="false" />
-	<codegen what="dao_mock" extend="false" />
-	<codegen what="dao_real" extend="false" />
+	<codegen type="entity" extend="true" />
+	<codegen type="model" extend="false" />
+	<codegen type="dao_interface" extend="false" />
+	<codegen type="dao_mock" extend="true" />
+	<codegen type="dao_real" extend="true" />
+	<codegen type="presenter" generate="true" extend="false" />
 </entity>
 -->
 
