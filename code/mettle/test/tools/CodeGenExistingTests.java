@@ -3,8 +3,10 @@ package tools;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+import org.mef.framework.sfx.SfxContext;
 import org.mef.tools.mgen.codegen.generators.BoundaryCodeGen;
 import org.mef.tools.mgen.codegen.generators.CodeGenBase;
+import org.mef.tools.mgen.codegen.generators.ControllerCodeGen;
 import org.mef.tools.mgen.codegen.generators.DAOIntefaceCodeGen;
 import org.mef.tools.mgen.codegen.generators.DaoEntityLoaderCodeGen;
 import org.mef.tools.mgen.codegen.generators.DaoFinderCodeGen;
@@ -14,13 +16,19 @@ import org.mef.tools.mgen.codegen.generators.FormBinderCodeGen;
 import org.mef.tools.mgen.codegen.generators.KnownDAOsCodeGen;
 import org.mef.tools.mgen.codegen.generators.MockDAOCodeGen;
 import org.mef.tools.mgen.codegen.generators.ModelCodeGen;
+import org.mef.tools.mgen.codegen.generators.PresenterCodeGen;
+import org.mef.tools.mgen.codegen.generators.PresenterUnitTestCodeGen;
 import org.mef.tools.mgen.codegen.generators.RealDAOCodeGen;
+import org.mef.tools.mgen.codegen.generators.ReplyCodeGen;
+import org.mef.tools.mgen.codegen.generators.ViewCodeGen;
+import org.mef.tools.mgen.parser.DalGenXmlParser;
 import org.mef.tools.mgen.parser.EntityDef;
 
 
 
 public class CodeGenExistingTests extends BaseCodeGenTest
 {
+	
 	@Test
 	public void testEntity() throws Exception
 	{

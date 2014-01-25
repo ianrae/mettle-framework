@@ -18,7 +18,7 @@ public class PresenterCodeGeneratorPhase extends CodeGeneratorPhase
 	
 	public PresenterCodeGeneratorPhase(SfxContext ctx) 
 	{
-		super(ctx, "app");
+		super(ctx, "presenter");
 	}
 
 	@Override
