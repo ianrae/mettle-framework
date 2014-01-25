@@ -1,4 +1,4 @@
-package mef;
+package mef.presenter;
 
 import static org.junit.Assert.*;
 

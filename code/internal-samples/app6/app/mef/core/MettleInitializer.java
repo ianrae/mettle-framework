@@ -3,6 +3,8 @@ package mef.core;
 //uncomment after you create your first Entity in mef.xml
 //import mef.gen.AllKnownDAOs_GEN;
 
+import mef.gen.AllKnownDAOs_GEN;
+
 import org.mef.framework.dao.IDAO;
 import org.mef.framework.sfx.IServiceFactory;
 import org.mef.framework.sfx.SfxContext;
@@ -11,6 +13,8 @@ import org.mef.framework.sfx.SfxErrorTracker;
 public class MettleInitializer 
 {
 	public static SfxContext theCtx;
+	public static String appPath;
+	
 	
 	public MettleInitializer()
 	{}
@@ -29,8 +33,8 @@ public class MettleInitializer
 		
 		String var = ctx.getVar("UNITTEST");
 		boolean createMocks = (var != null);
-//		AllKnownDAOs_GEN knownDAOs = new AllKnownDAOs_GEN();
-//		knownDAOs.registerDAOs(ctx, createMocks);
+		AllKnownDAOs_GEN knownDAOs = new AllKnownDAOs_GEN();
+		knownDAOs.registerDAOs(ctx, createMocks);
 		
 		//load seed data
 		loadSeedData(); //move to separate loader registered...

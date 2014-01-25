@@ -29,6 +29,8 @@ public class MettleInitializer
 		
 		String var = ctx.getVar("UNITTEST");
 		boolean createMocks = (var != null);
+		
+		//UNCOMMENT these two lines after you add first entity in mef.xml
 //		AllKnownDAOs_GEN knownDAOs = new AllKnownDAOs_GEN();
 //		knownDAOs.registerDAOs(ctx, createMocks);
 		
