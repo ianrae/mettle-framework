@@ -2,11 +2,12 @@
 
 package mef.entities;
 
+import mef.gen.User_GEN;
+
 import org.mef.framework.entities.Entity;
-import mef.gen.*;
-import mef.entities.*;
 import java.util.Date;
-public class User extends Entity
+
+public class User extends User_GEN
 {
 	public User()
 	{}
@@ -22,8 +23,8 @@ public class User extends Entity
 		this.id = entity.id;
 		this.name = entity.name;
 	}
-    public Long id;
 
-    public String name;
+
+
 
 }

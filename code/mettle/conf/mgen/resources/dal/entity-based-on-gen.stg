@@ -14,9 +14,27 @@ fielddecl(type, name, value) ::= <<
 >>
 
 
-classdecl(type, name) ::= <<
-public class <name> extends <name>_GEN
+classdecl(type, name, args, inits, copyinits, isNotExtended) ::= <<
+public class <name> extends Entity
 {
+<if(isNotExtended)>
+	public <name>()
+	{}
+	
+	
+<if(args)>
+	public <name>( <args; separator=", ">)
+	{
+		<inits; separator="\n">
+	}
+<endif>
+	
+	public <name>(<name> entity)
+	{
+		this.id = entity.id;
+		<copyinits; separator="\n">
+	}
+<endif>
 
 >>
 

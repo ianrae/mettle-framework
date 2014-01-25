@@ -19,26 +19,9 @@ init(v) ::= "<if(v)> = <v><endif>"
 
 
 classdecl(type, name, args, inits, copyinits, isNotExtended) ::= <<
-public class <name> extends Entity
+public class <name> extends <name>_GEN
 {
-<if(isNotExtended)>
-	public <name>()
-	{}
-	
-	
-<if(args)>
-	public <name>( <args; separator=", ">)
-	{
-		<inits; separator="\n">
-	}
-<endif>
-	
-	public <name>(<name> entity)
-	{
-		this.id = entity.id;
-		<copyinits; separator="\n">
-	}
-<endif>
+
 >>
 
 endclassdecl() ::= <<
