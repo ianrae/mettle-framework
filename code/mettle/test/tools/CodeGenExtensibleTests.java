@@ -131,6 +131,31 @@ public class CodeGenExtensibleTests extends BaseTest
 				String filename = "presenter.stg";
 				ZGenerator gen = new ZGenerator(_ctx, baseDir, filename, def,  "mef.presenters", "app\\mef\\presenters");
 				this.add(gen);
+				
+				filename = "reply.stg";
+				gen = new ZGenerator(_ctx, baseDir, filename, def,  "mef.presenters.replies", "app\\mef\\presenters\\replies");
+				add(gen);
+				
+				filename = "boundary.stg";
+				gen = new ZGenerator(_ctx, baseDir, filename, def,  "boundaries", "app\\boundaries");
+				add(gen);
+				
+				filename = "formbinder.stg";
+				gen = new ZGenerator(_ctx, baseDir, filename, def, "boundaries.binders", "app\\boundaries\\binders");
+				add(gen);
+				
+				filename = "presenter-unit-test.stg";
+				gen = new ZGenerator(_ctx, baseDir, filename, def,  "mef", "test\\mef");
+				add(gen);
+				
+				filename = "controller.stg";
+				gen = new ZGenerator(_ctx, baseDir, filename, def,  "controllers", "app\\controllers");
+				add(gen);
+				
+				filename = "index-view.stg";
+				gen = new ZGenerator(_ctx, baseDir, filename, def, "", "app\\views\\" + def.name);
+				add(gen);
+				
 			}
 			
 			super.initialize(appDir); //it will call initalize of each generator
