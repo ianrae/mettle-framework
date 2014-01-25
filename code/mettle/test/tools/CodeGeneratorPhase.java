@@ -7,6 +7,7 @@ import org.mef.framework.sfx.SfxContext;
 import org.mef.tools.mgen.codegen.CodeGenerator;
 import org.mef.tools.mgen.codegen.ICodeGenPhase;
 import org.mef.tools.mgen.codegen.ICodeGenerator;
+import org.mef.tools.mgen.parser.DalGenXmlParser;
 
 public class CodeGeneratorPhase extends CodeGenerator implements ICodeGenPhase
 {
@@ -67,4 +68,13 @@ public class CodeGeneratorPhase extends CodeGenerator implements ICodeGenPhase
 		throw new NotImplementedException();
 	}
 
+	
+	protected DalGenXmlParser readEntityDef(String appDir) throws Exception
+	{
+		String path = this.pathCombine(appDir, "mef.xml");
+		DalGenXmlParser parser = new DalGenXmlParser(_ctx);
+		boolean b = parser.parse(path);
+		return parser;
+	}
+	
 }

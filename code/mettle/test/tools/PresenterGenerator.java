@@ -31,7 +31,7 @@ public class PresenterGenerator extends CodeGenerator implements ICodeGenerator
 	@Override
 	public String name() 
 	{
-		return "copyFile";
+		return "presenter";
 	}
 
 	@Override

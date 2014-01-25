@@ -74,12 +74,5 @@ public class PresenterCodeGeneratorPhase extends CodeGeneratorPhase
 		
 		super.initialize(appDir); //it will call initalize of each generator
 	}
-	
-	private DalGenXmlParser readEntityDef(String appDir) throws Exception
-	{
-		String path = this.pathCombine(appDir, "mef.xml");
-		DalGenXmlParser parser = new DalGenXmlParser(_ctx);
-		boolean b = parser.parse(path);
-		return parser;
-	}
+
 }
