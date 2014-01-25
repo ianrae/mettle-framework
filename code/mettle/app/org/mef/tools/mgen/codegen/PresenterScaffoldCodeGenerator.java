@@ -106,7 +106,7 @@ public class PresenterScaffoldCodeGenerator extends CodeGenerator
 		}
 		
 		path = this.getResourceOrFilePath(baseDir, "presenter-unit-test.stg");
-		b = generateOneFile(def, new PresenterUnitTestCodeGen(_ctx), path, "mef", "test\\mef");
+		b = generateOneFile(def, new PresenterUnitTestCodeGen(_ctx), path, "mef.presenter", "test\\mef\\presenter");
 		if (!b )
 		{
 			return false; //!!

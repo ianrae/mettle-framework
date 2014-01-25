@@ -57,7 +57,7 @@ public class PresenterCodeGeneratorPhase extends CodeGeneratorPhase
 			
 			filename = "presenter-unit-test.stg";
 			inner = new PresenterUnitTestCodeGen(_ctx);
-			gen = new PresenterGenerator(_ctx, inner, baseDir, filename, def,  "mef", "test\\mef");
+			gen = new PresenterGenerator(_ctx, inner, baseDir, filename, def,  "mef.presenter", "test\\mef\\presenter");
 			add(gen);
 			
 			filename = "controller.stg";
