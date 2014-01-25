@@ -1,4 +1,4 @@
-package tools;
+package org.mef.tools.mgen.codegen.phase;
 
 import java.io.InputStream;
 
