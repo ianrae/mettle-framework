@@ -17,10 +17,10 @@ import org.mef.tools.mgen.codegen.ICodeGenerator;
 
 public class CodeGenExtensibleTests extends BaseTest
 {
-	public static class MyPhase33 extends CodeGenerator implements ICodeGenerator
+	public static class MyCopyGen extends CodeGenerator implements ICodeGenerator
 	{
 
-		public MyPhase33(SfxContext ctx) 
+		public MyCopyGen(SfxContext ctx) 
 		{
 			super(ctx);
 		}
@@ -32,8 +32,9 @@ public class CodeGenExtensibleTests extends BaseTest
 		}
 
 		@Override
-		public boolean run() throws Exception 
+		public boolean run(String appDir) throws Exception 
 		{
+			init(appDir);
 			String filename = "mef.xml";
 			String baseDir = "/mgen/resources/app/copy/";
 			InputStream stream = getSourceFile(baseDir, filename);
@@ -53,7 +54,6 @@ public class CodeGenExtensibleTests extends BaseTest
 		{
 			throw new NotImplementedException();
 		}
-		
 	}
 	
 	
@@ -64,14 +64,6 @@ public class CodeGenExtensibleTests extends BaseTest
 		public MyAppCodeGeneratorPhase(SfxContext ctx) 
 		{
 			super(ctx);
-		}
-
-		@Override
-		public void initx(String appDir) throws Exception 
-		{
-			this.init(appDir);
-			MyPhase33 phase33 = new MyPhase33(_ctx);
-			add(phase33);
 		}
 
 		@Override
@@ -87,13 +79,16 @@ public class CodeGenExtensibleTests extends BaseTest
 		}
 
 		@Override
-		public boolean run() throws Exception
+		public boolean run(String appDir) throws Exception
 		{
+			init(appDir);
+			MyCopyGen phase33 = new MyCopyGen(_ctx);
+			add(phase33);
 			createDirStructure();
 			
 			for(ICodeGenerator gen : genL)
 			{
-				if (! gen.run())
+				if (! gen.run(appDir))
 				{
 					this.addError(String.format("Generator %s failed", gen.name()));
 					return false;
@@ -150,12 +145,12 @@ public class CodeGenExtensibleTests extends BaseTest
 			phaseL.add(phase);
 		}
 		
-		public boolean run() throws Exception 
+		public boolean run(String appDir) throws Exception 
 		{
 			for(ICodeGenPhase phase : phaseL)
 			{
-				phase.initx(appDir);
-				if (! phase.run())
+//				phase.initx(appDir);
+				if (! phase.run(appDir))
 				{
 					this.addError(String.format("Phase %s failed", phase.name()));
 					return false;
@@ -164,10 +159,10 @@ public class CodeGenExtensibleTests extends BaseTest
 			
 			return true;
 		}
-		public void init(String appDir) 
-		{
-			this.appDir = appDir;
-		}
+//		public void init(String appDir) 
+//		{
+//			this.appDir = appDir;
+//		}
 	}
 	
 	public static class MyGenX implements ICodeGenerator
@@ -186,7 +181,7 @@ public class CodeGenExtensibleTests extends BaseTest
 		}
 
 		@Override
-		public boolean run() 
+		public boolean run(String appDir) 
 		{
 			return resultToReturn;
 		}
@@ -204,11 +199,11 @@ public class CodeGenExtensibleTests extends BaseTest
 		}
 		
 		@Override
-		public boolean run() throws Exception 
+		public boolean run(String appDir) throws Exception 
 		{
 			for(ICodeGenerator gen : genL)
 			{
-				if (! gen.run())
+				if (! gen.run(appDir))
 				{
 					this.addError(String.format("Generator %s failed", gen.name()));
 					return false;
@@ -229,11 +224,6 @@ public class CodeGenExtensibleTests extends BaseTest
 			this.genL.add(gen);
 		}
 
-		@Override
-		public void initx(String appDir) 
-		{
-			this.appDir = appDir;
-		}
 	}
 	
 	@Test
@@ -249,7 +239,8 @@ public class CodeGenExtensibleTests extends BaseTest
 		
 		master.addPhase(phase1);
 		
-		boolean b = master.run();
+		String appDir = "c:\\tmp\\cc";
+		boolean b = master.run(appDir);
 		assertTrue(b);
 	}
 
@@ -264,7 +255,8 @@ public class CodeGenExtensibleTests extends BaseTest
 		phase1.add(genx);
 		master.addPhase(phase1);
 		
-		boolean b = master.run();
+		String appDir = "c:\\tmp\\cc";
+		boolean b = master.run(appDir);
 		assertFalse(b);
 	}
 
@@ -276,8 +268,7 @@ public class CodeGenExtensibleTests extends BaseTest
 		master.addPhase(phase);
 		
 		String appDir = "c:\\tmp\\y";
-		master.init(appDir);
-		boolean b = master.run();
+		boolean b = master.run(appDir);
 		assertTrue(b);
 	}
 	

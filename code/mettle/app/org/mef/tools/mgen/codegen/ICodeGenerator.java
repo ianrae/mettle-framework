@@ -4,5 +4,5 @@ public interface ICodeGenerator
 {
 	String name();
 
-	boolean run() throws Exception ;
+	boolean run(String appDir) throws Exception ;
 }
