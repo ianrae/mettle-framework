@@ -21,12 +21,14 @@ public class CodeGenExtensibleTests extends BaseTest
 	{
 		String filename;
 		String baseDir;
+		String newExt; //can be null
 
-		public MyCopyGen(SfxContext ctx, String baseDir, String filename) 
+		public MyCopyGen(SfxContext ctx, String baseDir, String filename, String newExt) 
 		{
 			super(ctx);
 			this.filename = filename;
 			this.baseDir = baseDir;
+			this.newExt = newExt;
 		}
 
 		@Override
@@ -36,12 +38,16 @@ public class CodeGenExtensibleTests extends BaseTest
 		}
 
 		@Override
-		public boolean run(String appDir) throws Exception 
+		public void initialize(String appDir) throws Exception
 		{
 			init(appDir);
+		}
+		@Override
+		public boolean run() throws Exception 
+		{
 			InputStream stream = getSourceFile(baseDir, filename);
 			
-			boolean b = copyFile(stream, filename, appDir);
+			boolean b = copyFile(stream, filename, newExt, appDir);
 			return b;
 		}
 
@@ -85,6 +91,10 @@ public class CodeGenExtensibleTests extends BaseTest
 		public void initialize(String appDir) throws Exception 
 		{
 			init(appDir);
+			for(ICodeGenerator gen : genL)
+			{
+				gen.initialize(appDir);
+			}
 		}
 		
 
@@ -93,7 +103,7 @@ public class CodeGenExtensibleTests extends BaseTest
 		{
 			for(ICodeGenerator gen : genL)
 			{
-				if (! gen.run(appDir))
+				if (! gen.run())
 				{
 					this.addError(String.format("Generator %s failed", gen.name()));
 					return false;
@@ -126,8 +136,9 @@ public class CodeGenExtensibleTests extends BaseTest
 		@Override
 		public void initialize(String appDir) throws Exception 
 		{
-			init(appDir);
+			init(appDir); //done twice. fix later!! but need it initialized here for addGenerators
 			addGenerators();
+			super.initialize(appDir); //it will call initalize of each generator
 		}
 		
 		private void addGenerators()
@@ -135,10 +146,20 @@ public class CodeGenExtensibleTests extends BaseTest
 			String filename = "mef.xml";
 			String baseDir = "/mgen/resources/app/copy/";
 			addCopyGenerator(baseDir, filename);
+			
+			filename = "Global.txt";
+			String dest = pathCombine(appDir, "app");
+			addCopyGenerator(dest, filename);
 		}
+		
 		private void addCopyGenerator(String baseDir, String filename)
 		{
-			MyCopyGen gen = new MyCopyGen(_ctx, baseDir, filename);
+			MyCopyGen gen = new MyCopyGen(_ctx, baseDir, filename, null);
+			add(gen);
+		}
+		private void addCopyGenerator(String baseDir, String filename, String newExt)
+		{
+			MyCopyGen gen = new MyCopyGen(_ctx, baseDir, filename, newExt);
 			add(gen);
 		}
 
@@ -226,7 +247,12 @@ public class CodeGenExtensibleTests extends BaseTest
 		}
 
 		@Override
-		public boolean run(String appDir) 
+		public void initialize(String appDir) throws Exception
+		{
+//			init(appDir);
+		}
+		@Override
+		public boolean run() 
 		{
 			return resultToReturn;
 		}
@@ -255,7 +281,7 @@ public class CodeGenExtensibleTests extends BaseTest
 		{
 			for(ICodeGenerator gen : genL)
 			{
-				if (! gen.run(appDir))
+				if (! gen.run())
 				{
 					this.addError(String.format("Generator %s failed", gen.name()));
 					return false;
