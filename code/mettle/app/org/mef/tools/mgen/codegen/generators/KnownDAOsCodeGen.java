@@ -42,7 +42,7 @@ public class KnownDAOsCodeGen extends CodeGenBase
 	@Override
 	public String getClassName(EntityDef def)
 	{
-		return makeClassName("AllKnownDAOs", true);
+		return makeClassName("AllKnownDAOs"); //, true);
 	}
 	
 	

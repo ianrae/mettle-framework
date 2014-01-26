@@ -34,7 +34,7 @@ public class ModelCodeGen extends CodeGenBase
 	@Override
 	public String getClassName(EntityDef def)
 	{
-		String className = makeClassName(def.name + "Model", def.shouldExtend(EntityDef.MODEL));
+		String className = makeClassName(def.name + "Model"); //, def.shouldExtend(EntityDef.MODEL));
 		return className;
 	}
 	

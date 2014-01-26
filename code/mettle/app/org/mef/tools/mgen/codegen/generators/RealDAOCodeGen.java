@@ -127,7 +127,7 @@ public class RealDAOCodeGen extends CodeGenBase
 	public String getClassName(EntityDef def)
 	{
 		String className = def.name + "DAO";
-		className = makeClassName(className, def.shouldExtend(EntityDef.DAO_REAL));
+		className = makeClassName(className); //, def.shouldExtend(EntityDef.DAO_REAL));
 		return className;
 	}
 	

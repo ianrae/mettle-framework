@@ -79,7 +79,7 @@ public class EntityCodeGen extends CodeGenBase
 		@Override
 		public String getClassName(EntityDef def)
 		{
-			return this.makeClassName(def.name, def.shouldExtend(EntityDef.ENTITY));
+			return this.makeClassName(def.name); //, def.shouldExtend(EntityDef.ENTITY));
 		}
 		
 		

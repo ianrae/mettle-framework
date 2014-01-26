@@ -114,7 +114,7 @@ public class EntityLoaderSaverCodeGen extends CodeGenBase
 	@Override
 	public String getClassName(EntityDef def)
 	{
-		return this.makeClassName("EntityLoaderSaver", true);
+		return this.makeClassName("EntityLoaderSaver"); //, true);
 	}
 
 

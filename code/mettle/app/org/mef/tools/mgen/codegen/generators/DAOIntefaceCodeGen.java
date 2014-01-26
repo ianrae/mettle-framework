@@ -42,7 +42,7 @@ public class DAOIntefaceCodeGen extends CodeGenBase
 		public String getClassName(EntityDef def)
 		{
 			String s = "I" + uppify(def.name) + "DAO";
-			return makeClassName(s, def.shouldExtend(EntityDef.DAO_INTERFACE));
+			return makeClassName(s); //def.shouldExtend(EntityDef.DAO_INTERFACE));
 		}
 		
 		

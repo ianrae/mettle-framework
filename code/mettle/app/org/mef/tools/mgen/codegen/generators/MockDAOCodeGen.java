@@ -36,7 +36,7 @@ public class MockDAOCodeGen extends CodeGenBase
 	public String getClassName(EntityDef def)
 	{
 		String className = "Mock" + def.name + "DAO";
-		className = makeClassName(className, def.shouldExtend(EntityDef.DAO_MOCK));
+		className = makeClassName(className); //, def.shouldExtend(EntityDef.DAO_MOCK));
 		return className;
 	}
 	

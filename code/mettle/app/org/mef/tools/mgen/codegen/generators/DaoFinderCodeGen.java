@@ -43,7 +43,7 @@ public class DaoFinderCodeGen extends CodeGenBase
 	@Override
 	public String getClassName(EntityDef def)
 	{
-		return makeClassName("DaoFinder", false);
+		return makeClassName("DaoFinder"); // false);
 	}
 	
 	

@@ -141,10 +141,10 @@ public abstract class CodeGenBase extends SfxBaseObj
 		}
 		
 		
-		protected String makeClassName(String name, boolean extend)
+		protected String makeClassName(String name)
 		{
 			String s = name;
-			if (extend)
+			if (this.isExtended)
 			{
 				s += "_GEN";
 			}

@@ -133,7 +133,7 @@ public class DaoEntityLoaderCodeGen extends CodeGenBase
 	@Override
 	public String getClassName(EntityDef def)
 	{
-		return this.makeClassName("DaoJsonLoader", true);
+		return this.makeClassName("DaoJsonLoader"); //, true);
 	}
 
 
