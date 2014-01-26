@@ -13,7 +13,7 @@ import org.mef.tools.mgen.codegen.phase.PresenterCodeGeneratorPhase;
 public class MGenBase 
 {
 	protected SfxContext _ctx;
-	protected boolean useNewImpl = false;
+	protected boolean useNewImpl = true;
 
 	public void runCodeGeneration() throws Exception
 	{
