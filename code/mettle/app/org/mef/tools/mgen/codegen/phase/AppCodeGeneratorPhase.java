@@ -142,5 +142,8 @@ public class AppCodeGeneratorPhase extends CodeGeneratorPhase
 		createDir("conf\\mef\\seed");
 		createDir("test\\mef");
 		createDir("test\\mef\\presenter");
+		createDir("mgen");
+		createDir("app\\controllers");  //already exists, but it helpful in unit tests
+		createDir("app\\views");  //already exists, but it helpful in unit tests
 	}
 }

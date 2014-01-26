@@ -2,9 +2,11 @@ package tools;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.NotImplementedException;
 import org.junit.Before;
 import org.junit.Test;
@@ -173,6 +175,36 @@ public class CodeGenExtensibleTests extends BaseTest
 		boolean b = master.run();
 		assertTrue(b);
 	}
+	
+	@Test
+	public void testApp6() throws Exception 
+	{
+		MasterCodeGenerator master = new MasterCodeGenerator(_ctx);
+		AppCodeGeneratorPhase phase = new AppCodeGeneratorPhase(_ctx);
+		master.addPhase(phase);
+
+		String appDir = "c:\\tmp\\dd\\" + genRandDir();
+		master.initialize(appDir);
+		boolean b = master.run();
+		assertTrue(b);
+		
+		//now use mef6.xml and do gen
+		String srcPath = this.getTestFile("mef6.xml");
+		String destPath = this.pathCombine(appDir, "mef.xml");
+		FileUtils.copyFile(new File(srcPath), new File(destPath));
+		
+		log("dao gen..");
+		master = new MasterCodeGenerator(_ctx);
+		DaoCodeGeneratorPhase phase2 = new DaoCodeGeneratorPhase(_ctx);
+		phase2.genRealDAO = true;
+		phase2.genDaoLoader = true;
+		
+		master.addPhase(phase2);
+		master.initialize(appDir);
+		b = master.run();
+		assertTrue(b);
+	}
+	
 
 	//-- helpers --
 	@Before
@@ -182,4 +214,14 @@ public class CodeGenExtensibleTests extends BaseTest
 		this._ctx.getServiceLocator().registerSingleton(SfxErrorTracker.class, new SfxErrorTracker(_ctx));
 	}
 
+	private String genRandDir()
+	{
+		int max = 10000;
+		int min = 10;
+		Integer random = min + (int)(Math.random() * ((max - min) + 1));
+		
+		String s = String.format("%d", random);
+		return s;
+	}
+	
 }

@@ -28,20 +28,21 @@ public class DaoCodeGeneratorPhase extends CodeGeneratorPhase
 		public String filename;
 		public EntityDef def;
 		public CodeGenBase inner;
+		public boolean isExtended;
 
-		public AddParams(String baseDir, String filename, EntityDef def, CodeGenBase inner)
+		public AddParams(String baseDir, String filename, EntityDef def, CodeGenBase inner, boolean isExtended)
 		{
 			this.baseDir = baseDir;
 			this.filename = filename;
 			this.def = def;
 			this.inner = inner;
-
-			inner.setExtended(def.shouldExtend(EntityDef.ENTITY));
+			this.isExtended = isExtended;
+//			inner.setExtended(def.shouldExtend(EntityDef.ENTITY));
 		}
 
 		public boolean needParentClass(String appDir, String relPath)
 		{
-			boolean isExtended = def.shouldExtend(EntityDef.ENTITY);
+//			boolean isExtended = def.shouldExtend(EntityDef.ENTITY);
 
 			if (isExtended)
 			{
@@ -57,11 +58,6 @@ public class DaoCodeGeneratorPhase extends CodeGeneratorPhase
 				}
 			}
 			return false;
-		}
-
-		public void setExtended(boolean b) {
-			// TODO Auto-generated method stub
-			
 		}
 	}
 
@@ -120,35 +116,45 @@ public class DaoCodeGeneratorPhase extends CodeGeneratorPhase
 
 	private void addOne(AddParams params, String packageName, String relPath)
 	{
-		DaoGenerator gen = new DaoGenerator(_ctx, params.inner, params.baseDir, params.filename, 
-				params.def,  packageName, relPath, extraImportsL);
-		add(gen);
+		addGenerator(params, packageName, relPath);
 		
 		//if extended and parent class doesn't exist then we'll create it
 		if (params.needParentClass(appDir, relPath))
 		{
 			//add again with extended=false so it creates the parent class
 //			params = new AddParams(baseDir, "entity-based-on-gen.stg", def, new EntityCodeGen(_ctx));
-			params.setExtended(false);
-			addOne(params, packageName, relPath);
+			params.isExtended = false;
+			addGenerator(params, packageName, relPath);
 		}
 	}
+	private void addGenerator(AddParams params, String packageName, String relPath)
+	{
+		params.inner.setExtended(params.isExtended); //propogate to codegen
+		DaoGenerator gen = new DaoGenerator(_ctx, params.inner, params.baseDir, params.filename, 
+				params.def,  packageName, relPath, extraImportsL);
+		add(gen);
+	}
+	
 	private void generateOtherClasses(EntityDef def) 
 	{
 		String baseDir = "/mgen/resources/dal/";
 
-		AddParams params = new AddParams(baseDir, "model.stg", def, new ModelCodeGen(_ctx));
+		boolean extend = def.shouldExtend(EntityDef.MODEL);
+		AddParams params = new AddParams(baseDir, "model.stg", def, new ModelCodeGen(_ctx), extend);
 		addOne(params, "models", "app\\models");
 
-		params = new AddParams(baseDir, "dao_interface.stg", def, new DAOIntefaceCodeGen(_ctx));
+		extend = def.shouldExtend(EntityDef.DAO_INTERFACE);
+		params = new AddParams(baseDir, "dao_interface.stg", def, new DAOIntefaceCodeGen(_ctx), extend);
 		addOne(params, "mef.daos", "app\\mef\\daos");
 
-		params = new AddParams(baseDir, "dao_mock.stg", def, new MockDAOCodeGen(_ctx));
+		extend = def.shouldExtend(EntityDef.DAO_MOCK);
+		params = new AddParams(baseDir, "dao_mock.stg", def, new MockDAOCodeGen(_ctx), extend);
 		addOne(params, "mef.daos.mocks", "app\\mef\\daos\\mocks");
 
 		if (genRealDAO)
 		{
-			params = new AddParams(baseDir, "dao_real.stg", def, new RealDAOCodeGen(_ctx));
+			extend = def.shouldExtend(EntityDef.DAO_REAL);
+			params = new AddParams(baseDir, "dao_real.stg", def, new RealDAOCodeGen(_ctx), extend);
 			addOne(params, "boundaries.daos", "app\\boundaries\\daos");
 		}
 	}
@@ -159,18 +165,22 @@ public class DaoCodeGeneratorPhase extends CodeGeneratorPhase
 
 		String baseDir = "/mgen/resources/dal/";
 
-		AddParams params = new AddParams(baseDir, "dao_all_known.stg", def, new KnownDAOsCodeGen(_ctx));
-		addOne(params, "mef.gen", "mef\\gen");
+		boolean extend = true;
+		AddParams params = new AddParams(baseDir, "dao_all_known.stg", def, new KnownDAOsCodeGen(_ctx), extend);
+		addOne(params, "mef.gen", "app\\mef\\gen");
 
-		params = new AddParams(baseDir, "dao_finder.stg", def, new DaoFinderCodeGen(_ctx));
+		extend = false;
+		params = new AddParams(baseDir, "dao_finder.stg", def, new DaoFinderCodeGen(_ctx), false);
 		addOne(params, "mef.core", "app\\mef\\core");
 
 		if (genDaoLoader)
 		{
-			params = new AddParams(baseDir, "dao_entity_loader.stg", def, new DaoEntityLoaderCodeGen(_ctx));
+			extend = true;
+			params = new AddParams(baseDir, "dao_entity_loader.stg", def, new DaoEntityLoaderCodeGen(_ctx), extend);
 			addOne(params, "mef.core", "app\\mef\\core");
 
-			params = new AddParams(baseDir, "dao_entity_saver.stg", def, new EntityLoaderSaverCodeGen(_ctx));
+			extend = true;
+			params = new AddParams(baseDir, "dao_entity_saver.stg", def, new EntityLoaderSaverCodeGen(_ctx), extend);
 			addOne(params, "mef.gen", "app\\mef\\gen");
 		}
 	}
@@ -185,7 +195,8 @@ public class DaoCodeGeneratorPhase extends CodeGeneratorPhase
 
 		String baseDir = "/mgen/resources/dal/";
 
-		AddParams params = new AddParams(baseDir, "entity.stg", def, new EntityCodeGen(_ctx));
+		boolean extend = def.shouldExtend(EntityDef.ENTITY);
+		AddParams params = new AddParams(baseDir, "entity.stg", def, new EntityCodeGen(_ctx), extend);
 		String relPath = "app\\mef\\entities";
 		addOne(params, "mef.entities", relPath);
 
