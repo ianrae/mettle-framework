@@ -29,6 +29,7 @@ public class DaoCodeGeneratorPhase extends CodeGeneratorPhase
 		public EntityDef def;
 		public CodeGenBase inner;
 		public boolean isExtended;
+		public boolean isParentOfExtended;
 
 		public AddParams(String baseDir, String filename, EntityDef def, CodeGenBase inner, boolean isExtended)
 		{
@@ -63,7 +64,7 @@ public class DaoCodeGeneratorPhase extends CodeGeneratorPhase
 
 	private DalGenXmlParser parser;
 	private List<String> extraImportsL = new ArrayList<String>();
-	private boolean _needParentClass;
+//	private boolean _needParentClass;
 
 	public boolean genRealDAO = false; //for now
 	public boolean genDaoLoader = false;
@@ -124,14 +125,15 @@ public class DaoCodeGeneratorPhase extends CodeGeneratorPhase
 			//add again with extended=false so it creates the parent class
 //			params = new AddParams(baseDir, "entity-based-on-gen.stg", def, new EntityCodeGen(_ctx));
 			params.isExtended = false;
+			params.isParentOfExtended = true;
 			addGenerator(params, packageName, relPath);
 		}
 	}
 	private void addGenerator(AddParams params, String packageName, String relPath)
 	{
-		params.inner.setExtended(params.isExtended); //propogate to codegen
+//		params.inner.setExtended(params.isExtended); //propogate to codegen
 		DaoGenerator gen = new DaoGenerator(_ctx, params.inner, params.baseDir, params.filename, 
-				params.def,  packageName, relPath, extraImportsL);
+				params.def,  packageName, relPath, extraImportsL, params.isExtended, params.isParentOfExtended);
 		add(gen);
 	}
 	

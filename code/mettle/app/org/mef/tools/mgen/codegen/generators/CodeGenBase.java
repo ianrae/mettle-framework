@@ -21,6 +21,7 @@ public abstract class CodeGenBase extends SfxBaseObj
 		public List<String> extraImportsL = new ArrayList<String>();
 
 		public boolean forUnitTest;
+		private boolean isParentOfExtended;
 
 		public CodeGenBase(SfxContext ctx, String path, String packageName)
 		{
@@ -49,6 +50,10 @@ public abstract class CodeGenBase extends SfxBaseObj
 		
 		protected String genFields(EntityDef def)
 		{
+			if (this.isParentOfExtended)
+			{
+				return ""; //want empty class
+			}
 			
 			String result = "";
 			for(FieldDef fdef : def.fieldL)
@@ -71,6 +76,10 @@ public abstract class CodeGenBase extends SfxBaseObj
 		public void setExtended(boolean b)
 		{
 			isExtended = b;
+		}
+		public void setIsParentOfExtended(boolean b)
+		{
+			isParentOfExtended = b;
 		}
 		
 		protected boolean isId(String name) 

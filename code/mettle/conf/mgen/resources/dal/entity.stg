@@ -19,8 +19,15 @@ init(v) ::= "<if(v)> = <v><endif>"
 
 
 classdecl(type, name, args, inits, copyinits, isNotExtended) ::= <<
+<if(isNotExtended)>
 public class <name> extends <name>_GEN
 {
+
+<else>
+public class <name> extends Entity
+{
+
+<endif>
 
 >>
 

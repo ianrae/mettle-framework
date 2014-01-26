@@ -20,6 +20,8 @@ public class <name> extends Entity
 <if(isNotExtended)>
 	public <name>()
 	{}
+<else>
+<endif>
 	
 	
 <if(args)>
