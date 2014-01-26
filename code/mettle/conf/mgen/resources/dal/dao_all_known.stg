@@ -18,13 +18,19 @@ import java.util.Date;
 >>
 
 
-classdecl(type, name) ::= <<
+classdecl(type, name, isParentOfExtended) ::= <<
+<if(isParentOfExtended)>
+public class <name> extends <name>_GEN
+{
+
+<else>
+
 public class <name>  
 {
 public List\<IDAO> registerDAOs(SfxContext ctx, boolean createMocks)
 {
 	ArrayList\<IDAO> L = new ArrayList\<IDAO>();
-    
+<endif>  
 >>
 
 adddal(type) ::= <<
@@ -43,12 +49,16 @@ else
 }	
 >>
 
-endclassdecl() ::= <<
+endclassdecl(isParentOfExtended) ::= <<
+<if(isParentOfExtended)>
+}
 
+<else>
 
 	return L;
 }
 }
+<endif>
 >>
 
 querydecl(type, fieldType, fullName) ::= <<

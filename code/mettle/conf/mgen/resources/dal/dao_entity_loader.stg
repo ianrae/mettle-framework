@@ -99,12 +99,17 @@ resolve2(type1, type2) ::= <<
 
 >>
 
-classdecl(name) ::= <<
+classdecl(name, isParentOfExtended) ::= <<
+<if(isParentOfExtended)>
+public class <name> extends <name>_GEN
+{
+
+<else>
 public class <name> extends BaseDaoJsonLoader
 {
 
 	
-
+<endif>
 
 >>
 

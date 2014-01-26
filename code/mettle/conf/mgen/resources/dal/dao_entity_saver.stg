@@ -41,12 +41,18 @@ saveorupdate(type, fields) ::= <<
 >>
 	
 
-classdecl(name) ::= <<
+classdecl(name, isParentOfExtended) ::= <<
+<if(isParentOfExtended)>
+public class <name> extends <name>_GEN
+{
+
+<else>
 public class <name> 
 {
 
 	
 
+<endif>
 
 >>
 

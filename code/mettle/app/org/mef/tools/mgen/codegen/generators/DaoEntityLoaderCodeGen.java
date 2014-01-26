@@ -19,34 +19,37 @@ public class DaoEntityLoaderCodeGen extends CodeGenBase
 	@Override
 	public String generate(EntityDef def)
 	{
-//		this.isExtended = true; //always
+		//		this.isExtended = true; //always
 		String result = genHeader(def); 
 
 		ST st = _group.getInstanceOf("classdecl");
 		st.add("name", this.getClassName(def));
+		st.add("isParentOfExtended", this.isParentOfExtended);
 		result += st.render(); 
-		
-		for(EntityDef tmp: def.allEntityTypes)
+
+		if (! this.isParentOfExtended)
 		{
-			if (tmp.enabled)
+			for(EntityDef tmp: def.allEntityTypes)
 			{
-				result += genReadEntity(tmp);
-				result += genLoadEntity(tmp);
-				result += genFindWithIdEntity(tmp);
+				if (tmp.enabled)
+				{
+					result += genReadEntity(tmp);
+					result += genLoadEntity(tmp);
+					result += genFindWithIdEntity(tmp);
+				}
 			}
 		}
-		
 
 		st = _group.getInstanceOf("endclassdecl");
 		result += st.render(); 
 
 		return result;
 	}
-	
+
 	protected String genHeader(EntityDef def)
 	{
 		ST st = _group.getInstanceOf("header");
-		
+
 		if (this.isExtended())
 		{
 			st.add("package", "mef.gen");
@@ -57,21 +60,21 @@ public class DaoEntityLoaderCodeGen extends CodeGenBase
 		}
 		st.add("extras", this.extraImportsL);
 
-//		st.add("type", def.name);
-		
-//		List<String> daoTypeL = new ArrayList<String>();
-//		for(FieldDef fdef : def.fieldL)
-//		{
-//			if (! isStandardJavaType(fdef.typeName ))
-//			{
-//				daoTypeL.add(fdef.typeName);
-//			}
-//		}
-//		st.add("types", daoTypeL);
+		//		st.add("type", def.name);
+
+		//		List<String> daoTypeL = new ArrayList<String>();
+		//		for(FieldDef fdef : def.fieldL)
+		//		{
+		//			if (! isStandardJavaType(fdef.typeName ))
+		//			{
+		//				daoTypeL.add(fdef.typeName);
+		//			}
+		//		}
+		//		st.add("types", daoTypeL);
 		String result = st.render(); 
 		return result;
 	}
-	
+
 	private boolean isStandardJavaType(String typeName)
 	{
 		String[] ar = new String[] { "Integer", "Long", "String", "int", "Integer", "long", "boolean" };
@@ -84,13 +87,13 @@ public class DaoEntityLoaderCodeGen extends CodeGenBase
 		}
 		return false;
 	}
-	
+
 	protected String genReadEntity(EntityDef def)
 	{
 		ST st = _group.getInstanceOf("readentity");
 		st.add("type", def.name);
 		st.add("fields", this.buildFieldsList(def));
-		
+
 		String result = st.render(); 
 		return result;
 	}
@@ -108,12 +111,12 @@ public class DaoEntityLoaderCodeGen extends CodeGenBase
 		}
 		return L;
 	}
-	
-	
+
+
 	protected String genLoadEntity(EntityDef def)
 	{
 		ST st = _group.getInstanceOf("loadentity");
-		
+
 		st.add("type", def.name);
 		String result = st.render(); 
 		return result;
@@ -121,14 +124,14 @@ public class DaoEntityLoaderCodeGen extends CodeGenBase
 	protected String genFindWithIdEntity(EntityDef def)
 	{
 		ST st = _group.getInstanceOf("findwithidentity");
-		
+
 		st.add("type", def.name);
 		String result = st.render(); 
 		return result;
 	}
-	
-	
-	
+
+
+
 
 	@Override
 	public String getClassName(EntityDef def)

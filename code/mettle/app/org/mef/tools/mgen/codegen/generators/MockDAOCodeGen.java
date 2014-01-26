@@ -22,10 +22,14 @@ public class MockDAOCodeGen extends CodeGenBase
 		
 		st.add("name", getClassName(def));
 		st.add("type", def.name);
+		st.add("isParentOfExtended", this.isParentOfExtended);
 		result += st.render(); 
 		
-		result += genQueries(def);
-		result += genMethods(def);
+		if (! isParentOfExtended)
+		{
+			result += genQueries(def);
+			result += genMethods(def);
+		}
 		st = _group.getInstanceOf("endclassdecl");
 		result += st.render(); 
 		

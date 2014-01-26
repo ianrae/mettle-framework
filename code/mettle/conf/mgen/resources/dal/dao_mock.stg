@@ -38,7 +38,13 @@ public <meth>
 >>
 
 
-classdecl(name, type) ::= <<
+classdecl(name, type, isParentOfExtended) ::= <<
+<if(isParentOfExtended)>
+public class <name> extends <name>_GEN
+{
+
+
+<else>
 public class <name> implements I<type>DAO
 {
     protected List\<<type>\> _L = new ArrayList\<<type>\>();
@@ -141,7 +147,7 @@ public class <name> implements I<type>DAO
 
     }
 
-	
+<endif>	
 	
 >>
 

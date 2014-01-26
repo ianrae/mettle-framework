@@ -19,21 +19,24 @@ public class EntityLoaderSaverCodeGen extends CodeGenBase
 	@Override
 	public String generate(EntityDef def)
 	{
-//		this.isExtended = true; //always
+		//		this.isExtended = true; //always
 		String result = genHeader(def); 
 
 		ST st = _group.getInstanceOf("classdecl");
 		st.add("name", this.getClassName(def));
+		st.add("isParentOfExtended", this.isParentOfExtended);		
 		result += st.render(); 
 
-		for(EntityDef tmp: def.allEntityTypes)
+		if (! this.isParentOfExtended)
 		{
-			if (tmp.enabled)
+			for(EntityDef tmp: def.allEntityTypes)
 			{
-				result += genReadEntity(tmp);
+				if (tmp.enabled)
+				{
+					result += genReadEntity(tmp);
+				}
 			}
 		}
-
 
 		st = _group.getInstanceOf("endclassdecl");
 		result += st.render(); 
@@ -55,7 +58,7 @@ public class EntityLoaderSaverCodeGen extends CodeGenBase
 		}
 
 		st.add("extras", this.extraImportsL);
-		
+
 		//			st.add("type", def.name);
 
 		//			List<String> daoTypeL = new ArrayList<String>();

@@ -68,7 +68,13 @@ protected static void touchAll(<type> entity, <type>Model t)
 }
 >>
 
-classdecl(name, type) ::= <<
+classdecl(name, type, isParentOfExtended) ::= <<
+<if(isParentOfExtended)>
+public class <name> extends <name>_GEN
+{
+
+
+<else>
 public class <name> implements I<type>DAO 
 {
 	@Override
@@ -193,7 +199,7 @@ public class <name> implements I<type>DAO
 		}
 		t.update();
 	}
-	
+<endif>	
        
 >>
 

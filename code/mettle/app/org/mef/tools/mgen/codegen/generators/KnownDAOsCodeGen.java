@@ -12,31 +12,36 @@ public class KnownDAOsCodeGen extends CodeGenBase
 	{
 		super(ctx);
 	}
-	
+
 	@Override
 	public String generate(EntityDef def)
 	{
-//		this.isExtended = true; //always
+		//		this.isExtended = true; //always
 		String result = genHeader(); 
 
 		ST st = _group.getInstanceOf("classdecl");
-//		st.add("type", def.name);
+		//		st.add("type", def.name);
 		st.add("name", getClassName(def));
+		st.add("isParentOfExtended", this.isParentOfExtended);
+
 		result += st.render(); 
-		
-		for(EntityDef tmp: def.allEntityTypes)
+
+		if (! this.isParentOfExtended)
 		{
-			if (tmp.enabled)
+			for(EntityDef tmp: def.allEntityTypes)
 			{
-				st = _group.getInstanceOf("adddal");
-				st.add("type", tmp.name);
-				result += st.render(); 
+				if (tmp.enabled)
+				{
+					st = _group.getInstanceOf("adddal");
+					st.add("type", tmp.name);
+					result += st.render(); 
+				}
 			}
-		}
-		
+		}		
 		st = _group.getInstanceOf("endclassdecl");
+		st.add("isParentOfExtended", this.isParentOfExtended);
 		result += st.render(); 
-		
+
 		return result;
 	}
 	@Override
@@ -44,8 +49,8 @@ public class KnownDAOsCodeGen extends CodeGenBase
 	{
 		return makeClassName("AllKnownDAOs"); //, true);
 	}
-	
-	
+
+
 	@Override
 	protected String buildField(EntityDef def, FieldDef fdef)
 	{
