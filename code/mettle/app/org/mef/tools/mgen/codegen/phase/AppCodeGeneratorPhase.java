@@ -84,7 +84,7 @@ public class AppCodeGeneratorPhase extends CodeGeneratorPhase
 	{
 		String filename = "error.scala.html";
 		String dest = pathCombine(appDir, "app/views");
-		addJavaCopyGenerator(baseDir, filename, dest);
+		addCopyGenerator(baseDir, filename, null, dest);
 	}
 
 	private String addTrailingSlash(String baseDir)
