@@ -22,7 +22,7 @@ public class RealDAOCodeGen extends CodeGenBase
 	@Override
 	public String generate(EntityDef def)
 	{
-		this.isExtended = def.shouldExtend(EntityDef.DAO_REAL);
+//		this.isExtended = def.shouldExtend(EntityDef.DAO_REAL);
 		String result = genHeader(def.name); 
 		ST st = _group.getInstanceOf("classdecl");
 		

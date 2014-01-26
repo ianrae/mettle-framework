@@ -16,7 +16,7 @@ public class MockDAOCodeGen extends CodeGenBase
 	@Override
 	public String generate(EntityDef def)
 	{
-		this.isExtended = def.shouldExtend(EntityDef.DAO_MOCK);
+//		this.isExtended = def.shouldExtend(EntityDef.DAO_MOCK);
 		String result = genHeader(); 
 		ST st = _group.getInstanceOf("classdecl");
 		

@@ -19,7 +19,7 @@ public class DAOIntefaceCodeGen extends CodeGenBase
 		@Override
 		public String generate(EntityDef def)
 		{
-			this.isExtended = def.shouldExtend(EntityDef.DAO_INTERFACE);
+//			this.isExtended = def.shouldExtend(EntityDef.DAO_INTERFACE);
 			
 			String result = genHeader(); 
 			
@@ -68,9 +68,4 @@ public class DAOIntefaceCodeGen extends CodeGenBase
 			return null;
 		}
 
-		@Override
-		public boolean isExtended() 
-		{
-			return isExtended;
-		}
 	}

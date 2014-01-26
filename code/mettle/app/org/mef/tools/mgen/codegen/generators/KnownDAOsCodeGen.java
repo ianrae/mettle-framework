@@ -16,7 +16,7 @@ public class KnownDAOsCodeGen extends CodeGenBase
 	@Override
 	public String generate(EntityDef def)
 	{
-		this.isExtended = true; //always
+//		this.isExtended = true; //always
 		String result = genHeader(); 
 
 		ST st = _group.getInstanceOf("classdecl");

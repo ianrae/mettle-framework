@@ -19,7 +19,7 @@ public class EntityCodeGen extends CodeGenBase
 		@Override
 		public String generate(EntityDef def)
 		{
-			this.isExtended = def.shouldExtend(EntityDef.ENTITY);
+//			this.isExtended = def.shouldExtend(EntityDef.ENTITY);
 			String result = genHeader(); 
 			
 			ST st = _group.getInstanceOf("classdecl");
@@ -28,7 +28,7 @@ public class EntityCodeGen extends CodeGenBase
 			st.add("args", buildArgList(def));
 			st.add("inits", buildCtorInitsList(def, false));
 			st.add("copyinits", buildCtorInitsList(def, true));
-			st.add("isNotExtended", ! this.isExtended);
+			st.add("isNotExtended", ! this.isExtended());
 			
 			result += st.render(); 
 			

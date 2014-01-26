@@ -17,7 +17,7 @@ public abstract class CodeGenBase extends SfxBaseObj
 //		private String _path;
 		protected STGroup _group;
 		public String _packageName;
-		protected boolean isExtended;
+		private boolean isExtended;
 		public List<String> extraImportsL = new ArrayList<String>();
 
 		public boolean forUnitTest;
@@ -67,6 +67,10 @@ public abstract class CodeGenBase extends SfxBaseObj
 		public boolean isExtended()
 		{
 			return isExtended; //only during generate is this valid
+		}
+		public void setExtended(boolean b)
+		{
+			isExtended = b;
 		}
 		
 		protected boolean isId(String name) 

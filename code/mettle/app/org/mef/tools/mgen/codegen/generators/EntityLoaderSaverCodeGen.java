@@ -19,7 +19,7 @@ public class EntityLoaderSaverCodeGen extends CodeGenBase
 	@Override
 	public String generate(EntityDef def)
 	{
-		this.isExtended = true; //always
+//		this.isExtended = true; //always
 		String result = genHeader(def); 
 
 		ST st = _group.getInstanceOf("classdecl");
@@ -45,7 +45,7 @@ public class EntityLoaderSaverCodeGen extends CodeGenBase
 	{
 		ST st = _group.getInstanceOf("header");
 
-		if (isExtended)
+		if (isExtended())
 		{
 			st.add("package", "mef.gen");
 		}

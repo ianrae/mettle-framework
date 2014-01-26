@@ -16,7 +16,7 @@ public class ModelCodeGen extends CodeGenBase
 	@Override
 	public String generate(EntityDef def)
 	{
-		this.isExtended = def.shouldExtend(EntityDef.MODEL);
+//		this.isExtended = def.shouldExtend(EntityDef.MODEL);
 		String result = genHeader(); 
 
 		ST st = _group.getInstanceOf("classdecl");
