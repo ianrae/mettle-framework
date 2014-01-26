@@ -41,7 +41,8 @@ public abstract class CodeGenerator extends SfxBaseObj
 	{
 		SfxFileUtils utils = new SfxFileUtils();
 		String basePath = utils.PathCombine(baseDir, filename);
-log("bp:" + basePath);
+//log("abp:" + basePath);
+log("ybp:" + baseDir + filename);
 		InputStream stream = this.getClass().getResourceAsStream(baseDir + filename);
 		if (stream == null)
 		{

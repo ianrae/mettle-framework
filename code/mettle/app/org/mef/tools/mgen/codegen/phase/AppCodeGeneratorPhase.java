@@ -19,13 +19,13 @@ public class AppCodeGeneratorPhase extends CodeGeneratorPhase
 	
 	private void addGenerators()
 	{
-		String baseDir = "/mgen/resources/app/copy/";
+		String baseDir = "/mgen/resources/app/copy";
 		addAppGenerators(baseDir);
 		
-		baseDir = "/mgen/resources/app/copy/mgen/";
+		baseDir = "/mgen/resources/app/copy/mgen";
 		addMGenGenerators(baseDir);
 		
-		baseDir = "/mgen/resources/app/copy/test/";
+		baseDir = "/mgen/resources/app/copy/test";
 		addTestGenerators(baseDir);
 		
 		baseDir = "/mgen/resources/app/copy";
@@ -87,20 +87,31 @@ public class AppCodeGeneratorPhase extends CodeGeneratorPhase
 		addJavaCopyGenerator(baseDir, filename, dest);
 	}
 
-	
+	private String addTrailingSlash(String baseDir)
+	{
+		baseDir = baseDir.replace("\\", "/"); //resource paths use /
+		if (! baseDir.endsWith("/"))
+		{
+			baseDir += "/";
+		}
+		return baseDir;
+	}	
 	
 	private void addCopyGenerator(String baseDir, String filename)
 	{
+		baseDir = addTrailingSlash(baseDir);
 		CopyFileGenerator gen = new CopyFileGenerator(_ctx, baseDir, filename, null, appDir);
 		add(gen);
 	}
 	private void addJavaCopyGenerator(String baseDir, String filename, String destDir)
 	{
+		baseDir = addTrailingSlash(baseDir);
 		CopyFileGenerator gen = new CopyFileGenerator(_ctx, baseDir, filename, ".java", destDir);
 		add(gen);
 	}
 	private void addCopyGenerator(String baseDir, String filename, String newExt, String destDir)
 	{
+		baseDir = addTrailingSlash(baseDir);
 		CopyFileGenerator gen = new CopyFileGenerator(_ctx, baseDir, filename, newExt, destDir);
 		add(gen);
 	}
