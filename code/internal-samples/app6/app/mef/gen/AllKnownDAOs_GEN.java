@@ -11,12 +11,13 @@ import boundaries.daos.*;
 import org.mef.framework.sfx.SfxContext;
 import java.util.Date;
 
+
 public class AllKnownDAOs_GEN  
 {
 public List<IDAO> registerDAOs(SfxContext ctx, boolean createMocks)
 {
 	ArrayList<IDAO> L = new ArrayList<IDAO>();
-    if (createMocks)
+  if (createMocks)
 {
 	IUserDAO dal = new MockUserDAO();
 	ctx.getServiceLocator().registerSingleton(IUserDAO.class, dal);
@@ -31,3 +32,4 @@ else
 	return L;
 }
 }
+

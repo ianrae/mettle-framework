@@ -43,6 +43,8 @@ saveorupdate(type, fields) ::= <<
 
 classdecl(name, isParentOfExtended) ::= <<
 <if(isParentOfExtended)>
+import mef.gen.EntityLoaderSaver_GEN;
+
 public class <name> extends <name>_GEN
 {
 

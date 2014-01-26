@@ -12,6 +12,7 @@ import play.data.format.*;
 import play.data.validation.Constraints.*;
 import javax.persistence.*;
 import mef.entities.*;
+import mef.gen.*;
 import boundaries.daos.*;
 import java.util.Date;
 <extras; separator="\n">
@@ -42,8 +43,6 @@ public class <name> extends <name>_GEN
 
 
 <else>
-public class <name> extends Entity
-{
 @Entity
 public class <name> extends Model
 {

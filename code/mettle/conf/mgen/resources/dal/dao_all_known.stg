@@ -20,6 +20,9 @@ import java.util.Date;
 
 classdecl(type, name, isParentOfExtended) ::= <<
 <if(isParentOfExtended)>
+import mef.gen.AllKnownDAOs_GEN;
+
+
 public class <name> extends <name>_GEN
 {
 

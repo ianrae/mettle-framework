@@ -101,6 +101,8 @@ resolve2(type1, type2) ::= <<
 
 classdecl(name, isParentOfExtended) ::= <<
 <if(isParentOfExtended)>
+import mef.gen.DaoJsonLoader_GEN;
+
 public class <name> extends <name>_GEN
 {
 

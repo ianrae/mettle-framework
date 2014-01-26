@@ -11,6 +11,7 @@ import org.mef.framework.sfx.SfxErrorTracker;
 public class MettleInitializer 
 {
 	public static SfxContext theCtx;
+	public static String appPath;
 	
 	public MettleInitializer()
 	{}

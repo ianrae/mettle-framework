@@ -114,7 +114,7 @@ public class MockUserDAO_GEN implements IUserDAO
 
     }
 
-
+	
 	//query
     @Override
     public User find_by_name(String val) 

@@ -10,6 +10,7 @@ import play.data.format.*;
 import play.data.validation.Constraints.*;
 import javax.persistence.*;
 import mef.entities.*;
+import mef.gen.*;
 import boundaries.daos.*;
 import java.util.Date;
 @Entity
@@ -31,7 +32,8 @@ public class UserModel extends Model
 	}
 
     //getters and setters
-           @Id 
+
+   @Id 
     private Long id;
 
     public Long getId() {

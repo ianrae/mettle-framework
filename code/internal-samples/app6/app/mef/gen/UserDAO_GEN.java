@@ -147,7 +147,7 @@ public class UserDAO_GEN implements IUserDAO
 		}
 		t.update();
 	}
-
+	
        protected static void touchAll(UserModel t, User entity)
 {
 	t.setId(entity.id);
