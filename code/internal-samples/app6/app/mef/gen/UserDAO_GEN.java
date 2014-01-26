@@ -20,6 +20,7 @@ import mef.core.MettleInitializer;
 
 import models.UserModel;
 import play.db.ebean.Model.Finder;
+import mef.gen.*;
 
 import mef.daos.*;
 import mef.entities.*;
@@ -46,7 +47,7 @@ public class UserDAO_GEN implements IUserDAO
 	@Override
 	public User findById(long id) 
 	{
-		UserModel t = UserModel.find.byId(id);
+		UserModel t = (UserModel)UserModel.find.byId(id);
 		if (t == null)
 		{
 			return null;

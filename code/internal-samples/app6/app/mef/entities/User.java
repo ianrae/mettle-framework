@@ -8,8 +8,11 @@ import mef.entities.*;
 import java.util.Date;
 public class User extends User_GEN
 {
-public User()
-{}
+
+        public User()
+        {
+        }
+
         public User( String name)
         {
                 this.name = name;

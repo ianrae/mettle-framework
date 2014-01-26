@@ -7,6 +7,7 @@ import org.mef.framework.dao.IDAO;
 import org.mef.framework.sfx.IServiceFactory;
 import org.mef.framework.sfx.SfxContext;
 import org.mef.framework.sfx.SfxErrorTracker;
+import org.mef.framework.Logger;
 
 public class MettleInitializer 
 {
@@ -26,13 +27,17 @@ public class MettleInitializer
 	public void onStart()
 	{
 		SfxContext ctx = theCtx;
+		
+		Logger.info("appPath: " + appPath);
+		ctx.setVar("appPath", appPath);
+		
 		registerIfNotAlready(SfxErrorTracker.class, new SfxErrorTracker(ctx));
 		
 		String var = ctx.getVar("UNITTEST");
 		boolean createMocks = (var != null);
 		
 		//UNCOMMENT these two lines after you add first entity in mef.xml
-//		AllKnownDAOs_GEN knownDAOs = new AllKnownDAOs_GEN();
+//		AllKnownDAOs knownDAOs = new AllKnownDAOs();
 //		knownDAOs.registerDAOs(ctx, createMocks);
 		
 		//load seed data

@@ -6,7 +6,7 @@ libraryDependencies ++= Seq(
   javaJdbc,
   javaEbean,
   cache,
-  "mettle" % "mettle_2.10" % "0.2-SNAPSHOT" 
+   "mettle" % "mettle_2.10" % "0.2-SNAPSHOT" 
 )     
 
 play.Project.playJavaSettings

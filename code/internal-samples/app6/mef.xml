@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <entities orm="ebean"> 
 
+
 <entity name="User">
 	<field>@Id Long id</field>
 	<field>@Required String name</field>
@@ -14,6 +15,7 @@
 	<codegen type="dao_real" extend="true" />
 	<codegen type="presenter" generate="true" extend="false" />
 </entity>
+
 
 
 </entities>

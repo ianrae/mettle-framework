@@ -8,6 +8,8 @@ import java.util.Iterator;
 import java.util.List;
 import com.fasterxml.jackson.databind.JsonNode;
 import mef.entities.*;
+import mef.gen.*;
+
 import java.util.Date;
 import org.mef.framework.loaders.BaseDaoJsonLoader;
 <extras; separator="\n">
@@ -101,7 +103,6 @@ resolve2(type1, type2) ::= <<
 
 classdecl(name, isParentOfExtended) ::= <<
 <if(isParentOfExtended)>
-import mef.gen.DaoJsonLoader_GEN;
 
 public class <name> extends <name>_GEN
 {

@@ -9,6 +9,8 @@ import java.util.Iterator;
 import java.util.List;
 import mef.entities.*;
 import mef.daos.*;
+import mef.gen.*;
+
 import java.util.Date;
 <extras; separator="\n">
 
@@ -43,7 +45,6 @@ saveorupdate(type, fields) ::= <<
 
 classdecl(name, isParentOfExtended) ::= <<
 <if(isParentOfExtended)>
-import mef.gen.EntityLoaderSaver_GEN;
 
 public class <name> extends <name>_GEN
 {
