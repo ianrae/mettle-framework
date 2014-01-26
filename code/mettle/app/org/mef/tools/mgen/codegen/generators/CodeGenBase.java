@@ -18,10 +18,10 @@ public abstract class CodeGenBase extends SfxBaseObj
 		protected STGroup _group;
 		public String _packageName;
 		private boolean isExtended;
+		protected boolean isParentOfExtended;
 		public List<String> extraImportsL = new ArrayList<String>();
 
 		public boolean forUnitTest;
-		private boolean isParentOfExtended;
 
 		public CodeGenBase(SfxContext ctx, String path, String packageName)
 		{

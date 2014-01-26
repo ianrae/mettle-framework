@@ -22,6 +22,8 @@ public class ModelCodeGen extends CodeGenBase
 		ST st = _group.getInstanceOf("classdecl");
 		st.add("type", def.name);
 		st.add("name", getClassName(def));
+		st.add("isParentOfExtended", this.isParentOfExtended);
+		
 		result += st.render(); 
 		
 		result += genFields(def);

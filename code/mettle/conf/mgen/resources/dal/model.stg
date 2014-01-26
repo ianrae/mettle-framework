@@ -35,7 +35,15 @@ fielddecl(type, name, bigName, setName, isEntity, daoName) ::= <<
 >>
 
 
-classdecl(type, name) ::= <<
+classdecl(type, name, isParentOfExtended) ::= <<
+<if(isParentOfExtended)>
+public class <name> extends <name>_GEN
+{
+
+
+<else>
+public class <name> extends Entity
+{
 @Entity
 public class <name> extends Model
 {
@@ -56,6 +64,8 @@ public class <name> extends Model
     
     //getters and setters
         
+<endif>
+
 >>
 
 endclassdecl() ::= <<

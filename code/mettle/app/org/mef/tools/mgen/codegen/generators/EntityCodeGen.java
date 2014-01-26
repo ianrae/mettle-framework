@@ -28,7 +28,7 @@ public class EntityCodeGen extends CodeGenBase
 			st.add("args", buildArgList(def));
 			st.add("inits", buildCtorInitsList(def, false));
 			st.add("copyinits", buildCtorInitsList(def, true));
-			st.add("isNotExtended", ! this.isExtended());
+			st.add("isParentOfExtended", this.isParentOfExtended);
 			
 			result += st.render(); 
 			

@@ -15,7 +15,14 @@ import com.avaje.ebean.Page;
 >>
 
 
-classdecl(type, name) ::= <<
+classdecl(type, name, isParentOfExtended) ::= <<
+<if(isParentOfExtended)>
+public interface <name> extends <name>_GEN
+{
+
+
+<else>
+
 public interface <name>  extends IDAO
 {
 	<type> findById(long id);
@@ -23,7 +30,7 @@ public interface <name>  extends IDAO
 	void save(<type> entity);        
 	void update(<type> entity);
     
-    
+<endif>    
 >>
 
 endclassdecl() ::= <<

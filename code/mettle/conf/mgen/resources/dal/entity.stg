@@ -18,8 +18,8 @@ fielddecl(type, name, value) ::= <<
 init(v) ::= "<if(v)> = <v><endif>"
 
 
-classdecl(type, name, args, inits, copyinits, isNotExtended) ::= <<
-<if(isNotExtended)>
+classdecl(type, name, args, inits, copyinits, isParentOfExtended) ::= <<
+<if(isParentOfExtended)>
 public class <name> extends <name>_GEN
 {
 
