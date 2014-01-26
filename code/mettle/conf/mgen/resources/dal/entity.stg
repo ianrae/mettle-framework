@@ -26,8 +26,25 @@ public class <name> extends <name>_GEN
 <else>
 public class <name> extends Entity
 {
-
+        
 <endif>
+
+        public <name>()
+        {
+        }
+
+<if(args)>
+        public <name>( <args; separator=", ">)
+        {
+                <inits; separator="\n">
+        }
+<endif>
+
+        public <name>(<name> entity)
+        {
+                this.id = entity.id;
+                <copyinits; separator="\n">
+        }
 
 >>
 
