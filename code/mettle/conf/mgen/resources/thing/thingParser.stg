@@ -1,0 +1,81 @@
+header(package, extras) ::= <<
+
+//THIS FILE HAS BEEN AUTO-GENERATED. DO NOT MODIFY.
+
+package <package>;
+
+import java.util.Date;
+import mef.things.*;
+import mef.thingworld.ParserHelper;
+import mef.thingworld.Thing;
+import mef.thingworld.ThingParser;
+import org.mef.framework.sfx.SfxContext;
+  
+<extras; separator="\n">
+
+>>
+
+fielddecl(type, name, value) ::= <<
+    public <type> <name><init(value)>;
+>>
+init(v) ::= "<if(v)> = <v><endif>"
+
+
+classdecl(type, name, isParentOfExtended) ::= <<
+<if(isParentOfExtended)>
+public class <name> extends <name>_GEN
+{
+
+<else>
+public class <name> extends ThingParser
+{
+	public TopicParser(SfxContext ctx) 
+	{
+		super(ctx);
+	}
+
+	@Override
+	protected Class getTargetClass() 
+	{
+		return Topic.class;
+	}
+	@Override
+	protected Thing createObj()
+	{
+		return new Topic();
+	}
+
+	protected void onParse(Thing targetParam) throws Exception
+	{
+		Topic target = (Topic) targetParam;
+
+		target.name = helper.getString("name");
+		target.createDate = helper.getDate("created");
+		target.modDate = helper.getDate("modified");
+	}
+
+	@Override
+	protected void onRender(Thing targetParam) 
+	{
+		Topic target = (Topic) targetParam;
+
+		obj.put("name", target.name);
+		obj.put("created", ParserHelper.dateToString(target.createDate));
+		obj.put("modified", ParserHelper.dateToString(target.modDate));
+	}
+
+	@Override
+	protected void resolve(String refName, Thing refObj, Thing targetParam) throws Exception 
+	{
+	}
+        
+<endif>
+
+		
+
+>>
+
+endclassdecl() ::= <<
+}
+>>
+
