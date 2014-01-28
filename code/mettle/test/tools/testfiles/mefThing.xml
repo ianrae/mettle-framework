@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<entities orm="ebean">
+
+<entity name="Task">
+	<field>long id</field>
+	<field seedWith="true" >@Required String label</field>
+	<field>boolean enabled</field>
+	<field>Note note</field>
+	<query>find_by_label</query>
+	<method><![CDATA[List<Task> search_by_name(String name)]]></method>
+
+	<codegen type="entity" generate="true" />
+	<codegen type="dao" generate="true" />
+	<codegen type="presenter" generate="false" />
+	<codegen type="controller" generate="true" />
+</entity>
+
+<thing name="Note">
+	<field>long id</field>
+	<field>@Required String text</field>
+
+	<codegen type="entity" generate="false" />
+</thing>
+
+</entities>

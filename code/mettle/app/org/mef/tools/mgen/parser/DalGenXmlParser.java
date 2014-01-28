@@ -16,11 +16,17 @@ public class DalGenXmlParser extends SfxBaseObj
 {
 	public List<EntityDef> _entityL = new ArrayList<EntityDef>();
 	SfxErrorTracker _tracker;
+	private boolean parseThingTag = false;
 	
 	public DalGenXmlParser(SfxContext ctx)
 	{
+		this(ctx, false);
+	}
+	public DalGenXmlParser(SfxContext ctx, boolean parseThingTag)
+	{
 		super(ctx);
 		_tracker = new SfxErrorTracker(ctx);
+		this.parseThingTag = parseThingTag;
 
 	}
 	
@@ -30,7 +36,8 @@ public class DalGenXmlParser extends SfxBaseObj
 		Document doc = r.readFromFile(path);
 		
 		SfxXmlParser p = new SfxXmlParser(doc);
-		ArrayList<Element> list = p.getAllByXPath(doc, "//entity");
+		String tagName = (this.parseThingTag) ? "//thing" : "//entity";
+		ArrayList<Element> list = p.getAllByXPath(doc, tagName);
 		
 		for(Element entityEl : list)
 		{

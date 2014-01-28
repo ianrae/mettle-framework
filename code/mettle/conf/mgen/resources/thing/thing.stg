@@ -26,9 +26,6 @@ public class <name> extends <name>_GEN
 <else>
 public class <name> extends Thing
 {
-        
-<endif>
-
 	public <name>()
 	{
 	}
@@ -39,6 +36,9 @@ public class <name> extends Thing
 	{
 		this.zFlag = true;
 	}	
+        
+<endif>
+
 		
 
 >>

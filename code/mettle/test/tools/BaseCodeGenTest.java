@@ -22,10 +22,11 @@ public class BaseCodeGenTest extends BaseTest
 
 
 	protected EntityDef def;
+	protected String mefFilename = "dalgen.xml";
 	@Before
 	public void init() throws Exception
 	{
 		createContext();
-		def = readEntityDef("dalgen.xml");
+		def = readEntityDef(mefFilename);
 	}
 }
