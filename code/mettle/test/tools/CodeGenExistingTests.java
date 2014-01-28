@@ -46,6 +46,28 @@ public class CodeGenExistingTests extends BaseCodeGenTest
 		genAndLog(gen, "entity.stg", "org.mef.dalgen.unittests.gen");
 	}
 	
+	@Test
+	public void testEntityMissing() throws Exception
+	{
+		log("--testEntity--");
+		def = readEntityDef("dalgenExisting.xml");
+		assertEquals("com.abc", def.useExistingPackage);
+		assertEquals(false, def.shouldGenerate(EntityDef.ENTITY));
+		
+		//also if no codegen then default is false
+		assertEquals(false, def.shouldGenerate(EntityDef.ENTITY));
+		assertEquals(false, def.shouldGenerate(EntityDef.DAO));
+		assertEquals(false, def.shouldGenerate(EntityDef.PRESENTER));
+		assertEquals(true, def.shouldGenerate(EntityDef.CONTROLLER));
+		
+		for(EntityDef tmp : def.allEntityTypes)
+		{
+			log(tmp.name);
+		}
+		
+		EntityCodeGen gen = new EntityCodeGen(_ctx);
+		genAndLog(gen, "entity.stg", "org.mef.dalgen.unittests.gen");
+	}
 	
 	//--- helper fns ---
 	private void genAndLog(CodeGenBase gen, String templateFile, String packageName)

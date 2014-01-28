@@ -203,6 +203,15 @@ public class CodeGenExtensibleTests extends BaseTest
 		master.initialize(appDir);
 		b = master.run();
 		assertTrue(b);
+		
+		log("presenter gen..");
+		master = new MasterCodeGenerator(_ctx);
+		PresenterCodeGeneratorPhase phase3 = new PresenterCodeGeneratorPhase(_ctx);
+		
+		master.addPhase(phase3);
+		master.initialize(appDir);
+		b = master.run();
+		assertTrue(b);
 	}
 	
 
