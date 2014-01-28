@@ -65,6 +65,12 @@ public class BaseTest
 		String path = pathCombine(stDir, filename);
 		return path;
 	}
+	protected String getThingTemplateFile(String filename)
+	{
+		String stDir = this.getCurrentDir("conf\\mgen\\resources\\thing");
+		String path = pathCombine(stDir, filename);
+		return path;
+	}
 	
 	
 	protected String pathCombine(String path1, String path2)

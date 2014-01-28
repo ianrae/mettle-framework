@@ -1,0 +1,49 @@
+header(package, extras) ::= <<
+
+//THIS FILE HAS BEEN AUTO-GENERATED. DO NOT MODIFY.
+
+package <package>;
+
+import java.util.Date;
+
+import mef.thingworld.Thing;
+  
+<extras; separator="\n">
+
+>>
+
+fielddecl(type, name, value) ::= <<
+    public <type> <name><init(value)>;
+>>
+init(v) ::= "<if(v)> = <v><endif>"
+
+
+classdecl(type, name, isParentOfExtended) ::= <<
+<if(isParentOfExtended)>
+public class <name> extends <name>_GEN
+{
+
+<else>
+public class <name> extends Thing
+{
+        
+<endif>
+
+	public <name>()
+	{
+	}
+
+
+	@Override
+	public void mark(int markType)
+	{
+		this.zFlag = true;
+	}	
+		
+
+>>
+
+endclassdecl() ::= <<
+}
+>>
+
