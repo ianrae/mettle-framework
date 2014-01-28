@@ -35,6 +35,7 @@ public class CodeGenExistingTests extends BaseCodeGenTest
 		log("--testEntity--");
 		def = readEntityDef("dalgenExisting.xml");
 		assertEquals("com.abc", def.useExistingPackage);
+		assertEquals(false, def.shouldGenerate(EntityDef.ENTITY));
 		
 		for(EntityDef tmp : def.allEntityTypes)
 		{

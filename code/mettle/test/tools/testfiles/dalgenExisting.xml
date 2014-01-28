@@ -7,6 +7,9 @@
 <query>find_by_label</query>
 
 <codegen type="entity" useExisting="com.abc" />
+<codegen type="dao" generate="true" />
+<codegen type="presenter" generate="false" />
+<codegen type="controller" generate="true" />
 </entity>
 
 <entity name="Entry">

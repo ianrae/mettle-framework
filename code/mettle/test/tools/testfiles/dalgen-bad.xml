@@ -7,11 +7,10 @@
 
 <query>find_by_label</query>
 
-<codegen type="entity" extend="true" />
-<codegen type="model" extend="false" />
-<codegen type="dao_interface" extend="false" />
-<codegen type="dao_mock" extend="false" />
-<codegen type="dao_real" extend="false" />
+<codegen type="entity" generate="true" />
+<codegen type="dao" generate="true" />
+<codegen type="presenter" generate="false" />
+<codegen type="controller" generate="true" />
 
 </entity>
 </entities>

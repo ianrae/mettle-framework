@@ -111,22 +111,24 @@ public class DalGenXmlParser extends SfxBaseObj
 		}
 		
 		//more
-		addGeneratorOptions(def, p, entityEl, EntityDef.ENTITY);
-		addGeneratorOptions(def, p, entityEl, EntityDef.MODEL);
-		addGeneratorOptions(def, p, entityEl, EntityDef.DAO_INTERFACE);
-		addGeneratorOptions(def, p, entityEl,  EntityDef.DAO_MOCK);
-		addGeneratorOptions(def, p, entityEl, EntityDef.DAO_REAL);
-		addGeneratorOptions(def, p, entityEl, EntityDef.PRESENTER); //default is false
-		
 		def.useExistingPackage = getExtendString(p, entityEl, "entity");
 		if (def.useExistingPackage != null && def.useExistingPackage.isEmpty())
 		{
 			def.useExistingPackage = null;
 		}
 		
+		boolean shouldGenerateEntity = (def.useExistingPackage == null);
+		
+		addGeneratorOptions(def, p, entityEl, EntityDef.ENTITY, true, shouldGenerateEntity);
+		addGeneratorOptions(def, p, entityEl, EntityDef.DAO, true, true);
+		addGeneratorOptions(def, p, entityEl, EntityDef.PRESENTER, false, true);
+		addGeneratorOptions(def, p, entityEl, EntityDef.CONTROLLER, false, true);
+		
+		
 	}
 	
-	private void addGeneratorOptions(EntityDef def, SfxXmlParser p, Element entityEl, String name)
+	private void addGeneratorOptions(EntityDef def, SfxXmlParser p, Element entityEl, String name, 
+			boolean shouldExtend, boolean shouldGenerate)
 	{
 		GeneratorOptions options = new GeneratorOptions();
 		options.name = name;
@@ -144,8 +146,8 @@ public class DalGenXmlParser extends SfxBaseObj
 			String s = tmp.getAttribute("type");
 			if (s != null && s.equals(name))
 			{
-				options.extend = getBool(tmp, "extend", false); //if a <codegen> node exists its default is false
-				options.generate = getBool(tmp, "generate", true);
+				options.extend = shouldExtend; //removed extend attr. getBool(tmp, "extend", shouldExtend); 
+				options.generate = getBool(tmp, "generate", shouldGenerate);
 			}
 		}
 		

@@ -52,11 +52,15 @@ public class ParseTests extends BaseTest
 		
 		assertEquals(1, def.queryL.size());
 		assertEquals("find_by_label", def.queryL.get(0));
-		assertEquals(false, def.shouldExtend(EntityDef.DAO_INTERFACE)); 
-		assertEquals(false, def.shouldExtend(EntityDef.DAO_MOCK)); 
-		assertEquals(false, def.shouldExtend(EntityDef.DAO_REAL)); 
 		assertEquals(true, def.shouldExtend(EntityDef.ENTITY)); 
-		assertEquals(false, def.shouldExtend(EntityDef.MODEL)); 
+		assertEquals(true, def.shouldExtend(EntityDef.DAO)); 
+		assertEquals(false, def.shouldExtend(EntityDef.PRESENTER)); 
+		assertEquals(false, def.shouldExtend(EntityDef.CONTROLLER)); 
+
+		assertEquals(true, def.shouldGenerate(EntityDef.ENTITY)); 
+		assertEquals(true, def.shouldGenerate(EntityDef.DAO)); 
+		assertEquals(false, def.shouldGenerate(EntityDef.PRESENTER)); 
+		assertEquals(true, def.shouldGenerate(EntityDef.CONTROLLER)); 
 	}
 	
 

@@ -8,20 +8,19 @@
 <query>find_by_label</query>
 <method><![CDATA[List<Task> search_by_name(String name)]]></method>
 
-<codegen type="entity" extend="true" />
-<codegen type="model" extend="false" />
-<codegen type="dao_interface" extend="false" />
-<codegen type="dao_mock" extend="false" />
-<codegen type="dao_real" extend="false" />
+<codegen type="entity" generate="true" />
+<codegen type="dao" generate="true" />
+<codegen type="presenter" generate="false" />
+<codegen type="controller" generate="true" />
 </entity>
 <entity name="Note">
 <field>long id</field>
 <field>@Required String text</field>
 
-<codegen type="entity" extend="false" />
-<codegen type="model" extend="false" />
-<codegen type="dao_interface" extend="false" />
-<codegen type="dao_mock" extend="false" />
-<codegen type="dao_real" extend="false" />
+<codegen type="entity" generate="false" />
+<codegen type="model" generate="false" />
+<codegen type="dao_interface" generate="false" />
+<codegen type="dao_mock" generate="false" />
+<codegen type="dao_real" generate="false" />
 </entity>
 </entities>

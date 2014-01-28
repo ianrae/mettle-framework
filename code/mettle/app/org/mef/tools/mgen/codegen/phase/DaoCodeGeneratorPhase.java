@@ -76,21 +76,21 @@ public class DaoCodeGeneratorPhase extends CodeGeneratorPhase
 	{
 		String baseDir = "/mgen/resources/dal/";
 
-		boolean extend = def.shouldExtend(EntityDef.MODEL);
+		boolean extend = def.shouldExtend(EntityDef.ENTITY);
 		AddParams params = new AddParams(baseDir, "model.stg", def, new ModelCodeGen(_ctx), extend);
 		addOne(params, "models", "app\\models");
 
-		extend = def.shouldExtend(EntityDef.DAO_INTERFACE);
+		extend = def.shouldExtend(EntityDef.ENTITY);
 		params = new AddParams(baseDir, "dao_interface.stg", def, new DAOIntefaceCodeGen(_ctx), extend);
 		addOne(params, "mef.daos", "app\\mef\\daos");
 
-		extend = def.shouldExtend(EntityDef.DAO_MOCK);
+		extend = def.shouldExtend(EntityDef.ENTITY);
 		params = new AddParams(baseDir, "dao_mock.stg", def, new MockDAOCodeGen(_ctx), extend);
 		addOne(params, "mef.daos.mocks", "app\\mef\\daos\\mocks");
 
 		if (genRealDAO)
 		{
-			extend = def.shouldExtend(EntityDef.DAO_REAL);
+			extend = def.shouldExtend(EntityDef.ENTITY);
 			params = new AddParams(baseDir, "dao_real.stg", def, new RealDAOCodeGen(_ctx), extend);
 			addOne(params, "boundaries.daos", "app\\boundaries\\daos");
 		}
