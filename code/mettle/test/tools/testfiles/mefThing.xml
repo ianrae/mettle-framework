@@ -20,6 +20,7 @@
 	<field>String text</field>
 	<field>Date createDate</field>
 	<field>Comment cmt</field>
+	<field><![CDATA[List<Topic> items]]></field>
 
 	<codegen type="entity" generate="false" />
 </thing>

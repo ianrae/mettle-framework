@@ -46,6 +46,11 @@ public class ThingParserCodeGen extends CodeGenBase
 		return result;
 	}
 
+	private boolean isThingList(FieldDef fdef)
+	{
+		return (fdef.typeName.startsWith("List<")); //list of things?
+	}
+	
 	private String genOnParse(EntityDef def) 
 	{
 		String result = "";
@@ -60,9 +65,13 @@ public class ThingParserCodeGen extends CodeGenBase
 				continue;
 			}
 
-			String helperName = getHelperName(fdef);
 			String s;
-			if (helperName == null)
+			String helperName = getHelperName(fdef);
+			if (isThingList(fdef))
+			{
+				s = genOnParseThingList(fdef);
+			}
+			else if (helperName == null)
 			{
 				s = String.format("target.%s = (%s) loadRef(target, \"%s\", %s.class);", fdef.name,
 						fdef.typeName, fdef.name, fdef.typeName);
@@ -81,6 +90,36 @@ public class ThingParserCodeGen extends CodeGenBase
 		return result;
 	}
 
+	private String genOnParseThingList(FieldDef fdef) 
+	{
+		String result = "";
+		ST st = _group.getInstanceOf("onparsethinglist");
+		
+		String elementTypeName = fdef.typeName.replace("List<","");
+		elementTypeName = elementTypeName.replace(">","");
+		st.add("type", elementTypeName);
+		st.add("name", fdef.name);
+
+		result += st.render(); 
+		result += "\n\n";
+		return result;
+	}
+	private String genOnRenderThingList(FieldDef fdef) 
+	{
+		String result = "";
+		ST st = _group.getInstanceOf("onrenderthinglist");
+		
+		String elementTypeName = fdef.typeName.replace("List<","");
+		elementTypeName = elementTypeName.replace(">","");
+		st.add("type", elementTypeName);
+		st.add("name", fdef.name);
+
+		result += st.render(); 
+		result += "\n\n";
+		return result;
+	}
+
+
 	private String genOnRender(EntityDef def) 
 	{
 		String result = "";
@@ -96,7 +135,11 @@ public class ThingParserCodeGen extends CodeGenBase
 			}
 
 			String s;
-			if (fdef.getDateType())
+			if (isThingList(fdef))
+			{
+				s = genOnRenderThingList(fdef);
+			}
+			else if (fdef.getDateType())
 			{
 				s = String.format("obj.put(\"%s\", ParserHelper.dateToString(target.%s));", fdef.name, fdef.name);
 			}

@@ -29,6 +29,29 @@ onparse(type, assigns) ::= <<
 	}
 >>
 
+onparsethinglist(type, name) ::= <<
+ 
+List\<Thing> tmpL = this.loadList("<name>", <type>.class);
+for(Thing thing : tmpL)
+{
+	target.<name>.add((<type>) thing);
+}
+>>
+
+
+onrenderthinglist(type, name) ::= <<
+ 
+if (target.<name> != null)
+{
+	ListRenderDesc desc = renderListStart("<name>");
+	for(<type> thing: target.<name>)
+	{
+		renderListEl(desc, thing);
+	}
+	renderListEnd(desc);
+}
+>>
+
 onrender(type, assigns) ::= <<
 	@Override
 	protected void onRender(Thing targetParam) 
