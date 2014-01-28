@@ -35,10 +35,36 @@ public class ThingParserCodeGen extends CodeGenBase
 			if (! isParentOfExtended)
 			{
 				result += genFields(def);
+				result += genOnParse(def);
 			}
+			
 			st = _group.getInstanceOf("endclassdecl");
 			result += st.render(); 
 			
+			return result;
+		}
+		
+		private String genOnParse(EntityDef def) 
+		{
+			String result = "";
+			ST st = _group.getInstanceOf("onparse");
+			st.add("type", def.name);
+
+			List<String> assignsL = new ArrayList<String>();
+			for(FieldDef fdef : def.fieldL)
+			{
+				if (fdef.name.equals("id"))
+				{
+					continue;
+				}
+
+				String s = String.format("target.%s = helper.getString(\"%s\");", fdef.name, fdef.name);
+				assignsL.add(s);
+			}
+			st.add("assigns", assignsL);
+
+			result += st.render(); 
+			result += "\n\n";
 			return result;
 		}
 		

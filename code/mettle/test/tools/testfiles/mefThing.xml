@@ -17,7 +17,7 @@
 
 <thing name="Note">
 	<field>long id</field>
-	<field>@Required String text</field>
+	<field>String text</field>
 
 	<codegen type="entity" generate="false" />
 </thing>
