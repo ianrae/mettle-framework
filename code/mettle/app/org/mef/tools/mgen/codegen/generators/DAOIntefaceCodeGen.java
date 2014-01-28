@@ -10,63 +10,65 @@ import org.stringtemplate.v4.ST;
 
 
 public class DAOIntefaceCodeGen extends CodeGenBase
+{
+	public DAOIntefaceCodeGen(SfxContext ctx)
 	{
-		public DAOIntefaceCodeGen(SfxContext ctx)
+		super(ctx);
+	}
+
+	@Override
+	public String generate(EntityDef def)
+	{
+		//			this.isExtended = def.shouldExtend(EntityDef.DAO_INTERFACE);
+
+		String result = genHeader(); 
+
+		ST st = _group.getInstanceOf("classdecl");
+		st.add("type", def.name);
+		st.add("name", getClassName(def));
+		st.add("isParentOfExtended", this.isParentOfExtended);
+		result += st.render(); 
+
+		if (! isParentOfExtended)
 		{
-			super(ctx);
-		}
-		
-		@Override
-		public String generate(EntityDef def)
-		{
-//			this.isExtended = def.shouldExtend(EntityDef.DAO_INTERFACE);
-			
-			String result = genHeader(); 
-			
-			ST st = _group.getInstanceOf("classdecl");
-			st.add("type", def.name);
-			st.add("name", getClassName(def));
-			st.add("isParentOfExtended", this.isParentOfExtended);
-			result += st.render(); 
-			
 			result += genQueries(def);
 			result += genMethods(def);
-			
-			st = _group.getInstanceOf("endclassdecl");
-			result += st.render(); 
-			
-			return result;
 		}
-		
+		st = _group.getInstanceOf("endclassdecl");
+		result += st.render(); 
 
-		@Override
-		public String getClassName(EntityDef def)
-		{
-			String s = "I" + uppify(def.name) + "DAO";
-			return makeClassName(s); //def.shouldExtend(EntityDef.DAO_INTERFACE));
-		}
-		
-		
-		protected String genQueries(EntityDef def)
-		{
-			String result = "";
-			for(String query : def.queryL)
-			{
-				ST st = _group.getInstanceOf("querydecl");
-				String fieldName = getFieldName(query);
-				st.add("type", def.name); //getFieldType(def, fieldName));
-				st.add("fieldType", getFieldType(def, fieldName));
-				st.add("fullName", query);
-				result += st.render(); 
-				result += "\n\n";
-			}
-			return result;
-		}
-		
-		@Override
-		protected String buildField(EntityDef def, FieldDef fdef) {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
+		return result;
 	}
+
+
+	@Override
+	public String getClassName(EntityDef def)
+	{
+		String s = "I" + uppify(def.name) + "DAO";
+		return makeClassName(s); //def.shouldExtend(EntityDef.DAO_INTERFACE));
+	}
+
+
+	protected String genQueries(EntityDef def)
+	{
+		String result = "";
+		for(String query : def.queryL)
+		{
+			ST st = _group.getInstanceOf("querydecl");
+			String fieldName = getFieldName(query);
+			st.add("type", def.name); //getFieldType(def, fieldName));
+			st.add("fieldType", getFieldType(def, fieldName));
+			st.add("fullName", query);
+			result += st.render(); 
+			result += "\n\n";
+		}
+		return result;
+	}
+
+	@Override
+	protected String buildField(EntityDef def, FieldDef fdef) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

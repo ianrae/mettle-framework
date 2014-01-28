@@ -76,7 +76,8 @@ public class DaoCodeGeneratorPhase extends CodeGeneratorPhase
 	{
 		String baseDir = "/mgen/resources/dal/";
 
-		boolean extend = def.shouldExtend(EntityDef.ENTITY);
+		//-model is exception. extend is false to avoid trouble with List<UserModel_GEN> and List<UserModel>
+		boolean extend = false; //def.shouldExtend(EntityDef.ENTITY);
 		AddParams params = new AddParams(baseDir, "model.stg", def, new ModelCodeGen(_ctx), extend);
 		addOne(params, "models", "app\\models");
 
