@@ -36,6 +36,7 @@ public class ThingParserCodeGen extends CodeGenBase
 			{
 				result += genFields(def);
 				result += genOnParse(def);
+				result += genOnRender(def);
 			}
 			
 			st = _group.getInstanceOf("endclassdecl");
@@ -58,7 +59,8 @@ public class ThingParserCodeGen extends CodeGenBase
 					continue;
 				}
 
-				String s = String.format("target.%s = helper.getString(\"%s\");", fdef.name, fdef.name);
+				String helperName = getHelperName(fdef);
+				String s = String.format("target.%s = helper.%s(\"%s\");", fdef.name, helperName, fdef.name);
 				assignsL.add(s);
 			}
 			st.add("assigns", assignsL);
@@ -68,7 +70,62 @@ public class ThingParserCodeGen extends CodeGenBase
 			return result;
 		}
 		
+		private String genOnRender(EntityDef def) 
+		{
+			String result = "";
+			ST st = _group.getInstanceOf("onrender");
+			st.add("type", def.name);
+
+			List<String> assignsL = new ArrayList<String>();
+			for(FieldDef fdef : def.fieldL)
+			{
+				if (fdef.name.equals("id"))
+				{
+					continue;
+				}
+
+				String s;
+				if (fdef.getDateType())
+				{
+					s = String.format("obj.put(\"%s\", ParserHelper.dateToString(target.%s));", fdef.name, fdef.name);
+				}
+				else
+				{
+					s = String.format("obj.put(\"%s\", target.%s);", fdef.name, fdef.name);
+				}
+				assignsL.add(s);
+			}
+			st.add("assigns", assignsL);
+
+			result += st.render(); 
+			result += "\n\n";
+			return result;
+		}
 		
+		private String getHelperName(FieldDef fdef) 
+		{
+			if (fdef.getBooleanType())
+			{
+				return "getDate";
+			}
+			if (fdef.getIntType())
+			{
+				return "getInt";
+			}
+			if (fdef.getDateType())
+			{
+				return "getDate";
+			}
+			else if (fdef.getStringType())
+			{
+				return "getString";
+			}
+			else
+			{
+				return "getString";
+			}
+		}
+
 		@Override
 		public String getClassName(EntityDef def)
 		{

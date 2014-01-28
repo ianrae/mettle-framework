@@ -18,6 +18,10 @@ public class FieldDef
 	{
 		return (typeName.equals("boolean"));
 	}
+	public boolean getIntType()
+	{
+		return (typeName.equals("int"));
+	}
 	public boolean getDateType()
 	{
 		return (typeName.equals("Date"));

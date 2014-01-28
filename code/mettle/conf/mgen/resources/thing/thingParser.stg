@@ -21,14 +21,23 @@ fielddecl(type, name, value) ::= <<
 init(v) ::= "<if(v)> = <v><endif>"
 
 onparse(type, assigns) ::= <<
-protected void onParse(Thing targetParam) throws Exception
-{
-	<type> target = (<type>) targetParam;
+	protected void onParse(Thing targetParam) throws Exception
+	{
+		<type> target = (<type>) targetParam;
 
-	<assigns; separator="\n">
-}
+		<assigns; separator="\n">
+	}
 >>
 
+onrender(type, assigns) ::= <<
+	@Override
+	protected void onRender(Thing targetParam) 
+	{
+		<type> target = (<type>) targetParam;
+
+		<assigns; separator="\n">
+	}
+>>
 
 classdecl(type, name, isParentOfExtended) ::= <<
 <if(isParentOfExtended)>
@@ -52,17 +61,6 @@ public class <name> extends ThingParser
 	protected Thing createObj()
 	{
 		return new Topic();
-	}
-
-
-	@Override
-	protected void onRender(Thing targetParam) 
-	{
-		Topic target = (Topic) targetParam;
-
-		obj.put("name", target.name);
-		obj.put("created", ParserHelper.dateToString(target.createDate));
-		obj.put("modified", ParserHelper.dateToString(target.modDate));
 	}
 
 	@Override

@@ -18,6 +18,7 @@
 <thing name="Note">
 	<field>long id</field>
 	<field>String text</field>
+	<field>Date createDate</field>
 
 	<codegen type="entity" generate="false" />
 </thing>
