@@ -9,7 +9,6 @@ public class MGen extends MGenBase
     @Test
     public void test() throws Exception 
     {
-    	this.useNewImpl = true;
         this.runCodeGeneration();
     }
 }
