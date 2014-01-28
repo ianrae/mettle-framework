@@ -1,4 +1,4 @@
-package tools;
+
 
 import static org.junit.Assert.*;
 
@@ -8,6 +8,8 @@ import java.util.List;
 
 import org.junit.Test;
 import org.mef.framework.sfx.SfxTextReader;
+
+import tools.BaseTest;
 
 
 public class FluentTests extends BaseTest 
@@ -509,7 +511,7 @@ public class FluentTests extends BaseTest
 			queryctx.queryL = new ArrayList<QStep>();
 		}
 
-		public Query1<Car> find()
+		public Query1<Car> query()
 		{
 			queryctx.queryL = new ArrayList<QStep>();
 			return new Query1<Car>(queryctx);
@@ -572,32 +574,32 @@ public class FluentTests extends BaseTest
 	{
 		Dao dao = new Dao();
 		dao.setActionProcessor(new MyProc());
-		Query1 x1 = dao.find();
+		Query1 x1 = dao.query();
 
 		assertNotNull(x1);
 
-		Car car = dao.find().findAny();
+		Car car = dao.query().findAny();
 		assertNull(car);
 
-		List<Car> L = dao.find().findMany();
+		List<Car> L = dao.query().findMany();
 		assertNotNull(L);
 
-		car = dao.find().where("price").eq("45").findAny();
+		car = dao.query().where("price").eq("45").findAny();
 		assertNull(car);
 
-		car = dao.find().where("price").eq("45").and("size").eq(35.5).findAny();
+		car = dao.query().where("price").eq("45").and("size").eq(35.5).findAny();
 		assertNull(car);
 
-		String query = dao.find().where("price").eq("45").and("size").eq(35.5).dumpQuery();
+		String query = dao.query().where("price").eq("45").and("size").eq(35.5).dumpQuery();
 		assertEquals(" [price W  ] [e s] [size &  ] [e f]", query);
 
 		log("here's any");
-		car = dao.find().orderBy("price").fetch("users").limit(1).findAny();
+		car = dao.query().orderBy("price").fetch("users").limit(1).findAny();
 		assertNull(car);
 		log("end");
 		
 		log("here's count");
-		long count = dao.find().where("price").eq("45").findCount();
+		long count = dao.query().where("price").eq("45").findCount();
 		assertEquals(0L, count);
 	}
 
@@ -607,7 +609,7 @@ public class FluentTests extends BaseTest
 		Dao dao = new Dao();
 		dao.setActionProcessor(new MyProc());
 
-		Car car = dao.find().orderBy("price").fetch("users").limit(1).findAny();
+		Car car = dao.query().orderBy("price").fetch("users").limit(1).findAny();
 		assertNull(car);
 	}
 	
