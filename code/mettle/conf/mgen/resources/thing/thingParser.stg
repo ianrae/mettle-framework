@@ -39,6 +39,15 @@ onrender(type, assigns) ::= <<
 	}
 >>
 
+resolve(type, assigns) ::= <<
+	@Override
+	protected void resolve(String refName, Thing refObj, Thing targetParam) throws Exception 
+	{
+		<assigns; separator="\n">
+	}
+>>        
+
+
 classdecl(type, name, isParentOfExtended) ::= <<
 <if(isParentOfExtended)>
 public class <name> extends <name>_GEN
@@ -63,11 +72,6 @@ public class <name> extends ThingParser
 		return new Topic();
 	}
 
-	@Override
-	protected void resolve(String refName, Thing refObj, Thing targetParam) throws Exception 
-	{
-	}
-        
 <endif>
 
 		
