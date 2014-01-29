@@ -10,6 +10,7 @@ public class QueryParser<T>
 	public static final char EQ = '=';
 	public static final char LT = '<';
 	public static final char GT = '>';
+	public static final char LE = 'a';
 	public static final char LIKE = 'l';
 	public static final char AND = '&';
 	public static final char OR = '|';
@@ -139,6 +140,19 @@ public class QueryParser<T>
 				else
 				{
 					currentAction.op = "gt";
+					currentAction.obj = x.obj;
+					actionL.add(currentAction);
+					currentAction = null;
+				}
+				break;
+			case LE:
+				if (currentAction == null)
+				{
+					throw new FluentException("misplaced LE"); //err!
+				}
+				else
+				{
+					currentAction.op = "le";
 					currentAction.obj = x.obj;
 					actionL.add(currentAction);
 					currentAction = null;

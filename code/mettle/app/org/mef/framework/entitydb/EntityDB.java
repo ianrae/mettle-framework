@@ -91,6 +91,10 @@ public class EntityDB<T>
 				res = matcher.compare(value, valueToMatch, matchType);
 				isMatch = (res < 0);
 				break;
+			case IValueMatcher.LE:
+				res = matcher.compare(value, valueToMatch, matchType);
+				isMatch = (res <= 0);
+				break;
 				
 			case IValueMatcher.GT:
 				res = matcher.compare(value, valueToMatch, matchType);

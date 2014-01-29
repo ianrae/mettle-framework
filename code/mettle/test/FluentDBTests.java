@@ -219,6 +219,10 @@ public class FluentDBTests extends BaseTest
 			{
 				return doCompare(qaction, IValueMatcher.LT);
 			}
+			else if (qaction.op.equals("le"))
+			{
+				return doCompare(qaction, IValueMatcher.LE);
+			}
 			else if (qaction.op.equals("gt"))
 			{
 				return doCompare(qaction, IValueMatcher.GT);
@@ -443,6 +447,23 @@ public class FluentDBTests extends BaseTest
 		assertEquals(2, count);
 
 		h = dao.query().where("model").lt("Bxx").findAny();
+		assertNotNull(h);
+		assertEquals("Airbus", h.model);
+	}
+	@Test
+	public void testLE()
+	{
+		init();
+		int target = 112;
+
+		Hotel h = dao.query().where("nVal").le(target).findAny();
+		assertNotNull(h);
+		assertEquals(110, h.nVal);
+
+		long count = dao.query().where("nVal").le(target).findCount();
+		assertEquals(3, count);
+
+		h = dao.query().where("model").le("Bxx").findAny();
 		assertNotNull(h);
 		assertEquals("Airbus", h.model);
 	}
