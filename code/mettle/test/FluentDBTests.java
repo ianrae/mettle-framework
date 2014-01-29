@@ -217,26 +217,38 @@ public class FluentDBTests extends BaseTest
 			}
 			else if (qaction.op.equals("lt"))
 			{
-				if (qaction.obj instanceof Integer)
-				{
-					return db.findCompareMatches(dataL, qaction.fieldName, (Integer)qaction.obj, IValueMatcher.LT);
-				}
-				else if (qaction.obj instanceof String)
-				{
-					return db.findCompareMatches(dataL, qaction.fieldName, (String)qaction.obj, IValueMatcher.LT);
-				}
-				else
-				{
-					throw new FluentException("ActionProc: unsupported obj type: " + qaction.obj.getClass().getSimpleName());
-				}
+				return doCompare(qaction, IValueMatcher.LT);
+			}
+			else if (qaction.op.equals("gt"))
+			{
+				return doCompare(qaction, IValueMatcher.GT);
 			}
 			else
 			{
 				throw new FluentException("ActionProc: unsupported op type: " + qaction.op);
 			}
 		}
-	}
 
+		private List<Hotel> doCompare(QueryAction qaction, int matchType)
+		{
+			if (qaction.obj instanceof Integer)
+			{
+				return db.findCompareMatches(dataL, qaction.fieldName, qaction.obj, Integer.class, matchType);
+			}
+			else if (qaction.obj instanceof String)
+			{
+				return db.findCompareMatches(dataL, qaction.fieldName, qaction.obj, String.class, matchType);
+			}
+			else if (qaction.obj instanceof Long)
+			{
+				return db.findCompareMatches(dataL, qaction.fieldName, qaction.obj, Long.class, matchType);
+			}
+			else
+			{
+				throw new FluentException("ActionProc: unsupported obj type: " + qaction.obj.getClass().getSimpleName());
+			}
+		}
+	}
 
 	@Test
 	public void testIntersectionNone() 
@@ -429,10 +441,27 @@ public class FluentDBTests extends BaseTest
 
 		long count = dao.query().where("nVal").lt(target).findCount();
 		assertEquals(2, count);
-		
+
 		h = dao.query().where("model").lt("Bxx").findAny();
 		assertNotNull(h);
 		assertEquals("Airbus", h.model);
+	}
+	@Test
+	public void testGT()
+	{
+		init();
+		int target = 112;
+
+		Hotel h = dao.query().where("nVal").gt(target).findAny();
+		assertNotNull(h);
+		assertEquals(113, h.nVal);
+
+		long count = dao.query().where("nVal").gt(target).findCount();
+		assertEquals(1, count);
+
+		h = dao.query().where("model").gt("Caa").findAny();
+		assertNotNull(h);
+		assertEquals("Spitfire", h.model);
 	}
 
 

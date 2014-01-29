@@ -73,7 +73,41 @@ public class Query2<T> extends QueryBase<T>
 		this.addx(QueryParser.LT, 'b', b);
 		return new Query3<T>(queryctx);
 	}
+
+	//lt
+	public Query3<T> gt(String val)
+	{
+		this.addx(QueryParser.GT, 's', val);
+		return new Query3<T>(queryctx);
+	}
+	public Query3<T> gt(Date dt)
+	{
+		this.addx(QueryParser.GT, 'd', dt);
+		return new Query3<T>(queryctx);
+	}
+	public Query3<T> gt(Double val)
+	{
+		this.addx(QueryParser.GT, 'f', val);
+		return new Query3<T>(queryctx);
+	}
+	public Query3<T> gt(long val)
+	{
+		this.addx(QueryParser.GT, 'l', val);
+		return new Query3<T>(queryctx);
+	}
+	public Query3<T> gt(int val)
+	{
+		this.addx(QueryParser.GT, 'i', val);
+		return new Query3<T>(queryctx);
+	}
+	public Query3<T> gt(boolean b)
+	{
+		this.addx(QueryParser.GT, 'b', b);
+		return new Query3<T>(queryctx);
+	}
 	
+	
+	//like
 	public Query3<T> like(String val)
 	{
 		this.addx(QueryParser.LIKE, 's', val);

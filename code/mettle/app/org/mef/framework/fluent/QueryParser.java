@@ -9,6 +9,7 @@ public class QueryParser<T>
 	public static final char WHERE = 'W';
 	public static final char EQ = '=';
 	public static final char LT = '<';
+	public static final char GT = '>';
 	public static final char LIKE = 'l';
 	public static final char AND = '&';
 	public static final char OR = '|';
@@ -125,6 +126,19 @@ public class QueryParser<T>
 				else
 				{
 					currentAction.op = "lt";
+					currentAction.obj = x.obj;
+					actionL.add(currentAction);
+					currentAction = null;
+				}
+				break;
+			case GT:
+				if (currentAction == null)
+				{
+					throw new FluentException("misplaced LT"); //err!
+				}
+				else
+				{
+					currentAction.op = "gt";
 					currentAction.obj = x.obj;
 					actionL.add(currentAction);
 					currentAction = null;

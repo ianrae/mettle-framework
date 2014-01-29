@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.apache.commons.lang.NotImplementedException;
 import org.mef.framework.entities.Entity;
+import org.mef.framework.fluent.FluentException;
 
 //Whole idea is we don't need a fully emulated sql db like H2.
 //(a)we are dealing with objects (which can be assumed to be fully eagerly loaded)
@@ -81,15 +82,32 @@ public class EntityDB<T>
 			}
 			
 			IValueMatcher matcher = this.getMatcher(clazz);
-			if (matchType == IValueMatcher.LT)
+			int res;
+			boolean isMatch = false;
+			
+			switch(matchType)
 			{
-				int res = matcher.compare(value, valueToMatch, matchType);
-				return (res < 0);
+			case IValueMatcher.LT:
+				res = matcher.compare(value, valueToMatch, matchType);
+				isMatch = (res < 0);
+				break;
+				
+			case IValueMatcher.GT:
+				res = matcher.compare(value, valueToMatch, matchType);
+				isMatch = (res > 0);
+				break;
+				
+			case IValueMatcher.CASE_INSENSITIVE:
+			case IValueMatcher.EXACT:
+			case IValueMatcher.LIKE:
+			case IValueMatcher.ILIKE:
+				isMatch = matcher.isMatch(value, valueToMatch, matchType);
+				
+			default:
+				throw new FluentException(String.format("Unsupported match type: %d", matchType));
 			}
-			else
-			{
-				return matcher.isMatch(value, valueToMatch, matchType);
-			}
+			
+			return isMatch;
 		}
 		
 		private IValueMatcher getMatcher(Class clazz)
@@ -217,26 +235,13 @@ public class EntityDB<T>
 			return resultL;
 		}
 		
-		public List<T> findCompareMatches(List<T> L, String fieldName, Integer valueToMatch, int matchType)
+		public List<T> findCompareMatches(List<T> L, String fieldName, Object valueToMatch, Class clazz, int matchType)
 		{
 			List<T> resultL = new ArrayList<T>();
 			
 			for(T f : L)
 			{
-				if (isMatchObject(f, fieldName, valueToMatch, Integer.class, matchType))
-				{
-					resultL.add(f);
-				}
-			}
-			return resultL;
-		}
-		public List<T> findCompareMatches(List<T> L, String fieldName, String valueToMatch, int matchType)
-		{
-			List<T> resultL = new ArrayList<T>();
-			
-			for(T f : L)
-			{
-				if (isMatchObject(f, fieldName, valueToMatch, String.class, matchType))
+				if (isMatchObject(f, fieldName, valueToMatch, clazz, matchType))
 				{
 					resultL.add(f);
 				}
