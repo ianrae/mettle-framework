@@ -42,7 +42,7 @@ public class FluentDBTests extends BaseTest
 
 	public static class HotelDao
 	{
-//		public List<Hotel> dataL;
+		//		public List<Hotel> dataL;
 		public QueryContext<Hotel> queryctx = new QueryContext<Hotel>();
 
 		public HotelDao()
@@ -71,12 +71,12 @@ public class FluentDBTests extends BaseTest
 		String orderBy;
 		String orderAsc; //"asc" or "desc"
 		int limit;
-		
+
 		public MyHotelProc(List<Hotel> hotelL)
 		{
 			this.dataL = hotelL;
 		}
-		
+
 		private void log(String s)
 		{
 			System.out.println(s);
@@ -103,12 +103,12 @@ public class FluentDBTests extends BaseTest
 			{
 				resultL = db.union(dataL, new ArrayList<Hotel>());
 			}
-			
+
 			if (orderBy != null)
 			{
 				resultL = db.orderBy(resultL, orderBy, orderAsc, String.class);
 			}
-			
+
 			if (limit >= 0)
 			{
 				if (limit > resultL.size())
@@ -123,7 +123,7 @@ public class FluentDBTests extends BaseTest
 		{
 			log("findAny");
 			initResultLIfNeeded();
-			
+
 			if (resultL.size() == 0)
 			{
 				return null;
@@ -149,25 +149,25 @@ public class FluentDBTests extends BaseTest
 		public void processAction(int index, QueryAction qaction) 
 		{
 			String action = qaction.action;
-			
+
 			log(String.format(" %d. %s", index, action));
-			
+
 			if (action.equals("ALL"))
 			{
 				resultL = db.union(dataL, new ArrayList<Hotel>());
 			}
 			else if (action.equals("WHERE"))
 			{
-				resultL = db.findMatches(dataL, qaction.fieldName, (String)qaction.obj);
+				resultL = findMatchByType(qaction);
 			}
 			else if (action.equals("AND"))
 			{
-				List<Hotel> tmp1 = db.findMatches(dataL, qaction.fieldName, (String)qaction.obj);
+				List<Hotel> tmp1 = findMatchByType(qaction);
 				resultL = db.intersection(resultL, tmp1);
 			}
 			else if (action.equals("OR"))
 			{
-				List<Hotel> tmp1 = db.findMatches(dataL, qaction.fieldName, (String)qaction.obj);
+				List<Hotel> tmp1 = findMatchByType(qaction);
 				resultL = db.union(resultL, tmp1);
 			}
 			else if (action.equals("ORDERBY"))
@@ -185,6 +185,32 @@ public class FluentDBTests extends BaseTest
 			else
 			{
 				throw new FluentException("ActionProc: unknown action: " + action);
+			}
+		}
+
+		private List<Hotel> findMatchByType(QueryAction qaction)
+		{
+			if (qaction.obj == null)
+			{
+				throw new FluentException("ActionProc: obj is null");
+			}
+
+
+			if (qaction.obj instanceof Long)
+			{
+				return db.findMatches(dataL, qaction.fieldName, (Long)qaction.obj);
+			}
+			else if (qaction.obj instanceof Integer)
+			{
+				return db.findMatches(dataL, qaction.fieldName, (Integer)qaction.obj);
+			}
+			else if (qaction.obj instanceof String)
+			{
+				return db.findMatches(dataL, qaction.fieldName, (String)qaction.obj);
+			}
+			else
+			{
+				throw new FluentException("ActionProc: unsupported obj type: " + qaction.obj.getClass().getSimpleName());
 			}
 		}
 	}
@@ -207,7 +233,7 @@ public class FluentDBTests extends BaseTest
 	{
 		init();
 		String target = "Boeing";
-		
+
 		Hotel h = dao.query().where("model").eq(target).and("flight").eq("UL901").findAny();
 		assertNotNull(h);
 		assertEquals(target, h.model);
@@ -219,7 +245,7 @@ public class FluentDBTests extends BaseTest
 		h = L.get(0);
 		assertEquals(target, h.model);
 		assertEquals("UL901", h.flight);
-		
+
 		long count = dao.query().where("model").eq("Spitfire").and("flight").eq("UL901").findCount();
 		assertEquals(1, count);
 	}
@@ -229,7 +255,7 @@ public class FluentDBTests extends BaseTest
 	{
 		init();
 		String target = "Boeing";
-		
+
 		Hotel h = dao.query().where("model").eq(target).or("flight").eq("UL901").findAny();
 		assertNotNull(h);
 		assertEquals(target, h.model);
@@ -244,7 +270,7 @@ public class FluentDBTests extends BaseTest
 		h = L.get(1);
 		assertEquals("Spitfire", h.model);
 		assertEquals("UL901", h.flight);
-		
+
 		long count = dao.query().where("model").eq("Spitfire").or("flight").eq("UL901").findCount();
 		assertEquals(3, count);
 	}
@@ -268,7 +294,7 @@ public class FluentDBTests extends BaseTest
 		h = L.get(1);
 		assertEquals("Spitfire", h.model);
 		assertEquals("UL901", h.flight);
-		
+
 		long count = dao.query().where("model").eq("Spitfire").findCount();
 		assertEquals(2, count);
 	}
@@ -286,11 +312,11 @@ public class FluentDBTests extends BaseTest
 
 		List<Hotel> L = dao.query().where("model").eq("zzz").findMany();
 		assertEquals(0, L.size());
-		
+
 		long count = dao.query().where("model").eq("zzz").findCount();
 		assertEquals(0, count);
 	}
-	
+
 	@Test
 	public void test3()
 	{
@@ -303,7 +329,7 @@ public class FluentDBTests extends BaseTest
 		log("findMany..");
 		List<Hotel> L = dao.query().findMany();
 		assertEquals(4, L.size());
-		
+
 		log("findCount..");
 		long count = dao.query().findCount();
 		assertEquals(4, count);
@@ -317,13 +343,13 @@ public class FluentDBTests extends BaseTest
 		Hotel h = dao.query().findUnique();
 		assertNull(h);
 	}
-	
+
 	@Test
 	public void testOrderBy()
 	{
 		init();
 		String target = "UL901";
-		
+
 		Hotel h = dao.query().orderBy("model").where("flight").eq(target).findAny();
 		assertNotNull(h);
 		assertEquals(target, h.flight);
@@ -331,7 +357,7 @@ public class FluentDBTests extends BaseTest
 
 		Hotel h2 = dao.query().orderBy("model", "asc").where("flight").eq(target).findAny();
 		assertTrue(h2 == h);
-		
+
 		h = dao.query().orderBy("model", "desc").where("flight").eq(target).findAny();
 		assertNotNull(h);
 		assertEquals(target, h.flight);
@@ -344,7 +370,7 @@ public class FluentDBTests extends BaseTest
 		init();
 		addMore();
 		String target = "UL901";
-		
+
 		List<Hotel> L = dao.query().orderBy("model").limit(10).where("flight").eq(target).findMany();
 		assertEquals(6, L.size());
 
@@ -356,18 +382,31 @@ public class FluentDBTests extends BaseTest
 		assertEquals(0, L.size());
 	}
 
-	
+	@Test
+	public void testInt()
+	{
+		init();
+		int target = 110;
+
+		Hotel h = dao.query().where("nVal").eq(target).findAny();
+		assertNotNull(h);
+		assertEquals(target, h.nVal);
+		assertEquals("Spitfire", h.model);
+
+	}
+
+
 	//--- helpers ---
 	private HotelDao dao;
 	List<Hotel> hotelL;
-	
+
 	private void init()
 	{
 		dao = new HotelDao();
 		hotelL = this.buildHotels();
 		dao.setActionProcessor(new MyHotelProc(hotelL));
 	}
-	
+
 	List<Hotel> buildHotels()
 	{
 		ArrayList<Hotel> L = new ArrayList<Hotel>();

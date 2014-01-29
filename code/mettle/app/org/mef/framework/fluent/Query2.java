@@ -30,6 +30,11 @@ public class Query2<T> extends QueryBase<T>
 		this.addx(QueryParser.EQ, 'l', val);
 		return new Query3<T>(queryctx);
 	}
+	public Query3<T> eq(int val)
+	{
+		this.addx(QueryParser.EQ, 'i', val);
+		return new Query3<T>(queryctx);
+	}
 	public Query3<T> eq(boolean b)
 	{
 		this.addx(QueryParser.EQ, 'b', b);
