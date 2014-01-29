@@ -19,6 +19,14 @@ public class FluentTests extends BaseTest
 
 	}
 	
+	public static class FluentException extends RuntimeException
+	{
+		public FluentException(String msg)
+		{
+			super(msg);
+		}
+	}
+	
 	public static class QueryAction
 	{
 		public static final String WHERE = "WHERE";
@@ -162,7 +170,7 @@ public class FluentTests extends BaseTest
 				case WHERE:
 					if (currentAction != null)
 					{
-						//err!
+						throw new FluentException("misplaced WHERE"); //err!
 					}
 					else
 					{
@@ -174,7 +182,7 @@ public class FluentTests extends BaseTest
 				case AND:
 					if (currentAction != null)
 					{
-						//err!
+						throw new FluentException("misplaced AND"); //err!
 					}
 					else
 					{
@@ -186,7 +194,7 @@ public class FluentTests extends BaseTest
 				case OR:
 					if (currentAction != null)
 					{
-						//err!
+						throw new FluentException("misplaced OR"); //err!
 					}
 					else
 					{
@@ -200,7 +208,7 @@ public class FluentTests extends BaseTest
 				case EQ:
 					if (currentAction == null)
 					{
-						//err!
+						throw new FluentException("misplaced EQ"); //err!
 					}
 					else
 					{
@@ -213,7 +221,7 @@ public class FluentTests extends BaseTest
 				case LIKE:
 					if (currentAction == null)
 					{
-						//err!
+						throw new FluentException("misplaced LIKE"); //err!
 					}
 					else
 					{
@@ -256,8 +264,8 @@ public class FluentTests extends BaseTest
 					
 					
 				default:
-					System.out.println("UKNOWN CMD: " + x.action);
-					break;
+//					System.out.println("UKNOWN CMD: " + x.action);
+					throw new FluentException("UKNOWN CMD: " + x.action); //err!
 				}
 			}
 			
@@ -333,7 +341,7 @@ public class FluentTests extends BaseTest
 			List<T> resultL = runner.executeMany(); //!!more efficient latet (use limit 2)
 			if (resultL.size() > 1)
 			{
-				return null; //err!
+				throw new FluentException("FindUnique found > 1 result");
 			}
 			
 			if (resultL.size() == 0)

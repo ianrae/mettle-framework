@@ -132,7 +132,11 @@ public class FluentDBTests extends BaseTest
 			
 			log(String.format(" %d. %s", index, action));
 			
-			if (action.equals("WHERE"))
+			if (action.equals("ALL"))
+			{
+				resultL = db.union(dataL, new ArrayList<Hotel>());
+			}
+			else if (action.equals("WHERE"))
 			{
 				resultL = db.findMatches(dataL, qaction.fieldName, (String)qaction.obj);
 			}
@@ -140,6 +144,11 @@ public class FluentDBTests extends BaseTest
 			{
 				List<Hotel> tmp1 = db.findMatches(dataL, qaction.fieldName, (String)qaction.obj);
 				resultL = db.intersection(resultL, tmp1);
+			}
+			else if (action.equals("OR"))
+			{
+				List<Hotel> tmp1 = db.findMatches(dataL, qaction.fieldName, (String)qaction.obj);
+				resultL = db.union(resultL, tmp1);
 			}
 		}
 	}
@@ -177,6 +186,31 @@ public class FluentDBTests extends BaseTest
 		
 		long count = dao.query().where("model").eq("Spitfire").and("flight").eq("UL901").findCount();
 		assertEquals(1, count);
+	}
+
+	@Test
+	public void testOr()
+	{
+		init();
+		String target = "Boeing";
+		
+		Hotel h = dao.query().where("model").eq(target).or("flight").eq("UL901").findAny();
+		assertNotNull(h);
+		assertEquals(target, h.model);
+		assertEquals("UL901", h.flight);
+
+		log("findManuy..");
+		List<Hotel> L = dao.query().where("model").eq(target).or("flight").eq("UL901").findMany();
+		assertEquals(2, L.size());
+		h = L.get(0);
+		assertEquals(target, h.model);
+		assertEquals("UL901", h.flight);
+		h = L.get(1);
+		assertEquals("Spitfire", h.model);
+		assertEquals("UL901", h.flight);
+		
+		long count = dao.query().where("model").eq("Spitfire").or("flight").eq("UL901").findCount();
+		assertEquals(3, count);
 	}
 
 	@Test
