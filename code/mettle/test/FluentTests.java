@@ -327,6 +327,21 @@ public class FluentTests extends BaseTest
 			List<T> resultL = runner.executeMany();
 			return resultL;
 		}
+		protected T doFindUnique()
+		{
+			QueryParser<T> runner = new QueryParser<T>(this.queryctx);
+			List<T> resultL = runner.executeMany(); //!!more efficient latet (use limit 2)
+			if (resultL.size() > 1)
+			{
+				return null; //err!
+			}
+			
+			if (resultL.size() == 0)
+			{
+				return null;
+			}
+			return resultL.get(0);
+		}
 		protected long doFindCount()
 		{
 			QueryParser<T> runner = new QueryParser<T>(this.queryctx);
@@ -363,10 +378,11 @@ public class FluentTests extends BaseTest
 		{
 			return dofindAny();
 		}
-		//		public Car findAnyIfExists()
-		//		{
-		//			return null;
-		//		}
+		//error if > 1
+		public T findUnique()
+		{
+			return doFindUnique();
+		}
 		public List<T> findMany()
 		{
 			return doFindMany();
@@ -453,9 +469,9 @@ public class FluentTests extends BaseTest
 			return dofindAny();
 		}
 		//error if > 1
-		public Car findUnique()
+		public T findUnique()
 		{
-			return null;
+			return doFindUnique();
 		}
 		public List<T> findMany()
 		{
