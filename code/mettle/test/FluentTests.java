@@ -114,7 +114,7 @@ public class FluentTests extends BaseTest
 		assertNull(car);
 
 		String query = dao.query().where("price").eq("45").and("size").eq(35.5).dumpQuery();
-		assertEquals(" [price W  ] [e s] [size &  ] [e f]", query);
+		assertEquals(" [price W  ] [= s] [size &  ] [= f]", query);
 
 		log("here's any");
 		car = dao.query().orderBy("price").fetch("users").limit(1).findAny();

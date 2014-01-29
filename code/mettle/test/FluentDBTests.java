@@ -227,6 +227,10 @@ public class FluentDBTests extends BaseTest
 			{
 				return doCompare(qaction, IValueMatcher.GT);
 			}
+			else if (qaction.op.equals("ge"))
+			{
+				return doCompare(qaction, IValueMatcher.GE);
+			}
 			else
 			{
 				throw new FluentException("ActionProc: unsupported op type: " + qaction.op);
@@ -481,6 +485,23 @@ public class FluentDBTests extends BaseTest
 		assertEquals(1, count);
 
 		h = dao.query().where("model").gt("Caa").findAny();
+		assertNotNull(h);
+		assertEquals("Spitfire", h.model);
+	}
+	@Test
+	public void testGE()
+	{
+		init();
+		int target = 112;
+
+		Hotel h = dao.query().where("nVal").ge(target).findAny();
+		assertNotNull(h);
+		assertEquals(113, h.nVal);
+
+		long count = dao.query().where("nVal").ge(target).findCount();
+		assertEquals(2, count);
+
+		h = dao.query().where("model").ge("Caa").findAny();
 		assertNotNull(h);
 		assertEquals("Spitfire", h.model);
 	}

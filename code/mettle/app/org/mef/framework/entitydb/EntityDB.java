@@ -101,11 +101,17 @@ public class EntityDB<T>
 				isMatch = (res > 0);
 				break;
 				
+			case IValueMatcher.GE:
+				res = matcher.compare(value, valueToMatch, matchType);
+				isMatch = (res >= 0);
+				break;
+				
 			case IValueMatcher.CASE_INSENSITIVE:
 			case IValueMatcher.EXACT:
 			case IValueMatcher.LIKE:
 			case IValueMatcher.ILIKE:
 				isMatch = matcher.isMatch(value, valueToMatch, matchType);
+				break;
 				
 			default:
 				throw new FluentException(String.format("Unsupported match type: %d", matchType));
