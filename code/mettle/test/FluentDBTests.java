@@ -9,6 +9,7 @@ import java.util.List;
 import org.junit.Test;
 import org.mef.framework.entities.Entity;
 import org.mef.framework.entitydb.EntityDB;
+import org.mef.framework.entitydb.IValueMatcher;
 import org.mef.framework.fluent.FluentException;
 import org.mef.framework.fluent.IQueryActionProcessor;
 import org.mef.framework.fluent.QStep;
@@ -195,22 +196,43 @@ public class FluentDBTests extends BaseTest
 				throw new FluentException("ActionProc: obj is null");
 			}
 
-
-			if (qaction.obj instanceof Long)
+			if (qaction.op.equals("eq"))
 			{
-				return db.findMatches(dataL, qaction.fieldName, (Long)qaction.obj);
+				if (qaction.obj instanceof Long)
+				{
+					return db.findMatches(dataL, qaction.fieldName, (Long)qaction.obj);
+				}
+				else if (qaction.obj instanceof Integer)
+				{
+					return db.findMatches(dataL, qaction.fieldName, (Integer)qaction.obj);
+				}
+				else if (qaction.obj instanceof String)
+				{
+					return db.findMatches(dataL, qaction.fieldName, (String)qaction.obj);
+				}
+				else
+				{
+					throw new FluentException("ActionProc: unsupported obj type: " + qaction.obj.getClass().getSimpleName());
+				}
 			}
-			else if (qaction.obj instanceof Integer)
+			else if (qaction.op.equals("lt"))
 			{
-				return db.findMatches(dataL, qaction.fieldName, (Integer)qaction.obj);
-			}
-			else if (qaction.obj instanceof String)
-			{
-				return db.findMatches(dataL, qaction.fieldName, (String)qaction.obj);
+				if (qaction.obj instanceof Integer)
+				{
+					return db.findCompareMatches(dataL, qaction.fieldName, (Integer)qaction.obj, IValueMatcher.LT);
+				}
+				else if (qaction.obj instanceof String)
+				{
+					return db.findCompareMatches(dataL, qaction.fieldName, (String)qaction.obj, IValueMatcher.LT);
+				}
+				else
+				{
+					throw new FluentException("ActionProc: unsupported obj type: " + qaction.obj.getClass().getSimpleName());
+				}
 			}
 			else
 			{
-				throw new FluentException("ActionProc: unsupported obj type: " + qaction.obj.getClass().getSimpleName());
+				throw new FluentException("ActionProc: unsupported op type: " + qaction.op);
 			}
 		}
 	}
@@ -393,6 +415,24 @@ public class FluentDBTests extends BaseTest
 		assertEquals(target, h.nVal);
 		assertEquals("Spitfire", h.model);
 
+	}
+
+	@Test
+	public void testLT()
+	{
+		init();
+		int target = 112;
+
+		Hotel h = dao.query().where("nVal").lt(target).findAny();
+		assertNotNull(h);
+		assertEquals(110, h.nVal);
+
+		long count = dao.query().where("nVal").lt(target).findCount();
+		assertEquals(2, count);
+		
+		h = dao.query().where("model").lt("Bxx").findAny();
+		assertNotNull(h);
+		assertEquals("Airbus", h.model);
 	}
 
 

@@ -7,6 +7,8 @@ public interface IValueMatcher
 	public final int LIKE = 3;
 	public final int ILIKE = 4;
 	
+	public final int LT=5;
+	
 	boolean isMatch(Object value, Object valueToMatch, int matchType); 
 	int compare(Object value, Object valueToMatch, int matchType); 
 }

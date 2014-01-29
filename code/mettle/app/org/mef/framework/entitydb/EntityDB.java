@@ -81,7 +81,15 @@ public class EntityDB<T>
 			}
 			
 			IValueMatcher matcher = this.getMatcher(clazz);
-			return matcher.isMatch(value, valueToMatch, matchType);
+			if (matchType == IValueMatcher.LT)
+			{
+				int res = matcher.compare(value, valueToMatch, matchType);
+				return (res < 0);
+			}
+			else
+			{
+				return matcher.isMatch(value, valueToMatch, matchType);
+			}
 		}
 		
 		private IValueMatcher getMatcher(Class clazz)
@@ -208,6 +216,34 @@ public class EntityDB<T>
 			}
 			return resultL;
 		}
+		
+		public List<T> findCompareMatches(List<T> L, String fieldName, Integer valueToMatch, int matchType)
+		{
+			List<T> resultL = new ArrayList<T>();
+			
+			for(T f : L)
+			{
+				if (isMatchObject(f, fieldName, valueToMatch, Integer.class, matchType))
+				{
+					resultL.add(f);
+				}
+			}
+			return resultL;
+		}
+		public List<T> findCompareMatches(List<T> L, String fieldName, String valueToMatch, int matchType)
+		{
+			List<T> resultL = new ArrayList<T>();
+			
+			for(T f : L)
+			{
+				if (isMatchObject(f, fieldName, valueToMatch, String.class, matchType))
+				{
+					resultL.add(f);
+				}
+			}
+			return resultL;
+		}
+		
 		
 		private boolean isAscending(String orderBy)
 		{
