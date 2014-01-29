@@ -231,6 +231,10 @@ public class FluentDBTests extends BaseTest
 			{
 				return doCompare(qaction, IValueMatcher.GE);
 			}
+			else if (qaction.op.equals("neq"))
+			{
+				return doCompare(qaction, IValueMatcher.NEQ);
+			}
 			else
 			{
 				throw new FluentException("ActionProc: unsupported op type: " + qaction.op);
@@ -506,6 +510,23 @@ public class FluentDBTests extends BaseTest
 		assertEquals("Spitfire", h.model);
 	}
 
+	@Test
+	public void testNEQ()
+	{
+		init();
+		int target = 110;
+
+		Hotel h = dao.query().where("nVal").neq(target).findAny();
+		assertNotNull(h);
+		assertEquals(113, h.nVal);
+
+		long count = dao.query().where("nVal").neq(target).findCount();
+		assertEquals(3, count);
+
+		h = dao.query().where("model").neq("Caa").findAny();
+		assertNotNull(h);
+		assertEquals("Spitfire", h.model);
+	}
 
 	//--- helpers ---
 	private HotelDao dao;

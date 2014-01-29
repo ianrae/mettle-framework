@@ -106,6 +106,11 @@ public class EntityDB<T>
 				isMatch = (res >= 0);
 				break;
 				
+			case IValueMatcher.NEQ:
+				res = matcher.compare(value, valueToMatch, matchType);
+				isMatch = (res != 0);
+				break;
+				
 			case IValueMatcher.CASE_INSENSITIVE:
 			case IValueMatcher.EXACT:
 			case IValueMatcher.LIKE:

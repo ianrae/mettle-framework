@@ -12,6 +12,7 @@ public class QueryParser<T>
 	public static final char GT = '>';
 	public static final char LE = 'a';
 	public static final char GE = 'b';
+	public static final char NEQ = 'c';
 	public static final char LIKE = 'l';
 	public static final char AND = '&';
 	public static final char OR = '|';
@@ -172,6 +173,21 @@ public class QueryParser<T>
 					currentAction = null;
 				}
 				break;
+			case NEQ:
+				if (currentAction == null)
+				{
+					throw new FluentException("misplaced NEQ"); //err!
+				}
+				else
+				{
+					currentAction.op = "neq";
+					currentAction.obj = x.obj;
+					actionL.add(currentAction);
+					currentAction = null;
+				}
+				break;
+				
+				
 			case LIKE:
 				if (currentAction == null)
 				{
