@@ -1,3 +1,4 @@
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -60,8 +61,10 @@ public class FluentDBTests extends BaseTest
 	{
 		EntityDB<Hotel> db = new EntityDB<Hotel>();
 		List<Hotel> dataL;
-		
 		List<Hotel> resultL;
+		String orderBy;
+		String orderAsc; //"asc" or "desc"
+		int limit;
 		
 		public MyHotelProc(List<Hotel> hotelL)
 		{
@@ -76,6 +79,8 @@ public class FluentDBTests extends BaseTest
 		public void start(List<FluentTests.QueryAction> actionL) 
 		{
 			resultL = null; //new ArrayList<Hotel>();
+			orderBy = null;
+			limit = -1;
 			log("start");
 		}
 
@@ -92,17 +97,26 @@ public class FluentDBTests extends BaseTest
 			{
 				resultL = db.union(dataL, new ArrayList<Hotel>());
 			}
+			
+			if (orderBy != null)
+			{
+				resultL = db.orderBy(resultL, orderBy, orderAsc, String.class);
+			}
+			
+			if (limit >= 0)
+			{
+				if (limit > resultL.size())
+				{
+					limit = resultL.size();
+				}
+				resultL = resultL.subList(0, limit);
+			}
 		}
 		@Override
 		public Hotel findAny() //0 or 1
 		{
 			log("findAny");
 			initResultLIfNeeded();
-			
-			if (resultL == null)
-			{
-				resultL = db.union(dataL, new ArrayList<Hotel>());
-			}
 			
 			if (resultL.size() == 0)
 			{
@@ -149,6 +163,22 @@ public class FluentDBTests extends BaseTest
 			{
 				List<Hotel> tmp1 = db.findMatches(dataL, qaction.fieldName, (String)qaction.obj);
 				resultL = db.union(resultL, tmp1);
+			}
+			else if (action.equals("ORDERBY"))
+			{
+				orderBy = qaction.fieldName;
+				orderAsc = (String) qaction.obj;
+			}
+			else if (action.equals("LIMIT"))
+			{
+				limit = (Integer)qaction.obj;
+			}
+			else if (action.equals("FETCH"))
+			{ //nothing to do
+			}
+			else
+			{
+				throw new FluentTests.FluentException("ActionProc: unknown action: " + action);
 			}
 		}
 	}
@@ -264,10 +294,6 @@ public class FluentDBTests extends BaseTest
 		assertEquals("Spitfire", h.model);
 		assertEquals("UL900", h.flight);
 
-		log("findUnique..");
-		h = dao.query().findUnique();
-		assertNull(h);
-
 		log("findMany..");
 		List<Hotel> L = dao.query().findMany();
 		assertEquals(4, L.size());
@@ -276,15 +302,64 @@ public class FluentDBTests extends BaseTest
 		long count = dao.query().findCount();
 		assertEquals(4, count);
 	}
+
+	@Test(expected=FluentTests.FluentException.class)
+	public void test4()
+	{
+		init();
+		log("findUnique..");
+		Hotel h = dao.query().findUnique();
+		assertNull(h);
+	}
+	
+	@Test
+	public void testOrderBy()
+	{
+		init();
+		String target = "UL901";
+		
+		Hotel h = dao.query().orderBy("model").where("flight").eq(target).findAny();
+		assertNotNull(h);
+		assertEquals(target, h.flight);
+		assertEquals("Boeing", h.model);
+
+		Hotel h2 = dao.query().orderBy("model", "asc").where("flight").eq(target).findAny();
+		assertTrue(h2 == h);
+		
+		h = dao.query().orderBy("model", "desc").where("flight").eq(target).findAny();
+		assertNotNull(h);
+		assertEquals(target, h.flight);
+		assertEquals("Spitfire", h.model);
+	}
+
+	@Test
+	public void testLimit()
+	{
+		init();
+		addMore();
+		String target = "UL901";
+		
+		List<Hotel> L = dao.query().orderBy("model").limit(10).where("flight").eq(target).findMany();
+		assertEquals(6, L.size());
+
+		L = dao.query().orderBy("model").limit(3).where("flight").eq(target).findMany();
+		assertEquals(3, L.size());
+		L = dao.query().orderBy("model").limit(1).where("flight").eq(target).findMany();
+		assertEquals(1, L.size());
+		L = dao.query().orderBy("model").limit(0).where("flight").eq(target).findMany();
+		assertEquals(0, L.size());
+	}
+
 	
 	//--- helpers ---
 	private HotelDao dao;
+	List<Hotel> hotelL;
 	
 	private void init()
 	{
 		dao = new HotelDao();
-		List<Hotel> L = this.buildHotels();
-		dao.setActionProcessor(new MyHotelProc(L));
+		hotelL = this.buildHotels();
+		dao.setActionProcessor(new MyHotelProc(hotelL));
 	}
 	
 	List<Hotel> buildHotels()
@@ -298,4 +373,11 @@ public class FluentDBTests extends BaseTest
 		return L;
 	}
 
+	private void addMore()
+	{
+		hotelL.add(new Hotel("UL901", "abc", 10));
+		hotelL.add(new Hotel("UL901", "def", 10));
+		hotelL.add(new Hotel("UL901", "ghi", 10));
+		hotelL.add(new Hotel("UL901", "jkl", 10));
+	}
 }

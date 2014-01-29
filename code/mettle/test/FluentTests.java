@@ -239,7 +239,7 @@ public class FluentTests extends BaseTest
 						addNewAction(QueryAction.ALL, " ", null, null);
 					}
 					
-					addNewAction(QueryAction.ORDERBY, " ", null, x.fieldName);
+					addNewAction(QueryAction.ORDERBY, " ", x.obj, x.fieldName);
 					currentAction = null;
 					break;
 					
@@ -503,7 +503,11 @@ public class FluentTests extends BaseTest
 		}
 		public Query1<T> orderBy(String fieldName)
 		{
-			this.addx(QueryParser.ORDERBY, ' ', null, fieldName);
+			return this.orderBy(fieldName, "asc");
+		}
+		public Query1<T> orderBy(String fieldName, String asc)
+		{
+			this.addx(QueryParser.ORDERBY, ' ', asc, fieldName);
 			return this;
 		}
 		public Query1<T> fetch(String relationFieldName)
