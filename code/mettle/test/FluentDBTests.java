@@ -9,6 +9,12 @@ import java.util.List;
 import org.junit.Test;
 import org.mef.framework.entities.Entity;
 import org.mef.framework.entitydb.EntityDB;
+import org.mef.framework.fluent.FluentException;
+import org.mef.framework.fluent.IQueryActionProcessor;
+import org.mef.framework.fluent.QStep;
+import org.mef.framework.fluent.Query1;
+import org.mef.framework.fluent.QueryAction;
+import org.mef.framework.fluent.QueryContext;
 
 import tools.BaseTest;
 
@@ -37,27 +43,27 @@ public class FluentDBTests extends BaseTest
 	public static class HotelDao
 	{
 //		public List<Hotel> dataL;
-		public FluentTests.QueryContext<Hotel> queryctx = new FluentTests.QueryContext<Hotel>();
+		public QueryContext<Hotel> queryctx = new QueryContext<Hotel>();
 
 		public HotelDao()
 		{
-			queryctx.queryL = new ArrayList<FluentTests.QStep>();
+			queryctx.queryL = new ArrayList<QStep>();
 		}
 
-		public FluentTests.Query1<Hotel> query()
+		public Query1<Hotel> query()
 		{
-			queryctx.queryL = new ArrayList<FluentTests.QStep>();
-			return new FluentTests.Query1<Hotel>(queryctx);
+			queryctx.queryL = new ArrayList<QStep>();
+			return new Query1<Hotel>(queryctx);
 		}
 
-		public void setActionProcessor(FluentTests.IQueryActionProcessor<Hotel> proc) 
+		public void setActionProcessor(IQueryActionProcessor<Hotel> proc) 
 		{
 			queryctx.proc = proc;
 		}
 	}
 
 
-	public static class MyHotelProc implements FluentTests.IQueryActionProcessor<Hotel>
+	public static class MyHotelProc implements IQueryActionProcessor<Hotel>
 	{
 		EntityDB<Hotel> db = new EntityDB<Hotel>();
 		List<Hotel> dataL;
@@ -76,7 +82,7 @@ public class FluentDBTests extends BaseTest
 			System.out.println(s);
 		}
 		@Override
-		public void start(List<FluentTests.QueryAction> actionL) 
+		public void start(List<QueryAction> actionL) 
 		{
 			resultL = null; //new ArrayList<Hotel>();
 			orderBy = null;
@@ -140,7 +146,7 @@ public class FluentDBTests extends BaseTest
 		}
 
 		@Override
-		public void processAction(int index, FluentTests.QueryAction qaction) 
+		public void processAction(int index, QueryAction qaction) 
 		{
 			String action = qaction.action;
 			
@@ -178,7 +184,7 @@ public class FluentDBTests extends BaseTest
 			}
 			else
 			{
-				throw new FluentTests.FluentException("ActionProc: unknown action: " + action);
+				throw new FluentException("ActionProc: unknown action: " + action);
 			}
 		}
 	}
@@ -303,7 +309,7 @@ public class FluentDBTests extends BaseTest
 		assertEquals(4, count);
 	}
 
-	@Test(expected=FluentTests.FluentException.class)
+	@Test(expected=FluentException.class)
 	public void test4()
 	{
 		init();
