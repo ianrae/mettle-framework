@@ -1,29 +1,24 @@
 package org.mef.framework.fluent;
 import java.util.List;
 
-import org.mef.framework.dao.IDAO;
-import org.mef.framework.sfx.SfxServiceLocator;
+import org.mef.framework.sfx.SfxBaseObj;
+import org.mef.framework.sfx.SfxContext;
 
 
 
-public class QueryContext<T>
+public class QueryContext<T> extends SfxBaseObj
 {
 	public List<QStep> queryL;
 	public IQueryActionProcessor<T> proc;
 	
-	private SfxServiceLocator daoRegistry = new SfxServiceLocator();
-	
-	public QueryContext()
+	public QueryContext(SfxContext ctx)
 	{
+		super(ctx);
 	}
 	
-	public void registerDao(Class clazz, IDAO dao)
+	public SfxContext getSfxContext()
 	{
-		this.daoRegistry.registerSingleton(clazz, dao);
+		return _ctx;
 	}
 	
-	public IDAO findDao(Class clazz)
-	{
-		return (IDAO) this.daoRegistry.getInstance(clazz);
-	}
 }

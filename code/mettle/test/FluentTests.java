@@ -28,10 +28,11 @@ public class FluentTests extends BaseTest
 	{
 		public List<Car> dataL;
 //		public List<QueryX> queryL = new ArrayList<QueryX>();
-		public QueryContext<Car> queryctx = new QueryContext<Car>();
+		public QueryContext<Car> queryctx; //= new QueryContext<Car>(null);
 
-		public Dao()
+		public Dao(QueryContext<Car> queryctx)
 		{
+			this.queryctx = queryctx;
 			queryctx.queryL = new ArrayList<QStep>();
 		}
 
@@ -107,7 +108,8 @@ public class FluentTests extends BaseTest
 	@Test
 	public void test() 
 	{
-		Dao dao = new Dao();
+		createContext();
+		Dao dao = new Dao(new QueryContext<Car>(_ctx));
 		dao.setActionProcessor(new MyProc());
 		Query1 x1 = dao.query();
 
@@ -141,7 +143,8 @@ public class FluentTests extends BaseTest
 	@Test
 	public void testProcessor() 
 	{
-		Dao dao = new Dao();
+		createContext();
+		Dao dao = new Dao(new QueryContext<Car>(_ctx));
 		dao.setActionProcessor(new MyProc());
 
 		Car car = dao.query().orderBy("price").fetch("users").limit(1).findAny();

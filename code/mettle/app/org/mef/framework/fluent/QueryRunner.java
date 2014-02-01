@@ -1,16 +1,21 @@
 package org.mef.framework.fluent;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.mef.framework.dao.IDAO;
+import org.mef.framework.entities.Entity;
+import org.mef.framework.sfx.SfxBaseObj;
+import org.mef.framework.sfx.SfxContext;
 
 
-public class QueryRunner<T>
+public class QueryRunner<T> extends SfxBaseObj
 {
 	private List<QueryAction> actionL;
 	private QueryContext<T> queryctx;
 	
 	public QueryRunner(List<QueryAction> actionL, QueryContext<T> queryctx)
 	{
+		super(queryctx.getSfxContext());
 		this.actionL = actionL;
 		this.queryctx = queryctx;
 	}
@@ -46,6 +51,7 @@ public class QueryRunner<T>
 	}
 
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private QueryAction processRelationalAction(int i, QueryAction action) 
 	{
 		Class clazz = queryctx.proc.getRelationalFieldType(action);
@@ -54,15 +60,34 @@ public class QueryRunner<T>
 			return null;
 		}
 		
-		IDAO dao = queryctx.findDao(clazz);
+		ProcRegistry registry = (ProcRegistry) this.getInstance(ProcRegistry.class);
+		IQueryActionProcessor otherProc = registry.findProc(clazz);
 		
-		action = queryctx.proc.processRelationalAction(i, action, dao);
-		return action;
+		String sav1 = action.fieldName; //addr
+		String sav2 = action.subFieldName; //street
+		
+		action.fieldName = sav2;
+		List<QueryAction> L = new ArrayList<QueryAction>();
+		L.add(action);
+		otherProc.start(actionL);
+		otherProc.processAction(0, action);
+		
+		Entity entity = (Entity) otherProc.findAny();
+		
+		//so we have found the address object that matches addr.street
+		//adjust the action so now we look for it
+		
+		QueryAction newAction = new QueryAction();
+		newAction.action = action.action;
+		newAction.fieldName = sav1;
+		newAction.obj = entity;
+		newAction.op = action.op;
+		return newAction;
 	}
 
 	private boolean isRelationalAction(QueryAction qaction) 
 	{
-		if (qaction.action.equals("WHERE") && qaction.fieldName.contains("."))
+		if (qaction.action.equals("WHERE") && qaction.subFieldName != null)
 		{
 			return true;
 		}

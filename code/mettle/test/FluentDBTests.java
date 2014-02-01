@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.mef.framework.entitydb.EntityDB;
 import org.mef.framework.fluent.EntityDBQueryProcessor;
 import org.mef.framework.fluent.FluentException;
+import org.mef.framework.fluent.QueryContext;
 
 import testentities.Hotel;
 import testentities.HotelDao;
@@ -293,7 +294,7 @@ public class FluentDBTests extends BaseTest
 	{
 		this.createContext();
 		hotelL = this.buildHotels();
-		dao = new HotelDao(hotelL);
+		dao = new HotelDao(hotelL, new QueryContext<Hotel>(_ctx));
 		dao.setActionProcessor(new EntityDBQueryProcessor<Hotel>(_ctx, hotelL));
 	}
 
@@ -301,18 +302,20 @@ public class FluentDBTests extends BaseTest
 	{
 		ArrayList<Hotel> L = new ArrayList<Hotel>();
 
-		L.add(new Hotel("UL900", "Spitfire", 10));
-		L.add(new Hotel("UL901", "Spitfire", 13));
-		L.add(new Hotel("AC710", "Airbus", 11));
-		L.add(new Hotel("UL901", "Boeing", 12));
+		long id = 1L;
+		L.add(new Hotel(id++,"UL900", "Spitfire", 10));
+		L.add(new Hotel(id++,"UL901", "Spitfire", 13));
+		L.add(new Hotel(id++,"AC710", "Airbus", 11));
+		L.add(new Hotel(id++,"UL901", "Boeing", 12));
 		return L;
 	}
 
 	private void addMore()
 	{
-		hotelL.add(new Hotel("UL901", "abc", 10));
-		hotelL.add(new Hotel("UL901", "def", 10));
-		hotelL.add(new Hotel("UL901", "ghi", 10));
-		hotelL.add(new Hotel("UL901", "jkl", 10));
+		long id = 1L;
+		hotelL.add(new Hotel(id++,"UL901", "abc", 10));
+		hotelL.add(new Hotel(id++,"UL901", "def", 10));
+		hotelL.add(new Hotel(id++,"UL901", "ghi", 10));
+		hotelL.add(new Hotel(id++,"UL901", "jkl", 10));
 	}
 }

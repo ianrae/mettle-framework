@@ -13,11 +13,12 @@ import org.mef.framework.fluent.QueryContext;
 public class HotelDao implements IDAO
 {
 	//		public List<Hotel> dataL;
-	public QueryContext<Hotel> queryctx = new QueryContext<Hotel>();
+	public QueryContext<Hotel> queryctx; // = new QueryContext<Hotel>();
 	List<Hotel> dataL;
 
-	public HotelDao(List<Hotel> dataL)
+	public HotelDao(List<Hotel> dataL, QueryContext<Hotel> queryctx)
 	{
+		this.queryctx = queryctx;
 		queryctx.queryL = new ArrayList<QStep>();
 		this.dataL = dataL;
 	}

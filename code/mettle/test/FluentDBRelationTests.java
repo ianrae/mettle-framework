@@ -7,6 +7,8 @@ import java.util.List;
 
 import org.junit.Test;
 import org.mef.framework.fluent.EntityDBQueryProcessor;
+import org.mef.framework.fluent.ProcRegistry;
+import org.mef.framework.fluent.QueryContext;
 
 import testentities.Hotel;
 import testentities.HotelDao;
@@ -74,19 +76,30 @@ public class FluentDBRelationTests extends BaseTest
 		addressL = this.buildAddresses();
 		hotelL = this.buildHotels();
 		
-		dao = new StreetAddressDao(addressL);
-		hotelDao = new HotelDao(hotelL);
+		dao = new StreetAddressDao(addressL, new QueryContext<StreetAddress>(_ctx));
+		hotelDao = new HotelDao(hotelL, new QueryContext<Hotel>(_ctx));
+
+		ProcRegistry registry = new ProcRegistry();
+		EntityDBQueryProcessor<StreetAddress> addrProc = new EntityDBQueryProcessor<StreetAddress>(_ctx, addressL);
+		EntityDBQueryProcessor<Hotel> hotelProc = new EntityDBQueryProcessor<Hotel>(_ctx, hotelL);
 		
-		dao.setActionProcessor(new EntityDBQueryProcessor<StreetAddress>(_ctx, addressL));
-		hotelDao.setActionProcessor(new EntityDBQueryProcessor<Hotel>(_ctx, hotelL));
+		registry.registerDao(StreetAddress.class, addrProc);
+		registry.registerDao(Hotel.class, hotelProc);
+		
+		_ctx.getServiceLocator().registerSingleton(ProcRegistry.class, registry);
+		
+		//!!remove later
+		dao.setActionProcessor(addrProc);
+		hotelDao.setActionProcessor(hotelProc);
 	}
 
 	private List<StreetAddress> buildAddresses()
 	{
 		ArrayList<StreetAddress> L = new ArrayList<StreetAddress>();
 
-		L.add(new StreetAddress("Main", 100));
-		L.add(new StreetAddress("King", 100));
+		long id = 50L;
+		L.add(new StreetAddress(id++, "Main", 100));
+		L.add(new StreetAddress(id++, "King", 100));
 		return L;
 	}
 	
@@ -94,10 +107,12 @@ public class FluentDBRelationTests extends BaseTest
 	{
 		ArrayList<Hotel> L = new ArrayList<Hotel>();
 
-		L.add(new Hotel("UL900", "Spitfire", 10));
-		L.add(new Hotel("UL901", "Spitfire", 13));
-		L.add(new Hotel("AC710", "Airbus", 11));
-		L.add(new Hotel("UL901", "Boeing", 12));
+		long id = 1L;
+		L.add(new Hotel(id++,"UL900", "Spitfire", 10));
+		L.add(new Hotel(id++,"UL901", "Spitfire", 13));
+		L.add(new Hotel(id++,"AC710", "Airbus", 11));
+		L.add(new Hotel(id++,"UL901", "Boeing", 12));
+		
 		return L;
 	}
 

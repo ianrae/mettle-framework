@@ -213,7 +213,6 @@ public class EntityDBQueryProcessor<T>  extends SfxBaseObj implements IQueryActi
 	{
 		EntityDB dbOther = new EntityDB();
 		
-		db
 		
 		return null;
 	}
@@ -221,9 +220,7 @@ public class EntityDBQueryProcessor<T>  extends SfxBaseObj implements IQueryActi
 	@Override
 	public Class getRelationalFieldType(QueryAction qaction) 
 	{
-		String s = qaction.fieldName;
-		int pos = s.indexOf('.');
-		String fieldName = s.substring(0, pos);
+		String fieldName = qaction.fieldName;
 		
 		Class clazz = db.getFieldType(dataL, fieldName);
 		//!!currently only works if dataL not empty. fix later

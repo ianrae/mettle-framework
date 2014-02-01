@@ -14,5 +14,6 @@ public class QueryAction
 	public String action;
 	public String op;
 	public String fieldName;
+	public String subFieldName;
 	public Object obj;
 }

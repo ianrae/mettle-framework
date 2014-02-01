@@ -15,11 +15,12 @@ import testentities.StreetAddress;
 public class StreetAddressDao implements IDAO
 {
 	//		public List<Hotel> dataL;
-	public QueryContext<StreetAddress> queryctx = new QueryContext<StreetAddress>();
+	public QueryContext<StreetAddress> queryctx; // = new QueryContext<StreetAddress>();
 	List<StreetAddress> dataL;
 
-	public StreetAddressDao(List<StreetAddress> dataL)
+	public StreetAddressDao(List<StreetAddress> dataL, QueryContext<StreetAddress> queryctx)
 	{
+		this.queryctx = queryctx;
 		queryctx.queryL = new ArrayList<QStep>();
 		this.dataL = dataL;
 		

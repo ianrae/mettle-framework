@@ -2,9 +2,11 @@ package org.mef.framework.fluent;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.mef.framework.sfx.SfxBaseObj;
 
 
-public class QueryParser<T>
+
+public class QueryParser<T> 
 {
 	public static final char WHERE = 'W';
 	public static final char EQ = '=';
@@ -80,6 +82,7 @@ public class QueryParser<T>
 					currentAction = new QueryAction();
 					currentAction.action = QueryAction.WHERE;
 					currentAction.fieldName = x.fieldName;
+					adjustForSubField(currentAction);
 				}
 				break;
 			case AND:
@@ -256,5 +259,17 @@ public class QueryParser<T>
 		currentAction.op = op;
 		currentAction.obj = obj;
 		actionL.add(currentAction);
+	}
+	
+	private void adjustForSubField(QueryAction qaction)
+	{
+		String s = qaction.fieldName;
+		int pos = s.indexOf('.');
+		if (pos < 0)
+		{
+			return; //no sub-field
+		}
+		qaction.fieldName = s.substring(0, pos);
+		qaction.subFieldName = s.substring(pos + 1);
 	}
 }
