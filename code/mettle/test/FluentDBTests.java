@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
+import org.mef.framework.binder.IFormBinder;
+import org.mef.framework.dao.IDAO;
 import org.mef.framework.entities.Entity;
 import org.mef.framework.entitydb.EntityDB;
 import org.mef.framework.entitydb.IValueMatcher;
@@ -16,6 +18,8 @@ import org.mef.framework.fluent.QStep;
 import org.mef.framework.fluent.Query1;
 import org.mef.framework.fluent.QueryAction;
 import org.mef.framework.fluent.QueryContext;
+import org.mef.framework.sfx.SfxBaseObj;
+import org.mef.framework.sfx.SfxContext;
 
 import tools.BaseTest;
 
@@ -41,14 +45,16 @@ public class FluentDBTests extends BaseTest
 
 
 
-	public static class HotelDao
+	public static class HotelDao implements IDAO
 	{
 		//		public List<Hotel> dataL;
 		public QueryContext<Hotel> queryctx = new QueryContext<Hotel>();
+		List<Hotel> dataL;
 
-		public HotelDao()
+		public HotelDao(List<Hotel> dataL)
 		{
 			queryctx.queryL = new ArrayList<QStep>();
+			this.dataL = dataL;
 		}
 
 		public Query1<Hotel> query()
@@ -61,38 +67,53 @@ public class FluentDBTests extends BaseTest
 		{
 			queryctx.proc = proc;
 		}
+
+		@Override
+		public int size() 
+		{
+			return dataL.size();
+		}
+
+		@Override
+		public void delete(long id) 
+		{
+			throw new RuntimeException("no del yet");
+		}
+
+		@Override
+		public void updateFrom(IFormBinder binder) 
+		{
+			throw new RuntimeException("no del yet");
+		}
 	}
 
 
-	public static class MyHotelProc implements IQueryActionProcessor<Hotel>
+	public static class MyHotelProc<T>  extends SfxBaseObj implements IQueryActionProcessor<T>
 	{
-		EntityDB<Hotel> db = new EntityDB<Hotel>();
-		List<Hotel> dataL;
-		List<Hotel> resultL;
+		EntityDB<T> db = new EntityDB<T>();
+		List<T> dataL;
+		List<T> resultL;
 		String orderBy;
 		String orderAsc; //"asc" or "desc"
 		int limit;
 
-		public MyHotelProc(List<Hotel> hotelL)
+		public MyHotelProc(SfxContext ctx, List<T> hotelL)
 		{
+			super(ctx);
 			this.dataL = hotelL;
 		}
 
-		private void log(String s)
-		{
-			System.out.println(s);
-		}
 		@Override
 		public void start(List<QueryAction> actionL) 
 		{
-			resultL = null; //new ArrayList<Hotel>();
+			resultL = null; //new ArrayList<T>();
 			orderBy = null;
 			limit = -1;
 			log("start");
 		}
 
 		@Override
-		public Hotel findOne() //exactly one
+		public T findOne() //exactly one
 		{
 			log("findOne");
 			return null;
@@ -102,7 +123,7 @@ public class FluentDBTests extends BaseTest
 		{
 			if (resultL == null)
 			{
-				resultL = db.union(dataL, new ArrayList<Hotel>());
+				resultL = db.union(dataL, new ArrayList<T>());
 			}
 
 			if (orderBy != null)
@@ -120,7 +141,7 @@ public class FluentDBTests extends BaseTest
 			}
 		}
 		@Override
-		public Hotel findAny() //0 or 1
+		public T findAny() //0 or 1
 		{
 			log("findAny");
 			initResultLIfNeeded();
@@ -132,7 +153,7 @@ public class FluentDBTests extends BaseTest
 			return resultL.get(0);
 		}
 		@Override
-		public List<Hotel> findMany() 
+		public List<T> findMany() 
 		{
 			log("findMany");
 			initResultLIfNeeded();
@@ -155,7 +176,7 @@ public class FluentDBTests extends BaseTest
 
 			if (action.equals("ALL"))
 			{
-				resultL = db.union(dataL, new ArrayList<Hotel>());
+				resultL = db.union(dataL, new ArrayList<T>());
 			}
 			else if (action.equals("WHERE"))
 			{
@@ -163,12 +184,12 @@ public class FluentDBTests extends BaseTest
 			}
 			else if (action.equals("AND"))
 			{
-				List<Hotel> tmp1 = findMatchByType(qaction);
+				List<T> tmp1 = findMatchByType(qaction);
 				resultL = db.intersection(resultL, tmp1);
 			}
 			else if (action.equals("OR"))
 			{
-				List<Hotel> tmp1 = findMatchByType(qaction);
+				List<T> tmp1 = findMatchByType(qaction);
 				resultL = db.union(resultL, tmp1);
 			}
 			else if (action.equals("ORDERBY"))
@@ -189,7 +210,7 @@ public class FluentDBTests extends BaseTest
 			}
 		}
 
-		private List<Hotel> findMatchByType(QueryAction qaction)
+		private List<T> findMatchByType(QueryAction qaction)
 		{
 			if (qaction.obj == null)
 			{
@@ -241,7 +262,7 @@ public class FluentDBTests extends BaseTest
 			}
 		}
 
-		private List<Hotel> doCompare(QueryAction qaction, int matchType)
+		private List<T> doCompare(QueryAction qaction, int matchType)
 		{
 			if (qaction.obj instanceof Integer)
 			{
@@ -534,9 +555,10 @@ public class FluentDBTests extends BaseTest
 
 	private void init()
 	{
-		dao = new HotelDao();
+		this.createContext();
 		hotelL = this.buildHotels();
-		dao.setActionProcessor(new MyHotelProc(hotelL));
+		dao = new HotelDao(hotelL);
+		dao.setActionProcessor(new MyHotelProc<Hotel>(_ctx, hotelL));
 	}
 
 	List<Hotel> buildHotels()
