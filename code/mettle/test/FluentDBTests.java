@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.mef.framework.entitydb.EntityDB;
 import org.mef.framework.fluent.EntityDBQueryProcessor;
 import org.mef.framework.fluent.FluentException;
+import org.mef.framework.fluent.ProcRegistry;
 import org.mef.framework.fluent.QueryContext;
 
 import testentities.Hotel;
@@ -294,8 +295,10 @@ public class FluentDBTests extends BaseTest
 	{
 		this.createContext();
 		hotelL = this.buildHotels();
-		dao = new HotelDao(hotelL, new QueryContext<Hotel>(_ctx));
-		dao.setActionProcessor(new EntityDBQueryProcessor<Hotel>(_ctx, hotelL));
+		dao = new HotelDao(hotelL, new QueryContext<Hotel>(_ctx, Hotel.class));
+		
+		ProcRegistry register = initProcRegistry();
+		register.registerDao(Hotel.class, new EntityDBQueryProcessor<Hotel>(_ctx, hotelL));
 	}
 
 	List<Hotel> buildHotels()

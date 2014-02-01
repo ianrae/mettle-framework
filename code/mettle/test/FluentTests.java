@@ -1,13 +1,17 @@
 
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
 import org.mef.framework.dao.IDAO;
+import org.mef.framework.fluent.EntityDBQueryProcessor;
 import org.mef.framework.fluent.IQueryActionProcessor;
+import org.mef.framework.fluent.ProcRegistry;
 import org.mef.framework.fluent.QStep;
 import org.mef.framework.fluent.Query1;
 import org.mef.framework.fluent.QueryAction;
@@ -40,11 +44,6 @@ public class FluentTests extends BaseTest
 		{
 			queryctx.queryL = new ArrayList<QStep>();
 			return new Query1<Car>(queryctx);
-		}
-
-		public void setActionProcessor(IQueryActionProcessor<Car> proc) 
-		{
-			queryctx.proc = proc;
 		}
 	}
 	
@@ -108,9 +107,10 @@ public class FluentTests extends BaseTest
 	@Test
 	public void test() 
 	{
-		createContext();
-		Dao dao = new Dao(new QueryContext<Car>(_ctx));
-		dao.setActionProcessor(new MyProc());
+		init();
+		Dao dao = new Dao(new QueryContext<Car>(_ctx, Car.class));
+		dao.dataL = this.carL;
+		
 		Query1 x1 = dao.query();
 
 		assertNotNull(x1);
@@ -124,7 +124,7 @@ public class FluentTests extends BaseTest
 		car = dao.query().where("price").eq("45").findAny();
 		assertNull(car);
 
-		car = dao.query().where("price").eq("45").and("size").eq(35.5).findAny();
+		car = dao.query().where("price").eq("45").and("size").eq(35).findAny();
 		assertNull(car);
 
 		String query = dao.query().where("price").eq("45").and("size").eq(35.5).dumpQuery();
@@ -143,9 +143,9 @@ public class FluentTests extends BaseTest
 	@Test
 	public void testProcessor() 
 	{
-		createContext();
-		Dao dao = new Dao(new QueryContext<Car>(_ctx));
-		dao.setActionProcessor(new MyProc());
+		init();
+		Dao dao = new Dao(new QueryContext<Car>(_ctx, Car.class));
+		dao.dataL = this.carL;
 
 		Car car = dao.query().orderBy("price").fetch("users").limit(1).findAny();
 		assertNull(car);
@@ -196,5 +196,17 @@ public class FluentTests extends BaseTest
 		{
 			log(line);
 		}
+	}
+	
+	
+	//--- helpers ---
+	List<Car> carL;
+
+	private void init()
+	{
+		this.createContext();
+		carL = new ArrayList<Car>();
+		ProcRegistry register = initProcRegistry();
+		register.registerDao(Car.class, new EntityDBQueryProcessor<Car>(_ctx, carL));
 	}
 }

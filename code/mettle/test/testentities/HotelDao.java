@@ -29,10 +29,10 @@ public class HotelDao implements IDAO
 		return new Query1<Hotel>(queryctx);
 	}
 
-	public void setActionProcessor(IQueryActionProcessor<Hotel> proc) 
-	{
-		queryctx.proc = proc;
-	}
+//	public void setActionProcessor(IQueryActionProcessor<Hotel> proc) 
+//	{
+//		queryctx.proc = proc;
+//	}
 
 	@Override
 	public int size() 

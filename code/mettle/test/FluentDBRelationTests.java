@@ -79,21 +79,15 @@ public class FluentDBRelationTests extends BaseTest
 		addressL = this.buildAddresses();
 		hotelL = this.buildHotels();
 		
-		dao = new StreetAddressDao(addressL, new QueryContext<StreetAddress>(_ctx));
-		hotelDao = new HotelDao(hotelL, new QueryContext<Hotel>(_ctx));
+		dao = new StreetAddressDao(addressL, new QueryContext<StreetAddress>(_ctx, StreetAddress.class));
+		hotelDao = new HotelDao(hotelL, new QueryContext<Hotel>(_ctx, Hotel.class));
 
-		ProcRegistry registry = new ProcRegistry();
+		ProcRegistry registry = initProcRegistry();
 		EntityDBQueryProcessor<StreetAddress> addrProc = new EntityDBQueryProcessor<StreetAddress>(_ctx, addressL);
 		EntityDBQueryProcessor<Hotel> hotelProc = new EntityDBQueryProcessor<Hotel>(_ctx, hotelL);
 		
 		registry.registerDao(StreetAddress.class, addrProc);
 		registry.registerDao(Hotel.class, hotelProc);
-		
-		_ctx.getServiceLocator().registerSingleton(ProcRegistry.class, registry);
-		
-		//!!remove later
-		dao.setActionProcessor(addrProc);
-		hotelDao.setActionProcessor(hotelProc);
 	}
 
 	private List<StreetAddress> buildAddresses()

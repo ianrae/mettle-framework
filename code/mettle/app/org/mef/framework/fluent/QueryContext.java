@@ -10,10 +10,12 @@ public class QueryContext<T> extends SfxBaseObj
 {
 	public List<QStep> queryL;
 	public IQueryActionProcessor<T> proc;
+	public Class<T> classOfT;
 	
-	public QueryContext(SfxContext ctx)
+	public QueryContext(SfxContext ctx, Class<T> clazz)
 	{
 		super(ctx);
+		this.classOfT = clazz;
 	}
 	
 	public SfxContext getSfxContext()

@@ -1,4 +1,6 @@
 package org.mef.framework.fluent;
+import java.lang.reflect.Field;
+import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,13 +14,20 @@ public class QueryRunner<T> extends SfxBaseObj
 {
 	private List<QueryAction> actionL;
 	private QueryContext<T> queryctx;
-	
+
 	public QueryRunner(List<QueryAction> actionL, QueryContext<T> queryctx)
 	{
 		super(queryctx.getSfxContext());
 		this.actionL = actionL;
 		this.queryctx = queryctx;
+
+		//init proc
+		ProcRegistry registry = (ProcRegistry) this.getInstance(ProcRegistry.class);
+		Class clazz = queryctx.classOfT;
+		queryctx.proc = registry.findProc(clazz);
+
 	}
+
 
 	public T executeAny() 
 	{
@@ -26,11 +35,11 @@ public class QueryRunner<T> extends SfxBaseObj
 		T result = queryctx.proc.findAny();
 		return result;
 	}
-	
+
 	private void runProcessor() 
 	{
 		queryctx.proc.start(actionL);
-		
+
 		int i = 0;
 		for(QueryAction action : actionL)
 		{
@@ -39,9 +48,9 @@ public class QueryRunner<T> extends SfxBaseObj
 			if (isRelationalAction(action))
 			{
 				action = processRelationalAction(i, action);
-//				action = queryctx.proc.processRelationalAction(i, action, this.queryctx);
+				//				action = queryctx.proc.processRelationalAction(i, action, this.queryctx);
 			}
-			
+
 			if (action != null)
 			{
 				queryctx.proc.processAction(i, action);
@@ -57,26 +66,26 @@ public class QueryRunner<T> extends SfxBaseObj
 		Class clazz = queryctx.proc.getRelationalFieldType(action);
 		if (clazz == null)
 		{
-			return null;
+			return null; //is this an error?
 		}
-		
+
 		ProcRegistry registry = (ProcRegistry) this.getInstance(ProcRegistry.class);
 		IQueryActionProcessor otherProc = registry.findProc(clazz);
-		
+
 		String sav1 = action.fieldName; //addr
 		String sav2 = action.subFieldName; //street
-		
+
 		action.fieldName = sav2;
 		List<QueryAction> L = new ArrayList<QueryAction>();
 		L.add(action);
 		otherProc.start(actionL);
 		otherProc.processAction(0, action);
-		
+
 		Entity entity = (Entity) otherProc.findAny();
-		
+
 		//so we have found the address object that matches addr.street
 		//adjust the action so now we look for it
-		
+
 		QueryAction newAction = new QueryAction();
 		newAction.action = action.action;
 		newAction.fieldName = sav1;

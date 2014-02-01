@@ -33,10 +33,10 @@ public class StreetAddressDao implements IDAO
 		return new Query1<StreetAddress>(queryctx);
 	}
 
-	public void setActionProcessor(IQueryActionProcessor<StreetAddress> proc) 
-	{
-		queryctx.proc = proc;
-	}
+//	public void setActionProcessor(IQueryActionProcessor<StreetAddress> proc) 
+//	{
+//		queryctx.proc = proc;
+//	}
 
 	@Override
 	public int size() 

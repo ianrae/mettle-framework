@@ -5,7 +5,12 @@ import static org.junit.Assert.*;
 import java.io.File;
 
 import org.junit.Test;
+import org.mef.framework.fluent.EntityDBQueryProcessor;
+import org.mef.framework.fluent.ProcRegistry;
 import org.mef.framework.sfx.SfxContext;
+
+import testentities.Hotel;
+import testentities.StreetAddress;
 
 
 public class BaseTest 
@@ -81,5 +86,12 @@ public class BaseTest
 		}
 		String path = path1 + path2;
 		return path;
+	}
+	
+	protected ProcRegistry initProcRegistry()
+	{
+		ProcRegistry registry = new ProcRegistry();
+		_ctx.getServiceLocator().registerSingleton(ProcRegistry.class, registry);
+		return registry;
 	}
 }
