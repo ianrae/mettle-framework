@@ -1,6 +1,8 @@
 package org.mef.framework.fluent;
 import java.util.List;
 
+import org.mef.framework.dao.IDAO;
+
 
 public class QueryRunner<T>
 {
@@ -31,7 +33,8 @@ public class QueryRunner<T>
 			System.out.println(s);
 			if (isRelationalAction(action))
 			{
-				action = queryctx.proc.processRelationalAction(i, action);
+				action = processRelationalAction(i, action);
+//				action = queryctx.proc.processRelationalAction(i, action, this.queryctx);
 			}
 			
 			if (action != null)
@@ -42,6 +45,20 @@ public class QueryRunner<T>
 		}
 	}
 
+
+	private QueryAction processRelationalAction(int i, QueryAction action) 
+	{
+		Class clazz = queryctx.proc.getRelationalFieldType(action);
+		if (clazz == null)
+		{
+			return null;
+		}
+		
+		IDAO dao = queryctx.findDao(clazz);
+		
+		action = queryctx.proc.processRelationalAction(i, action, dao);
+		return action;
+	}
 
 	private boolean isRelationalAction(QueryAction qaction) 
 	{

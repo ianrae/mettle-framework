@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
+import org.mef.framework.dao.IDAO;
 import org.mef.framework.fluent.IQueryActionProcessor;
 import org.mef.framework.fluent.QStep;
 import org.mef.framework.fluent.Query1;
@@ -91,7 +92,13 @@ public class FluentTests extends BaseTest
 			log(String.format(" %d. %s", index, action.action));
 		}
 		@Override
-		public QueryAction processRelationalAction(int index, QueryAction action) {
+		public Class getRelationalFieldType(QueryAction action) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+		@Override
+		public QueryAction processRelationalAction(int i, QueryAction action,
+				IDAO dao) {
 			// TODO Auto-generated method stub
 			return null;
 		}

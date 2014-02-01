@@ -1,6 +1,8 @@
 package org.mef.framework.fluent;
 import java.util.List;
 
+import org.mef.framework.dao.IDAO;
+
 
 public interface IQueryActionProcessor<T>
 {
@@ -10,5 +12,7 @@ public interface IQueryActionProcessor<T>
 	List<T> findMany();
 	long findCount();
 	void processAction(int index, QueryAction action);
-	QueryAction processRelationalAction(int index, QueryAction action);
+	
+	Class getRelationalFieldType(QueryAction action);
+	QueryAction processRelationalAction(int i, QueryAction action, IDAO dao);
 }

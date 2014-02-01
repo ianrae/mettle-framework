@@ -278,4 +278,15 @@ public class EntityDB<T>
             Collections.sort(L, comparator);
 			return L;
 		}
+		
+		public Class getFieldType(List<T> L, String fieldName) 
+		{
+			for(T f : L)
+			{
+				Class clazz = helper.getFieldType(f, fieldName);
+				return clazz;
+			}
+			return null;
+		}
+		
 	}

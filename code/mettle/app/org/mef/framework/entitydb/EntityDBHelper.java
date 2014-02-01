@@ -27,6 +27,26 @@ public class EntityDBHelper<T>
 		
 		return value;
 	}
+	public Class getFieldType(T obj, String fieldName) 
+	{
+		if (fieldName == null)
+		{
+			return null;
+		}
+		if (obj == null)
+		{
+			return null;
+		}
+		
+		Field field = null;
+		Object value = getDeclaredField(obj, field, fieldName);
+		if (value == null)
+		{
+			value = getField(obj, field, fieldName);
+		}
+		
+		return value.getClass();
+	}
 	private Object getDeclaredField(Object obj, Field field, String fieldName)
 	{
 		Object value = null;

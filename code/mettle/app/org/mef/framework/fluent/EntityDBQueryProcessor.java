@@ -2,6 +2,7 @@ package org.mef.framework.fluent;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.mef.framework.dao.IDAO;
 import org.mef.framework.entities.Entity;
 import org.mef.framework.entitydb.EntityDB;
 import org.mef.framework.entitydb.IValueMatcher;
@@ -208,9 +209,25 @@ public class EntityDBQueryProcessor<T>  extends SfxBaseObj implements IQueryActi
 	}
 
 	@Override
-	public QueryAction processRelationalAction(int index, QueryAction action) 
+	public QueryAction processRelationalAction(int index, QueryAction qaction, IDAO dao) 
 	{
-		this.log("satur");
+		EntityDB dbOther = new EntityDB();
+		
+		db
+		
 		return null;
 	}
+
+	@Override
+	public Class getRelationalFieldType(QueryAction qaction) 
+	{
+		String s = qaction.fieldName;
+		int pos = s.indexOf('.');
+		String fieldName = s.substring(0, pos);
+		
+		Class clazz = db.getFieldType(dataL, fieldName);
+		//!!currently only works if dataL not empty. fix later
+		return clazz;
+	}
+
 }
