@@ -16,13 +16,23 @@ public class EntityValueMatcher implements IValueMatcher
 		Entity s1 = (Entity)value;
 		Entity s2 = (Entity) valueToMatch;
 		
+		if (s1 == s2) //same object?
+		{
+			return true;
+		}
+		
 		Long lval1 = (Long) helper.getFieldValue(s1,  "id");// this.getId(s1);
 		Long lval2 = (Long) helper.getFieldValue(s2,  "id");// this.getId(s1);
+		
+		if (lval1 == null || lval2 == null)
+		{
+			return false;
+		}
 		
 		switch(matchType)
 		{
 		case IValueMatcher.EXACT:
-				return lval1 == lval2;
+				return lval1.longValue() == lval2.longValue();
 //		case IValueMatcher.CASE_INSENSITIVE:
 //			return s1.equalsIgnoreCase(s2);
 //			

@@ -58,7 +58,10 @@ public class FluentDBRelationTests extends BaseTest
 		
 		String target = "King";
 		hotel = hotelDao.query().where("addr.street").eq(target).findAny();
-
+		assertNull(hotel);
+		
+		target = "Main";
+		hotel = hotelDao.query().where("addr.street").eq(target).findAny();
 		assertNotNull(hotel);
 		assertEquals(target, hotel.addr.street);
 

@@ -221,7 +221,7 @@ public class BeanDBTests
 		Airline airline = db.findFirstMatchEntity(airlineL, "flight", flight1);
 		assertSame(airlineL.get(0), airline);
 		airline = db.findFirstMatchEntity(airlineL, "flight", flight2);
-		assertSame(airlineL.get(0), airline);
+		assertSame(airlineL.get(1), airline);
 	}
 	
 	
