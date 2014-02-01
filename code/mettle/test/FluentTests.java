@@ -90,6 +90,11 @@ public class FluentTests extends BaseTest
 		{
 			log(String.format(" %d. %s", index, action.action));
 		}
+		@Override
+		public QueryAction processRelationalAction(int index, QueryAction action) {
+			// TODO Auto-generated method stub
+			return null;
+		}
 	}
 
 	@Test

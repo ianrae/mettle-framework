@@ -1,3 +1,4 @@
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -5,72 +6,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
-import org.mef.framework.binder.IFormBinder;
-import org.mef.framework.dao.IDAO;
 import org.mef.framework.fluent.EntityDBQueryProcessor;
-import org.mef.framework.fluent.IQueryActionProcessor;
-import org.mef.framework.fluent.QStep;
-import org.mef.framework.fluent.Query1;
-import org.mef.framework.fluent.QueryContext;
 
 import testentities.Hotel;
 import testentities.HotelDao;
 import testentities.StreetAddress;
 import tools.BaseTest;
+import tools.testfiles.StreetAddressDao;
 
 
 
 public class FluentDBRelationTests extends BaseTest
 {
 
-
-	public static class StreetAddressDao implements IDAO
-	{
-		//		public List<Hotel> dataL;
-		public QueryContext<StreetAddress> queryctx = new QueryContext<StreetAddress>();
-		List<StreetAddress> dataL;
-
-		public StreetAddressDao(List<StreetAddress> dataL)
-		{
-			queryctx.queryL = new ArrayList<QStep>();
-			this.dataL = dataL;
-			
-			
-		}
-
-		public Query1<StreetAddress> query()
-		{
-			queryctx.queryL = new ArrayList<QStep>();
-			return new Query1<StreetAddress>(queryctx);
-		}
-
-		public void setActionProcessor(IQueryActionProcessor<StreetAddress> proc) 
-		{
-			queryctx.proc = proc;
-		}
-
-		@Override
-		public int size() 
-		{
-			return dataL.size();
-		}
-
-		@Override
-		public void delete(long id) 
-		{
-			throw new RuntimeException("no del yet");
-		}
-
-		@Override
-		public void updateFrom(IFormBinder binder) 
-		{
-			throw new RuntimeException("no del yet");
-		}
-	}
-
-
 	@Test
-	public void testAnd()
+	public void test()
 	{
 		init();
 		String target = "King";
@@ -79,9 +29,38 @@ public class FluentDBRelationTests extends BaseTest
 		assertNotNull(h);
 		assertEquals(target, h.street);
 		assertEquals(100, h.number);
+	}
+
+	@Test
+	public void testFindEntity()
+	{
+		init();
+		StreetAddress addr = this.addressL.get(0);
+		Hotel hotel = this.hotelL.get(0);
+		hotel.addr = addr;
+		
+		hotel = hotelDao.query().where("addr").eq(addr).findAny();
+
+		assertNotNull(hotel);
+		assertSame(addr, hotel.addr);
 
 	}
 
+	@Test
+	public void testWhereInRelation()
+	{
+		init();
+		StreetAddress addr = this.addressL.get(0);
+		Hotel hotel = this.hotelL.get(0);
+		hotel.addr = addr;
+		
+		String target = "King";
+		hotel = hotelDao.query().where("addr.street").eq(target).findAny();
+
+		assertNotNull(hotel);
+		assertEquals(target, hotel.addr.street);
+
+	}
 
 	//--- helpers ---
 	private StreetAddressDao dao;
@@ -93,12 +72,13 @@ public class FluentDBRelationTests extends BaseTest
 	{
 		this.createContext();
 		addressL = this.buildAddresses();
-		dao = new StreetAddressDao(addressL);
-		
 		hotelL = this.buildHotels();
+		
+		dao = new StreetAddressDao(addressL);
 		hotelDao = new HotelDao(hotelL);
 		
 		dao.setActionProcessor(new EntityDBQueryProcessor<StreetAddress>(_ctx, addressL));
+		hotelDao.setActionProcessor(new EntityDBQueryProcessor<Hotel>(_ctx, hotelL));
 	}
 
 	private List<StreetAddress> buildAddresses()

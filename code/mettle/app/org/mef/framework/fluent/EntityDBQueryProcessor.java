@@ -2,6 +2,7 @@ package org.mef.framework.fluent;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.mef.framework.entities.Entity;
 import org.mef.framework.entitydb.EntityDB;
 import org.mef.framework.entitydb.IValueMatcher;
 import org.mef.framework.sfx.SfxBaseObj;
@@ -151,6 +152,10 @@ public class EntityDBQueryProcessor<T>  extends SfxBaseObj implements IQueryActi
 			{
 				return db.findMatches(dataL, qaction.fieldName, (String)qaction.obj);
 			}
+			else if (qaction.obj instanceof Entity)
+			{
+				return db.findMatchesEntity(dataL, qaction.fieldName, (Entity)qaction.obj);
+			}
 			else
 			{
 				throw new FluentException("ActionProc: unsupported obj type: " + qaction.obj.getClass().getSimpleName());
@@ -200,5 +205,12 @@ public class EntityDBQueryProcessor<T>  extends SfxBaseObj implements IQueryActi
 		{
 			throw new FluentException("ActionProc: unsupported obj type: " + qaction.obj.getClass().getSimpleName());
 		}
+	}
+
+	@Override
+	public QueryAction processRelationalAction(int index, QueryAction action) 
+	{
+		this.log("satur");
+		return null;
 	}
 }

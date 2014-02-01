@@ -1,6 +1,8 @@
 package org.mef.framework.fluent;
 import java.util.Date;
 
+import org.mef.framework.entities.Entity;
+
 
 public class Query2<T> extends QueryBase<T>
 {
@@ -41,6 +43,11 @@ public class Query2<T> extends QueryBase<T>
 		this.addx(QueryParser.EQ, 'b', b);
 		return new Query3<T>(queryctx);
 	}
+	public Query3<T> eq(Entity entity)
+	{
+		this.addx(QueryParser.EQ, 'e', entity);
+		return new Query3<T>(queryctx);
+	}
 	
 	//neq
 	public Query3<T> neq(String val)
@@ -73,6 +80,12 @@ public class Query2<T> extends QueryBase<T>
 		this.addx(QueryParser.NEQ, 'b', b);
 		return new Query3<T>(queryctx);
 	}
+	public Query3<T> neq(Entity entity)
+	{
+		this.addx(QueryParser.NEQ, 'e', entity);
+		return new Query3<T>(queryctx);
+	}
+	
 	
 	//lt
 	public Query3<T> lt(String val)
@@ -105,6 +118,7 @@ public class Query2<T> extends QueryBase<T>
 		this.addx(QueryParser.LT, 'b', b);
 		return new Query3<T>(queryctx);
 	}
+	
 
 	//le
 	public Query3<T> le(String val)
@@ -138,6 +152,8 @@ public class Query2<T> extends QueryBase<T>
 		return new Query3<T>(queryctx);
 	}
 	
+	
+	
 	//gt
 	public Query3<T> gt(String val)
 	{
@@ -169,6 +185,8 @@ public class Query2<T> extends QueryBase<T>
 		this.addx(QueryParser.GT, 'b', b);
 		return new Query3<T>(queryctx);
 	}
+	
+	
 	//ge
 	public Query3<T> ge(String val)
 	{

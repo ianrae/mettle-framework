@@ -29,9 +29,27 @@ public class QueryRunner<T>
 		{
 			String s = String.format("%s: %s %s", action.action, action.fieldName, action.op);
 			System.out.println(s);
-			queryctx.proc.processAction(i, action);
+			if (isRelationalAction(action))
+			{
+				action = queryctx.proc.processRelationalAction(i, action);
+			}
+			
+			if (action != null)
+			{
+				queryctx.proc.processAction(i, action);
+			}
 			i++;
 		}
+	}
+
+
+	private boolean isRelationalAction(QueryAction qaction) 
+	{
+		if (qaction.action.equals("WHERE") && qaction.fieldName.contains("."))
+		{
+			return true;
+		}
+		return false;
 	}
 
 	public List<T> executeMany() 

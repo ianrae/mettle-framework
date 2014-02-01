@@ -10,4 +10,5 @@ public interface IQueryActionProcessor<T>
 	List<T> findMany();
 	long findCount();
 	void processAction(int index, QueryAction action);
+	QueryAction processRelationalAction(int index, QueryAction action);
 }
