@@ -209,15 +209,6 @@ public class EntityDBQueryProcessor<T>  extends SfxBaseObj implements IQueryActi
 	}
 
 	@Override
-	public QueryAction processRelationalAction(int index, QueryAction qaction, IDAO dao) 
-	{
-		EntityDB dbOther = new EntityDB();
-		
-		
-		return null;
-	}
-
-	@Override
 	public Class getRelationalFieldType(QueryAction qaction) 
 	{
 		String fieldName = qaction.fieldName;

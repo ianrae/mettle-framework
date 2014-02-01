@@ -96,12 +96,6 @@ public class FluentTests extends BaseTest
 			// TODO Auto-generated method stub
 			return null;
 		}
-		@Override
-		public QueryAction processRelationalAction(int i, QueryAction action,
-				IDAO dao) {
-			// TODO Auto-generated method stub
-			return null;
-		}
 	}
 
 	@Test

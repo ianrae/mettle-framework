@@ -12,7 +12,5 @@ public interface IQueryActionProcessor<T>
 	List<T> findMany();
 	long findCount();
 	void processAction(int index, QueryAction action);
-	
-	Class getRelationalFieldType(QueryAction action);
-	QueryAction processRelationalAction(int i, QueryAction action, IDAO dao);
+	Class<T> getRelationalFieldType(QueryAction action);
 }
