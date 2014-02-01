@@ -1,103 +1,24 @@
-import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
-import org.mef.framework.binder.IFormBinder;
-import org.mef.framework.dao.IDAO;
-import org.mef.framework.entities.Entity;
 import org.mef.framework.entitydb.EntityDB;
 import org.mef.framework.fluent.EntityDBQueryProcessor;
 import org.mef.framework.fluent.FluentException;
-import org.mef.framework.fluent.IQueryActionProcessor;
-import org.mef.framework.fluent.QStep;
-import org.mef.framework.fluent.Query1;
-import org.mef.framework.fluent.QueryContext;
 
+import testentities.Hotel;
+import testentities.HotelDao;
 import tools.BaseTest;
 
 
 
 public class FluentDBTests extends BaseTest
 {
-	public static class StreetAddress extends Entity
-	{
-		public String street;
-		public int number;
-
-		public StreetAddress(String street, Integer num)
-		{
-			this.street = street;
-			this.number = num;
-		}
-	}
-	
-	public static class Hotel extends Entity
-	{
-		public String flight;
-		public String model;
-		public Integer num;
-		public int  nVal;
-		public StreetAddress addr;
-
-		public Hotel(String flight, String model, Integer num)
-		{
-			this.flight = flight;
-			this.model = model;
-			this.num = num;
-			this.nVal = num + 100;
-		}
-	}
-
-
-
-	public static class HotelDao implements IDAO
-	{
-		//		public List<Hotel> dataL;
-		public QueryContext<Hotel> queryctx = new QueryContext<Hotel>();
-		List<Hotel> dataL;
-
-		public HotelDao(List<Hotel> dataL)
-		{
-			queryctx.queryL = new ArrayList<QStep>();
-			this.dataL = dataL;
-		}
-
-		public Query1<Hotel> query()
-		{
-			queryctx.queryL = new ArrayList<QStep>();
-			return new Query1<Hotel>(queryctx);
-		}
-
-		public void setActionProcessor(IQueryActionProcessor<Hotel> proc) 
-		{
-			queryctx.proc = proc;
-		}
-
-		@Override
-		public int size() 
-		{
-			return dataL.size();
-		}
-
-		@Override
-		public void delete(long id) 
-		{
-			throw new RuntimeException("no del yet");
-		}
-
-		@Override
-		public void updateFrom(IFormBinder binder) 
-		{
-			throw new RuntimeException("no del yet");
-		}
-	}
-
-
 	@Test
 	public void testIntersectionNone() 
 	{

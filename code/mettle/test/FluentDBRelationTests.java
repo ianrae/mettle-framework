@@ -1,7 +1,5 @@
-import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,50 +7,21 @@ import java.util.List;
 import org.junit.Test;
 import org.mef.framework.binder.IFormBinder;
 import org.mef.framework.dao.IDAO;
-import org.mef.framework.entities.Entity;
-import org.mef.framework.entitydb.EntityDB;
 import org.mef.framework.fluent.EntityDBQueryProcessor;
-import org.mef.framework.fluent.FluentException;
 import org.mef.framework.fluent.IQueryActionProcessor;
 import org.mef.framework.fluent.QStep;
 import org.mef.framework.fluent.Query1;
 import org.mef.framework.fluent.QueryContext;
 
+import testentities.Hotel;
+import testentities.HotelDao;
+import testentities.StreetAddress;
 import tools.BaseTest;
 
 
 
 public class FluentDBRelationTests extends BaseTest
 {
-	public static class StreetAddress extends Entity
-	{
-		public String street;
-		public int number;
-
-		public StreetAddress(String street, Integer num)
-		{
-			this.street = street;
-			this.number = num;
-		}
-	}
-	
-	public static class Hotel extends Entity
-	{
-		public String flight;
-		public String model;
-		public Integer num;
-		public int  nVal;
-		public StreetAddress addr;
-
-		public Hotel(String flight, String model, Integer num)
-		{
-			this.flight = flight;
-			this.model = model;
-			this.num = num;
-			this.nVal = num + 100;
-		}
-	}
-
 
 
 	public static class StreetAddressDao implements IDAO
@@ -65,6 +34,8 @@ public class FluentDBRelationTests extends BaseTest
 		{
 			queryctx.queryL = new ArrayList<QStep>();
 			this.dataL = dataL;
+			
+			
 		}
 
 		public Query1<StreetAddress> query()
@@ -114,22 +85,39 @@ public class FluentDBRelationTests extends BaseTest
 
 	//--- helpers ---
 	private StreetAddressDao dao;
+	private HotelDao hotelDao;
 	List<StreetAddress> addressL;
+	List<Hotel> hotelL;
 
 	private void init()
 	{
 		this.createContext();
-		addressL = this.buildHotels();
+		addressL = this.buildAddresses();
 		dao = new StreetAddressDao(addressL);
+		
+		hotelL = this.buildHotels();
+		hotelDao = new HotelDao(hotelL);
+		
 		dao.setActionProcessor(new EntityDBQueryProcessor<StreetAddress>(_ctx, addressL));
 	}
 
-	List<StreetAddress> buildHotels()
+	private List<StreetAddress> buildAddresses()
 	{
 		ArrayList<StreetAddress> L = new ArrayList<StreetAddress>();
 
 		L.add(new StreetAddress("Main", 100));
 		L.add(new StreetAddress("King", 100));
+		return L;
+	}
+	
+	List<Hotel> buildHotels()
+	{
+		ArrayList<Hotel> L = new ArrayList<Hotel>();
+
+		L.add(new Hotel("UL900", "Spitfire", 10));
+		L.add(new Hotel("UL901", "Spitfire", 13));
+		L.add(new Hotel("AC710", "Airbus", 11));
+		L.add(new Hotel("UL901", "Boeing", 12));
 		return L;
 	}
 
