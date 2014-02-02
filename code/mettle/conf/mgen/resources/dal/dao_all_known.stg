@@ -40,16 +40,18 @@ adddal(type) ::= <<
 
 if (createMocks)
 {
-	I<type>DAO dal = new Mock<type>DAO();
-	ctx.getServiceLocator().registerSingleton(I<type>DAO.class, dal);
-	L.add(dal);
+	I<type>DAO dao = new Mock<type>DAO();
+	ctx.getServiceLocator().registerSingleton(I<type>DAO.class, dao);
+	L.add(dao);
 }
 else
 {
-	I<type>DAO dal = new <type>DAO();
-	ctx.getServiceLocator().registerSingleton(I<type>DAO.class, dal);
-	L.add(dal);
+	I<type>DAO dao = new <type>DAO();
+	ctx.getServiceLocator().registerSingleton(I<type>DAO.class, dao);
+	L.add(dao);
 }	
+dao.init(ctx);
+
 >>
 
 endclassdecl(isParentOfExtended) ::= <<

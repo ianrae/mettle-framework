@@ -8,6 +8,7 @@ import org.mef.framework.fluent.IQueryActionProcessor;
 import org.mef.framework.fluent.QStep;
 import org.mef.framework.fluent.Query1;
 import org.mef.framework.fluent.QueryContext;
+import org.mef.framework.sfx.SfxContext;
 
 import testentities.StreetAddress;
 
@@ -54,5 +55,11 @@ public class StreetAddressDao implements IDAO
 	public void updateFrom(IFormBinder binder) 
 	{
 		throw new RuntimeException("no del yet");
+	}
+
+	@Override
+	public void init(SfxContext ctx) {
+		// TODO Auto-generated method stub
+		
 	}
 }

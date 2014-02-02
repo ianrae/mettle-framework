@@ -13,6 +13,14 @@ import mef.gen.*;
 import org.mef.framework.entitydb.EntityDB;
 import java.util.Date;
 import com.avaje.ebean.Page;
+import org.mef.framework.fluent.EntityDBQueryProcessor;
+import org.mef.framework.fluent.ProcRegistry;
+import org.mef.framework.fluent.QStep;
+import org.mef.framework.fluent.Query1;
+import org.mef.framework.fluent.QueryContext;
+import org.mef.framework.sfx.SfxContext;
+
+
 <extras; separator="\n">
 
 >>
@@ -49,6 +57,25 @@ public class <name> implements I<type>DAO
 {
     protected List\<<type>\> _L = new ArrayList\<<type>\>();
     protected EntityDB\<<type>\> _entityDB = new EntityDB\<<type>\>();
+	public QueryContext\<<type>\> queryctx; 
+	
+	@Override
+	public void init(SfxContext ctx)
+	{
+		this.queryctx = new QueryContext\<<type>\>(ctx, <type>.class);
+		
+		ProcRegistry registry = (ProcRegistry) ctx.getServiceLocator().getInstance(ProcRegistry.class);
+		EntityDBQueryProcessor\<<type>\> proc = new EntityDBQueryProcessor\<<type>\>(ctx, _L);
+		registry.registerDao(<type>.class, proc);
+	}
+    
+	@Override
+	public Query1\<<type>\> query() 
+	{
+		queryctx.queryL = new ArrayList<QStep>();
+		return new Query1\<<type>\>(queryctx);
+	}
+    
     
     @Override
     public int size() 

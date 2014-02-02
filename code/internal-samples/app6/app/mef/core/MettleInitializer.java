@@ -3,11 +3,16 @@ package mef.core;
 //uncomment after you create your first Entity in mef.xml
 //import mef.gen.AllKnownDAOs_GEN;
 
+import mef.entities.User;
+
 import org.mef.framework.dao.IDAO;
+import org.mef.framework.fluent.EntityDBQueryProcessor;
+import org.mef.framework.fluent.ProcRegistry;
 import org.mef.framework.sfx.IServiceFactory;
 import org.mef.framework.sfx.SfxContext;
 import org.mef.framework.sfx.SfxErrorTracker;
 import org.mef.framework.Logger;
+
 
 public class MettleInitializer 
 {
@@ -36,12 +41,22 @@ public class MettleInitializer
 		String var = ctx.getVar("UNITTEST");
 		boolean createMocks = (var != null);
 		
+		initProcRegistry();
+		
+		
 		//UNCOMMENT these two lines after you add first entity in mef.xml
-//		AllKnownDAOs knownDAOs = new AllKnownDAOs();
-//		knownDAOs.registerDAOs(ctx, createMocks);
+		AllKnownDAOs knownDAOs = new AllKnownDAOs();
+		knownDAOs.registerDAOs(ctx, createMocks);
 		
 		//load seed data
 		loadSeedData(); //move to separate loader registered...
+	}
+	
+	protected ProcRegistry initProcRegistry()
+	{
+		ProcRegistry registry = new ProcRegistry();
+		theCtx.getServiceLocator().registerSingleton(ProcRegistry.class, registry);
+		return registry;
 	}
 	
 	private void loadSeedData()

@@ -44,7 +44,9 @@ public class UserPresenter extends Presenter
 	{
 		UserReply reply = createReply(); 
 		reply.setDestination(Reply.VIEW_INDEX);
-		reply._allL = _dao.all();
+//		reply._allL = _dao.all();
+		reply._allL = _dao.query().findMany();
+		
 		return reply;
 	}
 

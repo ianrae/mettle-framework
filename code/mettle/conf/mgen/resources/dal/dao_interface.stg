@@ -10,6 +10,10 @@ import org.mef.framework.dao.IDAO;
 import mef.gen.*;
 import java.util.Date;
 import com.avaje.ebean.Page;
+import org.mef.framework.fluent.QStep;
+import org.mef.framework.fluent.Query1;
+
+
 <extras; separator="\n">
 
 >>
@@ -29,6 +33,8 @@ public interface <name>  extends IDAO
 	List\<<type>\> all();
 	void save(<type> entity);        
 	void update(<type> entity);
+	public Query1\<<type>\> query();
+	
     
 <endif>    
 >>

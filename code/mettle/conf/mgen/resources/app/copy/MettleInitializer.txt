@@ -8,6 +8,8 @@ import org.mef.framework.sfx.IServiceFactory;
 import org.mef.framework.sfx.SfxContext;
 import org.mef.framework.sfx.SfxErrorTracker;
 import org.mef.framework.Logger;
+import org.mef.framework.fluent.EntityDBQueryProcessor;
+import org.mef.framework.fluent.ProcRegistry;
 
 public class MettleInitializer 
 {
@@ -35,6 +37,7 @@ public class MettleInitializer
 		
 		String var = ctx.getVar("UNITTEST");
 		boolean createMocks = (var != null);
+		initProcRegistry();
 		
 		//UNCOMMENT these two lines after you add first entity in mef.xml
 //		AllKnownDAOs knownDAOs = new AllKnownDAOs();
@@ -43,6 +46,14 @@ public class MettleInitializer
 		//load seed data
 		loadSeedData(); //move to separate loader registered...
 	}
+	
+	protected ProcRegistry initProcRegistry()
+	{
+		ProcRegistry registry = new ProcRegistry();
+		theCtx.getServiceLocator().registerSingleton(ProcRegistry.class, registry);
+		return registry;
+	}
+	
 	
 	private void loadSeedData()
 	{
