@@ -14,6 +14,7 @@ import mef.daos.mocks.*;
 import boundaries.daos.*;
 import org.mef.framework.sfx.SfxContext;
 import java.util.Date;
+
 <extras; separator="\n">
 
 
@@ -43,14 +44,15 @@ if (createMocks)
 	I<type>DAO dao = new Mock<type>DAO();
 	ctx.getServiceLocator().registerSingleton(I<type>DAO.class, dao);
 	L.add(dao);
+	dao.init(ctx);
 }
 else
 {
 	I<type>DAO dao = new <type>DAO();
 	ctx.getServiceLocator().registerSingleton(I<type>DAO.class, dao);
 	L.add(dao);
+	dao.init(ctx);
 }	
-dao.init(ctx);
 
 >>
 
