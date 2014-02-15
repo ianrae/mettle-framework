@@ -68,9 +68,9 @@ public class MethodInvoker extends SfxBaseObj
 			Object result = null;
 			try 
 			{
-				log("a0");
+//				log("a0");
 				result = _method.invoke(_target, param1);
-				log("a1");
+//				log("a1");
 			} catch (IllegalArgumentException e) 
 			{
 				// TODO Auto-generated catch block

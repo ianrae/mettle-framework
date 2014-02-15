@@ -5,6 +5,9 @@
 # Home page
 GET     /                           controllers.Application.index()
 
+# Users
+GET     /users                     controllers.UserController.index()
+
 # Error
 GET     /logout                 controllers.ErrorController.logout()
 GET     /showError                 controllers.ErrorController.showError(msg:String)
