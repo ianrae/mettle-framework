@@ -1,8 +1,13 @@
 import java.util.List;
 
+import mef.core.MettleInitializer;
+import mef.core.UserEbeanQueryProcessor;
+import mef.daos.IUserDAO;
+import mef.entities.User;
 import models.UserModel;
 
 import org.junit.*;
+import org.mef.framework.sfx.SfxContext;
 
 import play.mvc.*;
 import play.test.*;
@@ -33,16 +38,38 @@ public class IntegrationTest {
                 List<UserModel> all = UserModel.find.all();
                 log(String.format("usermodel: count %d", all.size()));
                 
-                UserModel m = new UserModel();
-                m.setName("billy");
-                m.save();
-
+                buildTable();
+                
                 log("xx2");
                 all = UserModel.find.all();
                 log(String.format("usermodel: count %d", all.size()));
+                for(UserModel m : all)
+                {
+                	log(String.format("%d: %s", m.getId(), m.getName()));
+                }
                 
+                SfxContext ctx = MettleInitializer.theCtx;
+//                UserEbeanQueryProcessor qproc = new UserEbeanQueryProcessor(ctx);
+                
+                log("dao");
+                IUserDAO dao = (IUserDAO) MettleInitializer.getDAO(IUserDAO.class);
+                assertThat(dao).isNotNull();
             }
         });
+    }
+    
+    private void buildTable()
+    {
+        UserModel m = new UserModel();
+        m.setName("billy");
+        m.save();
+        m = new UserModel();
+        m.setName("joe");
+        m.save();
+        m = new UserModel();
+        m.setName("ally");
+        m.save();
+  	
     }
     
     //--helpers--

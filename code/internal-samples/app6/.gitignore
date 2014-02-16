@@ -3,7 +3,7 @@ project/project
 project/target
 target
 .target
-*.java
+*.class
 bin
 tmp
 .history

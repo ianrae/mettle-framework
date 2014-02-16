@@ -20,7 +20,7 @@ public class AllKnownDAOs_GEN
 	{
 		ArrayList<IDAO> L = new ArrayList<IDAO>();
 		IUserDAO dao = null;
-		
+		System.out.println(String.format("mock %b", createMocks));
 		if (createMocks)
 		{
 			dao = new MockUserDAO();
