@@ -32,9 +32,10 @@ public class MettleInitializer
 	public void onStart()
 	{
 		SfxContext ctx = theCtx;
-		
-		Logger.info("appPath: " + appPath);
-		ctx.setVar("appPath", appPath);
+
+		//not needed
+//		Logger.info("appPath: " + appPath);
+//		ctx.setVar("appPath", appPath);
 		
 		registerIfNotAlready(SfxErrorTracker.class, new SfxErrorTracker(ctx));
 		

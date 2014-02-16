@@ -1,3 +1,7 @@
+import java.util.List;
+
+import models.UserModel;
+
 import org.junit.*;
 
 import play.mvc.*;
@@ -17,12 +21,26 @@ public class IntegrationTest {
      */
     @Test
     public void test() {
-        running(testServer(3333, fakeApplication(inMemoryDatabase())), HTMLUNIT, new Callback<TestBrowser>() {
+    	log("starttest 0");
+    	Global global = new Global();
+        running(testServer(3333, fakeApplication(inMemoryDatabase(), global)), HTMLUNIT, new Callback<TestBrowser>() {
             public void invoke(TestBrowser browser) {
+            	log("starttest 1");
                 browser.goTo("http://localhost:3333");
                 assertThat(browser.pageSource()).contains("app6: bob");
                 
                 log("xx");
+                List<UserModel> all = UserModel.find.all();
+                log(String.format("usermodel: count %d", all.size()));
+                
+                UserModel m = new UserModel();
+                m.setName("billy");
+                m.save();
+
+                log("xx2");
+                all = UserModel.find.all();
+                log(String.format("usermodel: count %d", all.size()));
+                
             }
         });
     }
