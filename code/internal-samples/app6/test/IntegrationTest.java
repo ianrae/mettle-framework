@@ -54,8 +54,24 @@ public class IntegrationTest {
                 log("dao");
                 IUserDAO dao = (IUserDAO) MettleInitializer.getDAO(IUserDAO.class);
                 assertThat(dao).isNotNull();
+                
+                List<User> userlist = dao.query().findMany();
+                dumpList(userlist, "");
+                
+        		userlist = dao.query().where("name").eq("joe").findMany();
+        		dumpList(userlist, "2");
+
             }
         });
+    }
+
+    private void dumpList(List<User> userlist, String prefix)
+    {
+	    log(String.format("userlist%s: count %d", prefix, userlist.size()));
+	    for(User u: userlist)
+	    {
+	    	log(String.format("%d: %s", u.id, u.name));
+	    }
     }
     
     private void buildTable()

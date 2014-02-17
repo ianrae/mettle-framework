@@ -15,13 +15,17 @@ import org.mef.framework.fluent.QueryAction;
 import org.mef.framework.sfx.SfxBaseObj;
 import org.mef.framework.sfx.SfxContext;
 
+import boundaries.daos.UserDAO;
+
+import com.avaje.ebean.ExpressionList;
+
 
 public class UserEbeanQueryProcessor  extends SfxBaseObj implements IQueryActionProcessor<User>
 {
-	UserModel model;
 	String orderBy;
 	String orderAsc; //"asc" or "desc"
 	int limit;
+	ExpressionList expr;
 
 	public UserEbeanQueryProcessor(SfxContext ctx)
 	{
@@ -33,6 +37,7 @@ public class UserEbeanQueryProcessor  extends SfxBaseObj implements IQueryAction
 	{
 		orderBy = null;
 		limit = -1;
+		expr = null;
 		log("start");
 	}
 
@@ -69,7 +74,7 @@ public class UserEbeanQueryProcessor  extends SfxBaseObj implements IQueryAction
 	{
 		log("findAny");
 		initResultLIfNeeded();
-
+		
 //		if (resultL.size() == 0)
 //		{
 //			return null;
@@ -82,7 +87,19 @@ public class UserEbeanQueryProcessor  extends SfxBaseObj implements IQueryAction
 	{
 		log("findMany");
 		initResultLIfNeeded();
-		return null;
+		List<UserModel> mL = null;
+		
+		if (expr == null)
+		{
+			mL = UserModel.find.all();
+		}
+		else
+		{
+			mL = expr.findList();
+		}
+
+		List<User> uL = UserDAO.createEntityFromModel(mL);
+		return uL;
 	}
 	@Override
 	public long findCount() 
@@ -97,7 +114,7 @@ public class UserEbeanQueryProcessor  extends SfxBaseObj implements IQueryAction
 	{
 		String action = qaction.action;
 
-		log(String.format(" %d. %s", index, action));
+		log(String.format(" %d. %s -- %s %s", index, action, qaction.op, qaction.fieldName));
 
 		if (action.equals("ALL"))
 		{
@@ -106,6 +123,10 @@ public class UserEbeanQueryProcessor  extends SfxBaseObj implements IQueryAction
 		else if (action.equals("WHERE"))
 		{
 //			resultL = findMatchByType(qaction);
+			if (expr == null)
+			{
+				expr = UserModel.find.where().eq(qaction.fieldName, qaction.obj);
+			}
 		}
 		else if (action.equals("AND"))
 		{
