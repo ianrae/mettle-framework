@@ -15,11 +15,14 @@ import org.mef.framework.fluent.QueryAction;
 import org.mef.framework.sfx.SfxBaseObj;
 import org.mef.framework.sfx.SfxContext;
 
+import play.db.ebean.Model.Finder;
+
 import boundaries.daos.UserDAO;
 
 import com.avaje.ebean.Expr;
 import com.avaje.ebean.Expression;
 import com.avaje.ebean.ExpressionList;
+import com.avaje.ebean.Query;
 
 
 public class UserEbeanQueryProcessor  extends SfxBaseObj implements IQueryActionProcessor<User>
@@ -27,9 +30,9 @@ public class UserEbeanQueryProcessor  extends SfxBaseObj implements IQueryAction
 	String orderBy;
 	String orderAsc; //"asc" or "desc"
 	int limit;
-//	ExpressionList expr;
 	Expression expr1;
 	Expression expr2;
+	private String fetch;
 
 	public UserEbeanQueryProcessor(SfxContext ctx)
 	{
@@ -42,6 +45,7 @@ public class UserEbeanQueryProcessor  extends SfxBaseObj implements IQueryAction
 		orderBy = null;
 		limit = -1;
 		expr1 = expr2 = null;
+		fetch = null;
 		log("start");
 	}
 
@@ -49,57 +53,85 @@ public class UserEbeanQueryProcessor  extends SfxBaseObj implements IQueryAction
 	public User findOne() //exactly one
 	{
 		log("findOne");
-		return null;
+		Query<UserModel> qry = createQueryObj();
+		UserModel m = null;
+		
+		if (expr1 == null)
+		{
+			m = qry.findUnique();
+		}
+		else
+		{
+			m = qry.where(expr1).findUnique();
+		}
+
+		User u = UserDAO.createEntityFromModel(m);
+		return u;
 	}
 
-	private void initResultLIfNeeded()
-	{
-//		if (resultL == null)
-//		{
-//			resultL = db.union(dataL, new ArrayList<T>());
-//		}
-//
-//		if (orderBy != null)
-//		{
-//			resultL = db.orderBy(resultL, orderBy, orderAsc, String.class);
-//		}
-//
-//		if (limit >= 0)
-//		{
-//			if (limit > resultL.size())
-//			{
-//				limit = resultL.size();
-//			}
-//			resultL = resultL.subList(0, limit);
-//		}
-	}
 	@Override
 	public User findAny() //0 or 1
 	{
 		log("findAny");
-		initResultLIfNeeded();
 		
-//		if (resultL.size() == 0)
-//		{
-//			return null;
-//		}
-//		return resultL.get(0);
-		return null;
-	}
-	@Override
-	public List<User> findMany() 
-	{
-		log("findMany");
-		initResultLIfNeeded();
+		Query<UserModel> qry = createQueryObj();
 		List<UserModel> mL = null;
 		
 		if (expr1 == null)
 		{
-			mL = UserModel.find.all();
+			mL = qry.findList();
 		}
 		else
 		{
-			mL = UserModel.find.where(expr1).findList();
+			mL = qry.where(expr1).findList();
+		}
+		
+		if (mL == null || mL.size() == 0)
+		{
+			return null;
+		}
+		
+		UserModel m = mL.get(0);
+		User u = UserDAO.createEntityFromModel(m);
+		return u;
+	}
+	
+	private Query<UserModel> createQueryObj()
+	{
+		Query<UserModel> qry = UserModel.find;
+		
+		if (fetch != null)
+		{
+			qry = qry.fetch(fetch);
+		}
+		
+		if (orderBy != null)
+		{
+//			resultL = db.orderBy(resultL, orderBy, orderAsc, String.class);
+			qry = UserModel.find.orderBy(orderBy + " " + orderAsc);
+		}
+		
+		if (this.limit >= 0)
+		{
+			qry = qry.setMaxRows(limit);
+		}
+		return qry;
+	}
+	
+	@Override
+	public List<User> findMany() 
+	{
+		log("findMany");
+		List<UserModel> mL = null;
+		Query<UserModel> qry = createQueryObj();
+		
+		if (expr1 == null)
+		{
+			mL = qry.findList();
+		}
+		else
+		{
+			mL = qry.where(expr1).findList();
 		}
 
 		List<User> uL = UserDAO.createEntityFromModel(mL);
@@ -109,8 +141,18 @@ public class UserEbeanQueryProcessor  extends SfxBaseObj implements IQueryAction
 	public long findCount() 
 	{
 		log("findCount");
-		initResultLIfNeeded();
-		return 0;
+		Query<UserModel> qry = createQueryObj();
+		
+		int rowCount = 0;
+		if (expr1 == null)
+		{
+			rowCount = qry.findRowCount();
+		}
+		else
+		{
+			rowCount = qry.where(expr1).findRowCount();
+		}
+		return rowCount;
 	}
 
 	@Override
@@ -126,50 +168,20 @@ public class UserEbeanQueryProcessor  extends SfxBaseObj implements IQueryAction
 		}
 		else if (action.equals("WHERE"))
 		{
-//			resultL = findMatchByType(qaction);
 			if (expr1 == null)
 			{
-				if (opIs(qaction, "eq"))
-				{
-					expr1 = Expr.eq(qaction.fieldName, qaction.obj);
-				}
-				else if (opIs(qaction, "neq"))
-				{
-					expr1 = Expr.ne(qaction.fieldName, qaction.obj);
-				}
-				else if (opIs(qaction, "lt"))
-				{
-					expr1 = Expr.lt(qaction.fieldName, qaction.obj);
-				}
-				else if (opIs(qaction, "gt"))
-				{
-					expr1 = Expr.gt(qaction.fieldName, qaction.obj);
-				}
-				else if (opIs(qaction, "le"))
-				{
-					expr1 = Expr.le(qaction.fieldName, qaction.obj);
-				}
-				else if (opIs(qaction, "ge"))
-				{
-					expr1 = Expr.ge(qaction.fieldName, qaction.obj);
-				}
-				else
-				{
-					throw new FluentException("ActionProc: unsupported obj type: " + qaction.obj.getClass().getSimpleName());
-				}
+				expr1 = doExpr(qaction);
 			}
 		}
 		else if (action.equals("AND"))
 		{
-//			List<T> tmp1 = findMatchByType(qaction);
-//			resultL = db.intersection(resultL, tmp1);
+			expr2 = doExpr(qaction);
+			expr1 = Expr.and(expr1, expr2);
 		}
 		else if (action.equals("OR"))
 		{
 			expr2 = Expr.eq(qaction.fieldName, qaction.obj);
 			expr1 = Expr.or(expr1, expr2);
-//			List<T> tmp1 = findMatchByType(qaction);
-//			resultL = db.union(resultL, tmp1);
 		}
 		else if (action.equals("ORDERBY"))
 		{
@@ -181,12 +193,48 @@ public class UserEbeanQueryProcessor  extends SfxBaseObj implements IQueryAction
 			limit = (Integer)qaction.obj;
 		}
 		else if (action.equals("FETCH"))
-		{ //nothing to do
+		{ 
+			fetch = (String)qaction.obj; //only 1 fetch supported for now!!
 		}
 		else
 		{
 			throw new FluentException("ActionProc: unknown action: " + action);
 		}
+	}
+
+	private Expression doExpr(QueryAction qaction)
+	{
+		Expression expr = null;
+		
+		if (opIs(qaction, "eq"))
+		{
+			expr = Expr.eq(qaction.fieldName, qaction.obj);
+		}
+		else if (opIs(qaction, "neq"))
+		{
+			expr = Expr.ne(qaction.fieldName, qaction.obj);
+		}
+		else if (opIs(qaction, "lt"))
+		{
+			expr = Expr.lt(qaction.fieldName, qaction.obj);
+		}
+		else if (opIs(qaction, "gt"))
+		{
+			expr = Expr.gt(qaction.fieldName, qaction.obj);
+		}
+		else if (opIs(qaction, "le"))
+		{
+			expr = Expr.le(qaction.fieldName, qaction.obj);
+		}
+		else if (opIs(qaction, "ge"))
+		{
+			expr = Expr.ge(qaction.fieldName, qaction.obj);
+		}
+		else
+		{
+			throw new FluentException("ActionProc: unsupported obj type: " + qaction.obj.getClass().getSimpleName());
+		}
+		return expr;
 	}
 	
 	private boolean opIs(QueryAction qaction, String op)
@@ -194,81 +242,6 @@ public class UserEbeanQueryProcessor  extends SfxBaseObj implements IQueryAction
 		return qaction.op.equals(op);
 	}
 
-	private List<User> findMatchByType(QueryAction qaction)
-	{
-		if (qaction.obj == null)
-		{
-			throw new FluentException("ActionProc: obj is null");
-		}
-
-		if (qaction.op.equals("eq"))
-		{
-			if (qaction.obj instanceof Long)
-			{
-				return null; //db.findMatches(dataL, qaction.fieldName, (Long)qaction.obj);
-			}
-			else if (qaction.obj instanceof Integer)
-			{
-				return null; //db.findMatches(dataL, qaction.fieldName, (Integer)qaction.obj);
-			}
-			else if (qaction.obj instanceof String)
-			{
-				return null; //db.findMatches(dataL, qaction.fieldName, (String)qaction.obj);
-			}
-			else if (qaction.obj instanceof Entity)
-			{
-				return null; //db.findMatchesEntity(dataL, qaction.fieldName, (Entity)qaction.obj);
-			}
-			else
-			{
-				throw new FluentException("ActionProc: unsupported obj type: " + qaction.obj.getClass().getSimpleName());
-			}
-		}
-		else if (qaction.op.equals("lt"))
-		{
-			return doCompare(qaction, IValueMatcher.LT);
-		}
-		else if (qaction.op.equals("le"))
-		{
-			return doCompare(qaction, IValueMatcher.LE);
-		}
-		else if (qaction.op.equals("gt"))
-		{
-			return doCompare(qaction, IValueMatcher.GT);
-		}
-		else if (qaction.op.equals("ge"))
-		{
-			return doCompare(qaction, IValueMatcher.GE);
-		}
-		else if (qaction.op.equals("neq"))
-		{
-			return doCompare(qaction, IValueMatcher.NEQ);
-		}
-		else
-		{
-			throw new FluentException("ActionProc: unsupported op type: " + qaction.op);
-		}
-	}
-
-	private List<User> doCompare(QueryAction qaction, int matchType)
-	{
-		if (qaction.obj instanceof Integer)
-		{
-			return null; //db.findCompareMatches(dataL, qaction.fieldName, qaction.obj, Integer.class, matchType);
-		}
-		else if (qaction.obj instanceof String)
-		{
-			return null; //db.findCompareMatches(dataL, qaction.fieldName, qaction.obj, String.class, matchType);
-		}
-		else if (qaction.obj instanceof Long)
-		{
-			return null; //db.findCompareMatches(dataL, qaction.fieldName, qaction.obj, Long.class, matchType);
-		}
-		else
-		{
-			throw new FluentException("ActionProc: unsupported obj type: " + qaction.obj.getClass().getSimpleName());
-		}
-	}
 
 	@Override
 	public Class getRelationalFieldType(QueryAction qaction) 

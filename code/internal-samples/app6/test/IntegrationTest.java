@@ -70,7 +70,7 @@ public class IntegrationTest {
         		userlist = dao.query().where("name").le("billy").findMany();
         		dumpList(userlist, "4", 2);
 
-        		userlist = dao.query().orderBy("name").findMany();
+        		userlist = dao.query().orderBy("name", "desc").findMany();
         		dumpList(userlist, "5", 3);
             }
         });
