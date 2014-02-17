@@ -56,22 +56,34 @@ public class IntegrationTest {
                 assertThat(dao).isNotNull();
                 
                 List<User> userlist = dao.query().findMany();
-                dumpList(userlist, "");
+                dumpList(userlist, "", 3);
                 
         		userlist = dao.query().where("name").eq("joe").findMany();
-        		dumpList(userlist, "2");
+        		dumpList(userlist, "2", 1);
 
+        		userlist = dao.query().where("name").eq("nobody").findMany();
+        		dumpList(userlist, "0", 0);
+
+        		userlist = dao.query().where("name").eq("joe").or("name").eq("billy").findMany();
+        		dumpList(userlist, "3", 2);
+
+        		userlist = dao.query().where("name").le("billy").findMany();
+        		dumpList(userlist, "4", 2);
+
+        		userlist = dao.query().orderBy("name").findMany();
+        		dumpList(userlist, "5", 3);
             }
         });
     }
 
-    private void dumpList(List<User> userlist, String prefix)
+    private void dumpList(List<User> userlist, String prefix, int expectedSize)
     {
 	    log(String.format("userlist%s: count %d", prefix, userlist.size()));
 	    for(User u: userlist)
 	    {
 	    	log(String.format("%d: %s", u.id, u.name));
 	    }
+	    assertThat(userlist.size()).isEqualTo(expectedSize);
     }
     
     private void buildTable()
