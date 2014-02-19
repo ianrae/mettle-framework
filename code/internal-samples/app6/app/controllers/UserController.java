@@ -4,9 +4,11 @@ package controllers;
 import mef.presenters.replies.UserReply;
 
 import org.mef.framework.commands.CreateCommand;
+import org.mef.framework.commands.DeleteCommand;
 import org.mef.framework.commands.EditCommand;
 import org.mef.framework.commands.IndexCommand;
 import org.mef.framework.commands.NewCommand;
+import org.mef.framework.commands.ShowCommand;
 import org.mef.framework.commands.UpdateCommand;
 import org.mef.framework.replies.Reply;
 
@@ -51,6 +53,20 @@ public class UserController extends Controller
 		return renderOrForward(boundary, reply);
 	}
 	
+	public static Result deleteUser(Long id) 
+    {
+		UserBoundary boundary = UserBoundary.create();
+		UserReply reply = boundary.process(new DeleteCommand(id));
+		return renderOrForward(boundary, reply);
+	}
+
+	public static Result show(Long id) 
+    {
+		UserBoundary boundary = UserBoundary.create();
+		UserReply reply = boundary.process(new ShowCommand(id));
+		return renderOrForward(boundary, reply);
+	}
+	
     private static Result renderOrForward(UserBoundary boundary, UserReply reply)
     {
 		if (reply.failed())
@@ -66,6 +82,8 @@ public class UserController extends Controller
 			return ok(views.html.User.newuser.render(boundary.makeForm(reply)));    	
 		case Reply.VIEW_EDIT:
 			return ok(views.html.User.edit.render(boundary.makeForm(reply), reply._entity.id));    	
+		case Reply.VIEW_SHOW:
+			return ok(views.html.User.show.render(reply._entity));    	
 
 
 

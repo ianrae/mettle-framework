@@ -1,0 +1,25 @@
+@(user: mef.entities.User)
+
+@import helper._
+
+
+
+@main("user list") {
+
+ @if(flash.containsKey("success")) {
+        <div 
+        <strong>Done!</strong> @flash.get("success")
+        </div>
+    }  else {
+    <div> no flash </div>
+    } 
+
+    <h1> user </h1>
+
+    <ul>
+		Name: @user.name
+    </ul>
+
+        <br/>
+
+}

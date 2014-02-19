@@ -9,10 +9,10 @@ GET     /                           controllers.Application.index()
 GET     /users                     controllers.UserController.index()
 GET 	/users/new                controllers.UserController.newUser()
 POST 	/users/new              controllers.UserController.create()
-GET	 	/note/:id/edit				controllers.UserController.edit(id: Long)
-POST 	/note/:id/edit              controllers.UserController.update(id: Long)
-#GET	 	/note/:id/delete		controllers.NoteController.deleteNote(id: Long)
-#GET	 	/note/:id				controllers.NoteController.show(id: Long)
+GET	 	/users/:id/edit				controllers.UserController.edit(id: Long)
+POST 	/users/:id/edit              controllers.UserController.update(id: Long)
+GET	 	/users/:id/delete		controllers.UserController.deleteUser(id: Long)
+GET	 	/users/:id				controllers.UserController.show(id: Long)
 
 
 

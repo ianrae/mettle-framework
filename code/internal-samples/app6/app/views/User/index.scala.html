@@ -20,8 +20,10 @@
         @for(cc <- entities) {
             <li>
 				<div>
-                @cc.id  - @cc.name 
+				<div><a class="brand" href="@routes.UserController.show(cc.id)">[@cc.id]</a>  
+                - @cc.name 
                  and <a class="brand" href="@routes.UserController.edit(cc.id)">Edit</a>
+                <a class="brand" href="@routes.UserController.deleteUser(cc.id)">Delete</a>
                 </div>
 				<br/>
 
