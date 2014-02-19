@@ -23,6 +23,7 @@ import org.mef.framework.sfx.SfxContext;
 import mef.daos.IUserDAO;
 import mef.entities.User;
 import mef.presenters.replies.UserReply;
+import models.UserModel;
 public class UserPresenter extends Presenter
 {
 	private IUserDAO _dao;
@@ -130,12 +131,21 @@ public class UserPresenter extends Presenter
 				reply.setDestination(Reply.FORWARD_NOT_FOUND);
 				return reply;
 			}
-			_dao.updateFrom(binder);
+			updateFrom(binder, entity); //user local one
 			Logger.info("saved update ");
 			reply.setDestination(Reply.FORWARD_INDEX);
 			return reply;
 		}
 	}
+	
+	//add in id
+	private void updateFrom(IFormBinder binder, User user) 
+	{
+		UserModel model = (UserModel) binder.getRawObject();
+		model.setId(user.id);
+		model.update();
+	}
+
 
 
 	public UserReply onDeleteCommand(DeleteCommand cmd)
