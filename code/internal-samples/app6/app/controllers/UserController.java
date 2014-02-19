@@ -4,8 +4,10 @@ package controllers;
 import mef.presenters.replies.UserReply;
 
 import org.mef.framework.commands.CreateCommand;
+import org.mef.framework.commands.EditCommand;
 import org.mef.framework.commands.IndexCommand;
 import org.mef.framework.commands.NewCommand;
+import org.mef.framework.commands.UpdateCommand;
 import org.mef.framework.replies.Reply;
 
 import play.data.Form;
@@ -35,6 +37,20 @@ public class UserController extends Controller
 		return renderOrForward(boundary, reply);
 	}
 
+	public static Result edit(Long id) 
+    {
+		UserBoundary boundary = UserBoundary.create();
+		UserReply reply = boundary.process(new EditCommand(id));
+		return renderOrForward(boundary, reply);
+	}
+
+	public static Result update(Long id) 
+    {
+		UserBoundary boundary = UserBoundary.create();
+		UserReply reply = boundary.addFormAndProcess(new UpdateCommand(id));
+		return renderOrForward(boundary, reply);
+	}
+	
     private static Result renderOrForward(UserBoundary boundary, UserReply reply)
     {
 		if (reply.failed())
@@ -48,6 +64,9 @@ public class UserController extends Controller
 			return ok(views.html.User.index.render(reply._allL));    	
 		case Reply.VIEW_NEW:
 			return ok(views.html.User.newuser.render(boundary.makeForm(reply)));    	
+		case Reply.VIEW_EDIT:
+			return ok(views.html.User.edit.render(boundary.makeForm(reply), reply._entity.id));    	
+
 
 
 		case Reply.FOWARD_NOT_AUTHENTICATED:
