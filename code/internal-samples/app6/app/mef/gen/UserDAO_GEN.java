@@ -17,6 +17,7 @@ import java.util.Date;
 import boundaries.Boundary;
 import boundaries.daos.*;
 import mef.core.MettleInitializer;
+import mef.core.UserEbeanQueryProcessor;
 
 import models.UserModel;
 import play.db.ebean.Model.Finder;
@@ -42,9 +43,9 @@ public class UserDAO_GEN implements IUserDAO
 	{
 		this.queryctx = new QueryContext<User>(ctx, User.class);
 
-//		ProcRegistry registry = (ProcRegistry) ctx.getServiceLocator().getInstance(ProcRegistry.class);
-//		EntityDBQueryProcessor<User> proc = new EntityDBQueryProcessor<User>(ctx, _L);
-//		registry.registerDao(User.class, proc);
+		ProcRegistry registry = (ProcRegistry) ctx.getServiceLocator().getInstance(ProcRegistry.class);
+		UserEbeanQueryProcessor proc = new UserEbeanQueryProcessor(ctx);
+		registry.registerDao(User.class, proc);
 	}
 
 	@Override

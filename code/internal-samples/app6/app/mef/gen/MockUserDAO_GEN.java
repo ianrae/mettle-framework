@@ -39,7 +39,7 @@ public class MockUserDAO_GEN implements IUserDAO
 	@Override
 	public Query1<User> query() 
 	{
-		queryctx.queryL = new ArrayList<QStep\>();
+		queryctx.queryL = new ArrayList<QStep>();
 		return new Query1<User>(queryctx);
 	}
 
