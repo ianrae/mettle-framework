@@ -1,0 +1,32 @@
+@(userForm: Form[models.UserModel])
+
+@import helper._
+
+@implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapInput.render) } 
+
+
+@main("New user") {
+    
+    
+    <h2>Create a new user</h2>
+    
+@if(flash.containsKey("fail")) {
+        <div 
+        <strong>Oops!</strong> @flash.get("fail")
+        </div>
+    }  else {
+    <div> no flash </div>
+    } 
+        
+    @form(routes.UserController.create()) {
+        
+        <fieldset>
+        @helper.textarea(userForm("name"));
+		</fieldset>        
+        <input type="submit" value="Create">
+        
+    }
+    
+
+
+}

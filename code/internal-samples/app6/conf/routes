@@ -7,6 +7,14 @@ GET     /                           controllers.Application.index()
 
 # Users
 GET     /users                     controllers.UserController.index()
+GET 	/users/new                controllers.UserController.newUser()
+POST 	/users/new              controllers.UserController.create()
+#GET	 	/note/:id/edit				controllers.NoteController.edit(id: Long)
+#POST 	/note/:id/edit              controllers.NoteController.update(id: Long)
+#GET	 	/note/:id/delete		controllers.NoteController.deleteNote(id: Long)
+#GET	 	/note/:id				controllers.NoteController.show(id: Long)
+
+
 
 # Error
 GET     /logout                 controllers.ErrorController.logout()

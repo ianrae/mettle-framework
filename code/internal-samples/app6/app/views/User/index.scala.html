@@ -20,7 +20,7 @@
         @for(cc <- entities) {
             <li>
 				<div>
-                @cc.name  @cc.id   
+                @cc.id  - @cc.name 
                 </div>
 				<br/>
 
@@ -30,6 +30,7 @@
 
         <br/>
 
+               <a class="brand" href="@routes.UserController.newUser">New..</a>
 
 
 

@@ -72,6 +72,10 @@ public class IntegrationTest {
 
         		userlist = dao.query().orderBy("name", "desc").findMany();
         		dumpList(userlist, "5", 3);
+        		
+        		userlist = dao.query().where("name").gt("billy").findMany();
+        		dumpList(userlist, "4", 1);
+
             }
         });
     }
