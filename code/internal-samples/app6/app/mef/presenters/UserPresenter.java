@@ -141,9 +141,17 @@ public class UserPresenter extends Presenter
 	//add in id
 	private void updateFrom(IFormBinder binder, User user) 
 	{
-		UserModel model = (UserModel) binder.getRawObject();
-		model.setId(user.id);
-		model.update();
+		Object obj = binder.getRawObject();
+		if (obj instanceof User)
+		{
+			_dao.updateFrom(binder);
+		}
+		else
+		{
+			UserModel model = (UserModel) binder.getRawObject();
+			model.setId(user.id);
+			model.update();
+		}
 	}
 
 

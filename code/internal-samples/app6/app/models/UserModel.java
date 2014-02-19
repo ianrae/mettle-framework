@@ -44,7 +44,7 @@ public class UserModel extends Model
 		this.entity.id = val;
 
     }
-    
+
    @Required 
     private String name;
 

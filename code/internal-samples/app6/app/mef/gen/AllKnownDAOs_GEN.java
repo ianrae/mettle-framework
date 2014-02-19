@@ -14,26 +14,28 @@ import org.mef.framework.sfx.SfxContext;
 import java.util.Date;
 
 
+
 public class AllKnownDAOs_GEN  
 {
-	public List<IDAO> registerDAOs(SfxContext ctx, boolean createMocks)
-	{
-		ArrayList<IDAO> L = new ArrayList<IDAO>();
-		IUserDAO dao = null;
-//		System.out.println(String.format("mock %b", createMocks));
-		if (createMocks)
-		{
-			dao = new MockUserDAO();
-		}
-		else
-		{
-			dao = new UserDAO();
-		}	
-		ctx.getServiceLocator().registerSingleton(IUserDAO.class, dao);
-		L.add(dao);
-		dao.init(ctx);
+public List<IDAO> registerDAOs(SfxContext ctx, boolean createMocks)
+{
+	ArrayList<IDAO> L = new ArrayList<IDAO>();
+  if (createMocks)
+{
+	IUserDAO dao = new MockUserDAO();
+	ctx.getServiceLocator().registerSingleton(IUserDAO.class, dao);
+	L.add(dao);
+	dao.init(ctx);
+}
+else
+{
+	IUserDAO dao = new UserDAO();
+	ctx.getServiceLocator().registerSingleton(IUserDAO.class, dao);
+	L.add(dao);
+	dao.init(ctx);
+}	
 
-		return L;
-	}
+	return L;
+}
 }
 

@@ -176,28 +176,28 @@ public class UserDAO_GEN implements IUserDAO
 		}
 		t.update();
 	}
-	
-       protected static void touchAll(UserModel t, User entity)
-{
-	t.setId(entity.id);
-	t.setName(entity.name);
-}
 
-protected static void touchAll(User entity, UserModel t)
-{
-	entity.name = t.getName();
-}
+	protected static void touchAll(UserModel t, User entity)
+	{
+		t.setId(entity.id);
+		t.setName(entity.name);
+	}
 
-    @Override
-    public User find_by_name(String val) 
-    {
-      UserModel model = UserModel.find.where().eq("name", val).findUnique();
-	  if (model == null)
-	  {
-		return null;
-	  }
-	  User entity = createEntityFromModel(model);
-	  return entity;
-    }
+	protected static void touchAll(User entity, UserModel t)
+	{
+		entity.name = t.getName();
+	}
+
+	@Override
+	public User find_by_name(String val) 
+	{
+		UserModel model = UserModel.find.where().eq("name", val).findUnique();
+		if (model == null)
+		{
+			return null;
+		}
+		User entity = createEntityFromModel(model);
+		return entity;
+	}
 
 }
