@@ -39,7 +39,7 @@ public class MockUserDAO_GEN implements IUserDAO
 	@Override
 	public Query1<User> query() 
 	{
-		queryctx.queryL = new ArrayList();
+		queryctx.queryL = new ArrayList<QStep\>();
 		return new Query1<User>(queryctx);
 	}
 
@@ -139,6 +139,11 @@ public class MockUserDAO_GEN implements IUserDAO
 		this.delete(entity.id);
     	save(entity);
 
+    }
+    @Override
+    public void updateFrom(IFormBinder binder, User entity) 
+    {
+    	updateFrom(binder);
     }
 
 	

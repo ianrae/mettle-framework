@@ -102,7 +102,7 @@ public class <name> implements I<type>DAO
 	@Override
 	public Query1\<<type>\> query() 
 	{
-		queryctx.queryL = new ArrayList<QStep>();
+		queryctx.queryL = new ArrayList\<QStep\>();
 		return new Query1\<<type>\>(queryctx);
 	}
 
@@ -212,6 +212,11 @@ public class <name> implements I<type>DAO
 		<type>Model model = (<type>Model) binder.getRawObject();
 		model.update();
 	}
+    @Override
+    public void updateFrom(IFormBinder binder, <type> entity) 
+    {
+		throw new RuntimeException("you must implement updateFrom!"); //since some entities don't have id
+    }
 
 
 	@Override

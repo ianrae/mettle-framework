@@ -21,6 +21,7 @@ public interface IUserDAO_GEN  extends IDAO
 	void save(User entity);        
 	void update(User entity);
 	public Query1<User> query();
+    void updateFrom(IFormBinder binder, User entity);        
 
 
     public User find_by_name(String val);

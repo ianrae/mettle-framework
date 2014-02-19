@@ -17,7 +17,6 @@ import java.util.Date;
 import boundaries.Boundary;
 import boundaries.daos.*;
 import mef.core.MettleInitializer;
-import mef.core.UserEbeanQueryProcessor;
 
 import models.UserModel;
 import play.db.ebean.Model.Finder;
@@ -43,15 +42,15 @@ public class UserDAO_GEN implements IUserDAO
 	{
 		this.queryctx = new QueryContext<User>(ctx, User.class);
 
-		ProcRegistry registry = (ProcRegistry) ctx.getServiceLocator().getInstance(ProcRegistry.class);
-		UserEbeanQueryProcessor proc = new UserEbeanQueryProcessor(ctx);
-		registry.registerDao(User.class, proc);
+//		ProcRegistry registry = (ProcRegistry) ctx.getServiceLocator().getInstance(ProcRegistry.class);
+//		EntityDBQueryProcessor<User> proc = new EntityDBQueryProcessor<User>(ctx, _L);
+//		registry.registerDao(User.class, proc);
 	}
 
 	@Override
 	public Query1<User> query() 
 	{
-		queryctx.queryL = new ArrayList();
+		queryctx.queryL = new ArrayList<QStep>();
 		return new Query1<User>(queryctx);
 	}
 
@@ -160,6 +159,11 @@ public class UserDAO_GEN implements IUserDAO
 		UserModel model = (UserModel) binder.getRawObject();
 		model.update();
 	}
+    @Override
+    public void updateFrom(IFormBinder binder, User entity) 
+    {
+		throw new RuntimeException("you must implement updateFrom!"); //since some entities don't have id
+    }
 
 
 	@Override
@@ -176,28 +180,28 @@ public class UserDAO_GEN implements IUserDAO
 		}
 		t.update();
 	}
+	
+       protected static void touchAll(UserModel t, User entity)
+{
+	t.setId(entity.id);
+	t.setName(entity.name);
+}
 
-	protected static void touchAll(UserModel t, User entity)
-	{
-		t.setId(entity.id);
-		t.setName(entity.name);
-	}
+protected static void touchAll(User entity, UserModel t)
+{
+	entity.name = t.getName();
+}
 
-	protected static void touchAll(User entity, UserModel t)
-	{
-		entity.name = t.getName();
-	}
-
-	@Override
-	public User find_by_name(String val) 
-	{
-		UserModel model = UserModel.find.where().eq("name", val).findUnique();
-		if (model == null)
-		{
-			return null;
-		}
-		User entity = createEntityFromModel(model);
-		return entity;
-	}
+    @Override
+    public User find_by_name(String val) 
+    {
+      UserModel model = UserModel.find.where().eq("name", val).findUnique();
+	  if (model == null)
+	  {
+		return null;
+	  }
+	  User entity = createEntityFromModel(model);
+	  return entity;
+    }
 
 }

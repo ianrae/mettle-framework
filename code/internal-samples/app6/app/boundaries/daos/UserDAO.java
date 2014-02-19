@@ -24,11 +24,19 @@ import mef.gen.*;
 
 import mef.daos.*;
 import mef.entities.*;
+
 import com.avaje.ebean.Page;
 
 public class UserDAO extends UserDAO_GEN
 {
 
+    @Override
+    public void updateFrom(IFormBinder binder, User entity) 
+    {
+		UserModel model = (UserModel) binder.getRawObject();
+		model.setId(entity.id); //need to set id for update to work
+		model.update();
+    }
 
 	
        }

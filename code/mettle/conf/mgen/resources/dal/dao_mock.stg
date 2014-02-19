@@ -72,7 +72,7 @@ public class <name> implements I<type>DAO
 	@Override
 	public Query1\<<type>\> query() 
 	{
-		queryctx.queryL = new ArrayList<QStep>();
+		queryctx.queryL = new ArrayList\<QStep\>();
 		return new Query1\<<type>\>(queryctx);
 	}
     
@@ -172,6 +172,11 @@ public class <name> implements I<type>DAO
 		this.delete(entity.id);
     	save(entity);
 
+    }
+    @Override
+    public void updateFrom(IFormBinder binder, <type> entity) 
+    {
+    	updateFrom(binder);
     }
 
 <endif>	
