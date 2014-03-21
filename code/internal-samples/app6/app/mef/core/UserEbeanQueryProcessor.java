@@ -1,27 +1,19 @@
 package mef.core;
-import java.util.ArrayList;
 import java.util.List;
 
 import mef.entities.User;
 import models.UserModel;
 
-import org.mef.framework.dao.IDAO;
-import org.mef.framework.entities.Entity;
-import org.mef.framework.entitydb.EntityDB;
-import org.mef.framework.entitydb.IValueMatcher;
 import org.mef.framework.fluent.FluentException;
 import org.mef.framework.fluent.IQueryActionProcessor;
 import org.mef.framework.fluent.QueryAction;
 import org.mef.framework.sfx.SfxBaseObj;
 import org.mef.framework.sfx.SfxContext;
 
-import play.db.ebean.Model.Finder;
-
 import boundaries.daos.UserDAO;
 
 import com.avaje.ebean.Expr;
 import com.avaje.ebean.Expression;
-import com.avaje.ebean.ExpressionList;
 import com.avaje.ebean.Query;
 
 

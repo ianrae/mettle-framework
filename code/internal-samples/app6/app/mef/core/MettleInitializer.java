@@ -3,15 +3,11 @@ package mef.core;
 //uncomment after you create your first Entity in mef.xml
 //import mef.gen.AllKnownDAOs_GEN;
 
-import mef.entities.User;
-
 import org.mef.framework.dao.IDAO;
-import org.mef.framework.fluent.EntityDBQueryProcessor;
 import org.mef.framework.fluent.ProcRegistry;
 import org.mef.framework.sfx.IServiceFactory;
 import org.mef.framework.sfx.SfxContext;
 import org.mef.framework.sfx.SfxErrorTracker;
-import org.mef.framework.Logger;
 
 
 public class MettleInitializer 
