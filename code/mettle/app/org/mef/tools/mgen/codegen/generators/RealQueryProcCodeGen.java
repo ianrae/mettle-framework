@@ -40,7 +40,7 @@ public class RealQueryProcCodeGen extends CodeGenBase
 	@Override
 	public String getClassName(EntityDef def)
 	{
-		String className = def.name + "DAO";
+		String className = def.name + "EbeanQueryProcessor";
 		className = makeClassName(className); //, def.shouldExtend(EntityDef.DAO_REAL));
 		return className;
 	}

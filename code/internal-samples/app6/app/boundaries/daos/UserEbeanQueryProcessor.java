@@ -1,12 +1,10 @@
-header(package, type, extras) ::= <<
-
 //THIS FILE HAS BEEN AUTO-GENERATED. DO NOT MODIFY.
-package <package>;
+package boundaries.daos;
 
 import java.util.List;
 
-import mef.entities.<type>;
-import models.<type>Model;
+import mef.entities.User;
+import models.UserModel;
 
 import org.mef.framework.fluent.FluentException;
 import org.mef.framework.fluent.IQueryActionProcessor;
@@ -14,22 +12,14 @@ import org.mef.framework.fluent.QueryAction;
 import org.mef.framework.sfx.SfxBaseObj;
 import org.mef.framework.sfx.SfxContext;
 
-import boundaries.daos.<type>DAO;
+import boundaries.daos.UserDAO;
 
 import com.avaje.ebean.Expr;
 import com.avaje.ebean.Expression;
 import com.avaje.ebean.Query;
 
 
-<extras; separator="\n">
-
->>
-
-
-
-
-classdecl(name, type, isParentOfExtended) ::= <<
-public class <type>EbeanQueryProcessor  extends SfxBaseObj implements IQueryActionProcessor\<<type>\>
+public class UserEbeanQueryProcessor  extends SfxBaseObj implements IQueryActionProcessor<User>
 {
 	String orderBy;
 	String orderAsc; //"asc" or "desc"
@@ -38,13 +28,13 @@ public class <type>EbeanQueryProcessor  extends SfxBaseObj implements IQueryActi
 	Expression expr2;
 	private String fetch;
 
-	public <type>EbeanQueryProcessor(SfxContext ctx)
+	public UserEbeanQueryProcessor(SfxContext ctx)
 	{
 		super(ctx);
 	}
 
 	@Override
-	public void start(List\<QueryAction> actionL) 
+	public void start(List<QueryAction> actionL) 
 	{
 		orderBy = null;
 		limit = -1;
@@ -54,12 +44,12 @@ public class <type>EbeanQueryProcessor  extends SfxBaseObj implements IQueryActi
 	}
 
 	@Override
-	public <type> findOne() //exactly one
+	public User findOne() //exactly one
 	{
 		log("findOne");
-		Query\<<type>Model> qry = createQueryObj();
-		<type>Model m = null;
-		
+		Query<UserModel> qry = createQueryObj();
+		UserModel m = null;
+
 		if (expr1 == null)
 		{
 			m = qry.findUnique();
@@ -69,17 +59,17 @@ public class <type>EbeanQueryProcessor  extends SfxBaseObj implements IQueryActi
 			m = qry.where(expr1).findUnique();
 		}
 
-		<type> u = <type>DAO.createEntityFromModel(m);
+		User u = UserDAO.createEntityFromModel(m);
 		return u;
 	}
 
 	@Override
-	public <type> findAny() //0 or 1
+	public User findAny() //0 or 1
 	{
 		log("findAny");
-		
-		Query\<<type>Model> qry = createQueryObj();
-		List\<<type>Model> mL = null;
+
+		Query<UserModel> qry = createQueryObj();
+		List<UserModel> mL = null;
 
 		if (expr1 == null)
 		{
@@ -89,46 +79,46 @@ public class <type>EbeanQueryProcessor  extends SfxBaseObj implements IQueryActi
 		{
 			mL = qry.where(expr1).findList();
 		}
-		
+
 		if (mL == null || mL.size() == 0)
 		{
 			return null;
 		}
-		
-		<type>Model m = mL.get(0);
-		<type> u = <type>DAO.createEntityFromModel(m);
+
+		UserModel m = mL.get(0);
+		User u = UserDAO.createEntityFromModel(m);
 		return u;
 	}
 
-	private Query\<<type>Model> createQueryObj()
+	private Query<UserModel> createQueryObj()
 	{
-		Query\<<type>Model> qry = <type>Model.find;
-		
+		Query<UserModel> qry = UserModel.find;
+
 		if (fetch != null)
 		{
 			qry = qry.fetch(fetch);
 		}
-		
+
 		if (orderBy != null)
 		{
 //			resultL = db.orderBy(resultL, orderBy, orderAsc, String.class);
-			qry = <type>Model.find.orderBy(orderBy + " " + orderAsc);
+			qry = UserModel.find.orderBy(orderBy + " " + orderAsc);
 		}
-		
+
 		if (this.limit >= 0)
 		{
 			qry = qry.setMaxRows(limit);
 		}
 		return qry;
 	}
-	
+
 	@Override
-	public List\<<type>\> findMany() 
+	public List<User> findMany() 
 	{
 		log("findMany");
-		List\<<type>Model> mL = null;
-		Query\<<type>Model> qry = createQueryObj();
-		
+		List<UserModel> mL = null;
+		Query<UserModel> qry = createQueryObj();
+
 		if (expr1 == null)
 		{
 			mL = qry.findList();
@@ -138,16 +128,16 @@ public class <type>EbeanQueryProcessor  extends SfxBaseObj implements IQueryActi
 			mL = qry.where(expr1).findList();
 		}
 
-		List\<<type>\> uL = <type>DAO.createEntityFromModel(mL);
+		List<User> uL = UserDAO.createEntityFromModel(mL);
 		return uL;
 	}
-	
+
 	@Override
 	public long findCount() 
 	{
 		log("findCount");
-		Query\<<type>Model> qry = createQueryObj();
-		
+		Query<UserModel> qry = createQueryObj();
+
 		int rowCount = 0;
 		if (expr1 == null)
 		{
@@ -169,7 +159,7 @@ public class <type>EbeanQueryProcessor  extends SfxBaseObj implements IQueryActi
 
 		if (action.equals("ALL"))
 		{
-//			resultL = db.union(dataL, new ArrayList\<T>());
+//			resultL = db.union(dataL, new ArrayList<T>());
 		}
 		else if (action.equals("WHERE"))
 		{
@@ -210,7 +200,7 @@ public class <type>EbeanQueryProcessor  extends SfxBaseObj implements IQueryActi
 	private Expression doExpr(QueryAction qaction)
 	{
 		Expression expr = null;
-		
+
 		if (opIs(qaction, "eq"))
 		{
 			expr = Expr.eq(qaction.fieldName, qaction.obj);
@@ -241,7 +231,7 @@ public class <type>EbeanQueryProcessor  extends SfxBaseObj implements IQueryActi
 		}
 		return expr;
 	}
-	
+
 	private boolean opIs(QueryAction qaction, String op)
 	{
 		return qaction.op.equals(op);
@@ -252,17 +242,10 @@ public class <type>EbeanQueryProcessor  extends SfxBaseObj implements IQueryActi
 	public Class getRelationalFieldType(QueryAction qaction) 
 	{
 		String fieldName = qaction.fieldName;
-		
+
 		Class clazz = null; //db.getFieldType(dataL, fieldName);
 		//!!currently only works if dataL not empty. fix later
 		return clazz;
 	}
 
-	
->>
-
-endclassdecl() ::= <<
-}
->>
-
-
+	}
