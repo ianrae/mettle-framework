@@ -17,7 +17,6 @@ import java.util.Date;
 import boundaries.Boundary;
 import boundaries.daos.*;
 import mef.core.MettleInitializer;
-import mef.core.UserEbeanQueryProcessor;
 
 import models.UserModel;
 import play.db.ebean.Model.Finder;
@@ -25,6 +24,7 @@ import mef.gen.*;
 
 import mef.daos.*;
 import mef.entities.*;
+
 import com.avaje.ebean.Page;
 import org.mef.framework.fluent.EntityDBQueryProcessor;
 import org.mef.framework.fluent.ProcRegistry;

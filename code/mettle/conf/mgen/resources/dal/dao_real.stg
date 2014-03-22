@@ -94,9 +94,10 @@ public class <name> implements I<type>DAO
 	{
 		this.queryctx = new QueryContext\<<type>\>(ctx, <type>.class);
 		
-//		ProcRegistry registry = (ProcRegistry) ctx.getServiceLocator().getInstance(ProcRegistry.class);
-//		EntityDBQueryProcessor\<<type>\> proc = new EntityDBQueryProcessor\<<type>\>(ctx, _L);
-//		registry.registerDao(<type>.class, proc);
+		ProcRegistry registry = (ProcRegistry) ctx.getServiceLocator().getInstance(ProcRegistry.class);
+		<type>EbeanQueryProcessor proc = new <type>EbeanQueryProcessor(ctx);
+		registry.registerDao(<type>.class, proc);
+
 	}
     
 	@Override
