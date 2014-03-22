@@ -1,0 +1,267 @@
+header(package, type, extras) ::= <<
+
+//THIS FILE HAS BEEN AUTO-GENERATED. DO NOT MODIFY.
+package <package>;
+
+package mef.core;
+import java.util.List;
+
+import mef.entities.<type>;
+import models.<type>Model;
+
+import org.mef.framework.fluent.FluentException;
+import org.mef.framework.fluent.IQueryActionProcessor;
+import org.mef.framework.fluent.QueryAction;
+import org.mef.framework.sfx.SfxBaseObj;
+import org.mef.framework.sfx.SfxContext;
+
+import boundaries.daos.<type>DAO;
+
+import com.avaje.ebean.Expr;
+import com.avaje.ebean.Expression;
+import com.avaje.ebean.Query;
+
+
+<extras; separator="\n">
+
+>>
+
+
+
+
+classdecl(name, type, isParentOfExtended) ::= <<
+public class <type>EbeanQueryProcessor  extends SfxBaseObj implements IQueryActionProcessor\<<type>\>
+{
+	String orderBy;
+	String orderAsc; //"asc" or "desc"
+	int limit;
+	Expression expr1;
+	Expression expr2;
+	private String fetch;
+
+	public <type>EbeanQueryProcessor(SfxContext ctx)
+	{
+		super(ctx);
+	}
+
+	@Override
+	public void start(List\<QueryAction> actionL) 
+	{
+		orderBy = null;
+		limit = -1;
+		expr1 = expr2 = null;
+		fetch = null;
+		log("start");
+	}
+
+	@Override
+	public <type> findOne() //exactly one
+	{
+		log("findOne");
+		Query\<<type>Model> qry = createQueryObj();
+		<type>Model m = null;
+		
+		if (expr1 == null)
+		{
+			m = qry.findUnique();
+		}
+		else
+		{
+			m = qry.where(expr1).findUnique();
+		}
+
+		<type> u = <type>DAO.createEntityFromModel(m);
+		return u;
+	}
+
+	@Override
+	public <type> findAny() //0 or 1
+	{
+		log("findAny");
+		
+		Query\<<type>Model> qry = createQueryObj();
+		List\<<type>Model> mL = null;
+
+		if (expr1 == null)
+		{
+			mL = qry.findList();
+		}
+		else
+		{
+			mL = qry.where(expr1).findList();
+		}
+		
+		if (mL == null || mL.size() == 0)
+		{
+			return null;
+		}
+		
+		<type>Model m = mL.get(0);
+		<type> u = <type>DAO.createEntityFromModel(m);
+		return u;
+	}
+	
+	private Query\<<type>Model> createQueryObj()
+	{
+		Query\<<type>Model> qry = <type>Model.find;
+		
+		if (fetch != null)
+		{
+			qry = qry.fetch(fetch);
+		}
+		
+		if (orderBy != null)
+		{
+//			resultL = db.orderBy(resultL, orderBy, orderAsc, String.class);
+			qry = <type>Model.find.orderBy(orderBy + " " + orderAsc);
+		}
+		
+		if (this.limit >= 0)
+		{
+			qry = qry.setMaxRows(limit);
+		}
+		return qry;
+	}
+	
+	@Override
+	public List\<<type>> findMany() 
+	{
+		log("findMany");
+		List\<<type>Model> mL = null;
+		Query\<<type>Model> qry = createQueryObj();
+		
+		if (expr1 == null)
+		{
+			mL = qry.findList();
+		}
+		else
+		{
+			mL = qry.where(expr1).findList();
+		}
+
+		List\<<type>> uL = <type>DAO.createEntityFromModel(mL);
+		return uL;
+	}
+	@Override
+	public long findCount() 
+	{
+		log("findCount");
+		Query\<<type>Model> qry = createQueryObj();
+		
+		int rowCount = 0;
+		if (expr1 == null)
+		{
+			rowCount = qry.findRowCount();
+		}
+		else
+		{
+			rowCount = qry.where(expr1).findRowCount();
+		}
+		return rowCount;
+	}
+
+	@Override
+	public void processAction(int index, QueryAction qaction) 
+	{
+		String action = qaction.action;
+
+		log(String.format(" %d. %s -- %s %s", index, action, qaction.op, qaction.fieldName));
+
+		if (action.equals("ALL"))
+		{
+//			resultL = db.union(dataL, new ArrayList\<T>());
+		}
+		else if (action.equals("WHERE"))
+		{
+			if (expr1 == null)
+			{
+				expr1 = doExpr(qaction);
+			}
+		}
+		else if (action.equals("AND"))
+		{
+			expr2 = doExpr(qaction);
+			expr1 = Expr.and(expr1, expr2);
+		}
+		else if (action.equals("OR"))
+		{
+			expr2 = Expr.eq(qaction.fieldName, qaction.obj);
+			expr1 = Expr.or(expr1, expr2);
+		}
+		else if (action.equals("ORDERBY"))
+		{
+			orderBy = qaction.fieldName;
+			orderAsc = (String) qaction.obj;
+		}
+		else if (action.equals("LIMIT"))
+		{
+			limit = (Integer)qaction.obj;
+		}
+		else if (action.equals("FETCH"))
+		{ 
+			fetch = (String)qaction.obj; //only 1 fetch supported for now!!
+		}
+		else
+		{
+			throw new FluentException("ActionProc: unknown action: " + action);
+		}
+	}
+
+	private Expression doExpr(QueryAction qaction)
+	{
+		Expression expr = null;
+		
+		if (opIs(qaction, "eq"))
+		{
+			expr = Expr.eq(qaction.fieldName, qaction.obj);
+		}
+		else if (opIs(qaction, "neq"))
+		{
+			expr = Expr.ne(qaction.fieldName, qaction.obj);
+		}
+		else if (opIs(qaction, "lt"))
+		{
+			expr = Expr.lt(qaction.fieldName, qaction.obj);
+		}
+		else if (opIs(qaction, "gt"))
+		{
+			expr = Expr.gt(qaction.fieldName, qaction.obj);
+		}
+		else if (opIs(qaction, "le"))
+		{
+			expr = Expr.le(qaction.fieldName, qaction.obj);
+		}
+		else if (opIs(qaction, "ge"))
+		{
+			expr = Expr.ge(qaction.fieldName, qaction.obj);
+		}
+		else
+		{
+			throw new FluentException("ActionProc: unsupported obj type: " + qaction.obj.getClass().getSimpleName());
+		}
+		return expr;
+	}
+	
+	private boolean opIs(QueryAction qaction, String op)
+	{
+		return qaction.op.equals(op);
+	}
+
+
+	@Override
+	public Class getRelationalFieldType(QueryAction qaction) 
+	{
+		String fieldName = qaction.fieldName;
+		
+		Class clazz = null; //db.getFieldType(dataL, fieldName);
+		//!!currently only works if dataL not empty. fix later
+		return clazz;
+	}
+       
+>>
+
+endclassdecl() ::= <<
+}
+>>
+
+

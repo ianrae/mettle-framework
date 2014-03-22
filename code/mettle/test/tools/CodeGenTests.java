@@ -15,6 +15,7 @@ import org.mef.tools.mgen.codegen.generators.KnownDAOsCodeGen;
 import org.mef.tools.mgen.codegen.generators.MockDAOCodeGen;
 import org.mef.tools.mgen.codegen.generators.ModelCodeGen;
 import org.mef.tools.mgen.codegen.generators.RealDAOCodeGen;
+import org.mef.tools.mgen.codegen.generators.RealQueryProcCodeGen;
 import org.mef.tools.mgen.parser.EntityDef;
 import org.mef.tools.mgen.parser.GeneratorOptions;
 
@@ -78,6 +79,15 @@ public class CodeGenTests extends BaseCodeGenTest
 		setOptionExtend(def, EntityDef.ENTITY); // uses entity
 		RealDAOCodeGen gen = new RealDAOCodeGen(_ctx);
 		genAndLog(gen, "dao_real.stg", "boundaries.dals");
+	}
+	
+	@Test
+	public void testRealQueryProc() throws Exception
+	{
+		log("--testRealQueryProc--");
+		setOptionExtend(def, EntityDef.ENTITY); // uses entity
+		RealQueryProcCodeGen gen = new RealQueryProcCodeGen(_ctx);
+		genAndLog(gen, "dao_real_queryproc.stg", "boundaries.dals");
 	}
 	
 	@Test

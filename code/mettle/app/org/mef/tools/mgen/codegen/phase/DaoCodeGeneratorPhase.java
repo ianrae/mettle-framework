@@ -14,6 +14,7 @@ import org.mef.tools.mgen.codegen.generators.KnownDAOsCodeGen;
 import org.mef.tools.mgen.codegen.generators.MockDAOCodeGen;
 import org.mef.tools.mgen.codegen.generators.ModelCodeGen;
 import org.mef.tools.mgen.codegen.generators.RealDAOCodeGen;
+import org.mef.tools.mgen.codegen.generators.RealQueryProcCodeGen;
 import org.mef.tools.mgen.parser.DalGenXmlParser;
 import org.mef.tools.mgen.parser.EntityDef;
 
@@ -94,6 +95,11 @@ public class DaoCodeGeneratorPhase extends CodeGeneratorPhase
 			extend = def.shouldExtend(EntityDef.ENTITY);
 			params = new AddParams(baseDir, "dao_real.stg", def, new RealDAOCodeGen(_ctx), extend);
 			addOne(params, "boundaries.daos", "app\\boundaries\\daos");
+			
+			extend = false;
+			params = new AddParams(baseDir, "dao_real_queryproc.stg", def, new RealQueryProcCodeGen(_ctx), extend);
+			addOne(params, "boundaries.daos", "app\\boundaries\\daos");
+			
 		}
 	}
 
