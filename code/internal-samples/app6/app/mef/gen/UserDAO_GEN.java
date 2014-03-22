@@ -24,7 +24,6 @@ import mef.gen.*;
 
 import mef.daos.*;
 import mef.entities.*;
-
 import com.avaje.ebean.Page;
 import org.mef.framework.fluent.EntityDBQueryProcessor;
 import org.mef.framework.fluent.ProcRegistry;
@@ -46,6 +45,7 @@ public class UserDAO_GEN implements IUserDAO
 		ProcRegistry registry = (ProcRegistry) ctx.getServiceLocator().getInstance(ProcRegistry.class);
 		UserEbeanQueryProcessor proc = new UserEbeanQueryProcessor(ctx);
 		registry.registerDao(User.class, proc);
+
 	}
 
 	@Override
