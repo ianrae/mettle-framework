@@ -31,14 +31,21 @@ classdecl(type, name, mname, args, inits, copyinits, isParentOfExtended) ::= <<
 <if(isParentOfExtended)>
 public class <name> extends <name>_GEN
 {
+		
+        public <type>()
+        {
+			super();
+        }
+        public <type>(<mname> model)
+        {
+			super(model);
+        }
 
 <else>
 public class <name> extends Entity
 {
-        
-<endif>
 		private <mname> mModel;
-		
+        
         public <name>()
         {
 			this.mModel = new <mname>();
@@ -49,7 +56,8 @@ public class <name> extends Entity
 			this.mModel = model;
 			this.mRawModel = mModel;
         }
-
+<endif>
+		
 <if(args)>
         public <name>( <args; separator=", ">)
         {

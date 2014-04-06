@@ -9,7 +9,6 @@ import mef.entities.*;
 import java.util.Date;
 public class User_GEN extends Entity
 {
-
 		private UserModel mModel;
 
         public User_GEN()

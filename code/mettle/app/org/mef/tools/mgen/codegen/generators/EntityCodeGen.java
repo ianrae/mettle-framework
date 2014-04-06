@@ -23,7 +23,7 @@ public class EntityCodeGen extends CodeGenBase
 			String result = genHeader(); 
 			
 			ST st = _group.getInstanceOf("classdecl");
-			st.add("type", "int");
+			st.add("type", def.name);
 			st.add("name", getClassName(def));
 			st.add("mname", def.name + "Model");
 			st.add("args", buildArgList(def));
