@@ -21,18 +21,18 @@ public class EntityLoaderSaver_GEN
 	{
 		if (existing != null)
 		{
-			obj.id = existing.id;
+			obj.setId(existing.getId());
 			//copy everything 
-						existing.name = obj.name;
+						existing.setName(obj.getName());
 			
 
 			dao.update(existing); //inserts or updates 
 		}
 		else
 		{
-			obj.id = 0L;
+			obj.setId(0L);
 			dao.save(obj); //inserts or updates 
 		}
-		return obj.id;
+		return obj.getId();
 	}
 }

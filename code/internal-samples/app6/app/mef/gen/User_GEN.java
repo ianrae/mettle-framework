@@ -13,18 +13,5 @@ public class User_GEN extends Entity
         {
         }
 
-        public User_GEN( String name)
-        {
-                this.name = name;
-        }
-
-        public User_GEN(User_GEN entity)
-        {
-                this.id = entity.id;
-                this.name = entity.name;
-        }
-    public Long id;
-
-    public String name;
 
 }

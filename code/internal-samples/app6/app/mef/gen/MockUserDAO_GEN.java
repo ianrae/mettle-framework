@@ -65,7 +65,7 @@ public class MockUserDAO_GEN implements IUserDAO
     {
         for(User entity : _L)
         {
-            if (entity.id == id)
+            if (entity.getId() == id)
             {
                 return entity;
             }
@@ -92,21 +92,21 @@ public class MockUserDAO_GEN implements IUserDAO
     @Override
     public void save(User entity) 
     {
-    	if (entity.id == null)
+    	if (entity.getId() == null)
 		{
-    		entity.id = new Long(0L);
+    		entity.setId(new Long(0L));
     	}
 
-    	if (findActualById(entity.id) != null)
+    	if (findActualById(entity.getId()) != null)
     	{
-    		throw new RuntimeException(String.format("save: id %d already exists", entity.id));
+    		throw new RuntimeException(String.format("save: id %d already exists", entity.getId()));
     	}
 
 
-        delete(entity.id); //remove existing
-        if (entity.id == 0)
+        delete(entity.getId()); //remove existing
+        if (entity.getId() == 0)
         {
-        	entity.id = nextAvailIdNumber();
+        	entity.setId(nextAvailIdNumber());
         }
 
          _L.add(entity);
@@ -117,9 +117,9 @@ public class MockUserDAO_GEN implements IUserDAO
     	long used = 0;
         for(User entity : _L)
         {
-            if (entity.id > used)
+            if (entity.getId() > used)
             {
-                used = entity.id;
+                used = entity.getId();
             }
         }
         return used + 1;
@@ -128,7 +128,7 @@ public class MockUserDAO_GEN implements IUserDAO
 	@Override
 	public void update(User entity) 
 	{
-		this.delete(entity.id);
+		this.delete(entity.getId());
 		this.save(entity);
 	}
 
@@ -136,7 +136,7 @@ public class MockUserDAO_GEN implements IUserDAO
     public void updateFrom(IFormBinder binder) 
     {
     	User entity = (User) binder.getObject();
-		this.delete(entity.id);
+		this.delete(entity.getId());
     	save(entity);
 
     }

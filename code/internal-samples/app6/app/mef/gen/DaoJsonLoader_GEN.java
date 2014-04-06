@@ -22,10 +22,10 @@ public class DaoJsonLoader_GEN extends BaseDaoJsonLoader
 	{
 		User obj = new User();
 		JsonNode jj = node.get("id");
-		obj.id = jj.asLong();
+		obj.setId(jj.asLong());
 
 				jj = node.get("name");
-				obj.name = jj.textValue();
+				obj.setName(jj.textValue());
 
 
 
@@ -53,7 +53,7 @@ public class DaoJsonLoader_GEN extends BaseDaoJsonLoader
 	{
 		for (User ph : phoneL)
 		{
-			if (ph.id == id)
+			if (ph.getId() == id)
 			{
 				return ph;
 			}

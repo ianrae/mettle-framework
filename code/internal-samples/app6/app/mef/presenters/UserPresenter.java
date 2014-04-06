@@ -149,7 +149,7 @@ public class UserPresenter extends Presenter
 		else
 		{
 			UserModel model = (UserModel) binder.getRawObject();
-			model.setId(user.id);
+			model.setId(user.getId());
 			model.update();
 		}
 	}

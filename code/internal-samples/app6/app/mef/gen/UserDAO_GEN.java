@@ -58,18 +58,8 @@ public class UserDAO_GEN implements IUserDAO
 	@Override
 	public void save(User entity) 
 	{
-		UserModel t = (UserModel)entity.cc; 
-		if (t == null) //not yet known by db? (newly created)
-		{
-			System.out.println("save-auto-create");
-			t = createModelFromEntity(entity); //create model, set entity, and call all setters
-		}
-		else //touch all (for ebean), except id
-		{
-			touchAll(t, entity);
-		}
+		UserModel t = (UserModel) entity.getUnderlyingModel();
 		t.save();
-		entity.id = t.getId(); //in case created on
 	}
 
 	@Override
@@ -81,8 +71,8 @@ public class UserDAO_GEN implements IUserDAO
 			return null;
 		}
 
-		t.entity = createEntityFromModel(t); //create entity, set m.cc and t.entity, copy all fields from model to entity
-		return t.entity;
+		User entity = new User(t);
+		return entity;
 	}
 
 	@Override
@@ -114,11 +104,7 @@ public class UserDAO_GEN implements IUserDAO
 		{
 			return null;
 		}
-		UserModel t = new UserModel();
-		entity.cc = t;
-		t.entity = entity;
-		touchAll(t, entity);
-		return t;
+		return (UserModel) entity.getUnderlyingModel();
 	}
 	//create entity, set m.cc and t.entity, copy all fields from model to entity
 	public static User createEntityFromModel(UserModel t)
@@ -127,16 +113,8 @@ public class UserDAO_GEN implements IUserDAO
 		{
 			return null;		
 		}
-
-		if (t.entity != null && t.entity.cc != null)
-		{
-			return t.entity; //already exists
-		}
-		User entity = new User();
-		entity.cc = t;
-		entity.id = (t.getId() == null) ? 0 : t.getId();		
-		t.entity = entity;
-		touchAll(entity, t);
+		
+		User entity = new User(t);
 		return entity;
 	}
 	public static List<User> createEntityFromModel(List<UserModel> L)
@@ -170,28 +148,10 @@ public class UserDAO_GEN implements IUserDAO
 	@Override
 	public void update(User entity) 
 	{
-		UserModel t = (UserModel)entity.cc; 
-		if (t == null) //not yet known by db? (newly created)
-		{
-			t.entity = null; //throw exception
-		}
-		else //touch all (for ebean), except id
-		{
-			touchAll(t, entity);
-		}
+		UserModel t = (UserModel)entity.getUnderlyingModel();
 		t.update();
 	}
 	
-       protected static void touchAll(UserModel t, User entity)
-{
-	t.setId(entity.id);
-	t.setName(entity.name);
-}
-
-protected static void touchAll(User entity, UserModel t)
-{
-	entity.name = t.getName();
-}
 
     @Override
     public User find_by_name(String val) 

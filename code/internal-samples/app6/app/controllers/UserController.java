@@ -81,7 +81,7 @@ public class UserController extends Controller
 		case Reply.VIEW_NEW:
 			return ok(views.html.User.newuser.render(boundary.makeForm(reply)));    	
 		case Reply.VIEW_EDIT:
-			return ok(views.html.User.edit.render(boundary.makeForm(reply), reply._entity.id));    	
+			return ok(views.html.User.edit.render(boundary.makeForm(reply), reply._entity.getId()));    	
 		case Reply.VIEW_SHOW:
 			return ok(views.html.User.show.render(reply._entity));    	
 

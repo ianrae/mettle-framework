@@ -6,14 +6,23 @@ package <package>;
 
 import org.mef.framework.entities.Entity;
 import mef.gen.*;
+import models.*;
 import mef.entities.*;
 import java.util.Date;
 <extras; separator="\n">
 
 >>
 
-fielddecl(type, name, value) ::= <<
-    public <type> <name><init(value)>;
+fielddecl(type, name, upperName, value) ::= <<
+	
+	public <type> get<upperName>()
+	{
+		return this.model.get<upperName>();
+	}
+	public void set<upperName>(<type> val)
+	{
+		this.model.set<upperName>(val);
+	}
 >>
 init(v) ::= "<if(v)> = <v><endif>"
 

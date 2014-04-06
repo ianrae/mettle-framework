@@ -53,7 +53,7 @@ public class UserPresenterTests extends BasePresenterTest
 	{
 		User u = createUser("bob");
 		_dao.save(u);
-		assertEquals("bob", _dao.all().get(0).name);
+		assertEquals("bob", _dao.all().get(0).getName());
 		UserReply reply = (UserReply) _presenter.process(new IndexCommand());
 
 		chkReplySucessful(reply, Reply.VIEW_INDEX, null);
@@ -86,7 +86,7 @@ public class UserPresenterTests extends BasePresenterTest
 		chkDalSize(1);
 		chkReplyForwardOnly(reply);
 		t = _dao.findById(1);
-		assertEquals(new Long(1L), t.id);
+		assertEquals(new Long(1L), t.getId());
 	}
 
 	@Test
@@ -107,7 +107,7 @@ public class UserPresenterTests extends BasePresenterTest
 	public void testEditUser() 
 	{
 		User t = initAndSaveUser();
-		UserReply reply = (UserReply) _presenter.process(new EditCommand(t.id));
+		UserReply reply = (UserReply) _presenter.process(new EditCommand(t.getId()));
 
 		chkReplySucessful(reply, Reply.VIEW_EDIT, null);
 		chkDalSize(1);
@@ -130,8 +130,8 @@ public class UserPresenterTests extends BasePresenterTest
 	{
 		User t = initAndSaveUser();
 		chkDalSize(1);
-		t.name = "user2"; //simulate user edit
-		Command cmd = createWithBinder(new UpdateCommand(t.id), t, true);
+		t.setName("user2"); //simulate user edit
+		Command cmd = createWithBinder(new UpdateCommand(t.getId()), t, true);
 
 		UserReply reply = (UserReply) _presenter.process(cmd);
 
@@ -139,15 +139,15 @@ public class UserPresenterTests extends BasePresenterTest
 		chkDalSize(1);
 		chkReplyForwardOnly(reply);
 
-		User t2 = _dao.findById(t.id);
-		assertEquals("user2", t2.name);
+		User t2 = _dao.findById(t.getId());
+		assertEquals("user2", t2.getName());
 	}
 	@Test
 	public void testUpdateUser_ValFail() 
 	{
 		User t = initAndSaveUser();
-		t.name = "user2"; //simulate user edit
-		Command cmd = createWithBinder(new UpdateCommand(t.id), t, false);
+		t.setName("user2"); //simulate user edit
+		Command cmd = createWithBinder(new UpdateCommand(t.getId()), t, false);
 
 		UserReply reply = (UserReply) _presenter.process(cmd);
 
@@ -155,8 +155,8 @@ public class UserPresenterTests extends BasePresenterTest
 		chkDalSize(1);
 		chkReplyWithEntity(reply);
 
-		User t2 = _dao.findById(t.id);
-		assertEquals("bob", t2.name); //unchanged (but mock dal kinda broken)
+		User t2 = _dao.findById(t.getId());
+		assertEquals("bob", t2.getName()); //unchanged (but mock dal kinda broken)
 	}
 	@Test
 	public void testUpdateUser_NotFound() 
@@ -176,7 +176,7 @@ public class UserPresenterTests extends BasePresenterTest
 	public void testDeleteUser() 
 	{
 		User t = initAndSaveUser();
-		UserReply reply = (UserReply) _presenter.process( new DeleteCommand(t.id));
+		UserReply reply = (UserReply) _presenter.process( new DeleteCommand(t.getId()));
 
 		chkReplySucessful(reply, Reply.FORWARD_INDEX, null);
 		chkDalSize(0);
@@ -199,7 +199,7 @@ public class UserPresenterTests extends BasePresenterTest
 	public void testShowUser() 
 	{
 		User t = initAndSaveUser();
-		UserReply reply = (UserReply) _presenter.process(new ShowCommand(t.id));
+		UserReply reply = (UserReply) _presenter.process(new ShowCommand(t.getId()));
 
 		chkReplySucessful(reply, Reply.VIEW_SHOW, null);
 		chkDalSize(1);
@@ -281,8 +281,8 @@ public class UserPresenterTests extends BasePresenterTest
 	private User initUser(String name)
 	{
 		User t = new User();
-		t.id = 0L; //dal will assign id
-		t.name = name;
+		t.setId(0L); //dal will assign id
+		t.setName(name);
 		assertEquals(0, _dao.size());
 		return t;
 	}
@@ -297,12 +297,12 @@ public class UserPresenterTests extends BasePresenterTest
 		User t = initUser(name);
 		_dao.save(t);
 		assertEquals(1, _dao.size());
-		return _dao.findById(t.id);
+		return _dao.findById(t.getId());
 	}
 	private User createUser(String name)
 	{
 		User u = new User();
-		u.name = name;
+		u.setName(name);
 		return u;
 	}
 

@@ -85,7 +85,7 @@ public class IntegrationTest {
 	    log(String.format("userlist%s: count %d", prefix, userlist.size()));
 	    for(User u: userlist)
 	    {
-	    	log(String.format("%d: %s", u.id, u.name));
+	    	log(String.format("%d: %s", u.getId(), u.getName()));
 	    }
 	    assertThat(userlist.size()).isEqualTo(expectedSize);
     }

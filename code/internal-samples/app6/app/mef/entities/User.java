@@ -2,25 +2,56 @@
 
 package mef.entities;
 
-import org.mef.framework.entities.Entity;
-import mef.gen.*;
-import mef.entities.*;
-import java.util.Date;
+import mef.gen.User_GEN;
+import models.UserModel;
+
 public class User extends User_GEN
 {
-
+		private UserModel model;
+		
         public User()
         {
+        	model = new UserModel();
         }
-
         public User( String name)
         {
-                this.name = name;
+            model = new UserModel();
+            model.setName(name);
+        }
+        public User(UserModel model)
+        {
+        	this.model = model;
+        }
+        public Object getUnderlyingModel()
+        {
+        	return model;
         }
 
         public User(User entity)
         {
-                this.id = entity.id;
-                this.name = entity.name;
+        	model = new UserModel();
+        	this.setId(entity.getId());
+        	this.setName(entity.getName());
+        }
+
+        //get/set
+        public Long getId() 
+        {
+            return model.getId();
+        }
+        public String getName() 
+        {
+            return model.getName();
+        }
+        
+        
+        public void setId(Long val)
+        {
+        	model.setId(val);
+        }
+        public void setName(String val)
+        {
+        	model.setName(val);
         }
 }
+
