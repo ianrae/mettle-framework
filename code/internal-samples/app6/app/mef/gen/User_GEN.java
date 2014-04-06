@@ -15,10 +15,12 @@ public class User_GEN extends Entity
         public User_GEN()
         {
 			this.mModel = new UserModel();
+			this.mRawModel = mModel;
         }
         public User_GEN(UserModel model)
         {
 			this.mModel = model;
+			this.mRawModel = mModel;
         }
 
         public User_GEN( String name)

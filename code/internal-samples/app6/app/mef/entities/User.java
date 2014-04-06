@@ -12,12 +12,12 @@ public class User extends User_GEN
         public User()
         {
         	mModel = new UserModel();
-//        	this.mRawModel = mModel;
+			this.mRawModel = mModel;
         }
         public User( String name)
         {
             mModel = new UserModel();
-//        	this.mRawModel = mModel;
+			this.mRawModel = mModel;
             mModel.setName(name);
         }
         public User(UserModel model)

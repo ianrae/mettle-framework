@@ -42,10 +42,12 @@ public class <name> extends Entity
         public <name>()
         {
 			this.mModel = new <mname>();
+			this.mRawModel = mModel;
         }
         public <name>(<mname> model)
         {
 			this.mModel = model;
+			this.mRawModel = mModel;
         }
 
 <if(args)>
