@@ -24,10 +24,10 @@ saveorupdate(type, fields) ::= <<
 	{
 		if (existing != null)
 		{
-			obj.setId(existing.getId())
+			obj.setId(existing.getId());
 			//copy everything 
 			<fields:{t| 
-			existing.set<t.name>(obj.get<t.name>());
+			existing.set<t.uname>(obj.get<t.uname>());
 			}; separator="\n">			
 			
 			dao.update(existing); //inserts or updates 

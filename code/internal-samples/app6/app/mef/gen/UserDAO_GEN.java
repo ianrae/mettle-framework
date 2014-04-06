@@ -58,7 +58,7 @@ public class UserDAO_GEN implements IUserDAO
 	@Override
 	public void save(User entity) 
 	{
-		UserModel t = (UserModel) entity.getUnderlyingModel();
+		UserModel t = (UserModel)entity.getUnderlyingModel();
 		t.save();
 	}
 
@@ -71,7 +71,7 @@ public class UserDAO_GEN implements IUserDAO
 			return null;
 		}
 
-		User entity = new User(t);
+		User entity = new User(t); //create entity, set m.cc and t.entity, copy all fields from model to entity
 		return entity;
 	}
 
@@ -104,7 +104,8 @@ public class UserDAO_GEN implements IUserDAO
 		{
 			return null;
 		}
-		return (UserModel) entity.getUnderlyingModel();
+		UserModel t = (UserModel)entity.getUnderlyingModel();
+		return t;
 	}
 	//create entity, set m.cc and t.entity, copy all fields from model to entity
 	public static User createEntityFromModel(UserModel t)
@@ -113,7 +114,7 @@ public class UserDAO_GEN implements IUserDAO
 		{
 			return null;		
 		}
-		
+
 		User entity = new User(t);
 		return entity;
 	}
@@ -148,12 +149,11 @@ public class UserDAO_GEN implements IUserDAO
 	@Override
 	public void update(User entity) 
 	{
-		UserModel t = (UserModel)entity.getUnderlyingModel();
+		UserModel t = (UserModel)entity.getUnderlyingModel(); 
 		t.update();
 	}
 	
-
-    @Override
+           @Override
     public User find_by_name(String val) 
     {
       UserModel model = UserModel.find.where().eq("name", val).findUnique();

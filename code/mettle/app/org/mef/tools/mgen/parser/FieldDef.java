@@ -6,6 +6,7 @@ import java.util.List;
 public class FieldDef
 {
 	public String name;
+	public String uname;
 	public String typeName;
 	public List<String> annotationL = new ArrayList<String>();
 	public boolean isSeedField;  //true means we search for records matching this field during db:seed 

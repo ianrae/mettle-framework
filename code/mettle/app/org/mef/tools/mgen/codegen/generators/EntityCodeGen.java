@@ -25,6 +25,7 @@ public class EntityCodeGen extends CodeGenBase
 			ST st = _group.getInstanceOf("classdecl");
 			st.add("type", "int");
 			st.add("name", getClassName(def));
+			st.add("mname", def.name + "Model");
 			st.add("args", buildArgList(def));
 			st.add("inits", buildCtorInitsList(def, false));
 			st.add("copyinits", buildCtorInitsList(def, true));
@@ -53,7 +54,7 @@ public class EntityCodeGen extends CodeGenBase
 					String s = String.format("this.set%s(%s);", uname, fdef.name);
 					if (isCopyCtor)
 					{
-						s = String.format("this.set%s(entity.get%s();", uname, uname);
+						s = String.format("this.set%s(entity.get%s());", uname, uname);
 					}
 					L.add(s);
 				}

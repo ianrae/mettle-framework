@@ -29,13 +29,13 @@ readentity(type, fields) ::= <<
 		<fields:{t| 
 		jj = node.get("<t.name>");
 		<if(t.stringType)>
-		obj.set<t.name>(jj.textValue());
+		obj.set<t.uname>(jj.textValue());
 		<endif>
 		<if(t.booleanType)>
-		obj.set<t.name>(jj.asBoolean());
+		obj.set<t.uname>(jj.asBoolean());
 		<endif>
 		<if(t.dateType)>
-		obj.set<t.name>(readDate(jj, "yyyy-MM-dd"));
+		obj.set<t.uname>(readDate(jj, "yyyy-MM-dd"));
 		<endif>
 		}; separator="\n">
 
@@ -72,7 +72,7 @@ findwithidentity(type) ::= <<
 	{
 		for (<type> ph : phoneL)
 		{
-			if (ph.id == id)
+			if (ph.getId() == id)
 			{
 				return ph;
 			}

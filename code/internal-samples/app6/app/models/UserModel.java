@@ -16,8 +16,6 @@ import java.util.Date;
 @Entity
 public class UserModel extends Model
 {
-//	@Transient
-//    public User entity = new User(); //needed else get illegalStateException
 
 
 	public static Finder<Long,UserModel> find = new Finder(
@@ -41,7 +39,6 @@ public class UserModel extends Model
     }
     public void setId(Long val) {
 		this.id = val;
-
     }
 
    @Required 
@@ -52,7 +49,6 @@ public class UserModel extends Model
     }
     public void setName(String val) {
 		this.name = val;
-
     }
 
 }

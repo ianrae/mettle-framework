@@ -24,10 +24,10 @@ public class User extends User_GEN
         {
         	this.mModel = model;
         }
-        public Object getUnderlyingModel()
-        {
-        	return mModel;
-        }
+//        public Object getUnderlyingModel()
+//        {
+//        	return mModel;
+//        }
 
         public User(User entity)
         {

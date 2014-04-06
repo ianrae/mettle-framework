@@ -17,17 +17,17 @@ fielddecl(type, name, upperName, value) ::= <<
 	
 	public <type> get<upperName>()
 	{
-		return this.model.get<upperName>();
+		return this.mModel.get<upperName>();
 	}
 	public void set<upperName>(<type> val)
 	{
-		this.model.set<upperName>(val);
+		this.mModel.set<upperName>(val);
 	}
 >>
 init(v) ::= "<if(v)> = <v><endif>"
 
 
-classdecl(type, name, args, inits, copyinits, isParentOfExtended) ::= <<
+classdecl(type, name, mname, args, inits, copyinits, isParentOfExtended) ::= <<
 <if(isParentOfExtended)>
 public class <name> extends <name>_GEN
 {
@@ -37,11 +37,15 @@ public class <name> extends Entity
 {
         
 <endif>
-		private <name>Model model;
+		private <mname> mModel;
 		
         public <name>()
         {
-			this.model = new <name>Model();
+			this.mModel = new <mname>();
+        }
+        public <name>(<mname> model)
+        {
+			this.mModel = model;
         }
 
 <if(args)>

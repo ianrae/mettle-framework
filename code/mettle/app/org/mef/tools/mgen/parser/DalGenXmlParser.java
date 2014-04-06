@@ -209,6 +209,7 @@ public class DalGenXmlParser extends SfxBaseObj
 			if (name.equals("id"))
 			{
 				fdef.name = name;
+				fdef.uname = uppify(name);
 				fdef.typeName = "long";
 			}
 			else
@@ -221,10 +222,20 @@ public class DalGenXmlParser extends SfxBaseObj
 			int n = ar.length;
 			fdef.typeName = ar[n - 2].trim();
 			fdef.name = ar[n - 1].trim();
+			fdef.uname = uppify(fdef.name);
 			parseAnnotations(fdef, ar);
 		}
 		def.fieldL.add(fdef);
 	}
+	
+	protected String uppify(String name) 
+	{
+		String upper = name.toUpperCase();
+		String s = upper.substring(0, 1);
+		s += name.substring(1);
+		return s;
+	}
+	
 	
 	private void parseQuery(EntityDef def, Element tmp)
 	{

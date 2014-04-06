@@ -110,8 +110,8 @@ public class <name> implements I<type>DAO
 			return null;
 		}
 				
-		t.entity = new <type>(t); //create entity, set m.cc and t.entity, copy all fields from model to entity
-		return t.entity;
+		<type> entity = new <type>(t); //create entity, set m.cc and t.entity, copy all fields from model to entity
+		return entity;
 	}
 
 	@Override
