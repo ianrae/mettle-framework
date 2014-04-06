@@ -24,18 +24,18 @@ readentity(type, fields) ::= <<
 	{
 		<type> obj = new <type>();
 		JsonNode jj = node.get("id");
-		obj.id = jj.asLong();
+		obj.setId(jj.asLong());
 
 		<fields:{t| 
 		jj = node.get("<t.name>");
 		<if(t.stringType)>
-		obj.<t.name> = jj.textValue();
+		obj.set<t.name>(jj.textValue());
 		<endif>
 		<if(t.booleanType)>
-		obj.<t.name> = jj.asBoolean();
+		obj.set<t.name>(jj.asBoolean());
 		<endif>
 		<if(t.dateType)>
-		obj.<t.name> = readDate(jj, "yyyy-MM-dd");
+		obj.set<t.name>(readDate(jj, "yyyy-MM-dd"));
 		<endif>
 		}; separator="\n">
 

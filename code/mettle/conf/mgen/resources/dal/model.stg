@@ -28,10 +28,6 @@ fielddecl(type, name, bigName, setName, isEntity, daoName) ::= <<
     }
     public void <setName><bigName>(<type> val) {
 		this.<name> = val;
-		<if(isEntity)>this.entity.<name> = <daoName>DAO.createEntityFromModel(val);
-		<else>this.entity.<name> = val;
-		<endif>
-        
     }
 >>
 
@@ -46,8 +42,6 @@ public class <name> extends <name>_GEN
 @Entity
 public class <name> extends Model
 {
-	@Transient
-    public <type> entity = new <type>(); //needed else get illegalStateException
 	
 	
 	public static Finder\<Long,<name>\> find = new Finder(

@@ -62,20 +62,6 @@ public <meth>
 }
 >>
 
-touchall1(type, assigns) ::= <<
-protected static void touchAll(<type>Model t, <type> entity)
-{
-	t.setId(entity.id);
-	<assigns; separator="\n">
-}
->>
-
-touchall2(type, assigns) ::= <<
-protected static void touchAll(<type> entity, <type>Model t)
-{
-	<assigns; separator="\n">
-}
->>
 
 classdecl(name, type, isParentOfExtended) ::= <<
 <if(isParentOfExtended)>
@@ -110,18 +96,8 @@ public class <name> implements I<type>DAO
 	@Override
 	public void save(<type> entity) 
 	{
-		<type>Model t = (<type>Model)entity.cc; 
-		if (t == null) //not yet known by db? (newly created)
-		{
-			System.out.println("save-auto-create");
-			t = createModelFromEntity(entity); //create model, set entity, and call all setters
-		}
-		else //touch all (for ebean), except id
-		{
-			touchAll(t, entity);
-		}
+		<type>Model t = (<type>Model)entity.getUnderlyingModel();
 		t.save();
-		entity.id = t.getId(); //in case created on
 	}
 	
 
@@ -134,7 +110,7 @@ public class <name> implements I<type>DAO
 			return null;
 		}
 				
-		t.entity = createEntityFromModel(t); //create entity, set m.cc and t.entity, copy all fields from model to entity
+		t.entity = new <type>(t); //create entity, set m.cc and t.entity, copy all fields from model to entity
 		return t.entity;
 	}
 
@@ -167,10 +143,7 @@ public class <name> implements I<type>DAO
 		{
 			return null;
 		}
-		<type>Model t = new <type>Model();
-		entity.cc = t;
-		t.entity = entity;
-		touchAll(t, entity);
+		<type>Model t = (<type>Model)entity.getUnderlyingModel();
 		return t;
 	}
 	//create entity, set m.cc and t.entity, copy all fields from model to entity
@@ -181,15 +154,7 @@ public class <name> implements I<type>DAO
 			return null;		
 		}
 		
-		if (t.entity != null && t.entity.cc != null)
-		{
-			return t.entity; //already exists
-		}
-		<type> entity = new <type>();
-		entity.cc = t;
-		entity.id = (t.getId() == null) ? 0 : t.getId();		
-		t.entity = entity;
-		touchAll(entity, t);
+		<type> entity = new <type>(t);
 		return entity;
 	}
 	public static List\<<type>\> createEntityFromModel(List\<<type>Model> L)
@@ -223,15 +188,7 @@ public class <name> implements I<type>DAO
 	@Override
 	public void update(<type> entity) 
 	{
-		<type>Model t = (<type>Model)entity.cc; 
-		if (t == null) //not yet known by db? (newly created)
-		{
-			t.entity = null; //throw exception
-		}
-		else //touch all (for ebean), except id
-		{
-			touchAll(t, entity);
-		}
+		<type>Model t = (<type>Model)entity.getUnderlyingModel(); 
 		t.update();
 	}
 <endif>	

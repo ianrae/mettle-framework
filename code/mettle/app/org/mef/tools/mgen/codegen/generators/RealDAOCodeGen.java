@@ -33,8 +33,8 @@ public class RealDAOCodeGen extends CodeGenBase
 
 		if (! isParentOfExtended)
 		{
-			result += genTouchAll(def);
-			result += genTouchAll2(def);
+//			result += genTouchAll(def);
+//			result += genTouchAll2(def);
 			result += genQueries(def);
 			result += genMethods(def);
 		}

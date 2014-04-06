@@ -2,7 +2,12 @@ package org.mef.framework.entities;
 
 public class Entity 
 {
-	public Object cc;
+	protected Object mRawModel;
+
+	public Object getUnderlyingModel()
+    {
+    	return mRawModel;
+    }
 	
 	//Derived classes can override this to do ad-hoc entity validation
 	public String validate()

@@ -49,10 +49,11 @@ public class EntityCodeGen extends CodeGenBase
 				{}
 				else
 				{
-					String s = String.format("this.%s = %s;", fdef.name, fdef.name);
+					String uname = this.uppify(fdef.name);
+					String s = String.format("this.set%s(%s);", uname, fdef.name);
 					if (isCopyCtor)
 					{
-						s = String.format("this.%s = entity.%s;", fdef.name, fdef.name);
+						s = String.format("this.set%s(entity.get%s();", uname, uname);
 					}
 					L.add(s);
 				}
