@@ -52,11 +52,11 @@ public class Hotel extends Entity
 		this.num = num;
 	}
 
-	public int getnVal() {
+	public int getNVal() {
 		return nVal;
 	}
 
-	public void setnVal(int nVal) {
+	public void setNVal(int nVal) {
 		this.nVal = nVal;
 	}
 
