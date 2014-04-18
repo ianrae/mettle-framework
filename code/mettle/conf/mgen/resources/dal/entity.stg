@@ -41,6 +41,18 @@ public class <name> extends <name>_GEN
 			super(model);
         }
 
+	<if(args)>
+        public <name>( <args; separator=", ">)
+        {
+			super(model);
+        }
+	<endif>
+
+        public <name>(<name> entity)
+        {
+			super(entity);
+        }
+
 <else>
 public class <name> extends Entity
 {
@@ -56,15 +68,14 @@ public class <name> extends Entity
 			this.mModel = model;
 			this.mRawModel = mModel;
         }
-<endif>
-		
-<if(args)>
+
+	<if(args)>
         public <name>( <args; separator=", ">)
         {
 			this.mModel = new <mname>();
             <inits; separator="\n">
         }
-<endif>
+	<endif>
 
         public <name>(<name> entity)
         {
@@ -73,6 +84,8 @@ public class <name> extends Entity
             <copyinits; separator="\n">
         }
 
+<endif>
+		
 >>
 
 endclassdecl() ::= <<
