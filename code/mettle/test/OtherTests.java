@@ -4,8 +4,11 @@ import java.io.InputStream;
 
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.junit.Test;
+import org.mef.framework.entitydb.EntityDBPropertyHelper;
 import org.mef.framework.sfx.SfxFileUtils;
 
+import testentities.Hotel;
+import testentities.StreetAddress;
 import tools.BaseTest;
 
 
@@ -67,4 +70,34 @@ public class OtherTests extends BaseTest
 		assertTrue(utils.fileExists(path));
 	}
 
+	@Test
+	public void testProp()
+	{
+		Hotel hotel = new Hotel(45L, "flight1", "abc", 44);
+		
+		EntityDBPropertyHelper<Hotel> helper = new EntityDBPropertyHelper<Hotel>();
+		
+		String s = (String) helper.getPropertyValue(hotel, "flight");
+		assertEquals("flight1", s);
+		
+		s = (String) helper.getPropertyValue(hotel, "zzzz"); //no such prop
+		assertEquals(null, s);
+		
+		int n = (Integer) helper.getPropertyValue(hotel, "num");
+		assertEquals(44, n);
+		long lval = (Long) helper.getPropertyValue(hotel, "id");
+		assertEquals(45L, lval);
+		
+		StreetAddress addr = (StreetAddress) helper.getPropertyValue(hotel, "addr");
+		assertNull(addr);
+		
+		Class clazz = helper.getPropertyType(hotel, "id");
+		assertEquals("long", clazz.getSimpleName());
+		
+		//property must be non-null to call get property type
+		clazz = helper.getPropertyType(hotel, "addr");
+		assertEquals("StreetAddress", clazz.getSimpleName());
+	}
+	
+	
 }

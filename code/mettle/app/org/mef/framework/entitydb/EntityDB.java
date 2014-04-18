@@ -20,7 +20,8 @@ import org.mef.framework.fluent.FluentException;
 public class EntityDB<T>
 	{
 		public boolean debug = false;
-		EntityDBHelper<T> helper;
+//		EntityDBHelper<T> helper;
+		EntityDBPropertyHelper<T> helper;
 	
 		HashMap<Class, IValueMatcher> matcherMap = new HashMap<Class, IValueMatcher>();
 		
@@ -32,7 +33,7 @@ public class EntityDB<T>
 			matcherMap.put(Long.class, new LongValueMatcher());
 			matcherMap.put(Entity.class, new EntityValueMatcher());
 			
-			helper = new EntityDBHelper<T>();
+			helper = new EntityDBPropertyHelper<T>();
 		}
 		//hmm should union just work in whole objects. If same object (Flight 55) in both
 		//lists, shouldn't result only be in result once!!
@@ -75,7 +76,7 @@ public class EntityDB<T>
 				return false;
 			}
 			
-			Object value = helper.getFieldValue(obj, fieldName);
+			Object value = helper.getPropertyValue(obj, fieldName);
 			if (value == null)
 			{
 				return (valueToMatch == null);
@@ -283,7 +284,7 @@ public class EntityDB<T>
 		{
 			for(T f : L)
 			{
-				Class clazz = helper.getFieldType(f, fieldName);
+				Class clazz = helper.getPropertyType(f, fieldName);
 				return clazz;
 			}
 			return null;

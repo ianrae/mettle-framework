@@ -21,8 +21,8 @@ public class ValueComparator<T> implements Comparator<T>
     
     public int compare(T obj1, T obj2)
     {
-    	Object value1 = db.helper.getFieldValue((T) obj1, fieldName);
-    	Object value2 = db.helper.getFieldValue((T) obj2, fieldName);
+    	Object value1 = db.helper.getPropertyValue((T) obj1, fieldName);
+    	Object value2 = db.helper.getPropertyValue((T) obj2, fieldName);
 
     	if (ascending)
         {

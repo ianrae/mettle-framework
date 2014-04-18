@@ -15,6 +15,38 @@ public class BeanDBTests
 {
 	public static class Flight extends Entity
 	{
+		public String getFlight() {
+			return flight;
+		}
+
+		public void setFlight(String flight) {
+			this.flight = flight;
+		}
+
+		public String getModel() {
+			return model;
+		}
+
+		public void setModel(String model) {
+			this.model = model;
+		}
+
+		public Integer getNum() {
+			return num;
+		}
+
+		public void setNum(Integer num) {
+			this.num = num;
+		}
+
+		public int getNVal() {
+			return nVal;
+		}
+
+		public void setNVal(int nVal) {
+			this.nVal = nVal;
+		}
+
 		String flight;
 		String model;
 		Integer num;
@@ -31,6 +63,14 @@ public class BeanDBTests
 	
 	public static class Airline extends Entity
 	{
+		public Flight getFlight() {
+			return flight;
+		}
+
+		public void setFlight(Flight flight) {
+			this.flight = flight;
+		}
+
 		Flight flight;
 		
 		public Airline(Flight flight)
