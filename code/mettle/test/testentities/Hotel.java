@@ -4,12 +4,12 @@ import org.mef.framework.entities.Entity;
 
 public class Hotel extends Entity
 {
-	long id;
-	public String flight;
-	public String model;
-	public Integer num;
-	public int  nVal;
-	public StreetAddress addr;
+	private long id;
+	private String flight;
+	private String model;
+	private Integer num;
+	private int  nVal;
+	private StreetAddress addr;
 
 	public Hotel(long id, String flight, String model, Integer num)
 	{

@@ -39,12 +39,12 @@ public class FluentDBRelationTests extends BaseTest
 		init();
 		StreetAddress addr = this.addressL.get(0);
 		Hotel hotel = this.hotelL.get(0);
-		hotel.addr = addr;
+		hotel.setAddr(addr);
 		
 		hotel = hotelDao.query().where("addr").eq(addr).findAny();
 
 		assertNotNull(hotel);
-		assertSame(addr, hotel.addr);
+		assertSame(addr, hotel.getAddr());
 
 	}
 
@@ -54,7 +54,7 @@ public class FluentDBRelationTests extends BaseTest
 		init();
 		StreetAddress addr = this.addressL.get(0);
 		Hotel hotel = this.hotelL.get(0);
-		hotel.addr = addr;
+		hotel.setAddr(addr);
 		
 		String target = "King";
 		hotel = hotelDao.query().where("addr.street").eq(target).findAny();
@@ -63,7 +63,7 @@ public class FluentDBRelationTests extends BaseTest
 		target = "Main";
 		hotel = hotelDao.query().where("addr.street").eq(target).findAny();
 		assertNotNull(hotel);
-		assertEquals(target, hotel.addr.street);
+		assertEquals(target, hotel.getAddr().getStreet());
 
 	}
 

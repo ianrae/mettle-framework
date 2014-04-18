@@ -41,15 +41,15 @@ public class FluentDBTests extends BaseTest
 
 		Hotel h = dao.query().where("model").eq(target).and("flight").eq("UL901").findAny();
 		assertNotNull(h);
-		assertEquals(target, h.model);
-		assertEquals("UL901", h.flight);
+		assertEquals(target, h.getModel());
+		assertEquals("UL901", h.getFlight());
 
 		log("findManuy..");
 		List<Hotel> L = dao.query().where("model").eq(target).and("flight").eq("UL901").findMany();
 		assertEquals(1, L.size());
 		h = L.get(0);
-		assertEquals(target, h.model);
-		assertEquals("UL901", h.flight);
+		assertEquals(target, h.getModel());
+		assertEquals("UL901", h.getFlight());
 
 		long count = dao.query().where("model").eq("Spitfire").and("flight").eq("UL901").findCount();
 		assertEquals(1, count);
@@ -63,18 +63,18 @@ public class FluentDBTests extends BaseTest
 
 		Hotel h = dao.query().where("model").eq(target).or("flight").eq("UL901").findAny();
 		assertNotNull(h);
-		assertEquals(target, h.model);
-		assertEquals("UL901", h.flight);
+		assertEquals(target, h.getModel());
+		assertEquals("UL901", h.getFlight());
 
 		log("findManuy..");
 		List<Hotel> L = dao.query().where("model").eq(target).or("flight").eq("UL901").findMany();
 		assertEquals(2, L.size());
 		h = L.get(0);
-		assertEquals(target, h.model);
-		assertEquals("UL901", h.flight);
+		assertEquals(target, h.getModel());
+		assertEquals("UL901", h.getFlight());
 		h = L.get(1);
-		assertEquals("Spitfire", h.model);
-		assertEquals("UL901", h.flight);
+		assertEquals("Spitfire", h.getModel());
+		assertEquals("UL901", h.getFlight());
 
 		long count = dao.query().where("model").eq("Spitfire").or("flight").eq("UL901").findCount();
 		assertEquals(3, count);
@@ -88,17 +88,17 @@ public class FluentDBTests extends BaseTest
 		Hotel h = dao.query().where("model").eq("Spitfire").findAny();
 
 		assertNotNull(h);
-		assertEquals("Spitfire", h.model);
-		assertEquals("UL900", h.flight);
+		assertEquals("Spitfire", h.getModel());
+		assertEquals("UL900", h.getFlight());
 
 		List<Hotel> L = dao.query().where("model").eq("Spitfire").findMany();
 		assertEquals(2, L.size());
 		h = L.get(0);
-		assertEquals("Spitfire", h.model);
-		assertEquals("UL900", h.flight);
+		assertEquals("Spitfire", h.getModel());
+		assertEquals("UL900", h.getFlight());
 		h = L.get(1);
-		assertEquals("Spitfire", h.model);
-		assertEquals("UL901", h.flight);
+		assertEquals("Spitfire", h.getModel());
+		assertEquals("UL901", h.getFlight());
 
 		long count = dao.query().where("model").eq("Spitfire").findCount();
 		assertEquals(2, count);
@@ -128,8 +128,8 @@ public class FluentDBTests extends BaseTest
 		init();
 		Hotel h = dao.query().findAny();
 		assertNotNull(h);
-		assertEquals("Spitfire", h.model);
-		assertEquals("UL900", h.flight);
+		assertEquals("Spitfire", h.getModel());
+		assertEquals("UL900", h.getFlight());
 
 		log("findMany..");
 		List<Hotel> L = dao.query().findMany();
@@ -157,16 +157,16 @@ public class FluentDBTests extends BaseTest
 
 		Hotel h = dao.query().orderBy("model").where("flight").eq(target).findAny();
 		assertNotNull(h);
-		assertEquals(target, h.flight);
-		assertEquals("Boeing", h.model);
+		assertEquals(target, h.getFlight());
+		assertEquals("Boeing", h.getModel());
 
 		Hotel h2 = dao.query().orderBy("model", "asc").where("flight").eq(target).findAny();
 		assertTrue(h2 == h);
 
 		h = dao.query().orderBy("model", "desc").where("flight").eq(target).findAny();
 		assertNotNull(h);
-		assertEquals(target, h.flight);
-		assertEquals("Spitfire", h.model);
+		assertEquals(target, h.getFlight());
+		assertEquals("Spitfire", h.getModel());
 	}
 
 	@Test
@@ -195,8 +195,8 @@ public class FluentDBTests extends BaseTest
 
 		Hotel h = dao.query().where("nVal").eq(target).findAny();
 		assertNotNull(h);
-		assertEquals(target, h.nVal);
-		assertEquals("Spitfire", h.model);
+		assertEquals(target, h.getNVal());
+		assertEquals("Spitfire", h.getModel());
 
 	}
 
@@ -208,14 +208,14 @@ public class FluentDBTests extends BaseTest
 
 		Hotel h = dao.query().where("nVal").lt(target).findAny();
 		assertNotNull(h);
-		assertEquals(110, h.nVal);
+		assertEquals(110, h.getNVal());
 
 		long count = dao.query().where("nVal").lt(target).findCount();
 		assertEquals(2, count);
 
 		h = dao.query().where("model").lt("Bxx").findAny();
 		assertNotNull(h);
-		assertEquals("Airbus", h.model);
+		assertEquals("Airbus", h.getModel());
 	}
 	@Test
 	public void testLE()
@@ -225,14 +225,14 @@ public class FluentDBTests extends BaseTest
 
 		Hotel h = dao.query().where("nVal").le(target).findAny();
 		assertNotNull(h);
-		assertEquals(110, h.nVal);
+		assertEquals(110, h.getNVal());
 
 		long count = dao.query().where("nVal").le(target).findCount();
 		assertEquals(3, count);
 
 		h = dao.query().where("model").le("Bxx").findAny();
 		assertNotNull(h);
-		assertEquals("Airbus", h.model);
+		assertEquals("Airbus", h.getModel());
 	}
 	@Test
 	public void testGT()
@@ -242,14 +242,14 @@ public class FluentDBTests extends BaseTest
 
 		Hotel h = dao.query().where("nVal").gt(target).findAny();
 		assertNotNull(h);
-		assertEquals(113, h.nVal);
+		assertEquals(113, h.getNVal());
 
 		long count = dao.query().where("nVal").gt(target).findCount();
 		assertEquals(1, count);
 
 		h = dao.query().where("model").gt("Caa").findAny();
 		assertNotNull(h);
-		assertEquals("Spitfire", h.model);
+		assertEquals("Spitfire", h.getModel());
 	}
 	@Test
 	public void testGE()
@@ -259,14 +259,14 @@ public class FluentDBTests extends BaseTest
 
 		Hotel h = dao.query().where("nVal").ge(target).findAny();
 		assertNotNull(h);
-		assertEquals(113, h.nVal);
+		assertEquals(113, h.getNVal());
 
 		long count = dao.query().where("nVal").ge(target).findCount();
 		assertEquals(2, count);
 
 		h = dao.query().where("model").ge("Caa").findAny();
 		assertNotNull(h);
-		assertEquals("Spitfire", h.model);
+		assertEquals("Spitfire", h.getModel());
 	}
 
 	@Test
@@ -277,14 +277,14 @@ public class FluentDBTests extends BaseTest
 
 		Hotel h = dao.query().where("nVal").neq(target).findAny();
 		assertNotNull(h);
-		assertEquals(113, h.nVal);
+		assertEquals(113, h.getNVal());
 
 		long count = dao.query().where("nVal").neq(target).findCount();
 		assertEquals(3, count);
 
 		h = dao.query().where("model").neq("Caa").findAny();
 		assertNotNull(h);
-		assertEquals("Spitfire", h.model);
+		assertEquals("Spitfire", h.getModel());
 	}
 
 	//--- helpers ---
