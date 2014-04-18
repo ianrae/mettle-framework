@@ -61,14 +61,16 @@ public class <name> extends Entity
 <if(args)>
         public <name>( <args; separator=", ">)
         {
-                <inits; separator="\n">
+			this.mModel = new <mname>();
+            <inits; separator="\n">
         }
 <endif>
 
         public <name>(<name> entity)
         {
-                this.setId(entity.getId());
-                <copyinits; separator="\n">
+			this.mModel = new <mname>();
+            this.setId(entity.getId());
+            <copyinits; separator="\n">
         }
 
 >>

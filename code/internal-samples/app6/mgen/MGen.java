@@ -9,6 +9,6 @@ public class MGen extends MGenBase
     @Test
     public void test() throws Exception 
     {
-        this.runCodeGeneration();
+        this.runCodeGeneration(); //
     }
 }
