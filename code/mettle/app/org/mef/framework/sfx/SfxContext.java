@@ -27,6 +27,12 @@ public class SfxContext {
 		_logger = (ISfxLogger) _loc.getInstance(ISfxLogger.class);
 	}
 	
+	public void setLogger(ISfxLogger newLogger)
+	{
+		_loc.registerSingleton(ISfxLogger.class, newLogger);
+		_logger = (ISfxLogger) _loc.getInstance(ISfxLogger.class);
+	}
+	
 	public ISfxLogger getLogger()
 	{
 		return _logger;
