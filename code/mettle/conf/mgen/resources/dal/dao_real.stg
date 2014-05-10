@@ -55,10 +55,11 @@ querydecl(type, fieldType, name) ::= <<
     }
 >>
 
-methoddecl(meth) ::= <<
+methoddecl(meth, retVal) ::= <<
+//method
 public <meth>
 {
-	return null;
+	return <retVal>;
 }
 >>
 

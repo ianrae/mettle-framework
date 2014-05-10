@@ -62,7 +62,7 @@ public class Presenter extends SfxBaseObj
 		Reply reply = createReply();
 		if (reply == null)
 		{
-			Logger.warn("you forgot to implement createReply!!");
+			this.addError("Presenter: you forgot to implement createReply!!");
 			reply = new Reply();
 			reply.setFailed(true);
 			return reply;
@@ -80,7 +80,7 @@ public class Presenter extends SfxBaseObj
 		doAfterAction(cmd, (Reply)res);
 		if (res == null)
 		{
-			Logger.warn("null from invoker.call!!");
+			this.addError("Presenter: null from invoker.call!!");
 			reply.setFailed(true);
 			return reply;
 		}
@@ -113,7 +113,7 @@ public class Presenter extends SfxBaseObj
 		}
 		catch (Exception e) 
 		{
-			e.printStackTrace();
+			this.addErrorException(e, "formatter");
 		}
 		return reply;
 	}
@@ -126,7 +126,7 @@ public class Presenter extends SfxBaseObj
 		}
 		catch (Exception e) 
 		{
-			e.printStackTrace();
+			this.addErrorException(e, "formatter");
 		}
 	}
 	
@@ -147,8 +147,7 @@ public class Presenter extends SfxBaseObj
 			} 
 			catch (Exception e) 
 			{
-				e.printStackTrace();
-				this.addError("EXCEPTION in formatter: " + e.getMessage());
+				this.addErrorException(e, "formatter");
 			}
 		}
 	}

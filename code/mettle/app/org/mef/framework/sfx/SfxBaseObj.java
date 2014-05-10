@@ -55,6 +55,12 @@ public class SfxBaseObj
 	{
 		this.getErrorTrackerInstance().errorOccurred(errMsg);
 	}
+	public void addErrorException(Exception e, String title)
+	{
+		e.printStackTrace();
+		this.addError(String.format("EXCEPTION in %s: %s", title, e.getMessage()));
+	}
+	
 	
 	protected String pathCombine(String path1, String path2)
 	{

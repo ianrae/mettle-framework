@@ -36,7 +36,7 @@ public class RealDAOCodeGen extends CodeGenBase
 //			result += genTouchAll(def);
 //			result += genTouchAll2(def);
 			result += genQueries(def);
-			result += genMethods(def);
+			result += genMethods(def, true);
 		}
 		st = _group.getInstanceOf("endclassdecl");
 		result += st.render(); 

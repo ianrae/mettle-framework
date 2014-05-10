@@ -93,6 +93,7 @@ public class ParseTests extends BaseTest
 		assertEquals("Task", def.name);
 		
 		assertEquals(1, def.methodL.size());
+		assertEquals("List<Task> search_by_name(String name)", def.methodL.get(0));
 	}
 	
 	

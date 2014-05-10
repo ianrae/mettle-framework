@@ -160,17 +160,46 @@ public abstract class CodeGenBase extends SfxBaseObj
 			return s;
 		}
 		
-		protected String genMethods(EntityDef def)
+		protected String genMethods(EntityDef def, boolean areDefining)
 		{
 			String result = "";
 			for(String method : def.methodL)
 			{
 				ST st = _group.getInstanceOf("methoddecl");
 				st.add("meth", method);
+				
+				if (areDefining)
+				{
+					String retVal = caclRetVal(method);
+					st.add("retVal", retVal);
+				}
+				
 				result += st.render(); 
 				result += "\n\n";
 			}
 			return result;
+		}
+		
+		private String caclRetVal(String method)
+		{
+			//List<Task> search_by_name(String name)
+			method = method.trim();
+			if (method.startsWith("boolean"))
+			{
+				return "false";
+			}
+			else if (method.startsWith("int"))
+			{
+				return "0";
+			}
+			else if (method.startsWith("long"))
+			{
+				return "0L";
+			}
+			else 
+			{
+				return "null";
+			}
 		}
 		
 		

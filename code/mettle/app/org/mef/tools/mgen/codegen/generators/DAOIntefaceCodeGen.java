@@ -32,7 +32,7 @@ public class DAOIntefaceCodeGen extends CodeGenBase
 		if (! isParentOfExtended)
 		{
 			result += genQueries(def);
-			result += genMethods(def);
+			result += genMethods(def, false);
 		}
 		st = _group.getInstanceOf("endclassdecl");
 		result += st.render(); 
