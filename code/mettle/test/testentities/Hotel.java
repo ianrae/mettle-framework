@@ -10,6 +10,7 @@ public class Hotel extends Entity
 	private Integer num;
 	private int  nVal;
 	private StreetAddress addr;
+	private boolean flag;
 
 	public Hotel(long id, String flight, String model, Integer num)
 	{
@@ -68,5 +69,12 @@ public class Hotel extends Entity
 		this.addr = addr;
 	}
 	
+	public Boolean getFlag() {
+		return flag;
+	}
+
+	public void setFlag(Boolean val) {
+		this.flag = val;
+	}
 	
 }

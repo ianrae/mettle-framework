@@ -31,6 +31,7 @@ public class EntityDB<T>
 			matcherMap.put(String.class, new StringValueMatcher());
 			matcherMap.put(Integer.class, new IntegerValueMatcher());
 			matcherMap.put(Long.class, new LongValueMatcher());
+			matcherMap.put(Boolean.class, new BooleanValueMatcher());
 			matcherMap.put(Entity.class, new EntityValueMatcher());
 			
 			helper = new EntityDBPropertyHelper<T>();
@@ -244,6 +245,19 @@ public class EntityDB<T>
 			for(T f : L)
 			{
 				if (isMatchObject(f, fieldName, valueToMatch, Long.class, IValueMatcher.EXACT))
+				{
+					resultL.add(f);
+				}
+			}
+			return resultL;
+		}
+		public List<T> findMatches(List<T> L, String fieldName, Boolean valueToMatch)
+		{
+			List<T> resultL = new ArrayList<T>();
+			
+			for(T f : L)
+			{
+				if (isMatchObject(f, fieldName, valueToMatch, Boolean.class, IValueMatcher.EXACT))
 				{
 					resultL.add(f);
 				}

@@ -1,3 +1,4 @@
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -78,6 +79,24 @@ public class FluentDBTests extends BaseTest
 
 		long count = dao.query().where("model").eq("Spitfire").or("flight").eq("UL901").findCount();
 		assertEquals(3, count);
+	}
+	
+	@Test
+	public void testBoolean()
+	{
+		init();
+
+		Hotel h = dao.query().where("flag").eq(true).findAny();
+		assertNull(h);
+		h = dao.query().where("flag").eq(false).findAny();
+		assertNotNull(h);
+		
+		h.setFlag(true);
+		h = dao.query().where("flag").eq(true).findAny();
+		assertNotNull(h);
+		Hotel h2 = dao.query().where("flag").eq(false).findAny();
+		assertNotNull(h2);
+		assertNotSame(h, h2);
 	}
 
 	@Test

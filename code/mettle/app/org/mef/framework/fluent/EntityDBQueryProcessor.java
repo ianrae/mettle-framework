@@ -153,6 +153,10 @@ public class EntityDBQueryProcessor<T>  extends SfxBaseObj implements IQueryActi
 			{
 				return db.findMatches(dataL, qaction.fieldName, (String)qaction.obj);
 			}
+			else if (qaction.obj instanceof Boolean)
+			{
+				return db.findMatches(dataL, qaction.fieldName, (Boolean)qaction.obj);
+			}
 			else if (qaction.obj instanceof Entity)
 			{
 				return db.findMatchesEntity(dataL, qaction.fieldName, (Entity)qaction.obj);
