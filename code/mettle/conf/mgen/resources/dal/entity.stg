@@ -1,6 +1,8 @@
-header(package, extras) ::= <<
+header(package, extras, willBeOverwritten) ::= <<
 
+<if(willBeOverwritten)>
 //THIS FILE HAS BEEN AUTO-GENERATED. DO NOT MODIFY.
+<endif>
 
 package <package>;
 

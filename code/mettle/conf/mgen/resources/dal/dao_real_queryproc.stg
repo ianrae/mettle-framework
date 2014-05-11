@@ -1,6 +1,9 @@
-header(package, type, extras) ::= <<
+header(package, type, extras, willBeOverwritten) ::= <<
 
+<if(willBeOverwritten)>
 //THIS FILE HAS BEEN AUTO-GENERATED. DO NOT MODIFY.
+<endif>
+
 package <package>;
 
 import java.util.List;

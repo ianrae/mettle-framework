@@ -1,4 +1,4 @@
-header(package, extras) ::= <<
+header(package, extras, willBeOverwritten) ::= <<
 
 package <package>;
 

@@ -121,12 +121,12 @@ public abstract class CodeGenBase extends SfxBaseObj
 			int pos = query.indexOf(target);
 			return query.substring(pos + target.length());
 		}
-		
-		protected String genHeader()
+
+		protected String genHeader(boolean willBeOverwritten)
 		{
-			return genHeader(null);
+			return genHeader(null, willBeOverwritten);
 		}
-		protected String genHeader(String type)
+		protected String genHeader(String type, boolean willBeOverwritten)
 		{
 			ST st = _group.getInstanceOf("header");
 			
@@ -145,6 +145,7 @@ public abstract class CodeGenBase extends SfxBaseObj
 			}
 			
 			st.add("extras", this.extraImportsL);
+			st.add("willBeOverwritten", willBeOverwritten);
 			String result = st.render(); 
 			return result;
 		}

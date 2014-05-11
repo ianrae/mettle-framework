@@ -20,7 +20,7 @@ public class ThingCodeGen extends CodeGenBase
 		public String generate(EntityDef def)
 		{
 //			this.isExtended = def.shouldExtend(EntityDef.ENTITY);
-			String result = genHeader(); 
+			String result = genHeader(! this.isParentOfExtended); 
 			
 			ST st = _group.getInstanceOf("classdecl");
 			st.add("type", "int");

@@ -21,7 +21,7 @@ public class DAOIntefaceCodeGen extends CodeGenBase
 	{
 		//			this.isExtended = def.shouldExtend(EntityDef.DAO_INTERFACE);
 
-		String result = genHeader(); 
+		String result = genHeader(true); 
 
 		ST st = _group.getInstanceOf("classdecl");
 		st.add("type", def.name);

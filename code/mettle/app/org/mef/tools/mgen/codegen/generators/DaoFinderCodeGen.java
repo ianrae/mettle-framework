@@ -17,7 +17,7 @@ public class DaoFinderCodeGen extends CodeGenBase
 	public String generate(EntityDef def)
 	{
 //		this.isExtended = false; //always
-		String result = genHeader(); 
+		String result = genHeader(true); 
 
 		ST st = _group.getInstanceOf("classdecl");
 //		st.add("type", def.name);
