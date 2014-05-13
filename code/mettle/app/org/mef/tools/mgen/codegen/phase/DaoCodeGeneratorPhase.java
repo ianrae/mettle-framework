@@ -98,6 +98,7 @@ public class DaoCodeGeneratorPhase extends CodeGeneratorPhase
 			
 			extend = false;
 			params = new AddParams(baseDir, "dao_real_queryproc.stg", def, new RealQueryProcCodeGen(_ctx), extend);
+			params.forceUserCanModifyFlag = false;
 			addOne(params, "boundaries.daos", "app\\boundaries\\daos");
 			
 		}
@@ -115,12 +116,14 @@ public class DaoCodeGeneratorPhase extends CodeGeneratorPhase
 
 		extend = false;
 		params = new AddParams(baseDir, "dao_finder.stg", def, new DaoFinderCodeGen(_ctx), false);
+		params.forceUserCanModifyFlag = false;
 		addOne(params, "mef.core", "app\\mef\\core");
 
 		if (genDaoLoader)
 		{
 			extend = true;
 			params = new AddParams(baseDir, "dao_entity_loader.stg", def, new DaoEntityLoaderCodeGen(_ctx), extend);
+			params.forceUserCanModifyFlag = false;
 			addOne(params, "mef.core", "app\\mef\\core");
 
 			extend = true;
@@ -164,8 +167,9 @@ public class DaoCodeGeneratorPhase extends CodeGeneratorPhase
 	private void addGenerator(AddParams params, String packageName, String relPath)
 	{
 //		params.inner.setExtended(params.isExtended); //propogate to codegen
+		boolean flag = params.canUserModify();
 		DaoGenerator gen = new DaoGenerator(_ctx, params.inner, params.baseDir, params.filename, 
-				params.def,  packageName, relPath, extraImportsL, params.isExtended, params.isParentOfExtended);
+				params.def,  packageName, relPath, extraImportsL, params.isExtended, params.isParentOfExtended, flag);
 		add(gen);
 	}
 	

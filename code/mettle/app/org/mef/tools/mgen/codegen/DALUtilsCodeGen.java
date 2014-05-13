@@ -18,7 +18,7 @@ public class DALUtilsCodeGen extends CodeGenBase
 	@Override
 	public String generate(EntityDef def)
 	{
-		String result = genHeader(this.isParentOfExtended); 
+		String result = genHeader(); 
 		ST st = _group.getInstanceOf("classdecl");
 		
 		st.add("name", getClassName(def));

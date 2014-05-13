@@ -16,7 +16,7 @@ public class ControllerCodeGen extends CodeGenBase
 		@Override
 		public String generate(EntityDef def)
 		{
-			String result = genHeader(def.name, false); 
+			String result = genHeader(def.name); 
 			
 			ST st = _group.getInstanceOf("classdecl");
 			st.add("type", def.name);

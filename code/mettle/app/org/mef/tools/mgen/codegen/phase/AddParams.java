@@ -14,6 +14,7 @@ class AddParams
 	public CodeGenBase inner;
 	public boolean isExtended;
 	public boolean isParentOfExtended;
+	public boolean forceUserCanModifyFlag;
 
 	public AddParams(String baseDir, String filename, EntityDef def, CodeGenBase inner, boolean isExtended)
 	{
@@ -43,5 +44,37 @@ class AddParams
 			}
 		}
 		return false;
+	}
+	
+	public boolean canUserModify()
+	{
+//		isExtended mean is a _GEN class
+//		isParentOfExtended means is parent of extended class
+//		userCanModify
+//
+//		file        isEx  isPar  UCMod
+//		entity_gen  true   false  false
+//		entity      false  true   true
+//		boundary    false  false  true
+//		binder       ""    ""     true
+//		real-dao    false  true   true
+//		qryproc     false  false  false
+//		idao        false   true  true
+//		mockdao     false   true  true
+//		real-dao-gen true   false false
+//		idao-gen     true   false false
+		
+		if (this.isExtended)
+		{
+			return false;
+		}
+		else if (this.isParentOfExtended)
+		{
+			return true;
+		}
+		else
+		{
+			return this.forceUserCanModifyFlag;
+		}
 	}
 }

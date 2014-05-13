@@ -17,7 +17,7 @@ public class ModelCodeGen extends CodeGenBase
 	public String generate(EntityDef def)
 	{
 //		this.isExtended = def.shouldExtend(EntityDef.MODEL);
-		String result = genHeader(! this.isParentOfExtended); 
+		String result = genHeader(); 
 
 		ST st = _group.getInstanceOf("classdecl");
 		st.add("type", def.name);

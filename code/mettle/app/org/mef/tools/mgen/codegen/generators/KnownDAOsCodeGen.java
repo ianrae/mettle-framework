@@ -17,7 +17,7 @@ public class KnownDAOsCodeGen extends CodeGenBase
 	public String generate(EntityDef def)
 	{
 		//		this.isExtended = true; //always
-		String result = genHeader(! this.isParentOfExtended); 
+		String result = genHeader(); 
 
 		ST st = _group.getInstanceOf("classdecl");
 		//		st.add("type", def.name);

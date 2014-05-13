@@ -26,6 +26,7 @@ public class PresenterGenerator extends CodeGenerator implements ICodeGenerator
 		this.relPath = relPath;
 		this.def = def;
 		this.gen = gen;
+		this.gen.setUserCanModifyFlag(true);
 	}
 
 	@Override

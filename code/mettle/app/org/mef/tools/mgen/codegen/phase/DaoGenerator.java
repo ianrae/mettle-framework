@@ -19,10 +19,11 @@ public class DaoGenerator extends CodeGenerator implements ICodeGenerator
 	private List<String> extraImportsL;
 	private boolean isExtended;
 	private boolean isParentOfExtended;
+	private boolean userCanModifyFlag;
 
 	public DaoGenerator(SfxContext ctx, CodeGenBase gen, String baseDir, String filename, 
 			EntityDef def, String packageName, String relPath, List<String> extraImportsL,
-			boolean isExtended, boolean isParentOfExtended) 
+			boolean isExtended, boolean isParentOfExtended, boolean userCanModifyFlag) 
 	{
 		super(ctx);
 		this.filename = filename;
@@ -34,6 +35,7 @@ public class DaoGenerator extends CodeGenerator implements ICodeGenerator
 		this.extraImportsL = extraImportsL;
 		this.isExtended = isExtended;
 		this.isParentOfExtended = isParentOfExtended;
+		this.userCanModifyFlag = userCanModifyFlag;
 	}
 
 	@Override
@@ -55,6 +57,7 @@ public class DaoGenerator extends CodeGenerator implements ICodeGenerator
 
 		gen.setExtended(isExtended); //propogate to codegen
 		gen.setIsParentOfExtended(isParentOfExtended);
+		gen.setUserCanModifyFlag(userCanModifyFlag);
 		
 		gen.init(path, packageName);
 		if (! def.enabled)

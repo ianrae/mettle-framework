@@ -19,6 +19,7 @@ public abstract class CodeGenBase extends SfxBaseObj
 		public String _packageName;
 		private boolean isExtended;
 		protected boolean isParentOfExtended;
+		protected boolean userCanModifyFlag;
 		public List<String> extraImportsL = new ArrayList<String>();
 
 		public boolean forUnitTest;
@@ -122,11 +123,11 @@ public abstract class CodeGenBase extends SfxBaseObj
 			return query.substring(pos + target.length());
 		}
 
-		protected String genHeader(boolean willBeOverwritten)
+		protected String genHeader()
 		{
-			return genHeader(null, willBeOverwritten);
+			return genHeader(null);
 		}
-		protected String genHeader(String type, boolean willBeOverwritten)
+		protected String genHeader(String type)
 		{
 			ST st = _group.getInstanceOf("header");
 			
@@ -145,7 +146,7 @@ public abstract class CodeGenBase extends SfxBaseObj
 			}
 			
 			st.add("extras", this.extraImportsL);
-			st.add("willBeOverwritten", willBeOverwritten);
+			st.add("willBeOverwritten", ! this.userCanModifyFlag);
 			String result = st.render(); 
 			return result;
 		}
@@ -212,5 +213,9 @@ public abstract class CodeGenBase extends SfxBaseObj
 					return true;
 			}
 			return false;
+		}
+		public void setUserCanModifyFlag(boolean userCanModifyFlag) 
+		{
+			this.userCanModifyFlag = userCanModifyFlag;
 		}
 	}
