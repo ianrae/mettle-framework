@@ -1,4 +1,4 @@
-package tools;
+package tools.old;
 
 import static org.junit.Assert.*;
 
@@ -10,6 +10,8 @@ import org.junit.Test;
 import org.mef.tools.mgen.codegen.old.AppScaffoldCodeGenerator;
 import org.mef.tools.mgen.codegen.old.DalCodeGenerator;
 import org.mef.tools.mgen.codegen.old.PresenterScaffoldCodeGenerator;
+
+import tools.BaseTest;
 
 public class AppCodeGenTests extends BaseTest
 {

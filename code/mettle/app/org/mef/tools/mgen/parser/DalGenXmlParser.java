@@ -76,20 +76,36 @@ public class DalGenXmlParser extends SfxBaseObj
 		{
 			_tracker.errorOccurred("Entity name must not be empty");
 		}
+
+		//we are moving to generating fields from Model class
+		String useModelFields = getEl(entityEl, "useModelFields");
+		log("userModelFields: " + useModelFields);
 		
 		//fields
-		for(int i = 0; i < 1000; i++)
+		if (useModelFields != null && useModelFields.equals("true"))
 		{
-			Element tmp = p.getIthByName(entityEl, "field", i);
-			if (tmp == null)
-			{
-				break;
-			}
-			else
-			{
-				parseField(def, tmp);
-			}
+			log("NEW GEN FIELDS FROM MODEL..");
+			ModelMethodFinder methodFinder = new ModelMethodFinder(_ctx);
+			String fullclassname = String.format("models.%sModel", def.name);
+			List<FieldDef> fieldL = methodFinder.getPropertiesFor(fullclassname);
+			def.fieldL.addAll(fieldL);
 		}
+		else
+		{
+			for(int i = 0; i < 1000; i++)
+			{
+				Element tmp = p.getIthByName(entityEl, "field", i);
+				if (tmp == null)
+				{
+					break;
+				}
+				else
+				{
+					parseField(def, tmp);
+				}
+			}
+		}		
+		
 		//queries
 		for(int i = 0; i < 1000; i++)
 		{
