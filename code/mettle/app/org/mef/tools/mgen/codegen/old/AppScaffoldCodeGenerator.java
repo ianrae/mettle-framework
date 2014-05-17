@@ -1,4 +1,4 @@
-package org.mef.tools.mgen.codegen;
+package org.mef.tools.mgen.codegen.old;
 
 //import static org.junit.Assert.assertEquals;
 //import static org.junit.Assert.assertNotNull;
@@ -17,8 +17,9 @@ import org.mef.framework.sfx.SfxBaseObj;
 import org.mef.framework.sfx.SfxContext;
 import org.mef.framework.sfx.SfxFileUtils;
 import org.mef.framework.sfx.SfxTextWriter;
+import org.mef.tools.mgen.codegen.CodeGenerator;
 
-
+//OLD !!!!!!!!!!!!
 public class AppScaffoldCodeGenerator extends CodeGenerator
 {
 	

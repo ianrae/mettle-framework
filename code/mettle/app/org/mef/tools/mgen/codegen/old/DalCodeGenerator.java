@@ -1,4 +1,4 @@
-package org.mef.tools.mgen.codegen;
+package org.mef.tools.mgen.codegen.old;
 
 //import static org.junit.Assert.assertEquals;
 
@@ -11,6 +11,7 @@ import org.mef.framework.sfx.SfxBaseObj;
 import org.mef.framework.sfx.SfxContext;
 import org.mef.framework.sfx.SfxErrorTracker;
 import org.mef.framework.sfx.SfxTextWriter;
+import org.mef.tools.mgen.codegen.CodeGenerator;
 import org.mef.tools.mgen.codegen.generators.CodeGenBase;
 import org.mef.tools.mgen.codegen.generators.DAOIntefaceCodeGen;
 import org.mef.tools.mgen.codegen.generators.DaoEntityLoaderCodeGen;

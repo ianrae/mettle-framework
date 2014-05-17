@@ -7,9 +7,9 @@ import java.io.InputStream;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.Test;
-import org.mef.tools.mgen.codegen.AppScaffoldCodeGenerator;
-import org.mef.tools.mgen.codegen.DalCodeGenerator;
-import org.mef.tools.mgen.codegen.PresenterScaffoldCodeGenerator;
+import org.mef.tools.mgen.codegen.old.AppScaffoldCodeGenerator;
+import org.mef.tools.mgen.codegen.old.DalCodeGenerator;
+import org.mef.tools.mgen.codegen.old.PresenterScaffoldCodeGenerator;
 
 public class AppCodeGenTests extends BaseTest
 {
