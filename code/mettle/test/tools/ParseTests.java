@@ -112,4 +112,45 @@ public class ParseTests extends BaseTest
 		EntityDef def = parser._entityL.get(1);
 		assertEquals("User", def.name);
 	}
+	
+	@Test
+	public void testGenFromModel() throws Exception
+	{
+		log("--testGenFromModel--");
+		createContext();
+		String path = this.getTestFile("mef_model1.xml");
+		DalGenXmlParser parser = new DalGenXmlParser(_ctx);
+		boolean b = parser.parse(path);
+		
+		assertEquals(1, parser._entityL.size());
+		
+		EntityDef def = parser._entityL.get(0);
+		assertEquals("StreetAddress", def.name);
+		
+		assertEquals(3, def.fieldL.size());
+		
+		FieldDef fdef = def.fieldL.get(0);
+		assertEquals("street", fdef.name);
+		assertEquals("String", fdef.typeName);
+		assertEquals(0, fdef.annotationL.size());
+		
+		fdef = def.fieldL.get(1);
+		assertEquals("id", fdef.name);
+		assertEquals("long", fdef.typeName);
+		assertEquals(0, fdef.annotationL.size());
+
+		fdef = def.fieldL.get(2);
+		assertEquals("number", fdef.name);
+		assertEquals("int", fdef.typeName);
+		assertEquals(0, fdef.annotationL.size());
+		assertEquals(0, parser.getErrorCount());
+
+		assertEquals(0, def.queryL.size());
+		assertEquals(true, def.shouldGenerate(EntityDef.ENTITY)); 
+		assertEquals(true, def.shouldGenerate(EntityDef.DAO)); 
+		assertEquals(false, def.shouldGenerate(EntityDef.PRESENTER)); 
+		assertEquals(true, def.shouldGenerate(EntityDef.CONTROLLER)); 
+	}
+	
+	
 }

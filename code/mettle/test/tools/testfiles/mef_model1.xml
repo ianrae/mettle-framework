@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<entities orm="ebean">
+
+<entity name="StreetAddress" useModelFields="testentities.StreetAddress" >
+	<codegen type="entity" generate="true" />
+	<codegen type="dao" generate="true" />
+	<codegen type="presenter" generate="false" />
+	<codegen type="controller" generate="true" />
+</entity>
+
+</entities>

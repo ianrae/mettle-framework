@@ -79,9 +79,14 @@ public class DaoCodeGeneratorPhase extends CodeGeneratorPhase
 
 		//-model is exception. extend is false to avoid trouble with List<UserModel_GEN> and List<UserModel>
 		boolean extend = false; //def.shouldExtend(EntityDef.ENTITY);
-		AddParams params = new AddParams(baseDir, "model.stg", def, new ModelCodeGen(_ctx), extend);
-		addOne(params, "models", "app\\models");
-
+		AddParams params;
+		
+		if (def.generateModel)
+		{
+			params = new AddParams(baseDir, "model.stg", def, new ModelCodeGen(_ctx), extend);
+			addOne(params, "models", "app\\models");
+		}
+		
 		extend = def.shouldExtend(EntityDef.ENTITY);
 		params = new AddParams(baseDir, "dao_interface.stg", def, new DAOIntefaceCodeGen(_ctx), extend);
 		addOne(params, "mef.daos", "app\\mef\\daos");

@@ -82,13 +82,19 @@ public class DalGenXmlParser extends SfxBaseObj
 		log("userModelFields: " + useModelFields);
 		
 		//fields
-		if (useModelFields != null && useModelFields.equals("true"))
+		if (useModelFields != null && ! useModelFields.isEmpty())
 		{
 			log("NEW GEN FIELDS FROM MODEL..");
 			ModelMethodFinder methodFinder = new ModelMethodFinder(_ctx);
 			String fullclassname = String.format("models.%sModel", def.name);
+			if (! useModelFields.equals("true"))
+			{
+				fullclassname = useModelFields;
+			}
+			log("FROM CLASS: " + fullclassname);
 			List<FieldDef> fieldL = methodFinder.getPropertiesFor(fullclassname);
 			def.fieldL.addAll(fieldL);
+			def.generateModel = false;
 		}
 		else
 		{

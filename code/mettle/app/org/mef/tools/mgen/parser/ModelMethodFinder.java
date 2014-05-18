@@ -41,7 +41,7 @@ public class ModelMethodFinder extends SfxBaseObj
 				continue;
 			}
 			
-			log(m.getName());
+//			log(m.getName());
 			FieldDef fdef = new FieldDef();
 			fdef.isSeedField = false; //!!fix later
 			

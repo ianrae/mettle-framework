@@ -19,6 +19,7 @@ public class EntityDef
 //	public boolean extendModel;
 //	public boolean genPresenter;
 	public String useExistingPackage;
+	public boolean generateModel = true;
 	
 	public static final String ENTITY = "entity";
 	public static final String DAO = "dao";
