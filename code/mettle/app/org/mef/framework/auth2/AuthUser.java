@@ -6,9 +6,9 @@ public class AuthUser
 	private String name;
 	private String userId;
 	private String sessionId;
-//	private IAuthSubject subject;
-	private Object subject;
-
+	private Object subject; //for authorization SRT
+	private Object userData; //app-dependent and optional
+	
 	public AuthUser()
 	{}
 
@@ -44,5 +44,13 @@ public class AuthUser
 	public void setSubject(Object subj)
 	{
 		this.subject = subj;
+	}
+	public Object getUserData()
+	{
+		return this.userData;
+	}
+	public void setUserData(Object subj)
+	{
+		this.userData = subj;
 	}
 }
