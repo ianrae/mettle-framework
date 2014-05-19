@@ -93,6 +93,7 @@ public class EntityCodeGen extends CodeGenBase
 			st.add("type", fdef.typeName);
 			st.add("name", fdef.name);
 			st.add("upperName", uppify(fdef.name));
+			st.add("readonly", fdef.isReadOnly);
 			result = st.render(); 
 
 			String s = "";

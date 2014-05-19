@@ -11,20 +11,23 @@ import mef.gen.*;
 import models.*;
 import mef.entities.*;
 import java.util.Date;
+import java.sql.Timestamp;
 <extras; separator="\n">
 
 >>
 
-fielddecl(type, name, upperName, value) ::= <<
+fielddecl(type, name, upperName, value, readonly) ::= <<
 	
 	public <type> get<upperName>()
 	{
 		return this.mModel.get<upperName>();
 	}
+<if(!readonly)>
 	public void set<upperName>(<type> val)
 	{
 		this.mModel.set<upperName>(val);
 	}
+<endif>
 >>
 init(v) ::= "<if(v)> = <v><endif>"
 
