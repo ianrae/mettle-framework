@@ -104,7 +104,7 @@ public class DaoEntityLoaderCodeGen extends CodeGenBase
 		{
 			if (fdef.name.equals("id"))
 			{}
-			else
+			else if (! fdef.isReadOnly)
 			{
 				L.add(fdef);
 			}

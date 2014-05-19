@@ -67,11 +67,19 @@ public class RealDAOCodeGen extends CodeGenBase
 
 				s += String.format("t.set%s(%sDAO.createModelFromEntity(entity.%s));", uppify(fdef.name), daoName, fdef.name);
 			}
-			else
+			else if (! fdef.isReadOnly)
 			{
 				s = String.format("t.set%s(entity.%s);", uppify(fdef.name), fdef.name);
 			}
-			assignsL.add(s);
+			else
+			{
+				s = null;
+			}
+			
+			if (s != null)
+			{
+				assignsL.add(s);
+			}
 		}
 		st.add("assigns", assignsL);
 

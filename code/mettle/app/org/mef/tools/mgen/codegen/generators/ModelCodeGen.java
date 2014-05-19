@@ -5,7 +5,7 @@ import org.mef.tools.mgen.parser.EntityDef;
 import org.mef.tools.mgen.parser.FieldDef;
 import org.stringtemplate.v4.ST;
 
-
+//NO LONGER USED!!
 public class ModelCodeGen extends CodeGenBase
 {
 	public ModelCodeGen(SfxContext ctx)

@@ -48,7 +48,7 @@ public class EntityCodeGen extends CodeGenBase
 			{
 				if (fdef.name.equals("id"))
 				{}
-				else
+				else if (! fdef.isReadOnly)
 				{
 					String uname = this.uppify(fdef.name);
 					String s = String.format("this.set%s(%s);", uname, fdef.name);
@@ -69,7 +69,7 @@ public class EntityCodeGen extends CodeGenBase
 			{
 				if (fdef.name.equals("id"))
 				{}
-				else
+				else if (! fdef.isReadOnly)
 				{
 					String s = String.format("%s %s", fdef.typeName, fdef.name);
 					L.add(s);

@@ -1,4 +1,5 @@
 
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 
 import java.lang.reflect.Method;
@@ -41,6 +42,7 @@ public class MGenReflectionTests
 		for(FieldDef fdef : fieldL)
 		{
 			log(String.format("%s %s", fdef.typeName, fdef.name));
+			assertFalse(fdef.isReadOnly);
 		}
 		
 		//doesn't work! so must still mention each entity in mef.xml

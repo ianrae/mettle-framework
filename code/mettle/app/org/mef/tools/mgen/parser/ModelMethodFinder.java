@@ -44,6 +44,11 @@ public class ModelMethodFinder extends SfxBaseObj
 //			log(m.getName());
 			FieldDef fdef = new FieldDef();
 			fdef.isSeedField = false; //!!fix later
+			fdef.isReadOnly = false;
+			if (! doesSetMethodExist(clazz, m.getName()))
+			{
+				fdef.isReadOnly = true;
+			}
 			
 			String s = m.getName().substring(3); //skip 'get'
 			
@@ -77,6 +82,32 @@ public class ModelMethodFinder extends SfxBaseObj
 		return fieldL;
 	}
 
+	private boolean doesSetMethodExist(Class clazz, String methodName)
+	{
+		Set<Method> list = Reflections.getAllMethods(clazz, Reflections.withPrefix("set"));
+		String target = "set" + methodName.substring(3);
+		
+		for(Method m : list)
+		{
+			if (! Modifier.isPublic(m.getModifiers()))
+			{
+				continue;
+			}
+			else if (shouldSkip(m))
+			{
+				continue;
+			}
+			
+			if (m.getName().equals(target))
+			{
+				return true;
+			}
+			
+		}
+		return false;
+	}
+	
+	
 	private boolean shouldSkip(Method m) 
 	{
 		String[] arSkip = { "getUnderlyingModel", "getClass" };
