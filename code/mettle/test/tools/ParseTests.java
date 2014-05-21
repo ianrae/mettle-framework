@@ -129,17 +129,22 @@ public class ParseTests extends BaseTest
 		
 		assertEquals(3, def.fieldL.size());
 		
-		FieldDef fdef = def.fieldL.get(0);
+		for(FieldDef tmp : def.fieldL)
+		{
+			log("f : " + tmp.name);
+		}
+		
+		FieldDef fdef = def.fieldL.get(2);
 		assertEquals("street", fdef.name);
 		assertEquals("String", fdef.typeName);
 		assertEquals(0, fdef.annotationL.size());
 		
-		fdef = def.fieldL.get(1);
+		fdef = def.fieldL.get(0);
 		assertEquals("id", fdef.name);
 		assertEquals("long", fdef.typeName);
 		assertEquals(0, fdef.annotationL.size());
 
-		fdef = def.fieldL.get(2);
+		fdef = def.fieldL.get(1);
 		assertEquals("number", fdef.name);
 		assertEquals("int", fdef.typeName);
 		assertEquals(0, fdef.annotationL.size());

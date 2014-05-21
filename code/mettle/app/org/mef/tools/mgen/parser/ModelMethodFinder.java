@@ -2,6 +2,8 @@ package org.mef.tools.mgen.parser;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
@@ -12,6 +14,20 @@ import org.reflections.Reflections;
 
 public class ModelMethodFinder extends SfxBaseObj
 {
+	public class FieldComparator implements Comparator<FieldDef>
+	{
+	    public FieldComparator()
+	    {
+	    }
+	    
+	    @Override
+	    public int compare(FieldDef obj1, FieldDef obj2)
+	    {
+	    	return obj1.name.compareTo(obj2.name);
+	    }	    	
+	    
+	}	
+	
 
 	public ModelMethodFinder(SfxContext ctx) 
 	{
@@ -79,6 +95,8 @@ public class ModelMethodFinder extends SfxBaseObj
 				fieldL.add(fdef);
 			}
 		}
+		
+		Collections.sort(fieldL, new FieldComparator());
 		return fieldL;
 	}
 

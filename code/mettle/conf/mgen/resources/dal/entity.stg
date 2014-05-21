@@ -78,6 +78,7 @@ public class <name> extends Entity
         public <name>( <args; separator=", ">)
         {
 			this.mModel = new <mname>();
+			this.mRawModel = mModel;
             <inits; separator="\n">
         }
 	<endif>
@@ -85,6 +86,7 @@ public class <name> extends Entity
         public <name>(<name> entity)
         {
 			this.mModel = new <mname>();
+			this.mRawModel = mModel;
             this.setId(entity.getId());
             <copyinits; separator="\n">
         }
