@@ -1,11 +1,13 @@
 package tools.sprig;
 
-import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +24,10 @@ public class SprigTests extends BaseTest
 	public static class Size
 	{
 		public String name;
+		public int num;
+		public boolean flag;
+		public Date createDate;
+		public Long amount;
 	}
 
 	public static class Color
@@ -150,6 +156,25 @@ public class SprigTests extends BaseTest
             if (map.containsKey("name"))
             {
                 obj.name = (String)map.get("name");
+            }
+            if (map.containsKey("num"))
+            {
+            	Integer n = (Integer)map.get("num");
+                obj.num = n;
+            }
+            if (map.containsKey("flag"))
+            {
+                obj.flag = (Boolean)map.get("flag");
+            }
+            if (map.containsKey("createDate"))
+            {
+            	Long n = Long.parseLong((String) map.get("createDate"));
+            	obj.createDate = new Date(n);
+            }
+            if (map.containsKey("amount"))
+            {
+            	Long n = (Long)map.get("amount");
+            	obj.amount = n;
             }
 
             return obj;
@@ -416,7 +441,7 @@ public class SprigTests extends BaseTest
 	{
         String root = "{'types': [%s] }";
 
-		String data = "{'type':'Size', 'items':[{'name':'small'},{'name':'medium'}]}";
+		String data = "{'type':'Size', 'items':[{'name':'small','num':45,'flag':true,'createDate':'1375675200000'},{'name':'medium'}]}";
 		data = String.format(root, data);
 		data = fix(data);
 
@@ -428,6 +453,11 @@ public class SprigTests extends BaseTest
 		assertEquals(2, L.size());
 		Size size = (Size) L.get(0);
 		assertEquals("small", size.name);
+		assertEquals(45, size.num);
+		assertEquals(true, size.flag);
+		assertEquals(1375675200000L, size.createDate.getTime());   
+		
+		
 		size = (Size) L.get(1);
 		assertEquals("medium", size.name);
 	}
