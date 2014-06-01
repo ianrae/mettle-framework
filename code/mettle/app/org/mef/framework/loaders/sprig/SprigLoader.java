@@ -75,9 +75,7 @@ public abstract class SprigLoader<T extends Entity>
 
 	public abstract Entity parse(Map<String,Object> map);
 
-	//make abstract!!
-	public void resolve(Entity sourceObj, String fieldName, Entity obj)
-	{}
+	public abstract void resolve(Entity sourceObj, String fieldName, Entity obj);
 
 	public Class getClassBeingLoaded()
 	{
