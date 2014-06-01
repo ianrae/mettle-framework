@@ -6,9 +6,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,8 +14,6 @@ import org.junit.Test;
 
 import tools.BaseTest;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class SprigTests extends BaseTest
 {
@@ -28,6 +24,7 @@ public class SprigTests extends BaseTest
 		public boolean flag;
 		public Date createDate;
 		public Long amount;
+		public char action;
 	}
 
 	public static class Color
@@ -45,104 +42,7 @@ public class SprigTests extends BaseTest
 	}
 	
 	
-	public static class ViaRef
-	{
-		public Class sourceClazz;
-		public String sourceField;
-		public Object sourceObj;
-		public String targetClassName;
-		public String targetField;
-		public String targetVal;
-		public Object targetObj;
-	}
-	public interface LoaderObserver
-	{
-		void addViaRef(ViaRef ref);
-	}
-	
-	public static class SprigIdMap
-	{
-		public Map<Integer,Object> objMap = new HashMap<Integer, Object>();
-	}
-
-    public static abstract class BaseJLoader 
-    {
-        protected Class classBeingLoaded;
-//        protected HashMap<Class<?>,SprigIdMap> sprigIdMap;// = new HashMap<Class,SprigId>();
-        SprigIdMap sprigIdMap;
-        
-        public BaseJLoader(Class clazz)
-        {
-            this.classBeingLoaded = clazz;
-            sprigIdMap = new SprigIdMap();
-        }
-        public List<Object> parseItems(Map<String,Object> map, LoaderObserver observer)
-        {
-            List<Object> resultL = new ArrayList<Object>();
-            List<Map<String,Object>> inputList = (List<Map<String, Object>>) map.get("items");
-            
-            
-            for(Map<String,Object> tmp : inputList)
-            {
-            	Object obj = this.parse(tmp);
-            	resultL.add(obj);
-            	parseSprigId(tmp, obj);
-            	
-            	for(String key : tmp.keySet())
-            	{
-            		if (containsVia(key))
-            		{
-            			System.out.println(key);
-            			String[] ar = key.split(" via ");
-            			System.out.println(key);
-            			String[] arTarget = ar[1].split("\\.");
-            			//sourceclass,field,obj,target class,field,val,obj
-            			ViaRef ref = new ViaRef();
-            			ref.sourceClazz = this.classBeingLoaded;
-            			ref.sourceField = ar[0];
-            			ref.sourceObj = obj;
-            			ref.targetClassName = arTarget[0];
-            			ref.targetField = arTarget[1];
-            			ref.targetVal = (String) tmp.get(key);
-            			observer.addViaRef(ref);
-            		}
-            	}
-            }
-
-            return resultL;
-        }
-        
-        
-        public void parseSprigId(Map<String,Object> map, Object obj)
-        {
-        	String idName = "sprig_id";
-            if (map.containsKey(idName))
-            {
-            	Integer id = (Integer)map.get(idName);
-            	
-            	SprigIdMap idMap = this.sprigIdMap;
-            	idMap.objMap.put(id, obj);
-            }
-        }
-       
-       
-        private boolean containsVia(String key) 
-        {
-        	String s = key.replace('\t', ' ');
-        	return s.contains(" via ");
-		}
-        
-		public abstract Object parse(Map<String,Object> map);
-		
-        public void resolve(Object sourceObj, String fieldName, Object obj)
-        {}
-
-        public Class getClassBeingLoaded()
-        {
-            return this.classBeingLoaded;
-        }
-    }
-    public static class SizeJLoader extends BaseJLoader
+	public static class SizeJLoader extends SprigLoader
     {
         public SizeJLoader()
         {
@@ -159,28 +59,29 @@ public class SprigTests extends BaseTest
             }
             if (map.containsKey("num"))
             {
-            	Integer n = (Integer)map.get("num");
-                obj.num = n;
+                obj.num = getInt(map, "num");
             }
             if (map.containsKey("flag"))
             {
-                obj.flag = (Boolean)map.get("flag");
+                obj.flag = getBoolean(map, "flag");
             }
             if (map.containsKey("createDate"))
             {
-            	Long n = Long.parseLong((String) map.get("createDate"));
-            	obj.createDate = new Date(n);
+            	obj.createDate = this.getDate(map, "createDate");
             }
             if (map.containsKey("amount"))
             {
-            	Long n = (Long)map.get("amount");
-            	obj.amount = n;
+            	obj.amount = this.getLong(map, "amount");
+            }
+            if (map.containsKey("action"))
+            {
+            	obj.action = getChar(map, "action");
             }
 
             return obj;
         }
     }
-    public static class ColorJLoader extends BaseJLoader
+    public static class ColorJLoader extends SprigLoader
     {
         public ColorJLoader()
         {
@@ -200,7 +101,7 @@ public class SprigTests extends BaseTest
         }
     }
     
-    public static class ShirtJLoader extends BaseJLoader
+    public static class ShirtJLoader extends SprigLoader
     {
         public ShirtJLoader()
         {
@@ -246,207 +147,17 @@ public class SprigTests extends BaseTest
         }
     }
     
-    public static class XLoader implements LoaderObserver
-    {
-        public Map<Class, List<Object>> resultMap = new HashMap<Class, List<Object>>();
-        private Map<String, BaseJLoader> loaderMap = new HashMap<String, BaseJLoader>();
-        public List<ViaRef> viaL = new ArrayList<ViaRef>();
-		private boolean doingImmediate;
-       
-        private BaseJLoader getLoader(String className)
-        {
-        	BaseJLoader loader = null;
-           
-            if (className.equals("Size"))
-            {
-                loader = new SizeJLoader();
-            }
-            else if (className.equals("Color"))
-            {
-                loader = new ColorJLoader();
-            }
-            else if (className.equals("Shirt"))
-            {
-            	loader = new ShirtJLoader();
-            }
-            else
-            {
-            }
-           
-            this.loaderMap.put(className, loader); //only works if each class only loaded once. fix later!!
-            return loader;
-        }
-
-        @SuppressWarnings("unchecked")
-        public void parseTypes(String inputJson) throws Exception
-        {
-            Map<String,Object> myMap = new HashMap<String, Object>();
-
-            ObjectMapper objectMapper = new ObjectMapper();
-            String mapData = inputJson;
-            myMap = objectMapper.readValue(mapData, new TypeReference<HashMap<String,Object>>() {});
-            System.out.println("Map using TypeReference: "+myMap);
-
-            List<Map<String,Object>> myList = (List<Map<String, Object>>) myMap.get("types");
-
-            for(Map<String,Object> inner : myList)
-            {
-                String typeName = (String)inner.get("type");
-                BaseJLoader loader = this.getLoader(typeName);
-//                List<Object> L = (List<Flour>)(List<?>) loader.parseItems(inner, this);
-                List<Object> L = loader.parseItems(inner, this);
-
-                List<Object> storedL = resultMap.get(loader.getClassBeingLoaded());
-                if (storedL != null)
-                {
-                    storedL.addAll(L);
-                }
-                else
-                {
-                    List<Object> objL = (List<Object>)(List<?>)L;
-                    resultMap.put(loader.getClassBeingLoaded(), objL);
-                }
-            }
-        }
-
-		@Override
-		public void addViaRef(ViaRef ref) 
-		{
-			viaL.add(ref);
-		}
-
-		
-		public boolean resolveImmediate() 
-		{
-			doingImmediate = true;
-			return doResolve();
-		}
-		
-		public boolean resolveDeferred() 
-		{
-			doingImmediate = false;
-			return doResolve();
-		}
-		
-        private boolean doResolve()
-        {
-            int maxRounds = 100;
-            int index = 0;
-            while(doOneRound())
-            {
-                int currentSize = this.viaL.size();
-                index++;
-                if (index >= maxRounds)
-                {
-                    return false;
-                }
-               
-            }
-            return (this.viaL.size() == 0);
-        }
-
-        private boolean doOneRound()
-        {
-            for(ViaRef vid : viaL)
-            {
-            	if (doingImmediate)
-            	{
-	                if (resolveAsImmediateId(vid))
-	                {
-	                    viaL.remove(vid);
-	                    return true;
-	                }
-            	}
-            	else
-            	{
-	                if (resolveAsDeferredId(vid))
-	                {
-	                    viaL.remove(vid);
-	                    return true;
-	                }
-            	}
-            }
-           
-            return false;
-        }
-
-        private boolean resolveAsImmediateId(ViaRef ref)
-        {
-        	if (ref.sourceField.startsWith("$")) //deferred (needs DAO)?
-        	{
-        		return false;
-        	}
-        	
-        	if (ref.targetField.equals("sprig_id"))
-        	{
-        		System.out.println("####");
-        		BaseJLoader loader = this.loaderMap.get(ref.targetClassName);
-        		Integer sprigId = Integer.parseInt(ref.targetVal);
-        		Object obj = loader.sprigIdMap.objMap.get(sprigId);
-        		
-        		BaseJLoader sourceLoader = this.loaderMap.get(ref.sourceClazz.getSimpleName());
-        		sourceLoader.resolve(ref.sourceObj, ref.sourceField, obj);
-        		return true;
-        	}
-        	
-//        	for(ViaRef tmp : this.viaL)
-//            {
-//                if (tmp.className.equals(vid.targetClassName))
-//                {
-//                    System.out.println("ho");
-//                    if (tmp.fieldName.equals(vid.targetFieldName))
-//                    {
-//                        if (tmp.fieldValue.equals(vid.targetFieldValue))
-//                        {
-//                            IJsonLoader loader = this.loaderMap.get(vid.sourceObj.getClass().getSimpleName());
-//                           
-//                            //!!to handle saltId must detect that fieldName is Integer,int,Long,String, then
-//                            //get targetFieldName tmp.obj.targetfieldName as an object (i.e. Integer not int)
-//                            loader.resolveVid(vid.sourceObj, vid.fieldName, tmp.obj);
-//                            return true;
-//                        }
-//                    }
-//                }
-//            }
-            return false;
-        }
-
-
-        private boolean resolveAsDeferredId(ViaRef ref)
-        {
-        	if (! ref.sourceField.startsWith("$")) //immediate?
-        	{
-        		return false;
-        	}
-        	
-        	if (ref.targetField.equals("sprig_id"))
-        	{
-        		System.out.println("####D");
-        		BaseJLoader loader = this.loaderMap.get(ref.targetClassName);
-        		Integer sprigId = Integer.parseInt(ref.targetVal);
-        		Object obj = loader.sprigIdMap.objMap.get(sprigId);
-        		
-        		BaseJLoader sourceLoader = this.loaderMap.get(ref.sourceClazz.getSimpleName());
-        		String fieldName = ref.sourceField.substring(1); //remove $
-        		sourceLoader.resolve(ref.sourceObj, fieldName, obj);
-        		return true;
-        	}
-        	return false;
-        }
-    }
-
-
-	@Test
+    @Test
 	public void test() throws Exception
 	{
         String root = "{'types': [%s] }";
 
-		String data = "{'type':'Size', 'items':[{'name':'small','num':45,'flag':true,'createDate':'1375675200000'},{'name':'medium'}]}";
+		String data = "{'type':'Size', 'items':[{'name':'small','num':45,'flag':true,'createDate':'1375675200000','action':'t'},{'name':'medium'}]}";
 		data = String.format(root, data);
 		data = fix(data);
 
 		log(data);
-		XLoader loader = new XLoader();
+		SprigDataLoader loader = new SprigDataLoader();
 		loader.parseTypes(data);
 		
 		List<Object> L = loader.resultMap.get(Size.class);
@@ -456,7 +167,7 @@ public class SprigTests extends BaseTest
 		assertEquals(45, size.num);
 		assertEquals(true, size.flag);
 		assertEquals(1375675200000L, size.createDate.getTime());   
-		
+		assertEquals('t', size.action);
 		
 		size = (Size) L.get(1);
 		assertEquals("medium", size.name);
@@ -473,7 +184,7 @@ public class SprigTests extends BaseTest
 		data = fix(data);
 
 		log(data);
-		XLoader loader = new XLoader();
+		SprigDataLoader loader = new SprigDataLoader();
 		loader.parseTypes(data);
 		
 		List<Object> L = loader.resultMap.get(Size.class);
@@ -498,7 +209,7 @@ public class SprigTests extends BaseTest
 		data = fix(data);
 
 		log(data);
-		XLoader loader = new XLoader();
+		SprigDataLoader loader = new SprigDataLoader();
 		loader.parseTypes(data);
 		
 		List<Object> L = loader.resultMap.get(Color.class);
@@ -520,7 +231,7 @@ public class SprigTests extends BaseTest
 		data = fix(data);
 
 		log(data);
-		XLoader loader = new XLoader();
+		SprigDataLoader loader = new SprigDataLoader();
 		loader.parseTypes(data);
 		List<Object> L = loader.resultMap.get(Color.class);
 		assertEquals(2, L.size());
@@ -548,7 +259,7 @@ public class SprigTests extends BaseTest
 		data = fix(data);
 
 		log(data);
-		XLoader loader = new XLoader();
+		SprigDataLoader loader = new SprigDataLoader();
 		loader.parseTypes(data);
 		List<Object> L = loader.resultMap.get(Color.class);
 		assertEquals(2, L.size());
