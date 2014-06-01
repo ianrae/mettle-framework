@@ -1,4 +1,4 @@
-package tools.sprig;
+package org.mef.framework.loaders.sprig;
 
 public interface LoaderObserver
 {

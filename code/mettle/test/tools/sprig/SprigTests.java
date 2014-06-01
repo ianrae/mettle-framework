@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.Test;
+import org.mef.framework.loaders.sprig.SprigDataLoader;
+import org.mef.framework.loaders.sprig.SprigLoader;
 
 import tools.BaseTest;
 

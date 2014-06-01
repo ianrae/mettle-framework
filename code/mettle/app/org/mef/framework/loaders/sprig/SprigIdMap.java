@@ -1,4 +1,4 @@
-package tools.sprig;
+package org.mef.framework.loaders.sprig;
 
 import java.util.HashMap;
 import java.util.Map;

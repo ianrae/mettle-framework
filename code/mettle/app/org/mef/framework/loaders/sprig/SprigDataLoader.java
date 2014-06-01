@@ -1,10 +1,11 @@
-package tools.sprig;
+package org.mef.framework.loaders.sprig;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import tools.sprig.SprigTests;
 import tools.sprig.SprigTests.ColorJLoader;
 import tools.sprig.SprigTests.ShirtJLoader;
 import tools.sprig.SprigTests.SizeJLoader;
