@@ -149,6 +149,32 @@ public class SprigTests extends BaseTest
         }
     }
     
+    public static class MyDataLoader extends SprigDataLoader
+    {
+
+		@Override
+		protected SprigLoader doGetLoader(String className) 
+		{
+            if (className.equals("Size"))
+            {
+                return new SizeJLoader();
+            }
+            else if (className.equals("Color"))
+            {
+                return new ColorJLoader();
+            }
+            else if (className.equals("Shirt"))
+            {
+            	return new ShirtJLoader();
+            }
+            else
+            {
+            	return null;
+            }
+		}
+    	
+    }
+    
     @Test
 	public void test() throws Exception
 	{
@@ -159,7 +185,7 @@ public class SprigTests extends BaseTest
 		data = fix(data);
 
 		log(data);
-		SprigDataLoader loader = new SprigDataLoader();
+		SprigDataLoader loader = new MyDataLoader();
 		loader.parseTypes(data);
 		
 		List<Object> L = loader.resultMap.get(Size.class);
@@ -186,7 +212,7 @@ public class SprigTests extends BaseTest
 		data = fix(data);
 
 		log(data);
-		SprigDataLoader loader = new SprigDataLoader();
+		MyDataLoader loader = new MyDataLoader();
 		loader.parseTypes(data);
 		
 		List<Object> L = loader.resultMap.get(Size.class);
@@ -211,7 +237,7 @@ public class SprigTests extends BaseTest
 		data = fix(data);
 
 		log(data);
-		SprigDataLoader loader = new SprigDataLoader();
+		MyDataLoader loader = new MyDataLoader();
 		loader.parseTypes(data);
 		
 		List<Object> L = loader.resultMap.get(Color.class);
@@ -233,7 +259,7 @@ public class SprigTests extends BaseTest
 		data = fix(data);
 
 		log(data);
-		SprigDataLoader loader = new SprigDataLoader();
+		MyDataLoader loader = new MyDataLoader();
 		loader.parseTypes(data);
 		List<Object> L = loader.resultMap.get(Color.class);
 		assertEquals(2, L.size());
@@ -261,7 +287,7 @@ public class SprigTests extends BaseTest
 		data = fix(data);
 
 		log(data);
-		SprigDataLoader loader = new SprigDataLoader();
+		MyDataLoader loader = new MyDataLoader();
 		loader.parseTypes(data);
 		List<Object> L = loader.resultMap.get(Color.class);
 		assertEquals(2, L.size());
