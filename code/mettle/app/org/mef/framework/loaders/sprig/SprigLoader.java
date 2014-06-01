@@ -125,4 +125,36 @@ public abstract class SprigLoader<T extends Entity>
 		Character ch = (s.isEmpty()) ? 0 : s.charAt(0);
 		return ch;
 	}
+
+	//extra stuff
+	public abstract T findRecord(T target);
+
+	public abstract void copyAllButId(T src, T dest);
+
+	//	private abstract boolean hasId(T user)
+	//	{
+	//		return !(user.getId() == null || user.getId() == 0L);
+	//	}
+
+	public void saveOrUpdate(List<Entity> L)
+	{
+		for(Entity obj : L)
+		{
+			@SuppressWarnings("unchecked")
+			T entity = (T)obj;
+			T existing = findRecord(entity);
+			if (existing == null)
+			{
+				saveEntity(entity);
+			}
+			else
+			{
+				copyAllButId(entity, existing);
+				updateUdate(existing);
+			}
+		}
+	}
+	public abstract void updateUdate(T existing);
+	public abstract void saveEntity(T entity);
+
 }

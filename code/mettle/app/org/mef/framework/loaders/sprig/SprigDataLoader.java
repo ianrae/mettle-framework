@@ -17,7 +17,8 @@ public abstract class SprigDataLoader implements LoaderObserver
 	public List<ViaRef> viaL = new ArrayList<ViaRef>();
 	private boolean doingImmediate;
 
-	private SprigLoader getLoader(String className)
+	@SuppressWarnings("rawtypes")
+	public SprigLoader getLoader(String className)
 	{
 		SprigLoader loader = doGetLoader(className);
 		if (loader != null)
@@ -27,6 +28,20 @@ public abstract class SprigDataLoader implements LoaderObserver
 		return loader;
 	}
 
+	@SuppressWarnings("rawtypes")
+	public List<SprigLoader> getAllLoaders()
+	{
+		List<SprigLoader> L = new ArrayList<SprigLoader>();
+		
+		for(String className : loaderMap.keySet())
+		{
+			SprigLoader loader = loaderMap.get(className);
+			L.add(loader);
+		}
+		return L;
+	}
+
+	
 	protected abstract SprigLoader doGetLoader(String className);
 
 	@SuppressWarnings("unchecked")

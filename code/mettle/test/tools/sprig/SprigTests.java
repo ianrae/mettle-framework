@@ -83,6 +83,27 @@ public class SprigTests extends BaseTest
 
             return obj;
         }
+
+		@Override
+		public Size findRecord(Size target) 
+		{
+			return null;
+		}
+
+		@Override
+		public void copyAllButId(Size src, Size dest) 
+		{
+		}
+
+		@Override
+		public void updateUdate(Size existing) 
+		{
+		}
+
+		@Override
+		public void saveEntity(Size entity) 
+		{
+		}
     }
     public static class ColorJLoader extends SprigLoader<Color>
     {
@@ -102,6 +123,23 @@ public class SprigTests extends BaseTest
 
             return obj;
         }
+
+		@Override
+		public Color findRecord(Color target) {
+			return null;
+		}
+
+		@Override
+		public void copyAllButId(Color src, Color dest) {
+		}
+
+		@Override
+		public void updateUdate(Color existing) {
+		}
+
+		@Override
+		public void saveEntity(Color entity) {
+		}
     }
     
     public static class ShirtJLoader extends SprigLoader<Shirt>
@@ -148,6 +186,24 @@ public class SprigTests extends BaseTest
 //                pizza.saltId = (Long) obj; //or (Integer) !!must be an object (i.e. Integer not int)
 //            }
         }
+
+		@Override
+		public Shirt findRecord(Shirt target) {
+			return null;
+		}
+
+		@Override
+		public void copyAllButId(Shirt src, Shirt dest) {
+			
+		}
+
+		@Override
+		public void updateUdate(Shirt existing) {
+		}
+
+		@Override
+		public void saveEntity(Shirt entity) {
+		}
     }
     
     public static class MyDataLoader extends SprigDataLoader
