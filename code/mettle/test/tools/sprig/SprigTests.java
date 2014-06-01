@@ -104,6 +104,12 @@ public class SprigTests extends BaseTest
 		public void saveEntity(Size entity) 
 		{
 		}
+
+		@Override
+		public void resolve(Entity sourceObj, String fieldName, Entity obj) {
+			// TODO Auto-generated method stub
+			
+		}
     }
     public static class ColorJLoader extends SprigLoader<Color>
     {
@@ -139,6 +145,12 @@ public class SprigTests extends BaseTest
 
 		@Override
 		public void saveEntity(Color entity) {
+		}
+
+		@Override
+		public void resolve(Entity sourceObj, String fieldName, Entity obj) {
+			// TODO Auto-generated method stub
+			
 		}
     }
     
