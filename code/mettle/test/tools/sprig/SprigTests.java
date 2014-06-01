@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.Test;
+import org.mef.framework.entities.Entity;
 import org.mef.framework.loaders.sprig.SprigDataLoader;
 import org.mef.framework.loaders.sprig.SprigLoader;
 
@@ -19,7 +20,7 @@ import tools.BaseTest;
 
 public class SprigTests extends BaseTest
 {
-	public static class Size
+	public static class Size extends Entity
 	{
 		public String name;
 		public int num;
@@ -29,13 +30,13 @@ public class SprigTests extends BaseTest
 		public char action;
 	}
 
-	public static class Color
+	public static class Color extends Entity
 	{
 		public int id;
 		public String colName;
 	}
 
-	public static class Shirt
+	public static class Shirt extends Entity
 	{
 		public int id;
 		public Size size;
@@ -44,7 +45,7 @@ public class SprigTests extends BaseTest
 	}
 	
 	
-	public static class SizeJLoader extends SprigLoader
+	public static class SizeJLoader extends SprigLoader<Size>
     {
         public SizeJLoader()
         {
@@ -52,7 +53,7 @@ public class SprigTests extends BaseTest
         }
        
         @Override
-        public Object parse(Map<String,Object> map)
+        public Entity parse(Map<String,Object> map)
         {
             Size obj = new Size();
             if (map.containsKey("name"))
@@ -83,7 +84,7 @@ public class SprigTests extends BaseTest
             return obj;
         }
     }
-    public static class ColorJLoader extends SprigLoader
+    public static class ColorJLoader extends SprigLoader<Color>
     {
         public ColorJLoader()
         {
@@ -91,7 +92,7 @@ public class SprigTests extends BaseTest
         }
        
         @Override
-        public Object parse(Map<String,Object> map)
+        public Entity parse(Map<String,Object> map)
         {
         	Color obj = new Color();
             if (map.containsKey("colName"))
@@ -103,7 +104,7 @@ public class SprigTests extends BaseTest
         }
     }
     
-    public static class ShirtJLoader extends SprigLoader
+    public static class ShirtJLoader extends SprigLoader<Shirt>
     {
         public ShirtJLoader()
         {
@@ -111,7 +112,7 @@ public class SprigTests extends BaseTest
         }
        
         @Override
-        public Object parse(Map<String,Object> map)
+        public Entity parse(Map<String,Object> map)
         {
         	Shirt obj = new Shirt();
             if (map.containsKey("id"))
@@ -125,7 +126,7 @@ public class SprigTests extends BaseTest
         }
         
         @Override
-        public void resolve(Object sourceObj, String fieldName, Object obj)
+        public void resolve(Entity sourceObj, String fieldName, Entity obj)
         {
             //gen one for each field that is not string,int,bool, etc
             if (fieldName.equals("color"))
@@ -188,7 +189,7 @@ public class SprigTests extends BaseTest
 		SprigDataLoader loader = new MyDataLoader();
 		loader.parseTypes(data);
 		
-		List<Object> L = loader.resultMap.get(Size.class);
+		List<Entity> L = loader.resultMap.get(Size.class);
 		assertEquals(2, L.size());
 		Size size = (Size) L.get(0);
 		assertEquals("small", size.name);
@@ -215,7 +216,7 @@ public class SprigTests extends BaseTest
 		MyDataLoader loader = new MyDataLoader();
 		loader.parseTypes(data);
 		
-		List<Object> L = loader.resultMap.get(Size.class);
+		List<Entity> L = loader.resultMap.get(Size.class);
 		assertEquals(2, L.size());
 		Size size = (Size) L.get(0);
 		assertEquals("small", size.name);
@@ -240,7 +241,7 @@ public class SprigTests extends BaseTest
 		MyDataLoader loader = new MyDataLoader();
 		loader.parseTypes(data);
 		
-		List<Object> L = loader.resultMap.get(Color.class);
+		List<Entity> L = loader.resultMap.get(Color.class);
 		assertEquals(2, L.size());
 		Color color = (Color) L.get(0);
 		assertEquals("red", color.colName);
@@ -261,7 +262,7 @@ public class SprigTests extends BaseTest
 		log(data);
 		MyDataLoader loader = new MyDataLoader();
 		loader.parseTypes(data);
-		List<Object> L = loader.resultMap.get(Color.class);
+		List<Entity> L = loader.resultMap.get(Color.class);
 		assertEquals(2, L.size());
 		Color color = (Color) L.get(0);
 		assertEquals("red", color.colName);
@@ -289,7 +290,7 @@ public class SprigTests extends BaseTest
 		log(data);
 		MyDataLoader loader = new MyDataLoader();
 		loader.parseTypes(data);
-		List<Object> L = loader.resultMap.get(Color.class);
+		List<Entity> L = loader.resultMap.get(Color.class);
 		assertEquals(2, L.size());
 		Color color = (Color) L.get(0);
 		assertEquals("red", color.colName);

@@ -5,12 +5,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.mef.framework.entities.Entity;
+
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public abstract class SprigDataLoader implements LoaderObserver
 {
-	public Map<Class, List<Object>> resultMap = new HashMap<Class, List<Object>>();
+	public Map<Class, List<Entity>> resultMap = new HashMap<Class, List<Entity>>();
 	private Map<String, SprigLoader> loaderMap = new HashMap<String, SprigLoader>();
 	public List<ViaRef> viaL = new ArrayList<ViaRef>();
 	private boolean doingImmediate;
@@ -42,18 +44,19 @@ public abstract class SprigDataLoader implements LoaderObserver
 		for(Map<String,Object> inner : myList)
 		{
 			String typeName = (String)inner.get("type");
+			@SuppressWarnings("rawtypes")
 			SprigLoader loader = this.getLoader(typeName);
 			//                List<Object> L = (List<Flour>)(List<?>) loader.parseItems(inner, this);
-			List<Object> L = loader.parseItems(inner, this);
+			List<Entity> L = loader.parseItems(inner, this);
 
-			List<Object> storedL = resultMap.get(loader.getClassBeingLoaded());
+			List<Entity> storedL = resultMap.get(loader.getClassBeingLoaded());
 			if (storedL != null)
 			{
 				storedL.addAll(L);
 			}
 			else
 			{
-				List<Object> objL = (List<Object>)(List<?>)L;
+				List<Entity> objL = (List<Entity>)(List<?>)L;
 				resultMap.put(loader.getClassBeingLoaded(), objL);
 			}
 		}
@@ -123,16 +126,16 @@ public abstract class SprigDataLoader implements LoaderObserver
 	private boolean resolveAsImmediateId(ViaRef ref)
 	{
 		if (ref.sourceField.startsWith("$")) //deferred (needs DAO)?
-				{
+		{
 			return false;
-				}
+		}
 
 		if (ref.targetField.equals("sprig_id"))
 		{
 			System.out.println("####");
 			SprigLoader loader = this.loaderMap.get(ref.targetClassName);
 			Integer sprigId = Integer.parseInt(ref.targetVal);
-			Object obj = loader.sprigIdMap.objMap.get(sprigId);
+			Entity obj = loader.sprigIdMap.objMap.get(sprigId);
 
 			SprigLoader sourceLoader = this.loaderMap.get(ref.sourceClazz.getSimpleName());
 			sourceLoader.resolve(ref.sourceObj, ref.sourceField, obj);
@@ -174,7 +177,7 @@ public abstract class SprigDataLoader implements LoaderObserver
 			System.out.println("####D");
 			SprigLoader loader = this.loaderMap.get(ref.targetClassName);
 			Integer sprigId = Integer.parseInt(ref.targetVal);
-			Object obj = loader.sprigIdMap.objMap.get(sprigId);
+			Entity obj = loader.sprigIdMap.objMap.get(sprigId);
 
 			SprigLoader sourceLoader = this.loaderMap.get(ref.sourceClazz.getSimpleName());
 			String fieldName = ref.sourceField.substring(1); //remove $
