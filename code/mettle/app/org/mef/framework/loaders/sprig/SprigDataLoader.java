@@ -84,16 +84,16 @@ public abstract class SprigDataLoader implements LoaderObserver
 	}
 
 
-	public boolean resolveImmediate() 
-	{
-//		doingImmediate = true;
-//		doResolve();
-		return true;
-	}
+//	public boolean resolveImmediate() 
+//	{
+////		doingImmediate = true;
+////		doResolve();
+//		return true;
+//	}
 
 	public boolean resolveDeferred() 
 	{
-		doingImmediate = false;
+//		doingImmediate = false;
 		return doResolve();
 	}
 
@@ -118,76 +118,18 @@ public abstract class SprigDataLoader implements LoaderObserver
 	{
 		for(ViaRef vid : viaL)
 		{
-			if (doingImmediate)
+			if (resolveAsDeferredId(vid))
 			{
-				if (resolveAsImmediateId(vid))
-				{
-					viaL.remove(vid);
-					return true;
-				}
-			}
-			else
-			{
-				if (resolveAsDeferredId(vid))
-				{
-					viaL.remove(vid);
-					return true;
-				}
+				viaL.remove(vid);
+				return true;
 			}
 		}
 
 		return false;
 	}
-
-	private boolean resolveAsImmediateId(ViaRef ref)
-	{
-		if (ref.sourceField.startsWith("$")) //deferred (needs DAO)?
-		{
-			return false;
-		}
-
-		if (ref.targetField.equals("sprig_id"))
-		{
-			System.out.println("####");
-			SprigLoader loader = this.loaderMap.get(ref.targetClassName);
-			Integer sprigId = Integer.parseInt(ref.targetVal);
-			Entity obj = loader.sprigIdMap.objMap.get(sprigId);
-
-			SprigLoader sourceLoader = this.loaderMap.get(ref.sourceClazz.getSimpleName());
-			sourceLoader.resolve(ref.sourceObj, ref.sourceField, obj);
-			return true;
-		}
-
-		//        	for(ViaRef tmp : this.viaL)
-		//            {
-		//                if (tmp.className.equals(vid.targetClassName))
-		//                {
-		//                    System.out.println("ho");
-		//                    if (tmp.fieldName.equals(vid.targetFieldName))
-		//                    {
-		//                        if (tmp.fieldValue.equals(vid.targetFieldValue))
-		//                        {
-		//                            IJsonLoader loader = this.loaderMap.get(vid.sourceObj.getClass().getSimpleName());
-		//                           
-		//                            //!!to handle saltId must detect that fieldName is Integer,int,Long,String, then
-		//                            //get targetFieldName tmp.obj.targetfieldName as an object (i.e. Integer not int)
-		//                            loader.resolveVid(vid.sourceObj, vid.fieldName, tmp.obj);
-		//                            return true;
-		//                        }
-		//                    }
-		//                }
-		//            }
-		return false;
-	}
-
 
 	private boolean resolveAsDeferredId(ViaRef ref)
 	{
-//		if (! ref.sourceField.startsWith("$")) //immediate?
-//		{
-//			return false;
-//		}
-
 		if (ref.targetField.equals("sprig_id"))
 		{
 			System.out.println("####D");

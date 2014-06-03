@@ -40,16 +40,6 @@ public class DataInitializer extends SfxBaseObj
 			return;
 		}
 		
-		int n1 = loader.viaL.size();
-		boolean b = loader.resolveImmediate();
-		if (! b)
-		{
-			this.addError("resolveImmediate FAILED!");
-			return;
-		}
-		int n2 = loader.viaL.size();
-		_ctx.log(String.format("IMMEDIATE resolve: %d of %d", (n1 - n2), n1));
-
 		int totalObjCount = 0;
 		List<SprigLoader> loaderL = loader.getAllLoaders();
 		for(SprigLoader classDataLoader : loaderL)
@@ -59,14 +49,14 @@ public class DataInitializer extends SfxBaseObj
 			totalObjCount += L.size();
 		}
 		
-		n1 = loader.viaL.size();
-		b = loader.resolveDeferred();
+		int n1 = loader.viaL.size();
+		boolean b = loader.resolveDeferred();
 		if (! b)
 		{
 			this.addError("resolveDeferred FAILED!");
 			return;
 		}
-		n2 = loader.viaL.size();
+		int n2 = loader.viaL.size();
 		_ctx.log(String.format("DERERRED resolve: %d of %d", (n1 - n2), n1));
 		_ctx.log(String.format("TOTAL objects loaded into db: %d", totalObjCount));
 	}

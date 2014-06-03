@@ -301,8 +301,7 @@ public class SprigTests extends BaseTest
 		color = (Color) L.get(1);
 		assertEquals("blue", color.colName);
 		
-		boolean b = loader.resolveImmediate();
-		b = loader.resolveDeferred();
+		boolean b = loader.resolveDeferred();
 		assertTrue(b);
 		L = loader.resultMap.get(Shirt.class);
 		assertEquals(1, L.size());
@@ -330,13 +329,10 @@ public class SprigTests extends BaseTest
 		color = (Color) L.get(1);
 		assertEquals("blue", color.colName);
 		
-		boolean b = loader.resolveImmediate();
-		assertTrue(b);
-		
 		//simulate dao load
 		color.id = 55;
 		
-		b = loader.resolveDeferred();
+		boolean b = loader.resolveDeferred();
 		assertTrue(b);
 		
 		L = loader.resultMap.get(Shirt.class);
