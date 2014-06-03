@@ -53,9 +53,8 @@ public class SprigTests extends BaseTest
         }
        
         @Override
-        public Entity parse(Map<String,Object> map)
+        public void parse(Size obj, Map<String,Object> map)
         {
-            Size obj = new Size();
             if (map.containsKey("name"))
             {
                 obj.name = (String)map.get("name");
@@ -80,8 +79,6 @@ public class SprigTests extends BaseTest
             {
             	obj.action = getChar(map, "action");
             }
-
-            return obj;
         }
 
 		@Override
@@ -119,15 +116,12 @@ public class SprigTests extends BaseTest
         }
        
         @Override
-        public Entity parse(Map<String,Object> map)
+        public void parse(Color obj, Map<String,Object> map)
         {
-        	Color obj = new Color();
             if (map.containsKey("colName"))
             {
                 obj.colName = (String)map.get("colName");
             }
-
-            return obj;
         }
 
 		@Override
@@ -148,17 +142,14 @@ public class SprigTests extends BaseTest
         }
        
         @Override
-        public Entity parse(Map<String,Object> map)
+        public void parse(Shirt obj, Map<String,Object> map)
         {
-        	Shirt obj = new Shirt();
             if (map.containsKey("id"))
             {
             	Integer n = (Integer) map.get("id");
                 obj.id = n;
             }
             //can't load size directly
-
-            return obj;
         }
         
         @Override

@@ -2,6 +2,7 @@ package org.mef.framework.loaders.sprig;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,15 +24,25 @@ public abstract class SprigLoader<T extends Entity>
 		List<Entity> resultL = new ArrayList<Entity>();
 		List<Map<String,Object>> inputList = (List<Map<String, Object>>) map.get("items");
 
-		for(Map<String,Object> tmp : inputList)
+		Map<String,Object> tmp = new HashMap<String,Object>();
+		for(Map<String,Object> params : inputList)
 		{
-			T obj = (T)this.parse(tmp);
+			T obj = null;
+			try {
+				obj = (T) this.classBeingLoaded.newInstance();
+			} catch (InstantiationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			resultL.add(obj);
-			parseSprigId(tmp, obj);
+			parseSprigId(params, obj);
 
-			for(String key : tmp.keySet())
+			for(String key : params.keySet())
 			{
-				String val = (String) tmp.get(key).toString();
+				String val = (String) params.get(key).toString();
 				if (containsVia(val))
 				{
 //					String data2 = "{'type':'Shirt', 'items':[{'id':1,'color':'<% sprig_record(Color,2)%>'}]}";
@@ -57,9 +68,16 @@ public abstract class SprigLoader<T extends Entity>
 					ref.targetVal = valx;
 					observer.addViaRef(ref);
 				}
+				else
+				{
+					tmp.put(key, params.get(key));
+				}
 			}
-		}
 
+			//parse all the non-sprig-record ones
+			this.parse(obj, tmp);				
+		}
+		
 		return resultL;
 	}
 	
@@ -82,7 +100,7 @@ public abstract class SprigLoader<T extends Entity>
 		return (key.startsWith("<%") && key.endsWith("%>"));
 	}
 
-	public abstract Entity parse(Map<String,Object> map);
+	public abstract void parse(T obj, Map<String,Object> map);
 
 	public abstract void resolve(Entity sourceObj, String fieldName, Entity obj);
 
