@@ -131,26 +131,12 @@ public class SprigTests extends BaseTest
         }
 
 		@Override
-		public Color findRecord(Color target) {
-			return null;
-		}
-
-		@Override
-		public void copyAllButId(Color src, Color dest) {
-		}
-
-		@Override
-		public void updateUdate(Color existing) {
-		}
-
-		@Override
 		public void saveEntity(Color entity) {
 		}
 
 		@Override
-		public void resolve(Entity sourceObj, String fieldName, Entity obj) {
-			// TODO Auto-generated method stub
-			
+		public void resolve(Entity sourceObj, String fieldName, Entity obj) 
+		{
 		}
     }
     
@@ -198,20 +184,6 @@ public class SprigTests extends BaseTest
 //                pizza.saltId = (Long) obj; //or (Integer) !!must be an object (i.e. Integer not int)
 //            }
         }
-
-		@Override
-		public Shirt findRecord(Shirt target) {
-			return null;
-		}
-
-		@Override
-		public void copyAllButId(Shirt src, Shirt dest) {
-			
-		}
-
-		@Override
-		public void updateUdate(Shirt existing) {
-		}
 
 		@Override
 		public void saveEntity(Shirt entity) {
@@ -270,31 +242,31 @@ public class SprigTests extends BaseTest
 		assertEquals("medium", size.name);
 	}
 
-	@Test
-	public void test2() throws Exception
-	{
-        String root = "{'types': [%s] }";
-
-		String data1 = "{'type':'Size', 'items':[{'name':'small'},{'name':'medium'}]}";
-		String data2 = "{'type':'Shirt', 'items':[{'id':1,'size via Size.name':'medium'},{'id':2,'size via Size.name':'small'}]}";
-		String data = String.format(root, data1 + "," + data2);
-		data = fix(data);
-
-		log(data);
-		MyDataLoader loader = new MyDataLoader();
-		loader.parseTypes(data);
-		
-		List<Entity> L = loader.resultMap.get(Size.class);
-		assertEquals(2, L.size());
-		Size size = (Size) L.get(0);
-		assertEquals("small", size.name);
-		size = (Size) L.get(1);
-		assertEquals("medium", size.name);
-		
-		assertEquals(2, loader.viaL.size());
-		L = loader.resultMap.get(Shirt.class);
-		assertEquals(2, L.size());
-	}
+//	@Test
+//	public void test2() throws Exception
+//	{
+//        String root = "{'types': [%s] }";
+//
+//		String data1 = "{'type':'Size', 'items':[{'name':'small'},{'name':'medium'}]}";
+//		String data2 = "{'type':'Shirt', 'items':[{'id':1,'size via Size.name':'medium'},{'id':2,'size via Size.name':'small'}]}";
+//		String data = String.format(root, data1 + "," + data2);
+//		data = fix(data);
+//
+//		log(data);
+//		MyDataLoader loader = new MyDataLoader();
+//		loader.parseTypes(data);
+//		
+//		List<Entity> L = loader.resultMap.get(Size.class);
+//		assertEquals(2, L.size());
+//		Size size = (Size) L.get(0);
+//		assertEquals("small", size.name);
+//		size = (Size) L.get(1);
+//		assertEquals("medium", size.name);
+//		
+//		assertEquals(2, loader.viaL.size());
+//		L = loader.resultMap.get(Shirt.class);
+//		assertEquals(2, L.size());
+//	}
 
 	@Test
 	public void test3() throws Exception
@@ -323,7 +295,8 @@ public class SprigTests extends BaseTest
         String root = "{'types': [%s] }";
 
 		String data1 = "{'type':'Color', 'items':[{'sprig_id':1, 'colName':'red'},{'sprig_id':2, 'colName':'blue'}]}";
-		String data2 = "{'type':'Shirt', 'items':[{'id':1,'color via Color.sprig_id':'2'}]}";
+//		String data2 = "{'type':'Shirt', 'items':[{'id':1,'color via Color.sprig_id':'2'}]}";
+		String data2 = "{'type':'Shirt', 'items':[{'id':1,'color':'<% sprig_record(Color,2)%>'}]}";
 		String data = String.format(root, data1 + "," + data2);
 		data = fix(data);
 
@@ -338,6 +311,7 @@ public class SprigTests extends BaseTest
 		assertEquals("blue", color.colName);
 		
 		boolean b = loader.resolveImmediate();
+		b = loader.resolveDeferred();
 		assertTrue(b);
 		L = loader.resultMap.get(Shirt.class);
 		assertEquals(1, L.size());
@@ -366,7 +340,7 @@ public class SprigTests extends BaseTest
 		assertEquals("blue", color.colName);
 		
 		boolean b = loader.resolveImmediate();
-		assertFalse(b);
+		assertTrue(b);
 		
 		//simulate dao load
 		color.id = 55;

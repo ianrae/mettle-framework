@@ -86,8 +86,9 @@ public abstract class SprigDataLoader implements LoaderObserver
 
 	public boolean resolveImmediate() 
 	{
-		doingImmediate = true;
-		return doResolve();
+//		doingImmediate = true;
+//		doResolve();
+		return true;
 	}
 
 	public boolean resolveDeferred() 
@@ -182,10 +183,10 @@ public abstract class SprigDataLoader implements LoaderObserver
 
 	private boolean resolveAsDeferredId(ViaRef ref)
 	{
-		if (! ref.sourceField.startsWith("$")) //immediate?
-		{
-			return false;
-		}
+//		if (! ref.sourceField.startsWith("$")) //immediate?
+//		{
+//			return false;
+//		}
 
 		if (ref.targetField.equals("sprig_id"))
 		{
@@ -195,7 +196,7 @@ public abstract class SprigDataLoader implements LoaderObserver
 			Entity obj = loader.sprigIdMap.objMap.get(sprigId);
 
 			SprigLoader sourceLoader = this.loaderMap.get(ref.sourceClazz.getSimpleName());
-			String fieldName = ref.sourceField.substring(1); //remove $
+			String fieldName = ref.sourceField; //.substring(1); //remove $
 			sourceLoader.resolve(ref.sourceObj, fieldName, obj);
 			return true;
 		}

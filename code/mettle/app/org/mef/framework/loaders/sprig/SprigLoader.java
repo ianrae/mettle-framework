@@ -31,20 +31,29 @@ public abstract class SprigLoader<T extends Entity>
 
 			for(String key : tmp.keySet())
 			{
-				if (containsVia(key))
+				String val = (String) tmp.get(key).toString();
+				if (containsVia(val))
 				{
+//					String data2 = "{'type':'Shirt', 'items':[{'id':1,'color':'<% sprig_record(Color,2)%>'}]}";
+					
 					System.out.println(key);
-					String[] ar = key.split(" via ");
-					System.out.println(key);
-					String[] arTarget = ar[1].split("\\.");
+					val = val.replace("<%", "");
+					val = val.replace("%>", "");
+					String target = "sprig_record(";
+					int pos = val.indexOf(target);
+					int pos2 = val.indexOf(',', pos);
+					int pos3 = val.indexOf(')', pos);
+					String namex = val.substring(pos + target.length(), pos2);
+					String valx = val.substring(pos2 + 1, pos3);
+					
 					//sourceclass,field,obj,target class,field,val,obj
 					ViaRef ref = new ViaRef();
 					ref.sourceClazz = this.classBeingLoaded;
-					ref.sourceField = ar[0];
+					ref.sourceField = key;
 					ref.sourceObj = obj;
-					ref.targetClassName = arTarget[0];
-					ref.targetField = arTarget[1];
-					ref.targetVal = (String) tmp.get(key);
+					ref.targetClassName = namex;
+					ref.targetField = "sprig_id";
+					ref.targetVal = valx;
 					observer.addViaRef(ref);
 				}
 			}
@@ -69,8 +78,7 @@ public abstract class SprigLoader<T extends Entity>
 
 	private boolean containsVia(String key) 
 	{
-		String s = key.replace('\t', ' ');
-		return s.contains(" via ");
+		return (key.startsWith("<%") && key.endsWith("%>"));
 	}
 
 	public abstract Entity parse(Map<String,Object> map);
@@ -126,9 +134,16 @@ public abstract class SprigLoader<T extends Entity>
 	}
 
 	//extra stuff
-	public abstract T findRecord(T target);
+	//can be overridden
+	public T findRecord(T target)
+	{
+		return null;
+	}
 
-	public abstract void copyAllButId(T src, T dest);
+	//can be overridden
+	public void copyAllButId(T src, T dest)
+	{
+	}
 
 	//	private abstract boolean hasId(T user)
 	//	{
@@ -153,7 +168,9 @@ public abstract class SprigLoader<T extends Entity>
 			}
 		}
 	}
-	public abstract void updateUdate(T existing);
+	//can be overridden
+	public void updateUdate(T existing)
+	{}
 	public abstract void saveEntity(T entity);
 
 }

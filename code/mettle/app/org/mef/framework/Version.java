@@ -1,5 +1,5 @@
 package org.mef.framework;
 
 public class Version {
-	public static final String version = "0.2.10";
+	public static final String version = "0.2.11";
 }
