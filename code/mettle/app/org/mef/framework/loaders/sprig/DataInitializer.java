@@ -20,9 +20,9 @@ public class DataInitializer extends SfxBaseObj
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public void load(String path) 
+	public void load(String path, String dir) 
 	{
-		String json = ResourceReader.readFile(path);
+		String json = ResourceReader.readSeedFile(path, dir);
 		if (json == null || json.isEmpty()) //fix later!!
 		{
 			log(String.format("SEED LOAD failed: %s", path));
