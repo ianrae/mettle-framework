@@ -39,12 +39,13 @@ public abstract class SprigLoader<T extends Entity>
 					System.out.println(key);
 					val = val.replace("<%", "");
 					val = val.replace("%>", "");
-					String target = "sprig_record(";
-					int pos = val.indexOf(target);
+//					String target = "sprig_record(";
+					int pos = val.indexOf('(');
 					int pos2 = val.indexOf(',', pos);
 					int pos3 = val.indexOf(')', pos);
-					String namex = val.substring(pos + target.length(), pos2);
-					String valx = val.substring(pos2 + 1, pos3);
+					String op = val.substring(0, pos).trim();
+					String namex = val.substring(pos + 1, pos2).trim();
+					String valx = val.substring(pos2 + 1, pos3).trim();
 					
 					//sourceclass,field,obj,target class,field,val,obj
 					ViaRef ref = new ViaRef();
@@ -61,7 +62,7 @@ public abstract class SprigLoader<T extends Entity>
 
 		return resultL;
 	}
-
+	
 
 	public void parseSprigId(Map<String,Object> map, Entity obj)
 	{

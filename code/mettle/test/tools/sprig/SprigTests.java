@@ -325,7 +325,7 @@ public class SprigTests extends BaseTest
         String root = "{'types': [%s] }";
 
 		String data1 = "{'type':'Color', 'items':[{'sprig_id':1, 'colName':'red'},{'sprig_id':2, 'colName':'blue'}]}";
-		String data2 = "{'type':'Shirt', 'items':[{'id':1,'$colorId via Color.sprig_id':'2'}]}";
+		String data2 = "{'type':'Shirt', 'items':[{'id':1,'colorId':'<% sprig_record(Color,2)%>'}]}";
 		String data = String.format(root, data1 + "," + data2);
 		data = fix(data);
 
