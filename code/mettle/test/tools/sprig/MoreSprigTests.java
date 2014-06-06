@@ -1,8 +1,7 @@
 package tools.sprig;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,19 +14,20 @@ import org.mef.framework.loaders.sprig.SprigLoader;
 import org.mef.framework.loaders.sprig.ViaRef;
 import org.mef.framework.utils.ResourceReader;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import tools.BaseTest;
 import tools.sprig.SprigTests.Color;
+import tools.sprig.SprigTests.Shirt;
 import tools.sprig.SprigTests.Size;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class MoreSprigTests extends BaseTest
 {
 	public static class SizeSprig extends SprigLoader<Size>
 	{
+		public List<Size> finalL = new ArrayList<Size>();
+		
 		public SizeSprig()
 		{
 			super(Size.class);
@@ -70,11 +70,14 @@ public class MoreSprigTests extends BaseTest
 		@Override
 		public void saveEntity(Size entity) 
 		{
+			finalL.add(entity);
 		}
 	}
 
 	public static class ColorSprig extends SprigLoader<Color>
 	{
+		public List<Color> finalL = new ArrayList<Color>();
+		
 		public ColorSprig()
 		{
 			super(Color.class);
@@ -90,7 +93,9 @@ public class MoreSprigTests extends BaseTest
 		}
 
 		@Override
-		public void saveEntity(Color entity) {
+		public void saveEntity(Color entity) 
+		{
+			finalL.add(entity);
 		}
 
 		@Override
@@ -99,6 +104,49 @@ public class MoreSprigTests extends BaseTest
 		}
 	}
 
+    public static class ShirtSprig extends SprigLoader<Shirt>
+    {
+    	public List<Shirt> finalL = new ArrayList<Shirt>();
+        public ShirtSprig()
+        {
+            super(Shirt.class);
+        }
+       
+        @Override
+        public void parse(Shirt obj, Map<String,Object> map)
+        {
+            if (map.containsKey("id"))
+            {
+            	Integer n = (Integer) map.get("id");
+                obj.id = n;
+            }
+            //can't load size directly
+        }
+        
+        @Override
+        public void resolve(Entity sourceObj, String fieldName, Entity obj)
+        {
+            //gen one for each field that is not string,int,bool, etc
+            if (fieldName.equals("color"))
+            {
+                Shirt shirt = (Shirt) sourceObj;
+                shirt.color = (Color) obj;
+            }
+            else if (fieldName.equals("colorId"))
+            {
+                Shirt shirt = (Shirt) sourceObj;
+                Color other = (Color)obj;
+                shirt.colorId  = other.id;
+            }
+        }
+
+		@Override
+		public void saveEntity(Shirt entity) 
+		{
+			finalL.add(entity);
+		}
+    }
+	
 
 	public static class Sprig implements LoaderObserver
 	{
@@ -146,6 +194,8 @@ public class MoreSprigTests extends BaseTest
 
 				log(String.format("SEED %s loading..", path));
 				numObj += parseType(loader, json);
+				
+				this.loaderMap.put(className, loader);
 			}
 
 			//tsort!!
@@ -209,17 +259,8 @@ public class MoreSprigTests extends BaseTest
 
 		private boolean doResolve(List<SprigLoader> soFarL)
 		{
-			int maxRounds = 100; //!!much bigger
-			int index = 0;
 			while(doOneRound(soFarL))
 			{
-				//				int currentSize = this.viaL.size();
-				index++;
-				if (index >= maxRounds)
-				{
-					return false;
-				}
-
 			}
 			return (this.viaL.size() == 0);
 		}
@@ -250,7 +291,6 @@ public class MoreSprigTests extends BaseTest
 		{
 			if (ref.targetField.equals("sprig_id"))
 			{
-				System.out.println("####D");
 				SprigLoader loader = this.loaderMap.get(ref.targetClassName);
 				Integer sprigId = Integer.parseInt(ref.targetVal);
 				Entity obj = loader.getSprigIdMap().objMap.get(sprigId);
@@ -270,8 +310,32 @@ public class MoreSprigTests extends BaseTest
 		String dir = this.getTestFile("sprig\\");
 		log(dir);
 		Sprig.setDir(dir);
-		int n = Sprig.load(new SizeSprig(), new ColorSprig());
-		assertEquals(4, n);
+		SizeSprig sizeSprig = new SizeSprig();
+		ColorSprig colorSprig = new ColorSprig();
+		ShirtSprig shirtSprig = new ShirtSprig();
+		
+		int n = Sprig.load(sizeSprig, colorSprig, shirtSprig);
+		assertEquals(5, n);
+		log("done");
+		
+		assertEquals(2, sizeSprig.finalL.size());
+		chkSize(sizeSprig.finalL.get(0), "small", 45);
+		chkSize(sizeSprig.finalL.get(1), "medium", 65);
+
+		assertEquals(2, colorSprig.finalL.size());
+		assertEquals("red", colorSprig.finalL.get(0).colName);
+		assertEquals("blue", colorSprig.finalL.get(1).colName);
+		
+		assertEquals(1, shirtSprig.finalL.size());
+		assertEquals(1, shirtSprig.finalL.get(0).id);
+		assertEquals("blue", shirtSprig.finalL.get(0).color.colName);
 	}
+
+	private void chkSize(Size size, String expected, int i) 
+	{
+		assertEquals(expected, size.name);
+		assertEquals(i, size.num);
+	}
+
 
 }

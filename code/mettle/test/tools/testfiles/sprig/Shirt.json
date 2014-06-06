@@ -1,0 +1,8 @@
+{
+"records": [
+		{"id":1,"color":"<% sprig_record(Color,2)%>"}
+	]
+}
+ 
+
+
