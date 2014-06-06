@@ -72,22 +72,22 @@ public class MoreSprigTests extends BaseTest
 		{
 		}
 	}
-	
-    public static class ColorSprig extends SprigLoader<Color>
-    {
-        public ColorSprig()
-        {
-            super(Color.class);
-        }
-       
-        @Override
-        public void parse(Color obj, Map<String,Object> map)
-        {
-            if (map.containsKey("colName"))
-            {
-                obj.colName = (String)map.get("colName");
-            }
-        }
+
+	public static class ColorSprig extends SprigLoader<Color>
+	{
+		public ColorSprig()
+		{
+			super(Color.class);
+		}
+
+		@Override
+		public void parse(Color obj, Map<String,Object> map)
+		{
+			if (map.containsKey("colName"))
+			{
+				obj.colName = (String)map.get("colName");
+			}
+		}
 
 		@Override
 		public void saveEntity(Color entity) {
@@ -97,8 +97,8 @@ public class MoreSprigTests extends BaseTest
 		public void resolve(Entity sourceObj, String fieldName, Entity obj) 
 		{
 		}
-    }
-	
+	}
+
 
 	public static class Sprig implements LoaderObserver
 	{
@@ -135,7 +135,7 @@ public class MoreSprigTests extends BaseTest
 			int numObj = 0;
 			for(SprigLoader loader : loaders)
 			{
-				String className = loader.getClassBeingLoaded().getSimpleName();
+				String className = loader.getNameOfClassBeingLoaded();
 				String path = className + ".json";
 				String json = ResourceReader.readSeedFile(path, seedDir);
 				if (json == null || json.isEmpty()) //fix later!!
@@ -147,14 +147,26 @@ public class MoreSprigTests extends BaseTest
 				log(String.format("SEED %s loading..", path));
 				numObj += parseType(loader, json);
 			}
-			
+
+			//tsort!!
+
 			log("and save..");
+			List<SprigLoader> soFarL = new ArrayList<SprigLoader>();
+
 			for(SprigLoader loader : loaders)
 			{
 				List<Entity> L = this.resultMap.get(loader.getClassBeingLoaded());
 				loader.saveOrUpdate(L);
+
+				soFarL.add(loader);
+				doResolve(soFarL);
 			}
 			
+			if (viaL.size() > 0)
+			{
+				log(String.format("SEED FAILED with %d unresolved sprig_id references", viaL.size()));
+			}
+
 			return numObj;
 		}
 		private int parseType(SprigLoader loader, String inputJson) throws Exception
@@ -192,6 +204,63 @@ public class MoreSprigTests extends BaseTest
 		public void addViaRef(ViaRef ref) 
 		{
 			viaL.add(ref);
+		}
+
+
+		private boolean doResolve(List<SprigLoader> soFarL)
+		{
+			int maxRounds = 100; //!!much bigger
+			int index = 0;
+			while(doOneRound(soFarL))
+			{
+				//				int currentSize = this.viaL.size();
+				index++;
+				if (index >= maxRounds)
+				{
+					return false;
+				}
+
+			}
+			return (this.viaL.size() == 0);
+		}
+
+		private boolean doOneRound(List<SprigLoader> soFarL)
+		{
+			for(ViaRef vid : viaL)
+			{
+				for(SprigLoader loader : soFarL)
+				{
+					//once a loaders objects have been saved to the db, we can resolve references to them
+					String className = loader.getNameOfClassBeingLoaded();
+					if (className.equals(vid.targetClassName))
+					{
+						if (resolveAsDeferredId(vid))
+						{
+							viaL.remove(vid);
+							return true;
+						}
+					}
+				}
+			}
+
+			return false;
+		}
+
+		private boolean resolveAsDeferredId(ViaRef ref)
+		{
+			if (ref.targetField.equals("sprig_id"))
+			{
+				System.out.println("####D");
+				SprigLoader loader = this.loaderMap.get(ref.targetClassName);
+				Integer sprigId = Integer.parseInt(ref.targetVal);
+				Entity obj = loader.getSprigIdMap().objMap.get(sprigId);
+
+				SprigLoader sourceLoader = this.loaderMap.get(ref.sourceClazz.getSimpleName());
+				String fieldName = ref.sourceField; //.substring(1); //remove $
+				sourceLoader.resolve(ref.sourceObj, fieldName, obj);
+				return true;
+			}
+			return false;
 		}
 	}
 

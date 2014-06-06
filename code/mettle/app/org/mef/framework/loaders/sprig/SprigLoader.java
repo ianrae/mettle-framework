@@ -12,7 +12,7 @@ public abstract class SprigLoader<T extends Entity>
 {
 	protected Class classBeingLoaded;
 	//        protected HashMap<Class<?>,SprigIdMap> sprigIdMap;// = new HashMap<Class,SprigId>();
-	SprigIdMap sprigIdMap;
+	private SprigIdMap sprigIdMap;
 
 	public SprigLoader(Class clazz)
 	{
@@ -94,7 +94,7 @@ public abstract class SprigLoader<T extends Entity>
 		{
 			Integer id = (Integer)map.get(idName);
 
-			SprigIdMap idMap = this.sprigIdMap;
+			SprigIdMap idMap = this.getSprigIdMap();
 			idMap.objMap.put(id, obj);
 		}
 	}
@@ -112,6 +112,10 @@ public abstract class SprigLoader<T extends Entity>
 	public Class getClassBeingLoaded()
 	{
 		return this.classBeingLoaded;
+	}
+	public String getNameOfClassBeingLoaded()
+	{
+		return this.classBeingLoaded.getSimpleName();
 	}
 
 	protected String getString(Map<String,Object> map, String name)
@@ -196,5 +200,9 @@ public abstract class SprigLoader<T extends Entity>
 	public void updateUdate(T existing)
 	{}
 	public abstract void saveEntity(T entity);
+	
+	public SprigIdMap getSprigIdMap() {
+		return sprigIdMap;
+	}
 
 }

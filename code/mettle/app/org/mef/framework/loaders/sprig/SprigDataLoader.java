@@ -135,7 +135,7 @@ public abstract class SprigDataLoader implements LoaderObserver
 			System.out.println("####D");
 			SprigLoader loader = this.loaderMap.get(ref.targetClassName);
 			Integer sprigId = Integer.parseInt(ref.targetVal);
-			Entity obj = loader.sprigIdMap.objMap.get(sprigId);
+			Entity obj = loader.getSprigIdMap().objMap.get(sprigId);
 
 			SprigLoader sourceLoader = this.loaderMap.get(ref.sourceClazz.getSimpleName());
 			String fieldName = ref.sourceField; //.substring(1); //remove $
