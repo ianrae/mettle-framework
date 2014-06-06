@@ -258,6 +258,30 @@ public class MoreSprigTests extends BaseTest
 				TSortNode node = new TSortNode(loader);
 				L.add(node);
 			}
+			
+			
+			for(ViaRef via : viaL)
+			{
+				SprigLoader srcLoader = findByClass(loaders, via.sourceClazz);
+				SprigLoader targetLoader = findByClassName(loaders, via.targetClassName);
+				
+				TSortNode node1 = null;
+				TSortNode node2 = null;
+				for(TSortNode tmp : L)
+				{
+					if (tmp.obj == srcLoader)
+					{
+						node1 = tmp;
+					}
+					else if (tmp.obj == targetLoader)
+					{
+						node2 = tmp;
+					}
+				}
+
+				node1.addDep(node2);
+			}
+			
 //			L.get(2).addDep(L.get(1));
 //			L.get(2).addDep(L.get(3));
 //			L.get(3).addDep(L.get(0));
@@ -272,6 +296,28 @@ public class MoreSprigTests extends BaseTest
 			return sortedL;
 		}
 
+		private SprigLoader findByClass(SprigLoader[] loaders, Class clazz) 
+		{
+			for(SprigLoader loader : loaders)
+			{
+				if (loader.getClassBeingLoaded() == clazz)
+				{
+					return loader;
+				}
+			}
+			return null;
+		}
+		private SprigLoader findByClassName(SprigLoader[] loaders, String className) 
+		{
+			for(SprigLoader loader : loaders)
+			{
+				if (loader.getNameOfClassBeingLoaded().equals(className))
+				{
+					return loader;
+				}
+			}
+			return null;
+		}
 		private void log(String s)
 		{
 			System.out.println(s);
