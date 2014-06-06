@@ -21,8 +21,13 @@ public abstract class SprigLoader<T extends Entity>
 	}
 	public List<Entity> parseItems(Map<String,Object> map, LoaderObserver observer)
 	{
-		List<Entity> resultL = new ArrayList<Entity>();
 		List<Map<String,Object>> inputList = (List<Map<String, Object>>) map.get("items");
+		return doparseItems(observer, inputList);
+	}
+
+	public List<Entity> doparseItems(LoaderObserver observer, List<Map<String,Object>> inputList)
+	{
+		List<Entity> resultL = new ArrayList<Entity>();
 
 		Map<String,Object> tmp = new HashMap<String,Object>();
 		for(Map<String,Object> params : inputList)
