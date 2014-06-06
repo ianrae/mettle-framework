@@ -58,8 +58,9 @@ public class MoreSprigTests extends BaseTest
 		}
 
 		@Override
-		public void resolve(Entity sourceObj, String fieldName, Entity obj) 
+		public boolean resolve(Entity sourceObj, String fieldName, Entity obj) 
 		{
+			return false;
 		}
 
 		@Override
@@ -94,8 +95,9 @@ public class MoreSprigTests extends BaseTest
 		}
 
 		@Override
-		public void resolve(Entity sourceObj, String fieldName, Entity obj) 
+		public boolean resolve(Entity sourceObj, String fieldName, Entity obj) 
 		{
+			return false;
 		}
 	}
 
@@ -119,19 +121,25 @@ public class MoreSprigTests extends BaseTest
         }
         
         @Override
-        public void resolve(Entity sourceObj, String fieldName, Entity obj)
+        public boolean resolve(Entity sourceObj, String fieldName, Entity obj)
         {
             //gen one for each field that is not string,int,bool, etc
             if (fieldName.equals("color"))
             {
                 Shirt shirt = (Shirt) sourceObj;
                 shirt.color = (Color) obj;
+                return true;
             }
             else if (fieldName.equals("colorId"))
             {
                 Shirt shirt = (Shirt) sourceObj;
                 Color other = (Color)obj;
                 shirt.colorId  = other.id;
+                return true;
+            }
+            else
+            {
+            	return false;
             }
         }
 
@@ -144,7 +152,7 @@ public class MoreSprigTests extends BaseTest
 	
 
 	@Test
-	public void test()
+	public void test() throws Exception
 	{
 		String dir = this.getTestFile("sprig\\");
 		log(dir);

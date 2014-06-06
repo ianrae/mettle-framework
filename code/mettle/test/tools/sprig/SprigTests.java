@@ -103,9 +103,9 @@ public class SprigTests extends BaseTest
 		}
 
 		@Override
-		public void resolve(Entity sourceObj, String fieldName, Entity obj) {
-			// TODO Auto-generated method stub
-			
+		public boolean resolve(Entity sourceObj, String fieldName, Entity obj) 
+		{
+			return false;
 		}
     }
     public static class ColorJLoader extends SprigLoader<Color>
@@ -129,8 +129,9 @@ public class SprigTests extends BaseTest
 		}
 
 		@Override
-		public void resolve(Entity sourceObj, String fieldName, Entity obj) 
+		public boolean resolve(Entity sourceObj, String fieldName, Entity obj) 
 		{
+			return false;
 		}
     }
     
@@ -153,21 +154,26 @@ public class SprigTests extends BaseTest
         }
         
         @Override
-        public void resolve(Entity sourceObj, String fieldName, Entity obj)
+        public boolean resolve(Entity sourceObj, String fieldName, Entity obj)
         {
             //gen one for each field that is not string,int,bool, etc
             if (fieldName.equals("color"))
             {
                 Shirt shirt = (Shirt) sourceObj;
                 shirt.color = (Color) obj;
+                return true;
             }
             else if (fieldName.equals("colorId"))
             {
                 Shirt shirt = (Shirt) sourceObj;
                 Color other = (Color)obj;
                 shirt.colorId  = other.id;
+                return true;
             }
-           
+            else
+            {
+            	return false;
+            }
             //if was saltId then
 //            if (fieldName.equals("salt"))
 //            {

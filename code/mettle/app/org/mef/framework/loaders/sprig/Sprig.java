@@ -19,22 +19,20 @@ public class Sprig implements LoaderObserver
 	{
 		seedDir = dir;
 	}
-	public static int load(SprigLoader...sprigs)
+	@SuppressWarnings("rawtypes")
+	public static int load(SprigLoader...sprigs) throws Exception
 	{
-		int n = 0;
 		Sprig self = new Sprig();
-		try {
-			n = self.doLoad(sprigs);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		int n = self.doLoad(sprigs);
 		return n;
 	}
 
+	@SuppressWarnings("rawtypes")
 	private Map<Class, List<Entity>> resultMap = new HashMap<Class, List<Entity>>();
+	@SuppressWarnings("rawtypes")
 	private Map<String, SprigLoader> loaderMap = new HashMap<String, SprigLoader>();
 	private List<ViaRef> viaL = new ArrayList<ViaRef>();
+	private int failCount; //# errors
 
 	public Sprig()
 	{
@@ -65,7 +63,7 @@ public class Sprig implements LoaderObserver
 
 		log("and save..");
 		List<SprigLoader> soFarL = new ArrayList<SprigLoader>();
-
+		failCount = 0;
 		for(SprigLoader loader : sortedL)
 		{
 			log(String.format("SEED saving %s..", loader.getNameOfClassBeingLoaded()));
@@ -74,6 +72,10 @@ public class Sprig implements LoaderObserver
 
 			soFarL.add(loader);
 			doResolve(soFarL);
+			if (failCount > 0)
+			{
+				throw new IllegalStateException("SEED resolve failed");
+			}
 		}
 		
 		if (viaL.size() > 0)
@@ -83,6 +85,7 @@ public class Sprig implements LoaderObserver
 
 		return numObj;
 	}
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private int parseType(SprigLoader loader, String inputJson) throws Exception
 	{
 		Map<String,Object> myMap = new HashMap<String, Object>();
@@ -90,7 +93,7 @@ public class Sprig implements LoaderObserver
 		ObjectMapper objectMapper = new ObjectMapper();
 		String mapData = inputJson;
 		myMap = objectMapper.readValue(mapData, new TypeReference<HashMap<String,Object>>() {});
-		System.out.println("Map using TypeReference: "+myMap);
+//		System.out.println("Map using TypeReference: "+myMap);
 
 		List<Map<String,Object>> myList = (List<Map<String, Object>>) myMap.get("records");
 
@@ -153,6 +156,7 @@ public class Sprig implements LoaderObserver
 		return sortedL;
 	}
 
+	@SuppressWarnings("rawtypes")
 	private SprigLoader findByClass(SprigLoader[] loaders, Class clazz) 
 	{
 		for(SprigLoader loader : loaders)
@@ -164,6 +168,7 @@ public class Sprig implements LoaderObserver
 		}
 		return null;
 	}
+	@SuppressWarnings("rawtypes")
 	private SprigLoader findByClassName(SprigLoader[] loaders, String className) 
 	{
 		for(SprigLoader loader : loaders)
@@ -186,6 +191,7 @@ public class Sprig implements LoaderObserver
 	}
 
 
+	@SuppressWarnings("rawtypes")
 	private boolean doResolve(List<SprigLoader> soFarL)
 	{
 		while(doOneRound(soFarL))
@@ -194,6 +200,7 @@ public class Sprig implements LoaderObserver
 		return (this.viaL.size() == 0);
 	}
 
+	@SuppressWarnings("rawtypes")
 	private boolean doOneRound(List<SprigLoader> soFarL)
 	{
 		for(ViaRef vid : viaL)
@@ -217,6 +224,7 @@ public class Sprig implements LoaderObserver
 		return false;
 	}
 
+	@SuppressWarnings("rawtypes")
 	private boolean resolveAsDeferredId(ViaRef ref)
 	{
 		if (ref.targetField.equals("sprig_id"))
@@ -226,8 +234,13 @@ public class Sprig implements LoaderObserver
 			Entity obj = loader.getSprigIdMap().objMap.get(sprigId);
 
 			SprigLoader sourceLoader = this.loaderMap.get(ref.sourceClazz.getSimpleName());
-			String fieldName = ref.sourceField; //.substring(1); //remove $
-			sourceLoader.resolve(ref.sourceObj, fieldName, obj);
+			String fieldName = ref.sourceField; 
+			if (! sourceLoader.resolve(ref.sourceObj, fieldName, obj))
+			{
+				failCount++;
+				log(String.format("SEED failed to resolve %s.%s to %s.%s ", ref.sourceClazz.getSimpleName(), 
+						fieldName, ref.targetClassName, ref.targetField));
+			}
 			return true;
 		}
 		return false;
