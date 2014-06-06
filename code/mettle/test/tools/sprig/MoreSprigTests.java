@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import tools.BaseTest;
+import tools.sprig.SprigTests.Color;
 import tools.sprig.SprigTests.Size;
 
 public class MoreSprigTests extends BaseTest
@@ -71,6 +72,33 @@ public class MoreSprigTests extends BaseTest
 		{
 		}
 	}
+	
+    public static class ColorSprig extends SprigLoader<Color>
+    {
+        public ColorSprig()
+        {
+            super(Color.class);
+        }
+       
+        @Override
+        public void parse(Color obj, Map<String,Object> map)
+        {
+            if (map.containsKey("colName"))
+            {
+                obj.colName = (String)map.get("colName");
+            }
+        }
+
+		@Override
+		public void saveEntity(Color entity) {
+		}
+
+		@Override
+		public void resolve(Entity sourceObj, String fieldName, Entity obj) 
+		{
+		}
+    }
+	
 
 	public static class Sprig implements LoaderObserver
 	{
@@ -101,12 +129,14 @@ public class MoreSprigTests extends BaseTest
 		{
 		}
 
+		@SuppressWarnings({ "rawtypes", "unchecked" })
 		private int doLoad(SprigLoader...loaders) throws Exception
 		{
 			int numObj = 0;
 			for(SprigLoader loader : loaders)
 			{
-				String path = "User.json";
+				String className = loader.getClassBeingLoaded().getSimpleName();
+				String path = className + ".json";
 				String json = ResourceReader.readSeedFile(path, seedDir);
 				if (json == null || json.isEmpty()) //fix later!!
 				{
@@ -117,6 +147,14 @@ public class MoreSprigTests extends BaseTest
 				log(String.format("SEED %s loading..", path));
 				numObj += parseType(loader, json);
 			}
+			
+			log("and save..");
+			for(SprigLoader loader : loaders)
+			{
+				List<Entity> L = this.resultMap.get(loader.getClassBeingLoaded());
+				loader.saveOrUpdate(L);
+			}
+			
 			return numObj;
 		}
 		private int parseType(SprigLoader loader, String inputJson) throws Exception
@@ -163,7 +201,7 @@ public class MoreSprigTests extends BaseTest
 		String dir = this.getTestFile("sprig\\");
 		log(dir);
 		Sprig.setDir(dir);
-		int n = Sprig.load(new SizeSprig());
+		int n = Sprig.load(new SizeSprig(), new ColorSprig());
 		assertEquals(4, n);
 	}
 
