@@ -18,6 +18,8 @@ import tools.BaseTest;
 import tools.sprig.SprigTests.Color;
 import tools.sprig.SprigTests.Shirt;
 import tools.sprig.SprigTests.Size;
+import tools.sprig.TSortTests.TSortNode;
+import tools.sprig.TSortTests.TopologicalSort;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -198,13 +200,14 @@ public class MoreSprigTests extends BaseTest
 				this.loaderMap.put(className, loader);
 			}
 
-			//tsort!!
+			List<SprigLoader> sortedL = tsort(loaders);
 
 			log("and save..");
 			List<SprigLoader> soFarL = new ArrayList<SprigLoader>();
 
-			for(SprigLoader loader : loaders)
+			for(SprigLoader loader : sortedL)
 			{
+				log(String.format("SEED saving %s..", loader.getNameOfClassBeingLoaded()));
 				List<Entity> L = this.resultMap.get(loader.getClassBeingLoaded());
 				loader.saveOrUpdate(L);
 
@@ -245,6 +248,29 @@ public class MoreSprigTests extends BaseTest
 			}
 			return L.size();
 		}
+		
+		@SuppressWarnings("rawtypes")
+		private List<SprigLoader> tsort(SprigLoader[] loaders)
+		{
+			List<TSortNode> L = new ArrayList<TSortNode>();
+			for(SprigLoader loader : loaders)
+			{
+				TSortNode node = new TSortNode(loader);
+				L.add(node);
+			}
+//			L.get(2).addDep(L.get(1));
+//			L.get(2).addDep(L.get(3));
+//			L.get(3).addDep(L.get(0));
+
+			List<TSortNode> sortL = TopologicalSort.sort(L);
+			
+			List<SprigLoader> sortedL = new ArrayList<SprigLoader>();
+			for(TSortNode node : sortL)
+			{
+				sortedL.add((SprigLoader) node.obj);
+			}
+			return sortedL;
+		}
 
 		private void log(String s)
 		{
@@ -275,6 +301,7 @@ public class MoreSprigTests extends BaseTest
 					String className = loader.getNameOfClassBeingLoaded();
 					if (className.equals(vid.targetClassName))
 					{
+						log("a " + className);
 						if (resolveAsDeferredId(vid))
 						{
 							viaL.remove(vid);
@@ -314,7 +341,7 @@ public class MoreSprigTests extends BaseTest
 		ColorSprig colorSprig = new ColorSprig();
 		ShirtSprig shirtSprig = new ShirtSprig();
 		
-		int n = Sprig.load(sizeSprig, colorSprig, shirtSprig);
+		int n = Sprig.load(sizeSprig, shirtSprig, colorSprig);
 		assertEquals(5, n);
 		log("done");
 		

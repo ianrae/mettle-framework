@@ -15,22 +15,22 @@ import tools.BaseTest;
 
 public class TSortTests extends BaseTest
 {
-	public static class TopoGraphNode
+	public static class TSortNode
 	{
 		public Object obj;
-		private List<TopoGraphNode> deps = new ArrayList<TopoGraphNode>();
+		private List<TSortNode> deps = new ArrayList<TSortNode>();
 
-		public TopoGraphNode(Object obj)
+		public TSortNode(Object obj)
 		{
 			this.obj = obj;
 		}
 
-		public List<TopoGraphNode> getDependents()
+		public List<TSortNode> getDependents()
 		{
 			return deps;
 		}
 
-		public void addDep(TopoGraphNode node)
+		public void addDep(TSortNode node)
 		{
 			deps.add(node);
 		}
@@ -51,14 +51,14 @@ public class TSortTests extends BaseTest
 		 *  "nodes" are has a toString() method that returns the name of a node since this method
 		 *  will be used if a cycle has been detected to report one of the nodes in the cycle.
 		 */
-		public static List<TopoGraphNode> sort(final Collection<TopoGraphNode> nodes)
+		public static List<TSortNode> sort(final Collection<TSortNode> nodes)
 				throws IllegalStateException
 				{
-			final List<TopoGraphNode> order = new ArrayList<TopoGraphNode>();
-			final Set<TopoGraphNode> visited = new HashSet<TopoGraphNode>();
+			final List<TSortNode> order = new ArrayList<TSortNode>();
+			final Set<TSortNode> visited = new HashSet<TSortNode>();
 
-			final Set<TopoGraphNode> alreadySeen = new HashSet<TopoGraphNode>();
-			for (final TopoGraphNode n : nodes) {
+			final Set<TSortNode> alreadySeen = new HashSet<TSortNode>();
+			for (final TSortNode n : nodes) {
 				alreadySeen.clear();
 				visit(n, alreadySeen, visited, order);
 			}
@@ -66,8 +66,8 @@ public class TSortTests extends BaseTest
 			return order;
 				}
 
-		private static void visit(final TopoGraphNode n, final Set<TopoGraphNode> alreadySeen,
-				final Set<TopoGraphNode> visited, final List<TopoGraphNode> order)
+		private static void visit(final TSortNode n, final Set<TSortNode> alreadySeen,
+				final Set<TSortNode> visited, final List<TSortNode> order)
 		{
 			if (alreadySeen.contains(n))
 				throw new IllegalStateException("cycle containing " + n + " found!");
@@ -75,7 +75,7 @@ public class TSortTests extends BaseTest
 
 			if (!visited.contains(n)) {
 				visited.add(n);
-				for (final TopoGraphNode m : n.getDependents())
+				for (final TSortNode m : n.getDependents())
 					visit(m, alreadySeen, visited, order);
 				order.add(n);
 			}
@@ -88,20 +88,20 @@ public class TSortTests extends BaseTest
 	@Test
 	public void test()
 	{
-		List<TopoGraphNode> L = new ArrayList<TopoGraphNode>();
+		List<TSortNode> L = new ArrayList<TSortNode>();
 		for(int i = 0; i < 4; i++)
 		{
 			String s = String.format("node%d", i);
-			TopoGraphNode node = new TopoGraphNode(s);
+			TSortNode node = new TSortNode(s);
 			L.add(node);
 		}
 		L.get(2).addDep(L.get(1));
 		L.get(2).addDep(L.get(3));
 		L.get(3).addDep(L.get(0));
 
-		List<TopoGraphNode> sortL = TopologicalSort.sort(L);
+		List<TSortNode> sortL = TopologicalSort.sort(L);
 
-		for(TopoGraphNode nod : sortL)
+		for(TSortNode nod : sortL)
 		{
 			log(nod.obj.toString());
 		}
