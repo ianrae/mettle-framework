@@ -25,10 +25,51 @@ parsedecl(type) ::= <<
 
 >>
 
-parsefield(fldName) ::= <<
+parseLong(fldName,setName) ::= <<
 		if (map.containsKey("<fldName>"))
 		{
-			obj.setId(getLong(map, "<fldName>"));
+			Long val = getLong(map, "<fldName>");
+			obj.<setName>(val);
+		}
+
+>>
+parseInteger(fldName,setName) ::= <<
+		if (map.containsKey("<fldName>"))
+		{
+			Integer val = getInt(map, "<fldName>");
+			obj.<setName>(val);
+		}
+
+>>
+parseString(fldName,setName) ::= <<
+		if (map.containsKey("<fldName>"))
+		{
+			String val = getString(map, "<fldName>");
+			obj.<setName>(val);
+		}
+
+>>
+parseBoolean(fldName,setName) ::= <<
+		if (map.containsKey("<fldName>"))
+		{
+			Boolean val = getBoolean(map, "<fldName>");
+			obj.<setName>(val);
+		}
+
+>>
+parseDate(fldName,setName) ::= <<
+		if (map.containsKey("<fldName>"))
+		{
+			Date val = getDate(map, "<fldName>");
+			obj.<setName>(val);
+		}
+
+>>
+parseCharacter(fldName,setName) ::= <<
+		if (map.containsKey("<fldName>"))
+		{
+			Character val = getCharacter(map, "<fldName>");
+			obj.<setName>(val);
 		}
 
 >>

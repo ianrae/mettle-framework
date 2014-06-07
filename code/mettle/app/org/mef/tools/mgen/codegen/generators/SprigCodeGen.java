@@ -65,9 +65,21 @@ public class SprigCodeGen extends CodeGenBase
 	@Override
 	protected String buildField(EntityDef def, FieldDef fdef)
 	{
-		ST st = _group.getInstanceOf("parsefield");
+		String typeName = uppify(fdef.typeName); //long,Long
+		ST st = _group.getInstanceOf("parse" + typeName);
+		
+		//we don't parse fields that are references to other models because this is handled by
+		//the resolve step.
+		//And other types (such as JodaTime types) are not supported here. Override parse() and handle
+		//them yourself, or extend dao_sprig.stg
+		if (st == null)
+		{
+			return "";
+		}
+		
 //		st.add("type", def.name);
 		st.add("fldName", fdef.name);
+		st.add("setName", "set" + fdef.uname);
 		
 		String result = st.render(); 
 		return result;
