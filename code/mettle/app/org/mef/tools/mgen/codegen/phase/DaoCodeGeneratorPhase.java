@@ -96,10 +96,13 @@ public class DaoCodeGeneratorPhase extends CodeGeneratorPhase
 		params = new AddParams(baseDir, "dao_mock.stg", def, new MockDAOCodeGen(_ctx), extend);
 		addOne(params, "mef.daos.mocks", "app\\mef\\daos\\mocks");
 
-		extend = def.shouldExtend(EntityDef.ENTITY);
-		params = new AddParams(baseDir, "dao_sprig.stg", def, new SprigCodeGen(_ctx), extend);
-		addOne(params, "mef.daos.sprigs", "app\\mef\\daos\\sprigs");
-
+		if (this.genDaoLoader)
+		{
+			extend = def.shouldExtend(EntityDef.ENTITY);
+			params = new AddParams(baseDir, "dao_sprig.stg", def, new SprigCodeGen(_ctx), extend);
+			addOne(params, "mef.daos.sprigs", "app\\mef\\daos\\sprigs");
+		}
+		
 		if (genRealDAO)
 		{
 			extend = def.shouldExtend(EntityDef.ENTITY);
@@ -129,17 +132,17 @@ public class DaoCodeGeneratorPhase extends CodeGeneratorPhase
 		params.forceUserCanModifyFlag = false;
 		addOne(params, "mef.core", "app\\mef\\core");
 
-		if (genDaoLoader)
-		{
-			extend = true;
-			params = new AddParams(baseDir, "dao_entity_loader.stg", def, new DaoEntityLoaderCodeGen(_ctx), extend);
-			params.forceUserCanModifyFlag = false;
-			addOne(params, "mef.core", "app\\mef\\core");
-
-			extend = true;
-			params = new AddParams(baseDir, "dao_entity_saver.stg", def, new EntityLoaderSaverCodeGen(_ctx), extend);
-			addOne(params, "mef.core", "app\\mef\\core");
-		}
+//		if (genDaoLoader)
+//		{
+//			extend = true;
+//			params = new AddParams(baseDir, "dao_entity_loader.stg", def, new DaoEntityLoaderCodeGen(_ctx), extend);
+//			params.forceUserCanModifyFlag = false;
+//			addOne(params, "mef.core", "app\\mef\\core");
+//
+//			extend = true;
+//			params = new AddParams(baseDir, "dao_entity_saver.stg", def, new EntityLoaderSaverCodeGen(_ctx), extend);
+//			addOne(params, "mef.core", "app\\mef\\core");
+//		}
 	}
 
 	protected void generateEntityClasses(EntityDef def) throws Exception

@@ -11,7 +11,7 @@ public class SfxErrorTracker extends SfxBaseObj
 		super(ctx);
 	}
 	
-	public void errorOccurred(String errMsg)
+	public synchronized void errorOccurred(String errMsg)
 	{
 		_lastError = errMsg;
 		_errorCount++;
