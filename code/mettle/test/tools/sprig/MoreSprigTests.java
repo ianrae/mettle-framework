@@ -178,6 +178,35 @@ public class MoreSprigTests extends BaseTest
 		assertEquals("blue", shirtSprig.finalL.get(0).color.colName);
 	}
 
+
+//to do!! save() of loader should do dao.findById and then copyAllButId	
+//	@Test
+//	public void testIdempotent() throws Exception
+//	{
+//		String dir = this.getTestFile("sprig\\");
+//		log(dir);
+//		Sprig.setDir(dir);
+//		SizeSprig sizeSprig = new SizeSprig();
+//		ColorSprig colorSprig = new ColorSprig();
+//		ShirtSprig shirtSprig = new ShirtSprig();
+//		
+//		int n = Sprig.load(sizeSprig, shirtSprig, colorSprig);
+//		assertEquals(5, n);
+//		log("done");
+//		
+//		assertEquals(2, sizeSprig.finalL.size());
+//		assertEquals(2, colorSprig.finalL.size());
+//		assertEquals(1, shirtSprig.finalL.size());
+//		log("again");
+//		n = Sprig.load(sizeSprig, shirtSprig, colorSprig);
+//		assertEquals(5, n);
+//		log("done");
+//		
+//		assertEquals(2, sizeSprig.finalL.size());
+//		assertEquals(2, colorSprig.finalL.size());
+//		assertEquals(1, shirtSprig.finalL.size());
+//	}
+	
 	private void chkSize(Size size, String expected, int i) 
 	{
 		assertEquals(expected, size.name);
