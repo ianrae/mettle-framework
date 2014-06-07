@@ -66,6 +66,15 @@ public class SprigCodeGen extends CodeGenBase
 	protected String buildField(EntityDef def, FieldDef fdef)
 	{
 		String typeName = uppify(fdef.typeName); //long,Long
+		if (fdef.typeName.equals("int"))
+		{
+			typeName = "Integer";
+		}
+		else if (fdef.typeName.equals("char"))
+		{
+			typeName = "Character";
+		}
+		
 		ST st = _group.getInstanceOf("parse" + typeName);
 		
 		//we don't parse fields that are references to other models because this is handled by

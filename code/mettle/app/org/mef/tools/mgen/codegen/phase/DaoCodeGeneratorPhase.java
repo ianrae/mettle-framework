@@ -98,7 +98,7 @@ public class DaoCodeGeneratorPhase extends CodeGeneratorPhase
 
 		extend = def.shouldExtend(EntityDef.ENTITY);
 		params = new AddParams(baseDir, "dao_sprig.stg", def, new SprigCodeGen(_ctx), extend);
-		addOne(params, "mef.daos.sprig", "app\\mef\\daos\\sprigs");
+		addOne(params, "mef.daos.sprigs", "app\\mef\\daos\\sprigs");
 
 		if (genRealDAO)
 		{

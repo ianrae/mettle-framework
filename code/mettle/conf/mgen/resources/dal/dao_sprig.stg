@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.ArrayList;
 import mef.entities.*;
 import mef.daos.*;
+import mef.gen.*;
+import mef.core.DaoFinder;
 <extras; separator="\n">
 
 >>
@@ -20,7 +22,7 @@ import mef.daos.*;
 
 parsedecl(type) ::= <<
 	@Override
-	public void parse(<type> obj, Map\<String,Object\> map)
+	public void parse(<type> obj, Map\<String,Object> map)
 	{
 
 >>
@@ -90,7 +92,7 @@ public class <name> extends <name>_GEN
 <else>
 public class <name> extends SprigLoader\<<type>\>
 {
-	private I<type>DAO dao;
+	protected I<type>DAO dao;
 
 	public <name>()
 	{
