@@ -275,11 +275,11 @@ public class SprigTests extends BaseTest
 		ColorJLoader loader = new ColorJLoader();
 		sprig.parseType(loader, data);
 
-		data1 = "{'id':1,'color via Color.sprig_id':'2'}";
+		data1 = "{'id':1,'color':'<% sprig_record(Color,2)%>'}";
 		data = String.format(root, data1);
 		data = fix(data);
 		log(data);
-		ColorJLoader loader2 = new ColorJLoader();
+		ShirtJLoader loader2 = new ShirtJLoader();
 		sprig.parseType(loader2, data);
 		
 		
@@ -293,41 +293,41 @@ public class SprigTests extends BaseTest
 		L = sprig.getResultMap().get(Shirt.class);
 		assertEquals(1, L.size());
 		Shirt shirt = (Shirt) L.get(0);
-		assertNotNull(shirt.color);
+		assertNull(shirt.color); //must use sprig.load to do resolving
 	}
 
-	@Test
-	public void test5() throws Exception
-	{
-        String root = "{'types': [%s] }";
-
-		String data1 = "{'type':'Color', 'items':[{'sprig_id':1, 'colName':'red'},{'sprig_id':2, 'colName':'blue'}]}";
-		String data2 = "{'type':'Shirt', 'items':[{'id':1,'colorId':'<% sprig_record(Color,2)%>'}]}";
-		String data = String.format(root, data1 + "," + data2);
-		data = fix(data);
-
-		log(data);
-		Sprig sprig = new Sprig();
-		ColorJLoader loader = new ColorJLoader();
-		sprig.load(loader);
-
-		List<Entity> L = sprig.getResultMap().get(Size.class);
-		assertEquals(2, L.size());
-		Color color = (Color) L.get(0);
-		assertEquals("red", color.colName);
-		color = (Color) L.get(1);
-		assertEquals("blue", color.colName);
-		
-		//simulate dao load
-		color.id = 55;
-		
-		
-		L = sprig.getResultMap().get(Shirt.class);
-		assertEquals(1, L.size());
-		Shirt shirt = (Shirt) L.get(0);
-		assertNull(shirt.color);
-		assertEquals(55, shirt.colorId);
-	}
+//	@Test
+//	public void test5() throws Exception
+//	{
+//        String root = "{'types': [%s] }";
+//
+//		String data1 = "{'type':'Color', 'items':[{'sprig_id':1, 'colName':'red'},{'sprig_id':2, 'colName':'blue'}]}";
+//		String data2 = "{'type':'Shirt', 'items':[{'id':1,'colorId':'<% sprig_record(Color,2)%>'}]}";
+//		String data = String.format(root, data1 + "," + data2);
+//		data = fix(data);
+//
+//		log(data);
+//		Sprig sprig = new Sprig();
+//		ColorJLoader loader = new ColorJLoader();
+//		sprig.load(loader);
+//
+//		List<Entity> L = sprig.getResultMap().get(Size.class);
+//		assertEquals(2, L.size());
+//		Color color = (Color) L.get(0);
+//		assertEquals("red", color.colName);
+//		color = (Color) L.get(1);
+//		assertEquals("blue", color.colName);
+//		
+//		//simulate dao load
+//		color.id = 55;
+//		
+//		
+//		L = sprig.getResultMap().get(Shirt.class);
+//		assertEquals(1, L.size());
+//		Shirt shirt = (Shirt) L.get(0);
+//		assertNull(shirt.color);
+//		assertEquals(55, shirt.colorId);
+//	}
 	//helpers
 	protected String fix(String s)
 	{
