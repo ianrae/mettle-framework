@@ -16,6 +16,7 @@ import org.mef.tools.mgen.codegen.generators.MockDAOCodeGen;
 import org.mef.tools.mgen.codegen.generators.ModelCodeGen;
 import org.mef.tools.mgen.codegen.generators.RealDAOCodeGen;
 import org.mef.tools.mgen.codegen.generators.RealQueryProcCodeGen;
+import org.mef.tools.mgen.codegen.generators.SprigCodeGen;
 import org.mef.tools.mgen.parser.EntityDef;
 import org.mef.tools.mgen.parser.GeneratorOptions;
 
@@ -148,6 +149,16 @@ public class CodeGenTests extends BaseCodeGenTest
 		log("--testPresenterUnitTest--");
 		BoundaryCodeGen gen = new BoundaryCodeGen(_ctx);
 		genPresenterAndLog(gen, "presenter-unit-test.stg", "mef");
+	}
+	
+	@Test
+	public void testSprig() throws Exception
+	{
+		log("--testSprig--");
+//		String path = this.getTemplateFile("dao_all_known.stg");
+//		String packageName = "mef.gen";
+		SprigCodeGen gen = new SprigCodeGen(_ctx);
+		genAndLog(gen, "dao_sprig.stg", "mef.gen");
 	}
 	
 //	@Test

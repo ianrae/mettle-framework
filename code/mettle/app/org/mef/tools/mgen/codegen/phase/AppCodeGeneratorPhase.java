@@ -135,6 +135,7 @@ public class AppCodeGeneratorPhase extends CodeGeneratorPhase
 		createDir("app\\mef\\core");
 		createDir("app\\mef\\daos");
 		createDir("app\\mef\\daos\\mocks");
+		createDir("app\\mef\\daos\\sprigs");
 		createDir("app\\mef\\entities");
 		createDir("app\\mef\\gen");
 		createDir("app\\mef\\presenters");
