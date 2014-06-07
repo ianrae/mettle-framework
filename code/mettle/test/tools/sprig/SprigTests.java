@@ -12,7 +12,7 @@ import java.util.Map;
 
 import org.junit.Test;
 import org.mef.framework.entities.Entity;
-import org.mef.framework.loaders.sprig.SprigDataLoader;
+import org.mef.framework.loaders.sprig.Sprig;
 import org.mef.framework.loaders.sprig.SprigLoader;
 
 import tools.BaseTest;
@@ -187,46 +187,22 @@ public class SprigTests extends BaseTest
 		}
     }
     
-    public static class MyDataLoader extends SprigDataLoader
-    {
-
-		@Override
-		protected SprigLoader doGetLoader(String className) 
-		{
-            if (className.equals("Size"))
-            {
-                return new SizeJLoader();
-            }
-            else if (className.equals("Color"))
-            {
-                return new ColorJLoader();
-            }
-            else if (className.equals("Shirt"))
-            {
-            	return new ShirtJLoader();
-            }
-            else
-            {
-            	return null;
-            }
-		}
-    	
-    }
     
     @Test
 	public void test() throws Exception
 	{
-        String root = "{'types': [%s] }";
+        String root = "{'records': [%s] }";
 
-		String data = "{'type':'Size', 'items':[{'name':'small','num':45,'flag':true,'createDate':'1375675200000','action':'t'},{'name':'medium'}]}";
+		String data = "{'name':'small','num':45,'flag':true,'createDate':'1375675200000','action':'t'},{'name':'medium'}";
 		data = String.format(root, data);
 		data = fix(data);
 
 		log(data);
-		SprigDataLoader loader = new MyDataLoader();
-		loader.parseTypes(data);
+		Sprig sprig = new Sprig();
+		SizeJLoader loader = new SizeJLoader();
+		sprig.parseType(loader, data);
 		
-		List<Entity> L = loader.resultMap.get(Size.class);
+		List<Entity> L = sprig.getResultMap().get(Size.class);
 		assertEquals(2, L.size());
 		Size size = (Size) L.get(0);
 		assertEquals("small", size.name);
@@ -268,17 +244,17 @@ public class SprigTests extends BaseTest
 	@Test
 	public void test3() throws Exception
 	{
-        String root = "{'types': [%s] }";
-
-		String data = "{'type':'Color', 'items':[{'sprig_id':1, 'colName':'red'},{'sprig_id':2, 'colName':'blue'}]}";
+        String root = "{'records': [%s] }";
+		String data = "{'sprig_id':1, 'colName':'red'},{'sprig_id':2, 'colName':'blue'}";
 		data = String.format(root, data);
 		data = fix(data);
 
 		log(data);
-		MyDataLoader loader = new MyDataLoader();
-		loader.parseTypes(data);
+		Sprig sprig = new Sprig();
+		ColorJLoader loader = new ColorJLoader();
+		sprig.parseType(loader, data);
 		
-		List<Entity> L = loader.resultMap.get(Color.class);
+		List<Entity> L = sprig.getResultMap().get(Color.class);
 		assertEquals(2, L.size());
 		Color color = (Color) L.get(0);
 		assertEquals("red", color.colName);
@@ -289,27 +265,32 @@ public class SprigTests extends BaseTest
 	@Test
 	public void test4() throws Exception
 	{
-        String root = "{'types': [%s] }";
-
-		String data1 = "{'type':'Color', 'items':[{'sprig_id':1, 'colName':'red'},{'sprig_id':2, 'colName':'blue'}]}";
-//		String data2 = "{'type':'Shirt', 'items':[{'id':1,'color via Color.sprig_id':'2'}]}";
-		String data2 = "{'type':'Shirt', 'items':[{'id':1,'color':'<% sprig_record(Color,2)%>'}]}";
-		String data = String.format(root, data1 + "," + data2);
+        String root = "{'records': [%s] }";
+		String data1 = "{'sprig_id':1, 'colName':'red'},{'sprig_id':2, 'colName':'blue'}";
+		String data = String.format(root, data1);
 		data = fix(data);
 
 		log(data);
-		MyDataLoader loader = new MyDataLoader();
-		loader.parseTypes(data);
-		List<Entity> L = loader.resultMap.get(Color.class);
+		Sprig sprig = new Sprig();
+		ColorJLoader loader = new ColorJLoader();
+		sprig.parseType(loader, data);
+
+		data1 = "{'id':1,'color via Color.sprig_id':'2'}";
+		data = String.format(root, data1);
+		data = fix(data);
+		log(data);
+		ColorJLoader loader2 = new ColorJLoader();
+		sprig.parseType(loader2, data);
+		
+		
+		List<Entity> L = sprig.getResultMap().get(Color.class);
 		assertEquals(2, L.size());
 		Color color = (Color) L.get(0);
 		assertEquals("red", color.colName);
 		color = (Color) L.get(1);
 		assertEquals("blue", color.colName);
 		
-		boolean b = loader.resolveDeferred();
-		assertTrue(b);
-		L = loader.resultMap.get(Shirt.class);
+		L = sprig.getResultMap().get(Shirt.class);
 		assertEquals(1, L.size());
 		Shirt shirt = (Shirt) L.get(0);
 		assertNotNull(shirt.color);
@@ -326,9 +307,11 @@ public class SprigTests extends BaseTest
 		data = fix(data);
 
 		log(data);
-		MyDataLoader loader = new MyDataLoader();
-		loader.parseTypes(data);
-		List<Entity> L = loader.resultMap.get(Color.class);
+		Sprig sprig = new Sprig();
+		ColorJLoader loader = new ColorJLoader();
+		sprig.load(loader);
+
+		List<Entity> L = sprig.getResultMap().get(Size.class);
 		assertEquals(2, L.size());
 		Color color = (Color) L.get(0);
 		assertEquals("red", color.colName);
@@ -338,10 +321,8 @@ public class SprigTests extends BaseTest
 		//simulate dao load
 		color.id = 55;
 		
-		boolean b = loader.resolveDeferred();
-		assertTrue(b);
 		
-		L = loader.resultMap.get(Shirt.class);
+		L = sprig.getResultMap().get(Shirt.class);
 		assertEquals(1, L.size());
 		Shirt shirt = (Shirt) L.get(0);
 		assertNull(shirt.color);

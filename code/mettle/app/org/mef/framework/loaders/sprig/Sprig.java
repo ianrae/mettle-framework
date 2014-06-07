@@ -38,6 +38,11 @@ public class Sprig implements LoaderObserver
 	{
 	}
 
+	public Map<Class, List<Entity>> getResultMap()
+	{
+		return this.resultMap;
+	}
+	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private int doLoad(SprigLoader...loaders) throws Exception
 	{
@@ -61,7 +66,7 @@ public class Sprig implements LoaderObserver
 
 		List<SprigLoader> sortedL = tsort(loaders);
 
-		log("and save..");
+//		logDebug("and save..");
 		List<SprigLoader> soFarL = new ArrayList<SprigLoader>();
 		failCount = 0;
 		for(SprigLoader loader : sortedL)
@@ -86,7 +91,7 @@ public class Sprig implements LoaderObserver
 		return numObj;
 	}
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	private int parseType(SprigLoader loader, String inputJson) throws Exception
+	public int parseType(SprigLoader loader, String inputJson) throws Exception
 	{
 		Map<String,Object> myMap = new HashMap<String, Object>();
 
