@@ -27,8 +27,9 @@ public class SprigCodeGen extends CodeGenBase
 		
 		if (! isParentOfExtended)
 		{
-			result += genQueries(def);
-			result += genMethods(def, true);
+			result += genParseBegin(def);
+			result += this.genFields(def);
+			result += genParseEnd(def);
 		}
 		st = _group.getInstanceOf("endclassdecl");
 		result += st.render(); 
@@ -39,43 +40,37 @@ public class SprigCodeGen extends CodeGenBase
 	@Override
 	public String getClassName(EntityDef def)
 	{
-		String className = "Mock" + def.name + "DAO";
+		String className = def.name + "Sprig";
 		className = makeClassName(className); //, def.shouldExtend(EntityDef.DAO_MOCK));
 		return className;
 	}
 	
-	protected String genQueries(EntityDef def)
+	protected String genParseBegin(EntityDef def)
 	{
-		String result = "";
-		for(String query : def.queryL)
-		{
-			ST st = _group.getInstanceOf("querydecl");
-			String fieldName = getFieldName(query);
-			st.add("type", def.name); //getFieldType(def, fieldName));
-			
-			String fieldType = getFieldType(def, fieldName);
-			st.add("fieldType", fieldType);
-			if (fieldType.equals("String"))
-			{
-				st.add("eq", ".equals(val)");
-			}
-			else
-			{
-				st.add("eq", " == val");
-			}
-			st.add("name", fieldName);
-			result += st.render(); 
-			result += "\n\n";
-		}
+		ST st = _group.getInstanceOf("parsedecl");
+		st.add("type", def.name);
+		
+		String result = st.render(); 
+		return result;
+	}
+	protected String genParseEnd(EntityDef def)
+	{
+		ST st = _group.getInstanceOf("parseend");
+		
+		String result = st.render(); 
 		return result;
 	}
 	
-
 	
 	@Override
 	protected String buildField(EntityDef def, FieldDef fdef)
 	{
-		return "";
+		ST st = _group.getInstanceOf("parsefield");
+//		st.add("type", def.name);
+		st.add("fldName", fdef.name);
+		
+		String result = st.render(); 
+		return result;
 	}
 
 }
