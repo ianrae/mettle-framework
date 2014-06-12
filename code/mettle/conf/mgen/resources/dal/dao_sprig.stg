@@ -8,13 +8,14 @@ package <package>;
 
 import java.util.Map;
 import org.mef.framework.entities.Entity;
-import org.mef.framework.loaders.sprig.SprigLoader;
+import org.mef.sprig.SprigLoader;
 import java.util.List;
 import java.util.ArrayList;
 import mef.entities.*;
 import mef.daos.*;
 import mef.gen.*;
 import mef.core.DaoFinder;
+import org.mef.framework.loaders.sprig.EntityDataLoader;
 <extras; separator="\n">
 
 >>
@@ -90,7 +91,7 @@ public class <name> extends <name>_GEN
 
 
 <else>
-public class <name> extends SprigLoader\<<type>\>
+public class <name> extends EntityDataLoader\<<type>\>
 {
 	protected I<type>DAO dao;
 
@@ -102,15 +103,14 @@ public class <name> extends SprigLoader\<<type>\>
 
 
 	@Override
-	public void saveEntity(<type> entity) 
+	public void save(<type> entity) 
 	{
 		dao.save(entity);
 	}
 
 	@Override
-	public boolean resolve(Entity sourceObj, String fieldName, Entity obj) 
+	public void resolve(<type> sourceObj, String fieldName, Object obj) 
 	{
-		return false;
 	}
 
 
