@@ -37,6 +37,9 @@ public class EntityDataLoader<T> implements SprigLoader<T>
 		
 	}
 
+	@Override
+	public void close()
+	{}
 	
 	protected String getString(Map<String,Object> map, String name)
 	{
