@@ -179,7 +179,7 @@ public class SprigTests extends BaseTest
 		List<Map<String,Object>> LL = r.parseType(data);
 		assertEquals(2, LL.size());
 		
-		Wrapper wrapper = new Wrapper(loader);
+		Wrapper wrapper = new Wrapper(loader, r);
 		
 		List<ViaRef> viaL = new ArrayList<ViaRef>();
 		List<Object> L = wrapper.parseObjects(LL, viaL);
@@ -205,8 +205,8 @@ public class SprigTests extends BaseTest
 
 		log(data);
 		ColorJLoader loader = new ColorJLoader();
-		Wrapper wrapper = new Wrapper(loader);
 		JsonFileReader r = new JsonFileReader("", "Color");
+		Wrapper wrapper = new Wrapper(loader, r);
 		List<Map<String,Object>> LL = r.parseType(data);
 		assertEquals(2, LL.size());
 		
