@@ -14,7 +14,8 @@ object ApplicationBuild extends Build {
     javaEbean,
     cache,
     "commons-io" % "commons-io" % "2.3",
-    "commons-lang" % "commons-lang" % "2.6"
+    "commons-lang" % "commons-lang" % "2.6",
+	"sprig" % "sprig_2.10" % "0.1-SNAPSHOT"	
     
   )
 

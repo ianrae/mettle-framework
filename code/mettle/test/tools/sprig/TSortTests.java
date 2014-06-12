@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
-import org.mef.framework.loaders.sprig.TSortNode;
-import org.mef.framework.loaders.sprig.TopologicalSort;
+import org.mef.sprig.util.TSortNode;
+import org.mef.sprig.util.TopologicalSort;
 
 import tools.BaseTest;
 

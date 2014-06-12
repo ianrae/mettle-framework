@@ -8,8 +8,8 @@ import java.util.Map;
 
 import org.junit.Test;
 import org.mef.framework.entities.Entity;
-import org.mef.framework.loaders.sprig.Sprig;
-import org.mef.framework.loaders.sprig.SprigLoader;
+import org.mef.framework.loaders.sprig.EntityDataLoader;
+import org.mef.sprig.Sprig;
 
 import tools.BaseTest;
 import tools.sprig.SprigTests.Color;
@@ -19,7 +19,7 @@ import tools.sprig.SprigTests.Size;
 
 public class MoreSprigTests extends BaseTest
 {
-	public static class SizeSprig extends SprigLoader<Size>
+	public static class SizeSprig extends EntityDataLoader<Size>
 	{
 		public List<Size> finalL = new ArrayList<Size>();
 		
@@ -58,19 +58,18 @@ public class MoreSprigTests extends BaseTest
 		}
 
 		@Override
-		public boolean resolve(Entity sourceObj, String fieldName, Entity obj) 
+		public void resolve(Size sourceObj, String fieldName, Object obj) 
 		{
-			return false;
 		}
 
 		@Override
-		public void saveEntity(Size entity) 
+		public void save(Size entity) 
 		{
 			finalL.add(entity);
 		}
 	}
 
-	public static class ColorSprig extends SprigLoader<Color>
+	public static class ColorSprig extends EntityDataLoader<Color>
 	{
 		public List<Color> finalL = new ArrayList<Color>();
 		
@@ -89,19 +88,18 @@ public class MoreSprigTests extends BaseTest
 		}
 
 		@Override
-		public void saveEntity(Color entity) 
+		public void save(Color entity) 
 		{
 			finalL.add(entity);
 		}
 
 		@Override
-		public boolean resolve(Entity sourceObj, String fieldName, Entity obj) 
+		public void resolve(Color sourceObj, String fieldName, Object obj) 
 		{
-			return false;
 		}
 	}
 
-    public static class ShirtSprig extends SprigLoader<Shirt>
+    public static class ShirtSprig extends EntityDataLoader<Shirt>
     {
     	public List<Shirt> finalL = new ArrayList<Shirt>();
         public ShirtSprig()
@@ -121,30 +119,24 @@ public class MoreSprigTests extends BaseTest
         }
         
         @Override
-        public boolean resolve(Entity sourceObj, String fieldName, Entity obj)
+        public void resolve(Shirt sourceObj, String fieldName, Object obj)
         {
             //gen one for each field that is not string,int,bool, etc
             if (fieldName.equals("color"))
             {
                 Shirt shirt = (Shirt) sourceObj;
                 shirt.color = (Color) obj;
-                return true;
             }
             else if (fieldName.equals("colorId"))
             {
                 Shirt shirt = (Shirt) sourceObj;
                 Color other = (Color)obj;
                 shirt.colorId  = other.id;
-                return true;
-            }
-            else
-            {
-            	return false;
             }
         }
 
 		@Override
-		public void saveEntity(Shirt entity) 
+		public void save(Shirt entity) 
 		{
 			finalL.add(entity);
 		}

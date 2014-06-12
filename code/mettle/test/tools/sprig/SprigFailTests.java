@@ -7,20 +7,17 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.Test;
-import org.mef.framework.entities.Entity;
-import org.mef.framework.loaders.sprig.Sprig;
-import org.mef.framework.loaders.sprig.SprigLoader;
+import org.mef.framework.loaders.sprig.EntityDataLoader;
+import org.mef.sprig.Sprig;
 
 import tools.BaseTest;
 import tools.sprig.MoreSprigTests.ColorSprig;
-import tools.sprig.SprigTests.Color;
 import tools.sprig.SprigTests.Shirt;
-import tools.sprig.SprigTests.Size;
 
 
 public class SprigFailTests extends BaseTest
 {
-    public static class BadShirtSprig extends SprigLoader<Shirt>
+    public static class BadShirtSprig extends EntityDataLoader<Shirt>
     {
     	public List<Shirt> finalL = new ArrayList<Shirt>();
         public BadShirtSprig()
@@ -40,13 +37,13 @@ public class SprigFailTests extends BaseTest
         }
         
         @Override
-        public boolean resolve(Entity sourceObj, String fieldName, Entity obj)
+        public void resolve(Shirt sourceObj, String fieldName, Object obj)
         {
-        	return false; //will cause failure
+        	throw new IllegalStateException("die!");
         }
 
 		@Override
-		public void saveEntity(Shirt entity) 
+		public void save(Shirt entity) 
 		{
 			finalL.add(entity);
 		}

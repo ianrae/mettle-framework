@@ -35,6 +35,7 @@ public class MGenBase
 			generatePresenterFiles();
 			generateDAOFiles();
 		}
+		log("Done.");
 	}
 
 	//------------- OLD ------------
