@@ -5,7 +5,7 @@ import org.mef.framework.binder.IFormBinder;
 
 import play.db.ebean.Model;
 
-public class GenericMockFormBinder<M extends Model,E> implements IFormBinder<M,E>
+public class GenericMockFormBinder<M,E> implements IFormBinder<M,E>
 {
 	private M obj;
 	public boolean isValid = true;

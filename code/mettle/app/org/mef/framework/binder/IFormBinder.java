@@ -7,7 +7,7 @@ import play.db.ebean.Model;
 
 
 //public interface IFormBinder
-public interface IFormBinder<M extends Model,E>
+public interface IFormBinder<M,E>
 {
 	boolean bind();
 
