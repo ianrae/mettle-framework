@@ -48,12 +48,6 @@ public class HotelDao implements IDAO
 	}
 
 	@Override
-	public void updateFrom(IFormBinder binder) 
-	{
-		throw new RuntimeException("no del yet");
-	}
-
-	@Override
 	public void init(SfxContext ctx) 
 	{
 		// TODO Auto-generated method stub

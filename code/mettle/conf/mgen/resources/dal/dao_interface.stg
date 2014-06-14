@@ -37,7 +37,6 @@ public interface <name>  extends IDAO
 	void save(<type> entity);        
 	void update(<type> entity);
 	public Query1\<<type>\> query();
-    void updateFrom(IFormBinder binder, <type> entity);        
 	
     
 <endif>    
