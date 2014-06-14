@@ -9,5 +9,5 @@ public interface IDAO
 	void init(SfxContext ctx);
 	int size();
 	void delete(long id);
-    void updateFrom(IFormBinder binder);        
+    void updateFrom(IFormBinder binder);        //!!get rid of this
 }
