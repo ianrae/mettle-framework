@@ -78,12 +78,12 @@ public class <name> extends Presenter
 		if (! binder.bind())
 		{
 			reply.setFlashFail("binding failed!");
-			reply._entity = (<type>) binder.getObject();
+			reply._entity = (<type>) binder.getEntity();
 			return reply;
 		}
 		else
 		{
-			<type> entity = (<type>) binder.getObject();
+			<type> entity = (<type>) binder.getEntity();
 			if (entity == null)
 			{
 				reply.setFailed(true);
@@ -124,7 +124,7 @@ public class <name> extends Presenter
 		if (! binder.bind())
 		{
 			reply.setFlashFail("binding failed!");
-			reply._entity = (<type>) binder.getObject();
+			reply._entity = (<type>) binder.getEntity();
 			if (reply._entity == null)
 			{
 				Logger.info("failbinding null entity!");
@@ -141,7 +141,10 @@ public class <name> extends Presenter
 				reply.setDestination(Reply.FORWARD_NOT_FOUND);
 				return reply;
 			}
-			_dao.updateFrom(binder);
+			//_dao.updateFrom(binder);
+			<type> entityNew = binder.getEntity();
+			_dao.update(entityNew); //copy over!!
+			
 			Logger.info("saved update ");
 			reply.setDestination(Reply.FORWARD_INDEX);
 			return reply;

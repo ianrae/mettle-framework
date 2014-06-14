@@ -179,7 +179,7 @@ public class <name> implements I<type>DAO
 	@Override
 	public void updateFrom(IFormBinder binder) 
 	{
-		<type>Model model = (<type>Model) binder.getRawObject();
+		<type>Model model = (<type>Model) binder.getInputModel();
 		model.update();
 	}
     @Override

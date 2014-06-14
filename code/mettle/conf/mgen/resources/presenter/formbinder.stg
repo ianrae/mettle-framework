@@ -26,7 +26,7 @@ init(v) ::= "<if(v)> = <v><endif>"
 
 classdecl(type, name) ::= <<
 
-public class <type>FormBinder implements IFormBinder
+public class <type>FormBinder implements IFormBinder\<<type>Model, <type>\>
 {
 	private Form\<<type>Model> validationForm;
 	private Form\<<type>Model> filledForm;
@@ -40,7 +40,7 @@ public class <type>FormBinder implements IFormBinder
 	{
 		this.filledForm = validationForm.bindFromRequest();
 		Logger.info("b0");
-		<type> entity = getObject();
+		<type> entity = getEntity();
 		if (entity != null)
 		{
 			Logger.info("b1");
@@ -56,25 +56,15 @@ public class <type>FormBinder implements IFormBinder
 	}
 
 	@Override
-	public <type> getObject() 
+	public <type>Model getInputModel() 
 	{
-		Logger.info("g0");
-		if (filledForm.hasErrors())
-		{
-			Logger.info("g1");
-			return null;
-		}
-		
 		<type>Model model = filledForm.get();
 		if (model == null)
 		{
 			Logger.info("g2");
 			return null;
 		}
-		
-		Logger.info("g3");
-		<type> entity = <type>DAO.createEntityFromModel(model);
-		return entity;
+		return model;
 	}
 	
 	@Override
@@ -87,12 +77,24 @@ public class <type>FormBinder implements IFormBinder
 	{
 		return filledForm;
 	}
-	@Override
-	public <type>Model getRawObject() 
-	{
-		return filledForm.get();
-	}
 
+	@Override
+	public <type> getEntity() 
+	{
+		<type>Model model = getInputModel();
+		if (model == null)
+		{
+			return null;
+		}
+		<type> entity = convert(model);
+		return entity;
+	}
+	@Override
+	public <type> convert(<type>Model model) 
+	{
+		<type> entity = new <type>(model);
+		return entity;
+	}
 
 >>
 
