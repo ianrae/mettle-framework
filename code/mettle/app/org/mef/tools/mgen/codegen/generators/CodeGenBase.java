@@ -198,6 +198,10 @@ public abstract class CodeGenBase extends SfxBaseObj
 			{
 				return "0L";
 			}
+			else if (method.startsWith("void"))
+			{
+				return "";
+			}
 			else 
 			{
 				return "null";
