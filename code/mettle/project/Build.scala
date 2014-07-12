@@ -5,7 +5,7 @@ import play.Project._
 object ApplicationBuild extends Build {
 
   val appName         = "mettle"
-  val appVersion      = "0.2-SNAPSHOT"
+  val appVersion      = "0.3-SNAPSHOT"
 
   val appDependencies = Seq(
     // Add your project dependencies here,
@@ -15,7 +15,7 @@ object ApplicationBuild extends Build {
     cache,
     "commons-io" % "commons-io" % "2.3",
     "commons-lang" % "commons-lang" % "2.6",
-	"sprig" % "sprig_2.10" % "0.1-SNAPSHOT"	
+	"play-sprig" % "play-sprig_2.10" % "0.1-SNAPSHOT"	
     
   )
 
