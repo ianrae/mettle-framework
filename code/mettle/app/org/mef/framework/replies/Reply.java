@@ -31,6 +31,7 @@ public class Reply
 	public static final int FOWARD_ERROR = 108;
 	public static final int FOWARD_NOT_AUTHORIZED = 109;
 	public static final int FOWARD_NOT_AUTHENTICATED = 110;
+	public static final int FOWARD_NOT_SSL = 111;
 
 	public AuthUser authUser; //null means not authenticated
 	public String json; //used by json formatter (see IReplyFormatter)

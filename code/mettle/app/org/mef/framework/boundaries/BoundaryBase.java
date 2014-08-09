@@ -17,12 +17,14 @@ import play.api.mvc.Call;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.data.validation.ValidationError;
+import play.mvc.Http.Request;
 import play.mvc.Result;
 
 public abstract class BoundaryBase extends SfxBaseObj
 {
 //	public Result result;
 	protected Command _cmd;
+	protected Request _request;
 
 	public BoundaryBase(SfxContext ctx)
 	{

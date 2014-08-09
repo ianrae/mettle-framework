@@ -22,7 +22,9 @@ object ApplicationBuild extends Build {
   val main = play.Project(appName, appVersion, appDependencies).settings(
     // Add your own project settings here 
 	resolvers += Resolver.file("sfxlib.jar", file("lib")) transactional(),	         
-	resolvers += Resolver.file("ST-4.0.7.jar", file("lib")) transactional()	         
+	resolvers += Resolver.file("ST-4.0.7.jar", file("lib")) transactional(),	   
+	resolvers += Resolver.url("play-sprig", new URL("http://ianrae.github.io/snapshot/"))(Resolver.ivyStylePatterns)
+	
   )
 
 }
