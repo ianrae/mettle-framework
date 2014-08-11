@@ -1,5 +1,6 @@
 
 
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -10,6 +11,7 @@ import java.util.List;
 import org.junit.Test;
 import org.mef.framework.dao.IDAO;
 import org.mef.framework.fluent.EntityDBQueryProcessor;
+import org.mef.framework.fluent.IDAOObserver;
 import org.mef.framework.fluent.IQueryActionProcessor;
 import org.mef.framework.fluent.ProcRegistry;
 import org.mef.framework.fluent.QStep;
@@ -61,13 +63,6 @@ public class FluentTests extends BaseTest
 		}
 
 		@Override
-		public T findOne() //exactly one
-		{
-			log("findOne");
-			return null;
-		}
-
-		@Override
 		public T findAny() //0 or 1
 		{
 			log("findAny");
@@ -95,6 +90,11 @@ public class FluentTests extends BaseTest
 		public Class getRelationalFieldType(QueryAction action) {
 			// TODO Auto-generated method stub
 			return null;
+		}
+		@Override
+		public void setObserver(IDAOObserver observer) {
+			// TODO Auto-generated method stub
+			
 		}
 	}
 
@@ -143,6 +143,10 @@ public class FluentTests extends BaseTest
 
 		Car car = dao.query().orderBy("price").fetch("users").limit(1).findAny();
 		assertNull(car);
+		
+		Car car2 = dao.query().orderBy("price").fetch("users").limit(1).findUnique();
+		assertSame(car, car2);
+		
 	}
 	
 //	@Test 
