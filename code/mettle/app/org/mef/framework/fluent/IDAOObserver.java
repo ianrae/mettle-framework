@@ -8,5 +8,6 @@ public interface IDAOObserver<T>
 	void onQueryMany(List<T> list);
 	void onSave(T entity);
 	void onUpdate(T entity);
-	void onDelete(T entity);
+	void onDelete(long id);
 }
+

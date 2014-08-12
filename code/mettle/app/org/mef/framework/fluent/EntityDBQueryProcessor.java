@@ -18,13 +18,20 @@ public class EntityDBQueryProcessor<T>  extends SfxBaseObj implements IQueryActi
 	String orderBy;
 	String orderAsc; //"asc" or "desc"
 	int limit;
-	IDAOObserver<T> observer;
+	IDAOObserver<T> observer; //!!can't use cache with entity db. fix later!!
 
 	public EntityDBQueryProcessor(SfxContext ctx, List<T> dataL)
 	{
 		super(ctx);
 		this.dataL = dataL;
 	}
+	
+	@Override
+	public void setObserver(IDAOObserver observer) 
+	{
+		this.observer = observer;
+	}
+
 
 	@Override
 	public void start(List<QueryAction> actionL) 
@@ -69,12 +76,9 @@ public class EntityDBQueryProcessor<T>  extends SfxBaseObj implements IQueryActi
 		
 		if (observer != null)
 		{
-			T entity = resultL.get(0);
-			if (entity != null)
-			{
-				this.observer.onQueryOne(entity);
-			}
+			observer.onQueryOne(resultL.get(0)); //entity might be null
 		}
+		
 		return resultL.get(0);
 	}
 	@Override
@@ -84,9 +88,8 @@ public class EntityDBQueryProcessor<T>  extends SfxBaseObj implements IQueryActi
 		initResultLIfNeeded();
 		if (observer != null)
 		{
-			this.observer.onQueryMany(resultL);
+			observer.onQueryMany(resultL);
 		}
-		
 		return resultL;
 	}
 	@Override
@@ -228,12 +231,6 @@ public class EntityDBQueryProcessor<T>  extends SfxBaseObj implements IQueryActi
 		Class clazz = db.getFieldType(dataL, fieldName);
 		//!!currently only works if dataL not empty. fix later
 		return clazz;
-	}
-
-	@Override
-	public void setObserver(IDAOObserver observer) 
-	{
-		this.observer = observer;
 	}
 
 }
