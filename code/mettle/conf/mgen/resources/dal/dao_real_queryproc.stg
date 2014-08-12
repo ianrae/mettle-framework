@@ -17,6 +17,7 @@ import org.mef.framework.fluent.QueryAction;
 import org.mef.framework.sfx.SfxBaseObj;
 import org.mef.framework.sfx.SfxContext;
 
+import org.mef.framework.fluent.IDAOObserver;
 import boundaries.daos.<type>DAO;
 
 import com.avaje.ebean.Expr;
@@ -40,12 +41,19 @@ public class <type>EbeanQueryProcessor  extends SfxBaseObj implements IQueryActi
 	Expression expr1;
 	Expression expr2;
 	private String fetch;
-
+	IDAOObserver\<<type>\> observer;
+	
 	public <type>EbeanQueryProcessor(SfxContext ctx)
 	{
 		super(ctx);
 	}
-
+	
+	@Override
+	public void setObserver(IDAOObserver\<<type>\> observer) 
+	{
+		this.observer = observer;
+	}
+	
 	@Override
 	public void start(List\<QueryAction> actionL) 
 	{
@@ -54,26 +62,6 @@ public class <type>EbeanQueryProcessor  extends SfxBaseObj implements IQueryActi
 		expr1 = expr2 = null;
 		fetch = null;
 		log("start");
-	}
-
-	@Override
-	public <type> findOne() //exactly one
-	{
-		log("findOne");
-		Query\<<type>Model> qry = createQueryObj();
-		<type>Model m = null;
-		
-		if (expr1 == null)
-		{
-			m = qry.findUnique();
-		}
-		else
-		{
-			m = qry.where(expr1).findUnique();
-		}
-
-		<type> u = <type>DAO.createEntityFromModel(m);
-		return u;
 	}
 
 	@Override
