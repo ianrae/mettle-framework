@@ -94,6 +94,7 @@ public class EntityCodeGen extends CodeGenBase
 			st.add("name", fdef.name);
 			st.add("upperName", uppify(fdef.name));
 			st.add("readonly", fdef.isReadOnly);
+			st.add("isEntity", this.isEntity(def, fdef.name));
 			result = st.render(); 
 
 			String s = "";

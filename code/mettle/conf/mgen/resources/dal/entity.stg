@@ -16,7 +16,20 @@ import java.sql.Timestamp;
 
 >>
 
-fielddecl(type, name, upperName, value, readonly) ::= <<
+fielddecl(type, name, upperName, value, readonly, isEntity) ::= <<
+
+<if(isEntity)>
+	protected <type>Model get<upperName>Model()
+	{
+		return this.mModel.get<upperName>();
+	}
+<if(!readonly)>
+	protected void set<upperName>Model(<type> val)
+	{
+		this.mModel.set<upperName>(val);
+	}
+<endif>
+<else>
 	
 	public <type> get<upperName>()
 	{
@@ -27,6 +40,7 @@ fielddecl(type, name, upperName, value, readonly) ::= <<
 	{
 		this.mModel.set<upperName>(val);
 	}
+<endif>
 <endif>
 >>
 init(v) ::= "<if(v)> = <v><endif>"
