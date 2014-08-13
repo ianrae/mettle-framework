@@ -176,6 +176,7 @@ public class CodeGenExtensibleTests extends BaseTest
 		assertTrue(b);
 	}
 	
+	//HERE IS WHERE I GENERATE TO C:\tmp\dd!!
 	@Test
 	public void testApp6() throws Exception 
 	{

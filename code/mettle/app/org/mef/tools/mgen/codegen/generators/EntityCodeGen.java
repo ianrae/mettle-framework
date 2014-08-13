@@ -94,7 +94,16 @@ public class EntityCodeGen extends CodeGenBase
 			st.add("name", fdef.name);
 			st.add("upperName", uppify(fdef.name));
 			st.add("readonly", fdef.isReadOnly);
-			st.add("isEntity", this.isEntity(def, fdef.name));
+			
+			//hack
+			boolean isEntity = this.isEntity(def, fdef.typeName);
+			if (fdef.typeName.endsWith("Model"))
+			{
+				isEntity = true; //later strip off Model and check isEntity
+				this.log("ISENTITY! " + fdef.typeName);
+			}
+			
+			st.add("isEntity", isEntity);
 			result = st.render(); 
 
 			String s = "";

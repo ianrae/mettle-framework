@@ -79,7 +79,7 @@ public class DalGenXmlParser extends SfxBaseObj
 
 		//we are moving to generating fields from Model class
 		String useModelFields = getEl(entityEl, "useModelFields");
-		log("userModelFields: " + useModelFields);
+		log("useModelFields: " + useModelFields);
 		
 		//fields
 		if (useModelFields != null && ! useModelFields.isEmpty())

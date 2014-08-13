@@ -1,7 +1,7 @@
 package org.mef.framework;
 
 public class Version {
-	public static final String version = "0.3.1.3";
+	public static final String version = "0.3.1.5";
 	
 	//v0.3.1.3 fix mgen - protected get..Model when is Entity
 	//v0.3.1.2 fix mgen

@@ -4,6 +4,7 @@
 <entity name="User">
 	<field>@Id Long id</field>
 	<field>@Required String name</field>
+	<field>Session mysess</field>
 
 	<query>find_by_name</query>
 
@@ -13,5 +14,15 @@
 	<codegen type="controller" generate="true" />
 </entity>
 
+<entity name="Session">
+	<field>@Id Long id</field>
+
+	<query>find_by_name</query>
+
+	<codegen type="entity" generate="true" />
+	<codegen type="dao" generate="true" />
+	<codegen type="presenter" generate="false" />
+	<codegen type="controller" generate="false" />
+</entity>
 
 </entities>
