@@ -3,6 +3,7 @@ package org.mef.framework;
 public class Version {
 	public static final String version = "0.3.1.5";
 	
+	//NOW ON 0.3-branch
 	//v0.3.1.3 fix mgen - protected get..Model when is Entity
 	//v0.3.1.2 fix mgen
 	//v0.3.1.1 query processor observer
