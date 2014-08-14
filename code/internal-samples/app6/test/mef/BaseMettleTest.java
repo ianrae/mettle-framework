@@ -10,6 +10,7 @@ public class BaseMettleTest extends BaseTest
 	{
 		MettleInitializer initializer = new MettleInitializer();
 		initializer.appPath = this.getCurrentDir("");
+		log(initializer.appPath);
 		initPart1(initializer);
 		initPart2(initializer);
 	}

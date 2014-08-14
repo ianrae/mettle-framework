@@ -19,8 +19,8 @@ import java.sql.Timestamp;
 fielddecl(type, name, upperName, value, readonly, isEntity) ::= <<
 
 <if(isEntity)>
-	//you must define get/set yourself in entity class
-	protected <type>Model get<upperName>Model()
+	//xyou must define get/set yourself in entity class
+	protected <type> get<upperName>Model()
 	{
 		return this.mModel.get<upperName>();
 	}
