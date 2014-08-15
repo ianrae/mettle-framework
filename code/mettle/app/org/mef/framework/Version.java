@@ -1,8 +1,9 @@
 package org.mef.framework;
 
 public class Version {
-	public static final String version = "0.4.0.0";
+	public static final String version = "0.4.0.1";
 	
+	//v0.4.0.1fix mgen - protected get..Model when is Entity
 	//MASTER BRANCH - new dev of 0.4
 	//v0.3.1.3 fix mgen - protected get..Model when is Entity
 	//v0.3.1.2 fix mgen

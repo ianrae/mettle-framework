@@ -50,13 +50,27 @@ public class EntityCodeGen extends CodeGenBase
 				{}
 				else if (! fdef.isReadOnly)
 				{
-					String uname = this.uppify(fdef.name);
-					String s = String.format("this.set%s(%s);", uname, fdef.name);
-					if (isCopyCtor)
+					boolean isEntity = isFieldAModel(def, fdef);
+					if (isEntity)
 					{
-						s = String.format("this.set%s(entity.get%s());", uname, uname);
+						String uname = this.uppify(fdef.name);
+						String s = String.format("this.set%sModel(%s);", uname, fdef.name);
+						if (isCopyCtor)
+						{
+							s = String.format("this.set%sModel(entity.get%sModel());", uname, uname);
+						}
+						L.add(s);
 					}
-					L.add(s);
+					else
+					{
+						String uname = this.uppify(fdef.name);
+						String s = String.format("this.set%s(%s);", uname, fdef.name);
+						if (isCopyCtor)
+						{
+							s = String.format("this.set%s(entity.get%s());", uname, uname);
+						}
+						L.add(s);
+					}
 				}
 			}
 			return L;
@@ -96,10 +110,9 @@ public class EntityCodeGen extends CodeGenBase
 			st.add("readonly", fdef.isReadOnly);
 			
 			//hack
-			boolean isEntity = this.isEntity(def, fdef.typeName);
-			if (fdef.typeName.endsWith("Model"))
+			boolean isEntity = isFieldAModel(def, fdef);
+			if (isEntity)
 			{
-				isEntity = true; //later strip off Model and check isEntity
 				this.log("ISENTITY! " + fdef.typeName);
 			}
 			
@@ -109,5 +122,17 @@ public class EntityCodeGen extends CodeGenBase
 			String s = "";
 			result = s + result;
 			return result;
+		}
+		
+		protected boolean isFieldAModel(EntityDef def, FieldDef fdef)
+		{
+			//hack
+			boolean isEntity = this.isEntity(def, fdef.typeName);
+			if (fdef.typeName.endsWith("Model"))
+			{
+				isEntity = true; //later strip off Model and check isEntity
+				return true;
+			}
+			return false;
 		}
 	}
