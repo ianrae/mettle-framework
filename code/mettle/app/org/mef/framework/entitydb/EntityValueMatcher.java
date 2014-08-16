@@ -8,7 +8,7 @@ import org.mef.framework.entities.Entity;
 
 public class EntityValueMatcher implements IValueMatcher
 {
-	private EntityDBHelper<Entity> helper = new EntityDBHelper<Entity>();
+	private EntityDBPropertyHelper<Entity> helper = new EntityDBPropertyHelper<Entity>();
 	
 	@Override
 	public boolean isMatch(Object value, Object valueToMatch, int matchType)
@@ -21,8 +21,9 @@ public class EntityValueMatcher implements IValueMatcher
 			return true;
 		}
 		
-		Long lval1 = (Long) helper.getFieldValue(s1,  "id");// this.getId(s1);
-		Long lval2 = (Long) helper.getFieldValue(s2,  "id");// this.getId(s1);
+		//entities no longer have fields, so need to do getId
+		Long lval1 = (Long) helper.getPropertyValue(s1,  "id");// this.getId(s1);
+		Long lval2 = (Long) helper.getPropertyValue(s2,  "id");// this.getId(s1);
 		
 		if (lval1 == null || lval2 == null)
 		{
