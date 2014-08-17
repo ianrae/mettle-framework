@@ -15,7 +15,7 @@ public class BooleanValueMatcher implements IValueMatcher
 		{
 		case IValueMatcher.EXACT:
 		case IValueMatcher.CASE_INSENSITIVE:
-				return s1 == s2;
+				return s1.booleanValue() == s2.booleanValue();
 			
 //		case IValueMatcher.LIKE:
 //			return like(s1, s2);
