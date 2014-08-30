@@ -1,4 +1,8 @@
 package testentities;
+import java.util.List;
+
+import javax.persistence.OneToMany;
+
 import org.mef.framework.entities.Entity;
 
 
@@ -20,6 +24,9 @@ public class Hotel extends Entity
 		this.num = num;
 		this.nVal = num + 100;
 	}
+	
+	@OneToMany
+	public List<StreetAddress> addresses;
 
 	public long getId() {
 		return id;

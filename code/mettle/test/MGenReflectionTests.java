@@ -2,7 +2,10 @@
 import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -15,6 +18,7 @@ import org.mef.tools.mgen.parser.FieldDef;
 import org.mef.tools.mgen.parser.ModelMethodFinder;
 import org.reflections.Reflections;
 
+import testentities.Hotel;
 import testentities.StreetAddress;
 
 
@@ -55,6 +59,43 @@ public class MGenReflectionTests
 			log("cz: " + cztmp.getCanonicalName());
 		}
 		//chkErrors(0);
+	}
+	
+	@SuppressWarnings("rawtypes")
+	@Test
+	public void testOneToMany()
+	{
+		Class clazz = Hotel.class;
+		Set<Method> list = Reflections.getAllMethods(clazz, Reflections.withPrefix("get"));
+		
+//		Annotation annotation = javax.persistence.OneToMany.class;
+		Class annoClazz = javax.persistence.OneToMany.class;
+		Set<Field> set = Reflections.getAllFields(clazz, Reflections.withAnnotation(annoClazz));
+		assertEquals(1, set.size());
+		Field f = getField(set);
+		assertEquals("addresses", f.getName());
+		
+		Class clazzf = f.getType();
+		log(clazzf.getCanonicalName());
+		log(f.toGenericString());
+		
+		ModelMethodFinder finder = new ModelMethodFinder(_ctx);
+		List<String> genL = finder.getOneToManyFields(clazz);
+		assertEquals(1, genL.size());
+		assertEquals("public java.util.List<testentities.StreetAddress> testentities.Hotel.addresses", genL.get(0));
+	}
+	
+	private Field getField(Set<Field> set)
+	{
+		Iterator<Field> itr  = set.iterator();
+
+		while (itr.hasNext()) 
+		{
+			Field fld = itr.next();
+			return fld;
+		}		
+		
+		return null;
 	}
 
 	private void log(String s)

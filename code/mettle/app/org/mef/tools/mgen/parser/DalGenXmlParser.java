@@ -95,6 +95,9 @@ public class DalGenXmlParser extends SfxBaseObj
 			List<FieldDef> fieldL = methodFinder.getPropertiesFor(fullclassname);
 			def.fieldL.addAll(fieldL);
 			def.generateModel = false;
+			
+			Class clazz = Class.forName(fullclassname);
+			def.oneToManyL = methodFinder.getOneToManyFields(clazz);
 		}
 		else
 		{
