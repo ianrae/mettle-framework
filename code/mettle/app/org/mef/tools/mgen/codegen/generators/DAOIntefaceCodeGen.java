@@ -73,9 +73,14 @@ public class DAOIntefaceCodeGen extends CodeGenBase
 			}
 			String fieldType = query.substring(pos1, pos2);
 			
+			//and now fieldname
+			pos1 = query.lastIndexOf('.');
+			String fieldName = query.substring(pos1 + 1);
+			
+			
 			st.add("type", def.name); //getFieldType(def, fieldName));
 			st.add("fieldType", fieldType);
-			st.add("fullName", "get" + fieldType + "s");
+			st.add("fullName", "get" + this.uppify(fieldName));
 			result += st.render(); 
 			result += "\n\n";
 		}
