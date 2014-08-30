@@ -241,6 +241,13 @@ public abstract class CodeGenBase extends SfxBaseObj
 				}
 			}
 			String fieldType = query.substring(pos1, pos2);
+			
+			if (fieldType.endsWith("Model"))
+			{
+				//AbcModel
+				fieldType = fieldType.substring(0, fieldType.length() - 5);
+			}
+			
 			return fieldType;
 		}
 		
