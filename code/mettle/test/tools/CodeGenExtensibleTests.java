@@ -111,7 +111,6 @@ public class CodeGenExtensibleTests extends BaseTest
 		MyGenX genx = new MyGenX("abc");
 		phase1.add(genx);
 
-
 		master.addPhase(phase1);
 
 		String appDir = "c:\\tmp\\cc";

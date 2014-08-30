@@ -155,7 +155,38 @@ public class ParseTests extends BaseTest
 		assertEquals(true, def.shouldGenerate(EntityDef.DAO)); 
 		assertEquals(false, def.shouldGenerate(EntityDef.PRESENTER)); 
 		assertEquals(true, def.shouldGenerate(EntityDef.CONTROLLER)); 
+		
+		assertEquals(0, def.oneToManyL.size());
 	}
 	
+	@Test
+	public void testGenFromModelOneToMany() throws Exception
+	{
+		log("--testGenFromModelOneToMany--");
+		createContext();
+		String path = this.getTestFile("mef_onetomany.xml");
+		DalGenXmlParser parser = new DalGenXmlParser(_ctx);
+		boolean b = parser.parse(path);
+		
+		assertEquals(1, parser._entityL.size());
+		
+		EntityDef def = parser._entityL.get(0);
+		assertEquals("Hotel", def.name);
+		
+		assertEquals(7, def.fieldL.size());
+		for(FieldDef tmp : def.fieldL)
+		{
+			log("f : " + tmp.name);
+		}
+
+		assertEquals(0, def.queryL.size());
+		assertEquals(true, def.shouldGenerate(EntityDef.ENTITY)); 
+		assertEquals(true, def.shouldGenerate(EntityDef.DAO)); 
+		assertEquals(false, def.shouldGenerate(EntityDef.PRESENTER)); 
+		assertEquals(false, def.shouldGenerate(EntityDef.CONTROLLER)); 
+		
+		assertEquals(1, def.oneToManyL.size());
+		log(def.oneToManyL.get(0));
+	}
 	
 }

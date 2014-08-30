@@ -33,6 +33,7 @@ public class DAOIntefaceCodeGen extends CodeGenBase
 		{
 			result += genQueries(def);
 			result += genMethods(def, false);
+			result += genOneToMany(def);
 		}
 		st = _group.getInstanceOf("endclassdecl");
 		result += st.render(); 
@@ -48,8 +49,41 @@ public class DAOIntefaceCodeGen extends CodeGenBase
 		return makeClassName(s); //def.shouldExtend(EntityDef.DAO_INTERFACE));
 	}
 
-
 	protected String genQueries(EntityDef def)
+	{
+		String result = "";
+		for(String query : def.oneToManyL)
+		{
+			//public java.util.List<testentities.StreetAddress> testentities.Hotel.addresses
+			ST st = _group.getInstanceOf("queryonetomany");
+
+			int pos1 = query.indexOf('<');
+			int pos2 = query.indexOf('>');
+			while (true)
+			{
+				int pos3 = query.indexOf('.', pos1);
+				if (pos3 < pos2)
+				{
+					pos1 = pos3 + 1;
+				}
+				else
+				{
+					break;
+				}
+			}
+			String fieldType = query.substring(pos1, pos2);
+			
+			st.add("type", def.name); //getFieldType(def, fieldName));
+			st.add("fieldType", fieldType);
+			st.add("fullName", "get" + fieldType + "s");
+			result += st.render(); 
+			result += "\n\n";
+		}
+		return result;
+	}
+
+	
+	protected String genOneToMany(EntityDef def)
 	{
 		String result = "";
 		for(String query : def.queryL)
@@ -63,8 +97,7 @@ public class DAOIntefaceCodeGen extends CodeGenBase
 			result += "\n\n";
 		}
 		return result;
-	}
-
+	}	
 	@Override
 	protected String buildField(EntityDef def, FieldDef fdef) {
 		// TODO Auto-generated method stub

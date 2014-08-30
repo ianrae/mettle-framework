@@ -25,4 +25,11 @@
 	<codegen type="controller" generate="false" />
 </entity>
 
+<entity name="Hotel" useModelFields="testentities.Hotel" >
+	<codegen type="entity" generate="true" />
+	<codegen type="dao" generate="true" />
+	<codegen type="presenter" generate="false" />
+	<codegen type="controller" generate="false" />
+</entity>
+
 </entities>

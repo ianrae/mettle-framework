@@ -50,6 +50,10 @@ querydecl(type, fieldType, fullName) ::= <<
 public <type> <fullName>(<fieldType> val);
 >>
 
+queryonetomany(type, fieldType, fullName) ::= <<
+public List\<<fieldType>\> <fullName>(<type> entity); 
+>>
+
 methoddecl(meth) ::= <<
 <meth>;
 >>

@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<entities orm="ebean">
+
+<entity name="Hotel" useModelFields="testentities.Hotel" >
+	<codegen type="entity" generate="true" />
+	<codegen type="dao" generate="true" />
+	<codegen type="presenter" generate="false" />
+	<codegen type="controller" generate="false" />
+</entity>
+
+</entities>
