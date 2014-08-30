@@ -66,6 +66,14 @@ public <meth>
 }
 >>
 
+queryonetomany(type, fieldType, fullName) ::= <<
+	public List\<<fieldType>\> <fullName>(<type> entity)
+	{
+		return null; 	
+	}
+>>
+
+
 
 classdecl(name, type, isParentOfExtended) ::= <<
 <if(isParentOfExtended)>

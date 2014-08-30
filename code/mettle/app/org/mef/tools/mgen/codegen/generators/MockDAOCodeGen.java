@@ -29,6 +29,7 @@ public class MockDAOCodeGen extends CodeGenBase
 		{
 			result += genQueries(def);
 			result += genMethods(def, true);
+			result += genOneToMany(def);
 		}
 		st = _group.getInstanceOf("endclassdecl");
 		result += st.render(); 
@@ -70,7 +71,25 @@ public class MockDAOCodeGen extends CodeGenBase
 		return result;
 	}
 	
+	protected String genOneToMany(EntityDef def)
+	{
+		String result = "";
+		for(String query : def.oneToManyL)
+		{
+			//public java.util.List<testentities.StreetAddress> testentities.Hotel.addresses
+			ST st = _group.getInstanceOf("queryonetomany");
 
+			String fieldType = getOneToManyFieldType(query);
+			String fieldName = getOneToManyFieldName(query);
+			
+			st.add("type", def.name); //getFieldType(def, fieldName));
+			st.add("fieldType", fieldType);
+			st.add("fullName", "get" + this.uppify(fieldName));
+			result += st.render(); 
+			result += "\n\n";
+		}
+		return result;
+	}
 	
 	@Override
 	protected String buildField(EntityDef def, FieldDef fdef)

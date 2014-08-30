@@ -49,7 +49,7 @@ public class DAOIntefaceCodeGen extends CodeGenBase
 		return makeClassName(s); //def.shouldExtend(EntityDef.DAO_INTERFACE));
 	}
 
-	protected String genQueries(EntityDef def)
+	protected String genOneToMany(EntityDef def)
 	{
 		String result = "";
 		for(String query : def.oneToManyL)
@@ -57,26 +57,8 @@ public class DAOIntefaceCodeGen extends CodeGenBase
 			//public java.util.List<testentities.StreetAddress> testentities.Hotel.addresses
 			ST st = _group.getInstanceOf("queryonetomany");
 
-			int pos1 = query.indexOf('<');
-			int pos2 = query.indexOf('>');
-			while (true)
-			{
-				int pos3 = query.indexOf('.', pos1);
-				if (pos3 < pos2)
-				{
-					pos1 = pos3 + 1;
-				}
-				else
-				{
-					break;
-				}
-			}
-			String fieldType = query.substring(pos1, pos2);
-			
-			//and now fieldname
-			pos1 = query.lastIndexOf('.');
-			String fieldName = query.substring(pos1 + 1);
-			
+			String fieldType = getOneToManyFieldType(query);
+			String fieldName = getOneToManyFieldName(query);
 			
 			st.add("type", def.name); //getFieldType(def, fieldName));
 			st.add("fieldType", fieldType);
@@ -87,8 +69,7 @@ public class DAOIntefaceCodeGen extends CodeGenBase
 		return result;
 	}
 
-	
-	protected String genOneToMany(EntityDef def)
+	protected String genQueries(EntityDef def)
 	{
 		String result = "";
 		for(String query : def.queryL)

@@ -222,4 +222,34 @@ public abstract class CodeGenBase extends SfxBaseObj
 		{
 			this.userCanModifyFlag = userCanModifyFlag;
 		}
+		
+		
+		protected String getOneToManyFieldType(String query)
+		{
+			int pos1 = query.indexOf('<');
+			int pos2 = query.indexOf('>');
+			while (true)
+			{
+				int pos3 = query.indexOf('.', pos1);
+				if (pos3 < pos2)
+				{
+					pos1 = pos3 + 1;
+				}
+				else
+				{
+					break;
+				}
+			}
+			String fieldType = query.substring(pos1, pos2);
+			return fieldType;
+		}
+		
+		protected String getOneToManyFieldName(String query)
+		{
+			//and now fieldname
+			int pos1 = query.lastIndexOf('.');
+			String fieldName = query.substring(pos1 + 1);
+			return fieldName;
+		}
+		
 	}
