@@ -1,23 +1,14 @@
 package org.mef.framework.binder;
 
-import java.util.List;
-import java.util.Map;
-
-import play.db.ebean.Model;
+import play.data.Form;
 
 
-//public interface IFormBinder
-public interface IFormBinder<M,E>
+public interface IFormBinder<T>
 {
 	boolean bind();
 
-	//	Object getObject();
-	//	Object getRawObject();
 	Object getValidationErrors();
-	//}
 
-	M getInputModel(); //return even if bind failed. may be partially filled
-
-	E getEntity(); //entity or thing
-	E convert(M model);
+	T get(); //return even if bind failed. may be partially filled
+	Form<T> getForm();
 }

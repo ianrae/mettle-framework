@@ -1,16 +1,13 @@
 package org.mef.framework.binder;
 
-import org.apache.commons.lang.NotImplementedException;
-import org.mef.framework.binder.IFormBinder;
+import play.data.Form;
 
-import play.db.ebean.Model;
-
-public class GenericMockFormBinder<M,E> implements IFormBinder<M,E>
+public class GenericMockFormBinder<T> implements IFormBinder<T>
 {
-	private M obj;
+	private T obj;
 	public boolean isValid = true;
 	
-	public GenericMockFormBinder(M obj)
+	public GenericMockFormBinder(T obj)
 	{
 		this.obj = obj;
 	}
@@ -20,7 +17,7 @@ public class GenericMockFormBinder<M,E> implements IFormBinder<M,E>
 	}
 
 	@Override
-	public M getInputModel()
+	public T get()
 	{
 		return obj;
 	}
@@ -31,20 +28,8 @@ public class GenericMockFormBinder<M,E> implements IFormBinder<M,E>
 		return null;
 	}
 	@Override
-	public E getEntity()
+	public Form<T> getForm() 
 	{
-		M model = getInputModel();
-		if (model == null)
-		{
-			return null;
-		}
-		E entity = convert(model);
-		return entity;
-	}
-	@Override
-	public E convert(M model) 
-	{
-		throw new NotImplementedException("convert !!");
-//		return null; //!!must implement
+		return null;
 	}
 }

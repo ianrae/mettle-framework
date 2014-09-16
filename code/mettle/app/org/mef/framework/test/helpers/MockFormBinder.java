@@ -3,9 +3,10 @@ package org.mef.framework.test.helpers;
 import org.mef.framework.entities.*;
 import org.mef.framework.binder.IFormBinder;
 
-import play.db.ebean.Model;
+import play.data.Form;
 
-public class MockFormBinder implements IFormBinder<Model,Entity>
+
+public class MockFormBinder implements IFormBinder<Entity>
 {
 	private Entity entity;
 	public boolean isValid = true;
@@ -26,9 +27,9 @@ public class MockFormBinder implements IFormBinder<Model,Entity>
 	}
 
 	@Override
-	public Model getInputModel()
+	public Entity get()
 	{
-		return null;
+		return entity;
 	}
 	
 	@Override
@@ -37,13 +38,7 @@ public class MockFormBinder implements IFormBinder<Model,Entity>
 		return null;
 	}
 	@Override
-	public Entity getEntity() 
-	{
-		return entity;
-	}
-
-	@Override
-	public Entity convert(Model model) 
+	public Form<Entity> getForm() 
 	{
 		return null;
 	}
