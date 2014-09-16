@@ -16,6 +16,17 @@ import java.sql.Timestamp;
 
 >>
 
+idstuff(type, name, upperName, className) ::= <<
+
+	public void propagateId(<className>_GEN existing)
+	{
+		if (get<upperName>() == null)
+		{
+			set<upperName>(existing.get<upperName>());
+		}
+	}
+>>
+
 fielddecl(type, name, upperName, value, readonly, isEntity) ::= <<
 
 <if(isEntity)>

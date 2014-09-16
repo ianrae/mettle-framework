@@ -1,8 +1,9 @@
 package org.mef.framework;
 
 public class Version {
-	public static final String version = "0.4.0.4";
+	public static final String version = "0.4.0.5";
 	
+	//v0.4.0.5 add propogateId
 	//v0.4.0.4 add OneToMany support
 	//v0.4.0.3 fix bug in boolean vaue matcher
 	//v0.4.0.2 fix mgen entity matching in queries

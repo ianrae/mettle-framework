@@ -34,6 +34,7 @@ public class EntityCodeGen extends CodeGenBase
 			result += st.render(); 
 			
 			result += genFields(def);
+			result += genIdStuff(def);
 			
 			st = _group.getInstanceOf("endclassdecl");
 			result += st.render(); 
@@ -135,4 +136,31 @@ public class EntityCodeGen extends CodeGenBase
 			}
 			return false;
 		}
+		
+		protected String genIdStuff(EntityDef def)
+		{
+			if (this.isParentOfExtended)
+			{
+				return ""; //want empty class
+			}
+			
+			String result = "";
+			for(FieldDef fdef : def.fieldL)
+			{
+				if (! fdef.name.equals("id")) //!!later use IHasId
+				{
+					continue;
+				}
+				
+				ST st = _group.getInstanceOf("idstuff");
+				st.add("type", fdef.typeName);
+				st.add("name", fdef.name);
+				st.add("upperName", uppify(fdef.name));
+				st.add("className", def.name);
+				
+				result = st.render(); 
+				result += "\n\n";
+			}
+			return result;
+		}		
 	}
