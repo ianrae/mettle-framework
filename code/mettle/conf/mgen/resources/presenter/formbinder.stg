@@ -27,7 +27,7 @@ classdecl(type, name) ::= <<
 
 public class <type>FormBinder implements IFormBinder\<<type>\>
 {
-	private Form\<<type>\> validationForm =  Form.form(<type>.class);
+	private Form\<<type>\> validationForm = Form.form(<type>.class);
 	private Form\<<type>\> filledForm;
 	private <type> entity; //set by bind()
 
@@ -38,7 +38,7 @@ public class <type>FormBinder implements IFormBinder\<<type>\>
 	public boolean bind() 
 	{
 		this.filledForm = validationForm.bindFromRequest();
-		<type> entity = get();
+		this.entity = get();
 		if (entity != null)
 		{
 //			String s = entity.validate();
