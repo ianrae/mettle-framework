@@ -1,8 +1,9 @@
 package org.mef.framework;
 
 public class Version {
-	public static final String version = "0.4.0.6";
+	public static final String version = "0.4.0.7";
 	
+	//v0.4.0.7 new binder using spring validation and IInput
 	//v0.4.0.6 improve IFormBinder
 	//v0.4.0.5 add propogateId
 	//v0.4.0.4 add OneToMany support

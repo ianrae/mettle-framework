@@ -57,7 +57,7 @@ public class Presenter extends SfxBaseObj
 			}
 		}
 		methodName = "on" + methodName;
-		log("looking for: " + methodName);
+		log(String.format("[MEF] %s.%s ", this.getClass().getSimpleName(), methodName));
 		
 		Reply reply = createReply();
 		if (reply == null)
