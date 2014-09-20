@@ -6,6 +6,12 @@ import org.springframework.validation.Validator;
 public class InputValidator implements Validator 
 	{
 		public IInput entity;
+		private int inputType;
+		
+		public InputValidator(int inputType)
+		{
+			this.inputType = inputType;
+		}
 
 	    @Override
 	    public boolean supports(Class<?> clazz) 
@@ -24,6 +30,6 @@ public class InputValidator implements Validator
 	    @Override
 	    public void validate(Object target, Errors errors) 
 	    {
-	    	entity.validateInput(errors);
+	    	entity.validateInput(errors, inputType);
 	    }
 	}	

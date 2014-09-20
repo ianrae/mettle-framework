@@ -61,13 +61,12 @@ public class <type>EbeanQueryProcessor  extends SfxBaseObj implements IQueryActi
 		limit = -1;
 		expr1 = expr2 = null;
 		fetch = null;
-		log("start");
 	}
 
 	@Override
 	public <type> findAny() //0 or 1
 	{
-		log("findAny");
+		//log("findAny");
 		
 		Query\<<type>Model> qry = createQueryObj();
 		List\<<type>Model> mL = null;
@@ -116,7 +115,7 @@ public class <type>EbeanQueryProcessor  extends SfxBaseObj implements IQueryActi
 	@Override
 	public List\<<type>\> findMany() 
 	{
-		log("findMany");
+		//log("findMany");
 		List\<<type>Model> mL = null;
 		Query\<<type>Model> qry = createQueryObj();
 		
@@ -136,7 +135,7 @@ public class <type>EbeanQueryProcessor  extends SfxBaseObj implements IQueryActi
 	@Override
 	public long findCount() 
 	{
-		log("findCount");
+		//log("findCount");
 		Query\<<type>Model> qry = createQueryObj();
 		
 		int rowCount = 0;
@@ -156,7 +155,7 @@ public class <type>EbeanQueryProcessor  extends SfxBaseObj implements IQueryActi
 	{
 		String action = qaction.action;
 
-		log(String.format(" %d. %s -- %s %s", index, action, qaction.op, qaction.fieldName));
+		//log(String.format(" %d. %s -- %s %s", index, action, qaction.op, qaction.fieldName));
 
 		if (action.equals("ALL"))
 		{

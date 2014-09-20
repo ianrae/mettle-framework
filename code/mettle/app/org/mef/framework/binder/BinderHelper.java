@@ -21,20 +21,20 @@ public class BinderHelper
 	{
 	}
 	
-	public static void validateInput(Object object, Form<?> filledForm)
+	public static void validateInput(Object object, Form<?> filledForm, int inputType)
 	{
 		BinderHelper helper = new BinderHelper();
-		helper.validate(object, filledForm);
+		helper.validate(object, filledForm, inputType);
 	}
 	
-	public void validate(Object entity, Form<?> filledForm) 
+	public void validate(Object entity, Form<?> filledForm, int inputType) 
 	{
 		//and do mef validation
 		if (entity != null && entity instanceof IInput)
 		{
 			List<ValidationError> verrors = new ArrayList<ValidationError>();
 			IInput input = (IInput)entity;
-			Errors errors = doValidation(input);
+			Errors errors = doValidation(input, inputType);
 			if (errors.getAllErrors().size() > 0)
 			{
 				for(ObjectError err : errors.getGlobalErrors())
@@ -69,10 +69,10 @@ public class BinderHelper
 		}
 		return msg.isEmpty();
 	}
-	private Errors doValidation(IInput input)
+	private Errors doValidation(IInput input, int inputType)
 	{
 		Errors errors = new BeanPropertyBindingResult(input, input.getClass().getSimpleName());
-		InputValidator pval = new InputValidator();
+		InputValidator pval = new InputValidator(inputType);
 		pval.entity = input;
 		ValidationUtils.invokeValidator(pval, input, errors);
 		return errors;

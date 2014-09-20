@@ -4,6 +4,6 @@ import org.springframework.validation.Errors;
 
 public interface IInput 
 {
-	void validateInput(Errors e);
+	void validateInput(Errors e, int inputType);
 }
 
