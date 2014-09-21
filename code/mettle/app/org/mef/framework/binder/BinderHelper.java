@@ -59,7 +59,6 @@ public class BinderHelper
 			}
 		}
 	}
-		
 	
 	private boolean isNullOrEmpty(String msg) 
 	{
@@ -69,7 +68,7 @@ public class BinderHelper
 		}
 		return msg.isEmpty();
 	}
-	private Errors doValidation(IInput input, int inputType)
+	public Errors doValidation(IInput input, int inputType)
 	{
 		Errors errors = new BeanPropertyBindingResult(input, input.getClass().getSimpleName());
 		InputValidator pval = new InputValidator(inputType);
@@ -77,5 +76,6 @@ public class BinderHelper
 		ValidationUtils.invokeValidator(pval, input, errors);
 		return errors;
 	}
+	
 
 }
