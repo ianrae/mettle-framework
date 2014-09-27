@@ -20,9 +20,14 @@ public class BoundaryCodeGen extends CodeGenBase
 	{
 		String result = genCustomHeader("XPresenter", "YReply", "ZBinder");
 
+		//classdecl(type, presenter, reply, binder, inputType) ::= <<
+
 		ST st = _group.getInstanceOf("classdecl");
 		st.add("type", def.name);
-		st.add("name", getClassName(def));
+		st.add("presenter", "XPresenter");
+		st.add("reply", "YReply");
+		st.add("binder", "ZBinder");
+		st.add("inputType", "CollectInput");
 		result += st.render(); 
 		result += newline;
 		st = _group.getInstanceOf("endclassdecl");
