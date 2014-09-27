@@ -27,8 +27,14 @@ public class ScaffoldGenTests extends BaseTest
 		private String controllerName;
 		private String boundaryName;
 		private String replyName;
-		private String binderName;		
+		private String binderName;
+		private String appDir;		
 
+		public void init(String appDir) 
+		{
+			this.appDir = appDir;
+		}		
+		
 		public void runCodeGeneration(String controllerName, String boundaryName, String replyName, String binderName) throws Exception
 		{
 			createContext();
@@ -62,7 +68,6 @@ public class ScaffoldGenTests extends BaseTest
 			String packageName = "boundaries.binders";
 			String relpath = "app\\boundaries\\binders";
 
-			String appDir = "c:\\tmp\\dd\\99";
 
 			ScaffoldGenerator gen = new ScaffoldGenerator(_ctx, inner, baseDir, filename, def, packageName, relpath);
 			gen.init(appDir);
@@ -105,7 +110,7 @@ public class ScaffoldGenTests extends BaseTest
 				return true;
 			}
 			return address.isEmpty();
-		}		
+		}
 	}
 
 	@Test
@@ -118,6 +123,11 @@ public class ScaffoldGenTests extends BaseTest
 		utils.deleteFile(new File(path));
 
 		ControllerGen gen = new ControllerGen();
+//		String appDir = this.getCurrentDirectory();
+		String appDir = "c:\\tmp\\dd\\99";
+		
+		gen.init(appDir);
+		
 
 		gen.runCodeGeneration("ImportController", "ImportBoundary", "PatientImportReply", "CollectInputBinder");
 
