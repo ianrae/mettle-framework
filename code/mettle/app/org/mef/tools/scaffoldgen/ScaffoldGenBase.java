@@ -13,12 +13,9 @@ public class ScaffoldGenBase extends GenBase
 	private String boundaryName;
 	private String replyName;
 	private String binderName;
-	private String appDir;		
+	public String appDir;
+	private String presentNameToUse;		
 
-	public void init(String appDir) 
-	{
-		this.appDir = appDir;
-	}		
 
 	//will not overwrite an existing source file
 	public void runCodeGeneration(String controllerName, String boundaryName, String replyName, String binderName) throws Exception
@@ -28,7 +25,7 @@ public class ScaffoldGenBase extends GenBase
 		{
 			appDir = this.getCurrentDirectory();
 		}
-		log("SCAFFOLDGEN v " + Version.version);
+		log("SCAFFOLDGEN v" + Version.version);
 		this.controllerName = controllerName;
 		this.boundaryName = boundaryName;
 		this.replyName = replyName;
@@ -49,12 +46,19 @@ public class ScaffoldGenBase extends GenBase
 			genBinder();
 		}
 	}
-	private void genBoundary() throws Exception 
+	private void genBinder() throws Exception 
 	{
 		String baseDir = "/mgen/resources/scaffoldgen/";
 		String filename = "formbinder.stg";
 		CodeGenBase inner = new FormBinderCodeGen(_ctx);
-		EntityDef def = createDef();
+		
+		//binderName should be of form <type>Binder or <type>FormBinder
+		String name = this.binderName.replace("FormBinder", "");
+		if (name.endsWith("Binder"))
+		{
+			name = name.replace("Binder", "");
+		}
+		EntityDef def = createDef(name);
 		String packageName = "boundaries.binders";
 		String relpath = "app\\boundaries\\binders";
 
@@ -63,22 +67,33 @@ public class ScaffoldGenBase extends GenBase
 		boolean b = gen.run();
 	}
 
-
-
-	private EntityDef createDef() 
+	private EntityDef createDef(String name) 
 	{
 		EntityDef def = new EntityDef();
 		def.enabled = true;
-		def.name = "CollectInput";
+		def.name = name;
 		// TODO Auto-generated method stub
 		return def;
 	}
 	private void genController()
 	{
 	}
-	private void genBinder()
+	private void genBoundary() throws Exception
 	{
+		String baseDir = "/mgen/resources/scaffoldgen/";
+		String filename = "boundary.stg";
+		CodeGenBase inner = new BoundaryCodeGen(_ctx);
+		EntityDef def = createDef(this.boundaryName);
+		String packageName = "boundaries";
+		String relpath = "app\\boundaries";
 
+		ScaffoldGenerator gen = new ScaffoldGenerator(_ctx, inner, baseDir, filename, def, packageName, relpath);
+		gen.init(appDir);
+		boolean b = gen.run();
+	}
+	public void presenterToUse(String name) 
+	{
+		this.presentNameToUse = name;
 	}
 
 	//--helpers--

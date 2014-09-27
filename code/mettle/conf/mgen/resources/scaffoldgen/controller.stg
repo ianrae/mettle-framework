@@ -1,0 +1,59 @@
+header(package, type, extras, willBeOverwritten) ::= <<
+
+
+package controllers;
+
+import mef.presenters.replies.<type>Reply;
+import org.mef.framework.commands.IndexCommand;
+import org.mef.framework.replies.Reply;
+
+import play.data.Form;
+import play.mvc.Controller;
+import play.mvc.Result;
+import boundaries.<type>Boundary;
+
+
+>>
+
+
+classdecl(type, name) ::= <<
+
+public class <name> extends Controller
+{
+	public static Result index() 
+    {
+		<type>Boundary boundary = <type>Boundary.create();
+		<type>Reply reply = boundary.process(new IndexCommand());
+		return renderOrForward(boundary, reply);
+	}
+	
+    private static Result renderOrForward(<type>Boundary boundary, <type>Reply reply)
+    {
+		if (reply.failed())
+		{
+			return redirect(routes.ErrorController.logout());
+		}
+		
+		switch(reply.getDestination())
+		{
+		case Reply.VIEW_INDEX:
+			return ok(views.html.<type>.index.render(reply._allL));    	
+
+		case Reply.FOWARD_NOT_AUTHENTICATED:
+			return play.mvc.Results.redirect(routes.ErrorController.showError("Not logged in!"));	
+
+		case Reply.FOWARD_NOT_AUTHORIZED:
+			return play.mvc.Results.redirect(routes.ErrorController.showError("Not authorized to do that!"));	
+
+
+		default:
+			return play.mvc.Results.redirect(routes.ErrorController.logout());	
+    	}
+	}
+
+
+>>
+
+endclassdecl() ::= <<
+}
+>>

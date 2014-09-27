@@ -1,0 +1,93 @@
+header(package, presenter, reply, binder) ::= <<
+
+package <package>;
+
+import mef.core.MettleInitializer;
+import mef.presenters.<presenter>;
+import mef.presenters.replies.<reply>;
+import mef.viewinputs.*;
+import mef.entities.*;
+
+import org.mef.framework.commands.Command;
+import org.mef.framework.sfx.SfxContext;
+
+import play.Logger;
+import play.data.Form;
+import play.mvc.Http.Request;
+import boundaries.binders.<binder>;
+
+>>
+
+fielddecl(type, name, value) ::= <<
+    public <name> <name><init(value)>;
+>>
+init(v) ::= "<if(v)> = <v><endif>"
+
+
+classdecl(type, name) ::= <<
+
+public class <type> extends Boundary
+{
+	
+	public static <type> create(Request request) 
+	{
+		return new <type>(MettleInitializer.theCtx, request);
+	}
+
+	public <binder> binder;
+	
+	public <type>(SfxContext ctx, Request request)
+	{
+		super(ctx, request);
+	}	
+	
+	public <reply> addFormAndProcess(int inputType, Command cmd)
+	{
+		binder = new <binder>(_ctx, inputType);
+		cmd.setFormBinder(binder);
+		return process(cmd);
+	}	
+	
+	public Form\<<type>Model> makeForm(<type>Reply reply)
+	{
+		if (binder != null)
+		{
+			Logger.info("mf-binder");
+			return binder.getRawForm();
+		}
+		Logger.info("mf-make");
+		Form\<<type>Model> frm = Form.form(<type>Model.class);
+		<type>Model model = <type>DAO.createModelFromEntity(reply._entity);
+		frm = frm.fill(model);
+		return frm;
+	}
+	
+	@Override
+	public <type>Reply process(Command cmd)
+	{
+		begin(cmd);
+		<type>Presenter presenter = new <type>Presenter(_ctx);
+		
+		<type>Reply reply = (<type>Reply) presenter.process(cmd);
+		
+		String flashKey = reply.getFlashKey();
+		String flashMsg = reply.getFlash();
+		if (flashKey != null)
+		{
+			Controller.flash(flashKey, flashMsg);
+		}
+		return reply;
+	}
+	
+	public String getAllValidationErrors()
+	{
+		return dogetAllValidationErrors(binder);
+	}
+
+
+>>
+
+endclassdecl() ::= <<
+}
+>>
+

@@ -18,22 +18,26 @@ public class ScaffoldGenTests extends BaseTest
 	@Test
 	public void test() throws Exception 
 	{
-
-		String path = "C:\\tmp\\dd\\99\\app\\boundaries\\binders\\CollectInputFormBinder.java";
-		SfxFileUtils utils = new SfxFileUtils();
-		utils._fileActionsEnabled = true;
-		utils.deleteFile(new File(path));
+		String appDir = "c:\\tmp\\dd\\99";
+		deleteFile(appDir, "\\app\\boundaries\\binders\\CollectInputFormBinder.java");
+		deleteFile(appDir, "\\app\\boundaries\\ImportBoundary.java");
 
 		ScaffoldGenBase gen = new ScaffoldGenBase();
 //		String appDir = this.getCurrentDirectory();
-		String appDir = "c:\\tmp\\dd\\99";
 		
-		gen.init(appDir);
+		gen.appDir = appDir; //force it
 		
-
-		gen.runCodeGeneration("ImportController", "ImportBoundary", "PatientImportReply", "CollectInputBinder");
+		gen.presenterToUse("PatientImportPresenter");
+		gen.runCodeGeneration("ImportController", "ImportBoundary", "PatientImportReply", "CollectInputFormBinder");
 
 	}
 
-
+	//--helpers--
+	private void deleteFile(String appDir, String relPath) throws Exception
+	{
+		String path = appDir + relPath;
+		SfxFileUtils utils = new SfxFileUtils();
+		utils._fileActionsEnabled = true;
+		utils.deleteFile(new File(path));
+	}
 }
