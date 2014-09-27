@@ -28,7 +28,9 @@ public class ScaffoldGenTests extends BaseTest
 		gen.appDir = appDir; //force it
 		
 		gen.presenterToUse("PatientImportPresenter");
-		gen.runCodeGeneration("ImportController", "ImportBoundary", "PatientImportReply", "CollectInputFormBinder");
+		gen.inputToUse("CollectInput");
+		gen.replyToUse("PatientImportReply");
+		gen.runCodeGeneration("ImportController", "ImportBoundary", "CollectInputFormBinder");
 
 	}
 

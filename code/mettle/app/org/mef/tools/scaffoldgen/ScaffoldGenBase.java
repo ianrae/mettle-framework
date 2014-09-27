@@ -14,11 +14,24 @@ public class ScaffoldGenBase extends GenBase
 	private String replyName;
 	private String binderName;
 	public String appDir;
-	private String presentNameToUse;		
+	private String presentNameToUse;
+	private String inputToUse;		
 
+	public void presenterToUse(String name) 
+	{
+		this.presentNameToUse = name;
+	}
+	public void inputToUse(String name)
+	{
+		this.inputToUse = name;
+	}
+	public void replyToUse(String name) 
+	{
+		this.replyName = name;
+	}
 
 	//will not overwrite an existing source file
-	public void runCodeGeneration(String controllerName, String boundaryName, String replyName, String binderName) throws Exception
+	public void runCodeGeneration(String controllerName, String boundaryName, String binderName) throws Exception
 	{
 		createContext();
 		if (appDir == null)
@@ -28,7 +41,7 @@ public class ScaffoldGenBase extends GenBase
 		log("SCAFFOLDGEN v" + Version.version);
 		this.controllerName = controllerName;
 		this.boundaryName = boundaryName;
-		this.replyName = replyName;
+		
 		this.binderName = binderName;
 
 		if (! isNullOrEmpty(controllerName))
@@ -45,6 +58,31 @@ public class ScaffoldGenBase extends GenBase
 		{
 			genBinder();
 		}
+	}
+
+	private EntityDef createDef(String name) 
+	{
+		EntityDef def = new EntityDef();
+		def.enabled = true;
+		def.name = name;
+		// TODO Auto-generated method stub
+		return def;
+	}
+	private void genController()
+	{
+	}
+	private void genBoundary() throws Exception
+	{
+		String baseDir = "/mgen/resources/scaffoldgen/";
+		String filename = "boundary.stg";
+		CodeGenBase inner = new BoundaryCodeGen(_ctx, this.presentNameToUse, this.replyName, this.binderName, this.inputToUse);
+		EntityDef def = createDef(this.boundaryName);
+		String packageName = "boundaries";
+		String relpath = "app\\boundaries";
+
+		ScaffoldGenerator gen = new ScaffoldGenerator(_ctx, inner, baseDir, filename, def, packageName, relpath);
+		gen.init(appDir);
+		boolean b = gen.run();
 	}
 	private void genBinder() throws Exception 
 	{
@@ -66,35 +104,9 @@ public class ScaffoldGenBase extends GenBase
 		gen.init(appDir);
 		boolean b = gen.run();
 	}
-
-	private EntityDef createDef(String name) 
-	{
-		EntityDef def = new EntityDef();
-		def.enabled = true;
-		def.name = name;
-		// TODO Auto-generated method stub
-		return def;
-	}
-	private void genController()
-	{
-	}
-	private void genBoundary() throws Exception
-	{
-		String baseDir = "/mgen/resources/scaffoldgen/";
-		String filename = "boundary.stg";
-		CodeGenBase inner = new BoundaryCodeGen(_ctx);
-		EntityDef def = createDef(this.boundaryName);
-		String packageName = "boundaries";
-		String relpath = "app\\boundaries";
-
-		ScaffoldGenerator gen = new ScaffoldGenerator(_ctx, inner, baseDir, filename, def, packageName, relpath);
-		gen.init(appDir);
-		boolean b = gen.run();
-	}
-	public void presenterToUse(String name) 
-	{
-		this.presentNameToUse = name;
-	}
+	
+	
+	
 
 	//--helpers--
 }

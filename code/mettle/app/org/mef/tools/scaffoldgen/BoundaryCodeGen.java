@@ -10,24 +10,34 @@ public class BoundaryCodeGen extends CodeGenBase
 {
 	public static String newline = System.getProperty("line.separator");
 
-	public BoundaryCodeGen(SfxContext ctx)
+	private String presenterName;
+	private String replyName;
+	private String binderName;
+
+	private String inputName;
+	
+	public BoundaryCodeGen(SfxContext ctx, String presentNameToUse, String replyName, String binderName, String inputName)
 	{
 		super(ctx);
+		this.presenterName = presentNameToUse;
+		this.replyName = replyName;
+		this.binderName = binderName;
+		this.inputName = inputName;
 	}
 
 	@Override
 	public String generate(EntityDef def)
 	{
-		String result = genCustomHeader("XPresenter", "YReply", "ZBinder");
+		String result = genCustomHeader(presenterName, replyName, binderName);
 
 		//classdecl(type, presenter, reply, binder, inputType) ::= <<
 
 		ST st = _group.getInstanceOf("classdecl");
 		st.add("type", def.name);
-		st.add("presenter", "XPresenter");
-		st.add("reply", "YReply");
-		st.add("binder", "ZBinder");
-		st.add("inputType", "CollectInput");
+		st.add("presenter", presenterName);
+		st.add("reply", replyName);
+		st.add("binder", binderName);
+		st.add("inputType", inputName);
 		result += st.render(); 
 		result += newline;
 		st = _group.getInstanceOf("endclassdecl");
