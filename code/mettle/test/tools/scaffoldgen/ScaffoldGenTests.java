@@ -21,6 +21,7 @@ public class ScaffoldGenTests extends BaseTest
 		String appDir = "c:\\tmp\\dd\\99";
 		deleteFile(appDir, "\\app\\boundaries\\binders\\CollectInputFormBinder.java");
 		deleteFile(appDir, "\\app\\boundaries\\ImportBoundary.java");
+		deleteFile(appDir, "\\app\\controllers\\ImportController.java");
 
 		ScaffoldGenBase gen = new ScaffoldGenBase();
 //		String appDir = this.getCurrentDirectory();

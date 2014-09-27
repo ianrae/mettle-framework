@@ -16,6 +16,7 @@ public class ScaffoldGenBase extends GenBase
 	public String appDir;
 	private String presentNameToUse;
 	private String inputToUse;		
+	private String baseDir = "/mgen/resources/scaffoldgen/";
 
 	public void presenterToUse(String name) 
 	{
@@ -68,12 +69,20 @@ public class ScaffoldGenBase extends GenBase
 		// TODO Auto-generated method stub
 		return def;
 	}
-	private void genController()
+	private void genController() throws Exception
 	{
+		String filename = "controller.stg";
+		CodeGenBase inner = new ControllerCodeGen(_ctx, this.presentNameToUse, this.replyName, this.boundaryName, this.inputToUse);
+		EntityDef def = createDef(this.controllerName);
+		String packageName = "controllers";
+		String relpath = "app\\controllers";
+
+		ScaffoldGenerator gen = new ScaffoldGenerator(_ctx, inner, baseDir, filename, def, packageName, relpath);
+		gen.init(appDir);
+		boolean b = gen.run();		
 	}
 	private void genBoundary() throws Exception
 	{
-		String baseDir = "/mgen/resources/scaffoldgen/";
 		String filename = "boundary.stg";
 		CodeGenBase inner = new BoundaryCodeGen(_ctx, this.presentNameToUse, this.replyName, this.binderName, this.inputToUse);
 		EntityDef def = createDef(this.boundaryName);
@@ -86,7 +95,6 @@ public class ScaffoldGenBase extends GenBase
 	}
 	private void genBinder() throws Exception 
 	{
-		String baseDir = "/mgen/resources/scaffoldgen/";
 		String filename = "formbinder.stg";
 		CodeGenBase inner = new FormBinderCodeGen(_ctx);
 		

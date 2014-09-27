@@ -1,33 +1,35 @@
-header(package, type, extras, willBeOverwritten) ::= <<
+header(package, presenter, reply, boundary) ::= <<
 
 
 package controllers;
 
-import mef.presenters.replies.<type>Reply;
+import mef.presenters.replies.<reply>;
+import org.mef.framework.replies.Reply;
+
+import play.mvc.Result;
+import boundaries.<boundary>;
 import org.mef.framework.commands.IndexCommand;
 import org.mef.framework.replies.Reply;
 
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
-import boundaries.<type>Boundary;
-
 
 >>
 
 
-classdecl(type, name) ::= <<
+classdecl(type, presenter, reply, boundary) ::= <<
 
-public class <name> extends Controller
+public class <type> extends BaseController
 {
 	public static Result index() 
     {
-		<type>Boundary boundary = <type>Boundary.create();
-		<type>Reply reply = boundary.process(new IndexCommand());
+		<boundary> boundary = <boundary>.create(request());
+		<repy> reply = boundary.process(new IndexCommand());
 		return renderOrForward(boundary, reply);
 	}
 	
-    private static Result renderOrForward(<type>Boundary boundary, <type>Reply reply)
+    private static Result renderOrForward(<boundary> boundary, <reply> reply)
     {
 		if (reply.failed())
 		{
