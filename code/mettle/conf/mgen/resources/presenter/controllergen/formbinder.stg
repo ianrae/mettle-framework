@@ -5,11 +5,11 @@ package <package>;
 
 import java.util.Map;
 
-import mef.entities.<type>;
+import mef.entities.*;
+import mef.viewinputs.*;
 
 import org.mef.framework.binder.IFormBinder;
 
-import boundaries.daos.<type>DAO;
 
 import play.Logger;
 import play.data.Form;
@@ -71,6 +71,7 @@ public class <type>FormBinder implements IFormBinder\<<type>\>
 >>
 
 endclassdecl() ::= <<
+
 }
 >>
 

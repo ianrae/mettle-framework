@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.mef.framework.Version;
 import org.mef.framework.sfx.SfxContext;
 import org.mef.framework.sfx.SfxErrorTracker;
+import org.mef.framework.sfx.SfxFileUtils;
 import org.mef.tools.mgen.codegen.CodeGenerator;
 import org.mef.tools.mgen.codegen.ICodeGenerator;
 import org.mef.tools.mgen.codegen.generators.BoundaryCodeGen;
@@ -59,20 +60,20 @@ public class CGenTests extends BaseTest
 		public boolean run() throws Exception 
 		{
 			String path = getResourceOrFilePath(baseDir, filename);
-			
+
 			gen.init(path, packageName);
 			if (! def.enabled)
 			{
 				log(def.name + " disabled -- no files generated.");
 				return true; //do nothing
 			}
-			
+
 			String code = gen.generate(def);	
 			String className = gen.getClassName(def);	
 
 			path = this.pathCombine(appDir, relPath);
 			this.createDir(relPath);
-			
+
 			String filename = className;
 			if (! filename.contains(".html"))
 			{
@@ -85,13 +86,13 @@ public class CGenTests extends BaseTest
 				log(prettifyPath(path)  + ": skipping - already exists");
 				return true;
 			}
-			
+
 			boolean b = writeFile(appDir, relPath, filename, code);
 			if (!b)
 			{
 				return false;
 			}
-			
+
 			return true;
 		}
 
@@ -109,44 +110,44 @@ public class CGenTests extends BaseTest
 	}	
 	public static class xFormBinderCodeGen extends CodeGenBase
 	{
+		public static String newline = System.getProperty("line.separator");
+
 		public xFormBinderCodeGen(SfxContext ctx)
 		{
 			super(ctx);
 		}
-		
+
 		@Override
 		public String generate(EntityDef def)
 		{
 			String result = genHeader(def.name); 
-			
+
 			ST st = _group.getInstanceOf("classdecl");
 			st.add("type", def.name);
 			st.add("name", getClassName(def));
 			result += st.render(); 
-			
-			result += genFields(def);
-			
+			result += newline;
 			st = _group.getInstanceOf("endclassdecl");
 			result += st.render(); 
-			
+
 			return result;
 		}
-		
+
 		@Override
 		public String getClassName(EntityDef def)
 		{
 			return  def.name + "FormBinder";
 		}
-		
-		
+
+
 		@Override
 		protected String buildField(EntityDef def, FieldDef fdef)
 		{
 			return "";
 		}
 	}	
-	
-	
+
+
 	public static class ControllerGen
 	{
 		protected SfxContext _ctx;
@@ -154,7 +155,7 @@ public class CGenTests extends BaseTest
 		private String boundaryName;
 		private String replyName;
 		private String binderName;		
-		
+
 		public void runCodeGeneration(String controllerName, String boundaryName, String replyName, String binderName) throws Exception
 		{
 			createContext();
@@ -163,17 +164,17 @@ public class CGenTests extends BaseTest
 			this.boundaryName = boundaryName;
 			this.replyName = replyName;
 			this.binderName = binderName;
-			
+
 			if (! isNullOrEmpty(controllerName))
 			{
 				genController();
 			}
-			
+
 			if (! isNullOrEmpty(boundaryName))
 			{
 				genBoundary();
 			}
-			
+
 			if (! isNullOrEmpty(binderName))
 			{
 				genBinder();
@@ -187,19 +188,20 @@ public class CGenTests extends BaseTest
 			EntityDef def = createDef();
 			String packageName = "boundaries.binders";
 			String relpath = "app\\boundaries\\binders";
-			
+
 			String appDir = "c:\\tmp\\dd\\99";
-			
+
 			xPresenterGenerator gen = new xPresenterGenerator(_ctx, inner, baseDir, filename, def, packageName, relpath);
 			gen.init(appDir);
 			boolean b = gen.run();
 		}
-		
-		
-		
+
+
+
 		private EntityDef createDef() 
 		{
 			EntityDef def = new EntityDef();
+			def.enabled = true;
 			def.name = "CollectInput";
 			// TODO Auto-generated method stub
 			return def;
@@ -209,9 +211,9 @@ public class CGenTests extends BaseTest
 		}
 		private void genBinder()
 		{
-			
+
 		}
-		
+
 		//--helpers--
 		protected void createContext()
 		{
@@ -232,15 +234,21 @@ public class CGenTests extends BaseTest
 			return address.isEmpty();
 		}		
 	}
-	
+
 	@Test
 	public void test() throws Exception 
 	{
+
+		String path = "C:\\tmp\\dd\\99\\app\\boundaries\\binders\\CollectInputFormBinder.java";
+		SfxFileUtils utils = new SfxFileUtils();
+		utils._fileActionsEnabled = true;
+		utils.deleteFile(new File(path));
+
 		ControllerGen gen = new ControllerGen();
-		
+
 		gen.runCodeGeneration("ImportController", "ImportBoundary", "PatientImportReply", "CollectInputBinder");
 
 	}
 
-	
+
 }
