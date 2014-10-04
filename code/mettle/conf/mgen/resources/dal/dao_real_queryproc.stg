@@ -201,7 +201,11 @@ public class <type>EbeanQueryProcessor  extends SfxBaseObj implements IQueryActi
 	{
 		Expression expr = null;
 		
-		if (opIs(qaction, "eq"))
+		if (opIs(qaction, "eqi"))
+		{
+			expr = Expr.ieq(qaction.fieldName, qaction.obj);
+		}
+		else if (opIs(qaction, "eq"))
 		{
 			expr = Expr.eq(qaction.fieldName, qaction.obj);
 		}
