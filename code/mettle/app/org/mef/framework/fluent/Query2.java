@@ -11,6 +11,12 @@ public class Query2<T> extends QueryBase<T>
 		this.queryctx = queryctx;
 	}
 
+	//eqi - case-insensitve
+	public Query3<T> eqi(String val)
+	{
+		this.addx(QueryParser.EQI, 's', val);
+		return new Query3<T>(queryctx);
+	}
 
 	//eq
 	public Query3<T> eq(String val)

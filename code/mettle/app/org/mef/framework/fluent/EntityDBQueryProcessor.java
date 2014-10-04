@@ -150,7 +150,18 @@ public class EntityDBQueryProcessor<T>  extends SfxBaseObj implements IQueryActi
 			throw new FluentException("ActionProc: obj is null");
 		}
 
-		if (qaction.op.equals("eq"))
+		if (qaction.op.equals("eqi"))
+		{
+			if (qaction.obj instanceof String)
+			{
+				return db.findMatches(dataL, qaction.fieldName, (String)qaction.obj, IValueMatcher.CASE_INSENSITIVE);
+			}
+			else
+			{
+				throw new FluentException("ActionProc: unsupported obj type: " + qaction.obj.getClass().getSimpleName());
+			}
+		}
+		else if (qaction.op.equals("eq"))
 		{
 			if (qaction.obj instanceof Long)
 			{

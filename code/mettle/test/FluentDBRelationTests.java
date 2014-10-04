@@ -31,6 +31,25 @@ public class FluentDBRelationTests extends BaseTest
 		assertNotNull(h);
 		assertEquals(target, h.street);
 		assertEquals(100, h.number);
+		
+		h = dao.query().where("street").eq("KING").findAny();
+		assertNull(h);
+	}
+
+	@Test
+	public void testi()
+	{
+		init();
+		String target = "King";
+
+		StreetAddress h = dao.query().where("street").eqi(target).findAny();
+		assertNotNull(h);
+		assertEquals(target, h.street);
+		assertEquals(100, h.number);
+		
+		StreetAddress h2 = dao.query().where("street").eqi("KING").findAny();
+		assertNotNull(h2);
+		assertSame(h, h2);
 	}
 
 	@Test

@@ -3,6 +3,7 @@ package org.mef.framework;
 public class Version {
 	public static final String version = "0.4.1.1";
 	
+	//v0.4.1.1 query eqi case-insensitive
 	//v0.4.1.0 SCAFFOLDGEN added
 	//v0.4.0.8 fix and IHasLongId
 	//v0.4.0.7 new binder using spring validation and IInput

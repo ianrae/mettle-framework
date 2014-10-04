@@ -22,6 +22,7 @@ public class QueryParser<T>
 	public static final char FETCH = 'F';
 	public static final char LIMIT = 'M';
 	public static final char OFFSET = 'P';
+	public static final char EQI = 'I';
 
 
 	//private List<QueryX> queryL;
@@ -111,6 +112,19 @@ public class QueryParser<T>
 				break;
 
 
+			case EQI:
+				if (currentAction == null)
+				{
+					throw new FluentException("misplaced EQI"); //err!
+				}
+				else
+				{
+					currentAction.op = "eqi";
+					currentAction.obj = x.obj;
+					actionL.add(currentAction);
+					currentAction = null;
+				}
+				break;
 			case EQ:
 				if (currentAction == null)
 				{
