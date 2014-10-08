@@ -39,7 +39,7 @@ public class EntityDBQueryProcessor<T>  extends SfxBaseObj implements IQueryActi
 		resultL = null; //new ArrayList<T>();
 		orderBy = null;
 		limit = -1;
-		log("start");
+//		log("start");
 	}
 
 	private void initResultLIfNeeded()
@@ -66,7 +66,7 @@ public class EntityDBQueryProcessor<T>  extends SfxBaseObj implements IQueryActi
 	@Override
 	public T findAny() //0 or 1
 	{
-		log("findAny");
+//		log("findAny");
 		initResultLIfNeeded();
 
 		if (resultL.size() == 0)
@@ -84,7 +84,7 @@ public class EntityDBQueryProcessor<T>  extends SfxBaseObj implements IQueryActi
 	@Override
 	public List<T> findMany() 
 	{
-		log("findMany");
+//		log("findMany");
 		initResultLIfNeeded();
 		if (observer != null)
 		{
@@ -95,7 +95,7 @@ public class EntityDBQueryProcessor<T>  extends SfxBaseObj implements IQueryActi
 	@Override
 	public long findCount() 
 	{
-		log("findCount");
+//		log("findCount");
 		initResultLIfNeeded();
 		return resultL.size();
 	}
@@ -105,7 +105,7 @@ public class EntityDBQueryProcessor<T>  extends SfxBaseObj implements IQueryActi
 	{
 		String action = qaction.action;
 
-		log(String.format(" %d. %s", index, action));
+//		log(String.format(" %d. %s", index, action));
 
 		if (action.equals("ALL"))
 		{

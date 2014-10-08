@@ -44,7 +44,7 @@ public class QueryRunner<T> extends SfxBaseObj
 		for(QueryAction action : actionL)
 		{
 			String s = String.format("%s: %s %s", action.action, action.fieldName, action.op);
-			System.out.println(s);
+//			System.out.println(s);
 			if (isRelationalAction(action))
 			{
 				action = processRelationalAction(i, action);
