@@ -31,9 +31,9 @@ public class KnowledgeMetadataTests extends BaseTest
 	    public String message;
 	}
 	
-	public static class ValErrorX
+	public static class ValidationErrors
 	{
-	    public Map<String,List<ValidationErrorSpec>> errors;
+	    public Map<String,List<ValidationErrorSpec>> map;
 	    private String itemName;
 	    
 	    public String getItemName()
@@ -47,32 +47,32 @@ public class KnowledgeMetadataTests extends BaseTest
 	    	spec.key = itemName;
 	    	spec.message = message;
 	    	
-	    	List<ValidationErrorSpec> L = errors.get(itemName);
+	    	List<ValidationErrorSpec> L = map.get(itemName);
 	    	if (L == null)
 	    	{
 	    		L = new ArrayList<ValidationErrorSpec>();
 	    	}
 	    	L.add(spec);
-	    	errors.put(itemName, L);
+	    	map.put(itemName, L);
 	    }
 	}
 	
 	public static class ValContext
 	{
 		private int failCount;
-	    private Map<String,List<ValidationErrorSpec>> errors;
+	    private Map<String,List<ValidationErrorSpec>> mapErrors;
 		
 		public ValContext()
 		{
-			errors = new HashMap<String,List<ValidationErrorSpec>>();
+			mapErrors = new HashMap<String,List<ValidationErrorSpec>>();
 		}
 		
 		public void validate(MValue val)
 		{
-			ValErrorX vex = new ValErrorX();
-			vex.errors = errors;
-			vex.itemName = val.getItemName();
-			if (! val.validate(vex))
+			ValidationErrors errors = new ValidationErrors();
+			errors.map = mapErrors;
+			errors.itemName = val.getItemName();
+			if (! val.validate(errors))
 			{
 				failCount++;
 			}
@@ -85,19 +85,19 @@ public class KnowledgeMetadataTests extends BaseTest
 		
 	    public Map<String,List<ValidationErrorSpec>> getErrors()
 	    {
-	    	return errors;
+	    	return mapErrors;
 	    }
 	}
 	
 	public interface IValidator
 	{
-		boolean validate(Object val, ValErrorX vex);
+		boolean validate(Object val, ValidationErrors errors);
 	}
 	
 	public static class NoneValidator implements IValidator
 	{
 		@Override
-		public boolean validate(Object val, ValErrorX vex) 
+		public boolean validate(Object val, ValidationErrors errors) 
 		{
 			return true;
 		}
@@ -106,12 +106,12 @@ public class KnowledgeMetadataTests extends BaseTest
 	public static class NotEmptyStringValidator implements IValidator
 	{
 		@Override
-		public boolean validate(Object val, ValErrorX vex) 
+		public boolean validate(Object val, ValidationErrors errors) 
 		{
 			String s = (String)val;
 			if (s.isEmpty())
 			{
-				vex.addError("empty string not allowed");
+				errors.addError("empty string not allowed");
 				return false;
 			}
 			return true;
@@ -231,13 +231,13 @@ public class KnowledgeMetadataTests extends BaseTest
 		
 		
 		//validation
-		public boolean validate(ValErrorX vex)
+		public boolean validate(ValidationErrors errors)
 		{
 			if (validator == null)
 			{
 				return true;
 			}
-			return validator.validate(obj, vex);
+			return validator.validate(obj, errors);
 		}
 		
 		public IValidator getValidator() {
