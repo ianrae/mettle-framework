@@ -2,12 +2,20 @@
 
 import static org.junit.Assert.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.junit.Test;
+import org.mef.framework.metadata.IntegerValue;
+import org.mef.framework.metadata.ListValue;
+import org.mef.framework.metadata.StringValue;
+import org.mef.framework.metadata.TupleValue;
+import org.mef.framework.metadata.Value;
+import org.mef.framework.metadata.ValueContainer;
+import org.mef.framework.metadata.validate.ValContext;
+import org.mef.framework.metadata.validate.ValidationErrorSpec;
+import org.mef.framework.metadata.validators.NotEmptyStringValidator;
 
 import tools.BaseTest;
 
@@ -25,248 +33,13 @@ public class KnowledgeMetadataTests extends BaseTest
 //		public int val;
 //	}
 	
-	public static class ValidationErrorSpec
-	{
-	    public String key;
-	    public String message;
-	}
-	
-	public static class ValidationErrors
-	{
-	    public Map<String,List<ValidationErrorSpec>> map;
-	    private String itemName;
-	    
-	    public String getItemName()
-	    {
-	    	return itemName;
-	    }
-	    
-	    public void addError(String message)
-	    {
-	    	ValidationErrorSpec spec = new ValidationErrorSpec();
-	    	spec.key = itemName;
-	    	spec.message = message;
-	    	
-	    	List<ValidationErrorSpec> L = map.get(itemName);
-	    	if (L == null)
-	    	{
-	    		L = new ArrayList<ValidationErrorSpec>();
-	    	}
-	    	L.add(spec);
-	    	map.put(itemName, L);
-	    }
-	}
-	
-	public static class ValContext
-	{
-		private int failCount;
-	    private Map<String,List<ValidationErrorSpec>> mapErrors;
-		
-		public ValContext()
-		{
-			mapErrors = new HashMap<String,List<ValidationErrorSpec>>();
-		}
-		
-		public void validate(Value val)
-		{
-			ValidationErrors errors = new ValidationErrors();
-			errors.map = mapErrors;
-			errors.itemName = val.getItemName();
-			if (! val.validate(errors))
-			{
-				failCount++;
-			}
-		}
-		
-		public int getFailCount()
-		{
-			return failCount;
-		}
-		
-	    public Map<String,List<ValidationErrorSpec>> getErrors()
-	    {
-	    	return mapErrors;
-	    }
-	}
-	
-	public interface IValidator
-	{
-		boolean validate(Object val, ValidationErrors errors);
-	}
-	
-	public static class NoneValidator implements IValidator
-	{
-		@Override
-		public boolean validate(Object val, ValidationErrors errors) 
-		{
-			return true;
-		}
-	}
-	
-	public static class NotEmptyStringValidator implements IValidator
-	{
-		@Override
-		public boolean validate(Object val, ValidationErrors errors) 
-		{
-			String s = (String)val;
-			if (s.isEmpty())
-			{
-				errors.addError("empty string not allowed");
-				return false;
-			}
-			return true;
-		}
-	}
-	
-	public static interface ValueContainer
-	{
-		void validate(ValContext vtx);
-	}
-	
-	public static class Value 
-	{
-		public static final int TYPE_INT=1;
-		public static final int TYPE_STRING=2;
-		public static final int TYPE_TUPLE=3;
-		public static final int TYPE_LIST=4;
-		
-		private int typeOfValue;
-		private Object obj;
-		private IValidator validator;
-		private String validatorItemName;  //eg. "email"
-		
-		public Value(int typeOfValue)
-		{
-			this.typeOfValue = typeOfValue;
-		}
-		public Value(int typeOfValue, int val)
-		{
-			this(typeOfValue);
-			if (typeOfValue == TYPE_INT)
-			{
-				obj = new Integer(val);
-			}
-		}
-		public Value(int typeOfValue, String val)
-		{
-			this(typeOfValue);
-			if (typeOfValue == TYPE_STRING)
-			{
-				obj = val;
-			}
-		}
-		
-		//deep copy
-		public Value(Value src) 
-		{
-			this.typeOfValue = src.typeOfValue;
-			this.validator = src.validator;
-			
-			switch(this.typeOfValue)
-			{
-			case TYPE_INT:
-				this.obj = new Integer((Integer)src.obj);
-				break;
-			case TYPE_STRING:
-				this.obj = new String((String)src.obj);
-				break;
-			case TYPE_TUPLE:
-				this.obj = new TupleValue((TupleValue)src.obj);
-				break;
-			case TYPE_LIST:
-				this.obj = new ListValue((ListValue)src.obj);
-				break;
-			default:
-				break; //err!!
-			}
-		}
-		public int getInt()
-		{
-			throwIfNot(TYPE_INT);
-			Integer nObj = (Integer)obj;
-			return nObj;
-		}
-		public String getString()
-		{
-			throwIfNot(TYPE_STRING);
-			String s = (String)obj;
-			return s;
-		}
-		
-		public void forceValue(Object obj)
-		{
-			this.obj = obj;
-		}
-		
-		public TupleValue getTuple() 
-		{
-			throwIfNot(TYPE_TUPLE);
-			TupleValue tuple = (TupleValue)obj;
-			return tuple;
-		}
-		public Value field(String fieldName) 
-		{
-			throwIfNot(TYPE_TUPLE);
-			TupleValue tuple = (TupleValue)obj;
-			return tuple.field(fieldName);
-		}
-		
-		public ListValue getList() 
-		{
-			throwIfNot(TYPE_LIST);
-			ListValue list = (ListValue)obj;
-			return list;
-		}
-		
-		
-		//helpers
-		protected void throwIfNot(int expectedType)
-		{
-			if (typeOfValue != expectedType)
-			{
-				throw new IllegalArgumentException(); //!!
-			}
-		}
-		
-		
-		
-		//validation
-		public boolean validate(ValidationErrors errors)
-		{
-			if (validator == null)
-			{
-				return true;
-			}
-			return validator.validate(obj, errors);
-		}
-		
-		public IValidator getValidator() {
-			return validator;
-		}
-		public void setValidator(String itemName, IValidator validator) {
-			this.validator = validator;
-			this.validatorItemName = itemName;
-		}
-		
-//		@Override
-//		public void validate(ValContext vtx) 
-//		{
-//			vtx.validate(this);
-//		}
-		
-	    public String getItemName()
-	    {
-	    	return validatorItemName;
-	    }
-	}
-	
 	public static class MTypeRegistry
 	{
 		private HashMap<String, Value> map;
 		
 		public MTypeRegistry()
 		{
-			map = new HashMap<String, KnowledgeMetadataTests.Value>();
+			map = new HashMap<String, Value>();
 			regDefaultTypes();
 		}
 		
@@ -301,95 +74,6 @@ public class KnowledgeMetadataTests extends BaseTest
 	}
 	
 	
-	public static class TupleValue implements ValueContainer
-	{
-		private HashMap<String, Value> map;
-		
-		public TupleValue()
-		{
-			map = new HashMap<String, KnowledgeMetadataTests.Value>();
-		}
-		
-		public TupleValue(TupleValue src)
-		{
-			map = new HashMap<String, KnowledgeMetadataTests.Value>();
-			for(String fieldName : src.map.keySet())
-			{
-				Value val = src.map.get(fieldName);
-				Value copy = new Value(val);
-				map.put(fieldName, copy);
-			}
-		}
-		
-		public void addField(String fieldName, Value val)
-		{
-			map.put(fieldName, val);
-		}
-
-		public Value field(String fieldName) 
-		{
-			Value field = map.get(fieldName);
-			return field;
-		}
-		
-		//validation
-		public void validate(ValContext vtx)
-		{
-			for(String fieldName : map.keySet())
-			{
-				Value val = map.get(fieldName);
-				vtx.validate(val);
-			}
-		}
-		
-		
-	}
-	
-	public static class ListValue implements ValueContainer
-	{
-		private List<Value> list;
-		
-		public ListValue()
-		{
-			list = new ArrayList<Value>();
-		}
-		
-		public ListValue(ListValue src)
-		{
-			list = new ArrayList<Value>();
-			for(Value val : src.list)
-			{
-				Value copy = new Value(val);
-				list.add(copy);
-			}
-		}
-		
-		public void addElement(Value val)
-		{
-			list.add(val);
-		}
-
-		public Value getIth(int index) 
-		{
-			Value val = list.get(index);
-			return val;
-		}
-
-		public Object size() 
-		{
-			return list.size();
-		}
-		
-		//validation
-		public void validate(ValContext vtx)
-		{
-			for(Value val : list)
-			{
-				vtx.validate(val);
-			}
-		}
-	}
-	
 	//sample wrapper class that could be codegen'd
 	public static class PersonNamePOJO
 	{
@@ -407,38 +91,6 @@ public class KnowledgeMetadataTests extends BaseTest
 		{
 			return value.field("lastName").getString();
 		}
-	}
-	
-	//////////////////////////////////////////////////////////////////
-	//new idea: define the metadata in a series of classes. that is, use java as a DSL
-	//then have tool that uses reflection to generate json
-	//then have ui that reads json and allows modifications (of values only, no new types)
-	//ui must do validation on any changed values (it can load the validator classes)
-	//final json read at production time. read raw, don't need to validate again (but maybe in case we hacked the json file)
-	//use same classes or gen some simple POJOS?
-	public static class IntegerValue extends Value
-	{
-//		public MInteger()
-//		{
-//			super(MValue.TYPE_INT);
-//		}
-		public IntegerValue(int val)
-		{
-			super(Value.TYPE_INT, val);
-		}
-		
-	}
-	public static class StringValue extends Value
-	{
-//		public MString()
-//		{
-//			super(MValue.TYPE_STRING);
-//		}
-		public StringValue(String val)
-		{
-			super(Value.TYPE_STRING, val);
-		}
-		
 	}
 	
 	public static class SmallInt extends IntegerValue
