@@ -67,7 +67,7 @@ public class KnowledgeMetadataTests extends BaseTest
 			mapErrors = new HashMap<String,List<ValidationErrorSpec>>();
 		}
 		
-		public void validate(MValue val)
+		public void validate(Value val)
 		{
 			ValidationErrors errors = new ValidationErrors();
 			errors.map = mapErrors;
@@ -123,7 +123,7 @@ public class KnowledgeMetadataTests extends BaseTest
 		void validate(ValContext vtx);
 	}
 	
-	public static class MValue implements IBaseObj
+	public static class Value 
 	{
 		public static final int TYPE_INT=1;
 		public static final int TYPE_STRING=2;
@@ -135,11 +135,11 @@ public class KnowledgeMetadataTests extends BaseTest
 		private IValidator validator;
 		private String validatorItemName;  //eg. "email"
 		
-		public MValue(int typeOfValue)
+		public Value(int typeOfValue)
 		{
 			this.typeOfValue = typeOfValue;
 		}
-		public MValue(int typeOfValue, int val)
+		public Value(int typeOfValue, int val)
 		{
 			this(typeOfValue);
 			if (typeOfValue == TYPE_INT)
@@ -147,7 +147,7 @@ public class KnowledgeMetadataTests extends BaseTest
 				obj = new Integer(val);
 			}
 		}
-		public MValue(int typeOfValue, String val)
+		public Value(int typeOfValue, String val)
 		{
 			this(typeOfValue);
 			if (typeOfValue == TYPE_STRING)
@@ -157,7 +157,7 @@ public class KnowledgeMetadataTests extends BaseTest
 		}
 		
 		//deep copy
-		public MValue(MValue src) 
+		public Value(Value src) 
 		{
 			this.typeOfValue = src.typeOfValue;
 			this.validator = src.validator;
@@ -171,10 +171,10 @@ public class KnowledgeMetadataTests extends BaseTest
 				this.obj = new String((String)src.obj);
 				break;
 			case TYPE_TUPLE:
-				this.obj = new MTupleValueObject((MTupleValueObject)src.obj);
+				this.obj = new TupleValue((TupleValue)src.obj);
 				break;
 			case TYPE_LIST:
-				this.obj = new MListValueObject((MListValueObject)src.obj);
+				this.obj = new ListValue((ListValue)src.obj);
 				break;
 			default:
 				break; //err!!
@@ -198,23 +198,23 @@ public class KnowledgeMetadataTests extends BaseTest
 			this.obj = obj;
 		}
 		
-		public MTupleValueObject getTuple() 
+		public TupleValue getTuple() 
 		{
 			throwIfNot(TYPE_TUPLE);
-			MTupleValueObject tuple = (MTupleValueObject)obj;
+			TupleValue tuple = (TupleValue)obj;
 			return tuple;
 		}
-		public MValue field(String fieldName) 
+		public Value field(String fieldName) 
 		{
 			throwIfNot(TYPE_TUPLE);
-			MTupleValueObject tuple = (MTupleValueObject)obj;
+			TupleValue tuple = (TupleValue)obj;
 			return tuple.field(fieldName);
 		}
 		
-		public MListValueObject getList() 
+		public ListValue getList() 
 		{
 			throwIfNot(TYPE_LIST);
-			MListValueObject list = (MListValueObject)obj;
+			ListValue list = (ListValue)obj;
 			return list;
 		}
 		
@@ -248,11 +248,11 @@ public class KnowledgeMetadataTests extends BaseTest
 			this.validatorItemName = itemName;
 		}
 		
-		@Override
-		public void validate(ValContext vtx) 
-		{
-			vtx.validate(this);
-		}
+//		@Override
+//		public void validate(ValContext vtx) 
+//		{
+//			vtx.validate(this);
+//		}
 		
 	    public String getItemName()
 	    {
@@ -262,30 +262,30 @@ public class KnowledgeMetadataTests extends BaseTest
 	
 	public static class MTypeRegistry
 	{
-		private HashMap<String, MValue> map;
+		private HashMap<String, Value> map;
 		
 		public MTypeRegistry()
 		{
-			map = new HashMap<String, KnowledgeMetadataTests.MValue>();
+			map = new HashMap<String, KnowledgeMetadataTests.Value>();
 			regDefaultTypes();
 		}
 		
 		private void regDefaultTypes() 
 		{
-			MValue val = new MValue(MValue.TYPE_INT, 0);
+			Value val = new Value(Value.TYPE_INT, 0);
 			map.put("int", val);
 			
-			val = new MValue(MValue.TYPE_STRING, "");
+			val = new Value(Value.TYPE_STRING, "");
 			map.put("string", val);
 			
 		}
 
-		public MValue create(String typeName)
+		public Value create(String typeName)
 		{
-			MValue val = map.get(typeName);
+			Value val = map.get(typeName);
 			
 			//deep copy
-			MValue copy = new MValue(val);
+			Value copy = new Value(val);
 //			if (copy.typeOfValue == MValue.TYPE_TUPLE)
 //			{
 //				MTupleValueObject newtuple = new MTupleValueObject(copy.getTuple());
@@ -294,41 +294,41 @@ public class KnowledgeMetadataTests extends BaseTest
 			return copy;
 		}
 		
-		public void register(String typeName, MValue val)
+		public void register(String typeName, Value val)
 		{
 			map.put(typeName, val);
 		}
 	}
 	
 	
-	public static class MTupleValueObject implements IBaseObj
+	public static class TupleValue implements IBaseObj
 	{
-		private HashMap<String, MValue> map;
+		private HashMap<String, Value> map;
 		
-		public MTupleValueObject()
+		public TupleValue()
 		{
-			map = new HashMap<String, KnowledgeMetadataTests.MValue>();
+			map = new HashMap<String, KnowledgeMetadataTests.Value>();
 		}
 		
-		public MTupleValueObject(MTupleValueObject src)
+		public TupleValue(TupleValue src)
 		{
-			map = new HashMap<String, KnowledgeMetadataTests.MValue>();
+			map = new HashMap<String, KnowledgeMetadataTests.Value>();
 			for(String fieldName : src.map.keySet())
 			{
-				MValue val = src.map.get(fieldName);
-				MValue copy = new MValue(val);
+				Value val = src.map.get(fieldName);
+				Value copy = new Value(val);
 				map.put(fieldName, copy);
 			}
 		}
 		
-		public void addField(String fieldName, MValue val)
+		public void addField(String fieldName, Value val)
 		{
 			map.put(fieldName, val);
 		}
 
-		public MValue field(String fieldName) 
+		public Value field(String fieldName) 
 		{
-			MValue field = map.get(fieldName);
+			Value field = map.get(fieldName);
 			return field;
 		}
 		
@@ -337,7 +337,7 @@ public class KnowledgeMetadataTests extends BaseTest
 		{
 			for(String fieldName : map.keySet())
 			{
-				MValue val = map.get(fieldName);
+				Value val = map.get(fieldName);
 				vtx.validate(val);
 			}
 		}
@@ -345,33 +345,33 @@ public class KnowledgeMetadataTests extends BaseTest
 		
 	}
 	
-	public static class MListValueObject implements IBaseObj
+	public static class ListValue implements IBaseObj
 	{
-		private List<MValue> list;
+		private List<Value> list;
 		
-		public MListValueObject()
+		public ListValue()
 		{
-			list = new ArrayList<MValue>();
+			list = new ArrayList<Value>();
 		}
 		
-		public MListValueObject(MListValueObject src)
+		public ListValue(ListValue src)
 		{
-			list = new ArrayList<MValue>();
-			for(MValue val : src.list)
+			list = new ArrayList<Value>();
+			for(Value val : src.list)
 			{
-				MValue copy = new MValue(val);
+				Value copy = new Value(val);
 				list.add(copy);
 			}
 		}
 		
-		public void addElement(MValue val)
+		public void addElement(Value val)
 		{
 			list.add(val);
 		}
 
-		public MValue getIth(int index) 
+		public Value getIth(int index) 
 		{
-			MValue val = list.get(index);
+			Value val = list.get(index);
 			return val;
 		}
 
@@ -383,7 +383,7 @@ public class KnowledgeMetadataTests extends BaseTest
 		//validation
 		public void validate(ValContext vtx)
 		{
-			for(MValue val : list)
+			for(Value val : list)
 			{
 				vtx.validate(val);
 			}
@@ -393,8 +393,8 @@ public class KnowledgeMetadataTests extends BaseTest
 	//sample wrapper class that could be codegen'd
 	public static class PersonNamePOJO
 	{
-		MValue value;
-		public PersonNamePOJO(MValue value)
+		Value value;
+		public PersonNamePOJO(Value value)
 		{
 			this.value = value;
 		}
@@ -416,32 +416,32 @@ public class KnowledgeMetadataTests extends BaseTest
 	//ui must do validation on any changed values (it can load the validator classes)
 	//final json read at production time. read raw, don't need to validate again (but maybe in case we hacked the json file)
 	//use same classes or gen some simple POJOS?
-	public static class MInteger extends MValue
+	public static class IntegerValue extends Value
 	{
 //		public MInteger()
 //		{
 //			super(MValue.TYPE_INT);
 //		}
-		public MInteger(int val)
+		public IntegerValue(int val)
 		{
-			super(MValue.TYPE_INT, val);
+			super(Value.TYPE_INT, val);
 		}
 		
 	}
-	public static class MString extends MValue
+	public static class StringValue extends Value
 	{
 //		public MString()
 //		{
 //			super(MValue.TYPE_STRING);
 //		}
-		public MString(String val)
+		public StringValue(String val)
 		{
-			super(MValue.TYPE_STRING, val);
+			super(Value.TYPE_STRING, val);
 		}
 		
 	}
 	
-	public static class SmallInt extends MInteger
+	public static class SmallInt extends IntegerValue
 	{
 //		public SmallInt()
 //		{
@@ -457,14 +457,14 @@ public class KnowledgeMetadataTests extends BaseTest
 	
 	public static class PersonName implements IBaseObj
 	{
-		public MString firstName;
-		public MString lastName;
+		public StringValue firstName;
+		public StringValue lastName;
 		
 		public PersonName(String string, String string2) 
 		{
-			firstName = new MString(string);
+			firstName = new StringValue(string);
 			firstName.setValidator("firstName", new NotEmptyStringValidator());
-			lastName = new MString(string2);
+			lastName = new StringValue(string2);
 			lastName.setValidator("secondName", new NotEmptyStringValidator());
 			
 		}
@@ -481,7 +481,7 @@ public class KnowledgeMetadataTests extends BaseTest
 	public static class System implements IBaseObj
 	{
 		//@Description("sdfsfd");
-		public MInteger retries =  new MInteger(5);
+		public IntegerValue retries =  new IntegerValue(5);
 		
 		public SmallInt weekday = new SmallInt(4);
 		
@@ -498,13 +498,13 @@ public class KnowledgeMetadataTests extends BaseTest
 	@Test
 	public void test() 
 	{
-		MValue val = new MValue(MValue.TYPE_INT, 0);
+		Value val = new Value(Value.TYPE_INT, 0);
 		assertEquals(0, val.getInt());
 		
-		val = new MValue(MValue.TYPE_INT, 23);
+		val = new Value(Value.TYPE_INT, 23);
 		assertEquals(23, val.getInt());
 		
-		val = new MValue(MValue.TYPE_STRING, "abc");
+		val = new Value(Value.TYPE_STRING, "abc");
 		assertEquals("abc", val.getString());
 	}
 	
@@ -513,13 +513,13 @@ public class KnowledgeMetadataTests extends BaseTest
 	{
 		MTypeRegistry reg = new MTypeRegistry();
 		
-		MValue val = reg.create("int");
+		Value val = reg.create("int");
 		assertEquals(0, val.getInt());
 		
 		val = reg.create("string");
 		assertEquals("", val.getString());
 		
-		val = new MValue(MValue.TYPE_INT, 14);
+		val = new Value(Value.TYPE_INT, 14);
 		reg.register("PosInt", val);
 		
 		val = reg.create("PosInt");
@@ -536,19 +536,19 @@ public class KnowledgeMetadataTests extends BaseTest
 	{
 		MTypeRegistry reg = new MTypeRegistry();
 		
-		MTupleValueObject tuple = new MTupleValueObject();
+		TupleValue tuple = new TupleValue();
 		tuple.addField("firstName", reg.create("string"));
 		tuple.addField("lastName", reg.create("string"));
 		
-		MValue obj = new MValue(MValue.TYPE_TUPLE);
+		Value obj = new Value(Value.TYPE_TUPLE);
 		obj.forceValue(tuple);
 		reg.register("personName", obj);
 		
-		MValue val = reg.create("personName");
-		MTupleValueObject tup = val.getTuple();
-		MValue field1 = tup.field("firstName");
+		Value val = reg.create("personName");
+		TupleValue tup = val.getTuple();
+		Value field1 = tup.field("firstName");
 		assertEquals("", field1.getString());
-		MValue field2 = tup.field("lastName");
+		Value field2 = tup.field("lastName");
 		assertEquals("", field2.getString());
 		field1.forceValue("bob");
 		field2.forceValue("jones");
@@ -558,8 +558,8 @@ public class KnowledgeMetadataTests extends BaseTest
 		assertEquals("bob", field1.getString());
 		assertEquals("jones", field2.getString());
 		
-		MValue val2 = reg.create("personName");
-		MTupleValueObject tup2 = val2.getTuple();
+		Value val2 = reg.create("personName");
+		TupleValue tup2 = val2.getTuple();
 		field1 = tup2.field("firstName");
 		assertEquals("", field1.getString());
 		
@@ -576,29 +576,29 @@ public class KnowledgeMetadataTests extends BaseTest
 	{
 		MTypeRegistry reg = new MTypeRegistry();
 		
-		MListValueObject listobj = new MListValueObject();
-		MValue el1 = reg.create("string");
+		ListValue listobj = new ListValue();
+		Value el1 = reg.create("string");
 		el1.forceValue("abc");
 		listobj.addElement(el1);
 		assertEquals(1, listobj.size());
 		
-		MValue xval = new MValue(MValue.TYPE_LIST);
+		Value xval = new Value(Value.TYPE_LIST);
 		xval.forceValue(listobj);
 		reg.register("mylist", xval);
 		
-		MValue val = reg.create("mylist");
-		MListValueObject z = val.getList();
+		Value val = reg.create("mylist");
+		ListValue z = val.getList();
 		assertEquals(1, z.size());
 		
-		MValue el100 = z.getIth(0);
+		Value el100 = z.getIth(0);
 		assertEquals("abc", el100.getString());
 		el100.forceValue("def");
 		
-		MValue val2 = reg.create("mylist");
-		MListValueObject z2 = val2.getList();
+		Value val2 = reg.create("mylist");
+		ListValue z2 = val2.getList();
 		assertEquals(1, z2.size());
 		
-		MValue el101 = z2.getIth(0);
+		Value el101 = z2.getIth(0);
 		assertEquals("abc", el101.getString());
 		z2.addElement(reg.create("string"));
 
