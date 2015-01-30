@@ -118,7 +118,7 @@ public class KnowledgeMetadataTests extends BaseTest
 		}
 	}
 	
-	public static interface IBaseObj
+	public static interface ValueContainer
 	{
 		void validate(ValContext vtx);
 	}
@@ -301,7 +301,7 @@ public class KnowledgeMetadataTests extends BaseTest
 	}
 	
 	
-	public static class TupleValue implements IBaseObj
+	public static class TupleValue implements ValueContainer
 	{
 		private HashMap<String, Value> map;
 		
@@ -345,7 +345,7 @@ public class KnowledgeMetadataTests extends BaseTest
 		
 	}
 	
-	public static class ListValue implements IBaseObj
+	public static class ListValue implements ValueContainer
 	{
 		private List<Value> list;
 		
@@ -455,7 +455,7 @@ public class KnowledgeMetadataTests extends BaseTest
 		}
 	}
 	
-	public static class PersonName implements IBaseObj
+	public static class PersonName implements ValueContainer
 	{
 		public StringValue firstName;
 		public StringValue lastName;
@@ -478,7 +478,7 @@ public class KnowledgeMetadataTests extends BaseTest
 		
 	}
 	
-	public static class System implements IBaseObj
+	public static class System implements ValueContainer
 	{
 		//@Description("sdfsfd");
 		public IntegerValue retries =  new IntegerValue(5);
