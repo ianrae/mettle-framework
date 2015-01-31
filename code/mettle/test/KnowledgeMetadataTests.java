@@ -5,16 +5,15 @@ import static org.junit.Assert.assertEquals;
 import java.util.HashMap;
 
 import org.junit.Test;
+import org.mef.framework.metadata.EnumValue;
 import org.mef.framework.metadata.IntegerValue;
 import org.mef.framework.metadata.ListValue;
 import org.mef.framework.metadata.StringValue;
 import org.mef.framework.metadata.TupleValue;
 import org.mef.framework.metadata.Value;
 import org.mef.framework.metadata.ValueContainer;
-import org.mef.framework.metadata.validate.IValidator;
 import org.mef.framework.metadata.validate.ValContext;
 import org.mef.framework.metadata.validate.ValidationErrorSpec;
-import org.mef.framework.metadata.validate.ValidationErrors;
 import org.mef.framework.metadata.validators.NotEmptyStringValidator;
 
 import tools.BaseTest;
@@ -295,30 +294,6 @@ public class KnowledgeMetadataTests extends BaseTest
 
 		assertEquals("", sys.joe.firstName.getString());
 	}
-
-	//enum
-	public static class EnumValue extends IntegerValue implements IValidator
-	{
-		public EnumValue(int val, String itemName)
-		{
-			super(val);
-			this.setValidator(itemName, this);
-		}
-		
-		@Override
-		public boolean validate(Object val, ValidationErrors errors) 
-		{
-			int n = (Integer)val;
-			if (! onValidate(n))
-			{
-				errors.addError(String.format("%d is not a valid enum value", n));
-				return false;
-			}
-			return true;
-		}
-	
-		protected boolean onValidate(int val) { return false; }
-	}	
 
 	public static class Coin extends EnumValue
 	{
