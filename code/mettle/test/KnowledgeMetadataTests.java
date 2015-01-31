@@ -7,13 +7,16 @@ import java.util.HashMap;
 import org.junit.Test;
 import org.mef.framework.metadata.EnumValue;
 import org.mef.framework.metadata.IntegerValue;
+import org.mef.framework.metadata.IntegerValueAndValidator;
 import org.mef.framework.metadata.ListValue;
 import org.mef.framework.metadata.StringValue;
+import org.mef.framework.metadata.StringValueAndValidator;
 import org.mef.framework.metadata.TupleValue;
 import org.mef.framework.metadata.Value;
 import org.mef.framework.metadata.ValueContainer;
 import org.mef.framework.metadata.validate.ValContext;
 import org.mef.framework.metadata.validate.ValidationErrorSpec;
+import org.mef.framework.metadata.validate.ValidationErrors;
 import org.mef.framework.metadata.validators.NotEmptyStringValidator;
 
 import tools.BaseTest;
@@ -269,8 +272,7 @@ public class KnowledgeMetadataTests extends BaseTest
 		System sys = new System();
 
 		ValContext vtx = new ValContext();
-		sys.validate(vtx);
-		assertEquals(0, vtx.getFailCount());
+		chkContainer(vtx, sys, 0);
 
 		assertEquals("bob", sys.joe.firstName.getString());
 	}
@@ -283,16 +285,14 @@ public class KnowledgeMetadataTests extends BaseTest
 		sys.joe = badjoe;
 
 		ValContext vtx = new ValContext();
-		sys.validate(vtx);
-		assertEquals(1, vtx.getFailCount());
-
-		for(ValidationErrorSpec spec : vtx.getFlattendErrorList())
-		{
-			log(String.format("err %s: %s", spec.key, spec.message));
-		}
-
+		chkContainer(vtx, sys, 0);
 
 		assertEquals("", sys.joe.firstName.getString());
+	}
+
+	private void chkContainer(ValContext vtx, System sys, int i) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	public static class Coin extends EnumValue
@@ -332,13 +332,64 @@ public class KnowledgeMetadataTests extends BaseTest
 		assertEquals(0, vtx.getFailCount());
 
 		coin = new Coin(77);
+		chkVal(vtx, coin, 1);
+	}
+	
+	
+	public static class MyStringValue extends StringValueAndValidator
+	{
+		public MyStringValue(String val, String itemName)
+		{
+			super(val, itemName);
+		}
+		
+		@Override
+		public boolean validate(Object val, ValidationErrors errors) 
+		{
+			String s = (String)val;
+			if (! s.contains("a"))
+			{
+				errors.addError(String.format("missing 'a'"));
+				return false;
+			}
+			return true;
+		}
+	}
+	
+	@Test
+	public void testStringAndVal() 
+	{
+		MyStringValue myval = new MyStringValue("abc", "");
 
-		vtx.validate(coin);
-		assertEquals(1, vtx.getFailCount());
+		ValContext vtx = new ValContext();
+		chkVal(vtx, myval, 0);
+
+		myval = new MyStringValue("bb", "");
+		chkVal(vtx, myval, 1);
+	}
+	
+	
+	//--helpers--
+	private void logValErrors(ValContext vtx)
+	{
 		for(ValidationErrorSpec spec : vtx.getFlattendErrorList())
 		{
 			log(String.format("err %s: %s", spec.key, spec.message));
 		}
 	}
-
+	
+	private void chkVal(ValContext vtx, Value val, int expectedValErrors)
+	{
+		vtx.validate(val);
+		assertEquals(expectedValErrors, vtx.getFailCount());
+		logValErrors(vtx);
+	}
+	
+	private void chkContainer(ValContext vtx, ValueContainer container, int expectedValErrors)
+	{
+		container.validate(vtx);
+		assertEquals(expectedValErrors, vtx.getFailCount());
+		logValErrors(vtx);
+	}
+	
 }
