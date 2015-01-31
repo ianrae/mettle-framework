@@ -1,10 +1,8 @@
 
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import org.junit.Test;
 import org.mef.framework.metadata.IntegerValue;
@@ -117,8 +115,8 @@ public class KnowledgeMetadataTests extends BaseTest
 		public PersonName(String string, String string2) 
 		{
 			firstName = new StringValue(string);
-			firstName.setValidator("firstName", new NotEmptyStringValidator());
 			lastName = new StringValue(string2);
+			firstName.setValidator("firstName", new NotEmptyStringValidator());
 			lastName.setValidator("secondName", new NotEmptyStringValidator());
 
 		}
@@ -299,21 +297,14 @@ public class KnowledgeMetadataTests extends BaseTest
 	}
 
 	//enum
-	public static class CurrencyDenom 
-	{
-	}
-
-
-	public static class EnumValue extends IntegerValue
+	public static class EnumValue extends IntegerValue implements IValidator
 	{
 		public EnumValue(int val, String itemName)
 		{
 			super(val);
-			this.setValidator(itemName, new CoinEnumValidator());
+			this.setValidator(itemName, this);
 		}
-	}
-	public static class EnumValidator implements IValidator
-	{
+		
 		@Override
 		public boolean validate(Object val, ValidationErrors errors) 
 		{
@@ -340,10 +331,7 @@ public class KnowledgeMetadataTests extends BaseTest
 		{
 			super(val, "coin");
 		}
-	}
-
-	public static class CoinEnumValidator extends EnumValidator
-	{
+		
 		protected boolean onValidate(int val) 
 		{
 			switch(val)
