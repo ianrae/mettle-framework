@@ -3,6 +3,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import play.i18n.Messages;
+
 
 public class ValidationErrors
 {
@@ -18,7 +20,7 @@ public class ValidationErrors
     {
     	ValidationErrorSpec spec = new ValidationErrorSpec();
     	spec.key = itemName;
-    	spec.message = message;
+    	spec.message = getMessageFromConf(message);
     	
     	List<ValidationErrorSpec> L = map.get(itemName);
     	if (L == null)
@@ -28,4 +30,13 @@ public class ValidationErrors
     	L.add(spec);
     	map.put(itemName, L);
     }
+    
+	private String getMessageFromConf(String message, Object... arguments) 
+	{
+		String s = Messages.get(message, arguments);
+		return s;
+	}
+    
+    
+
 }

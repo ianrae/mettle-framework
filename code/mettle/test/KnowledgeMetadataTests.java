@@ -19,6 +19,9 @@ import org.mef.framework.metadata.validate.ValContext;
 import org.mef.framework.metadata.validate.ValidationErrorSpec;
 import org.mef.framework.metadata.validate.ValidationErrors;
 import org.mef.framework.metadata.validators.NotEmptyStringValidator;
+import org.mef.framework.metadata.validators.RangeIntValidator;
+
+import play.i18n.Messages;
 
 import tools.BaseTest;
 
@@ -372,7 +375,56 @@ public class KnowledgeMetadataTests extends BaseTest
 		chkVal(vtx, myval, 1);
 	}
 	
+	@Test
+	public void testRangeVal() 
+	{
+		IntegerValue val = new IntegerValue(1);
+		val.setValidator("abc", new RangeIntValidator(1, 4));
+
+		ValContext vtx = new ValContext();
+		chkVal(vtx, val, 0);
+		val.forceValue(4);
+		chkVal(vtx, val, 0);
+		val.forceValue(5);
+		chkVal(vtx, val, 1);
+		
+		String s = Messages.get("error.required");
+		log(s);
+	}
 	
+	@Test
+	public void testVarArg()
+	{
+		String s = vararg1("a", "b", "c");
+		assertEquals("abc", s);
+
+		s = vararg1("a", 14, "c");
+		assertEquals("a14c", s);
+	
+		s = vararg2("a", "b", "c");
+		assertEquals("abc", s);
+
+		s = vararg2("a", 14, "c");
+		assertEquals("a14c", s);
+	}
+	
+	
+	private String vararg1(String string, Object... arguments) 
+	{
+		String s = string;
+		for(Object tmp : arguments)
+		{
+			s += tmp.toString();
+		}
+		return s;
+	}
+	
+	private String vararg2(String string, Object... arguments) 
+	{
+		String s = vararg1(string, arguments);
+		return s;
+	}
+
 	//--helpers--
 	private void logValErrors(ValContext vtx)
 	{
@@ -396,4 +448,14 @@ public class KnowledgeMetadataTests extends BaseTest
 		logValErrors(vtx);
 	}
 	
+	/* messages should contain:
+	 * error.invalid.java.util.Date=Invalid date value
+error.required=This field is required
+error.number=Numeric value expected
+
+		these are from messages.default in C:\src\downloadedStuff\play\playframework-master\framework\src\play\src\main\resources
+		
+		we should define our own and tell developers they need to create a conf/messages (for each lang)
+		and put mycroft
+	 */
 }

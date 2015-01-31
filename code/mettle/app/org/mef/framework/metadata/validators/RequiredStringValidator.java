@@ -4,15 +4,15 @@ import org.mef.framework.metadata.validate.ErrorMessages;
 import org.mef.framework.metadata.validate.ValidationErrors;
 
 
-public class NotEmptyStringValidator implements IValidator
+public class RequiredStringValidator implements IValidator
 {
 	@Override
 	public boolean validate(Object val, ValidationErrors errors) 
 	{
 		String s = (String)val;
-		if (s == null || s.isEmpty())
+		if (s == null)
 		{
-			errors.addError(ErrorMessages.NOTEMPTY);
+			errors.addError(ErrorMessages.REQUIRED);
 			return false;
 		}
 		return true;
