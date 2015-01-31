@@ -1,8 +1,9 @@
 package org.mef.framework;
 
 public class Version {
-	public static final String version = "0.4.1.3";
+	public static final String version = "0.4.2.0";
 	
+	//v0.4.2.0 adding metadata
 	//v0.4.1.3 cleanup
 	//v0.4.1.2 query eqi case-insensitive
 	//v0.4.1.0 SCAFFOLDGEN added
