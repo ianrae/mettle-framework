@@ -304,7 +304,32 @@ public class KnowledgeMetadataTests extends BaseTest
 	}
 
 
-	public static class Coin extends IntegerValue
+	public static class EnumValue extends IntegerValue
+	{
+		public EnumValue(int val, String itemName)
+		{
+			super(val);
+			this.setValidator(itemName, new CoinEnumValidator());
+		}
+	}
+	public static class EnumValidator implements IValidator
+	{
+		@Override
+		public boolean validate(Object val, ValidationErrors errors) 
+		{
+			int n = (Integer)val;
+			if (! onValidate(n))
+			{
+				errors.addError(String.format("%d is not a valid enum value", n));
+				return false;
+			}
+			return true;
+		}
+	
+		protected boolean onValidate(int val) { return false; }
+	}	
+
+	public static class Coin extends EnumValue
 	{
 		public static final int PENNY = 1;
 		public static final int NICKEL = 5;
@@ -313,19 +338,15 @@ public class KnowledgeMetadataTests extends BaseTest
 
 		public Coin(int val)
 		{
-			super(val);
-			this.setValidator("coin", new CoinEnumValidator());
+			super(val, "coin");
 		}
 	}
 
-	public static class CoinEnumValidator implements IValidator
+	public static class CoinEnumValidator extends EnumValidator
 	{
-		@Override
-		public boolean validate(Object val, ValidationErrors errors) 
+		protected boolean onValidate(int val) 
 		{
-			int n = (Integer)val;
-
-			switch(n)
+			switch(val)
 			{
 			case Coin.PENNY:
 			case Coin.NICKEL:
@@ -333,7 +354,6 @@ public class KnowledgeMetadataTests extends BaseTest
 			case Coin.QUARTER:
 				return true;
 			default:
-				errors.addError(String.format("%d is not a valid enum value", n));
 				return false;
 			}
 		}
