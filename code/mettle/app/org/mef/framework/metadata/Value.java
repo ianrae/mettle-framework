@@ -10,6 +10,8 @@ public class Value
 		public static final int TYPE_STRING=2;
 		public static final int TYPE_TUPLE=3;
 		public static final int TYPE_LIST=4;
+		public static final int TYPE_BOOLEAN=5;
+		public static final int TYPE_DOUBLE=6;
 		
 		private int typeOfValue;
 		private Object obj;
@@ -36,6 +38,22 @@ public class Value
 				obj = val;
 			}
 		}
+		public Value(int typeOfValue, Boolean b)
+		{
+			this(typeOfValue);
+			if (typeOfValue == TYPE_BOOLEAN)
+			{
+				obj = b;
+			}
+		}
+		public Value(int typeOfValue, Double d)
+		{
+			this(typeOfValue);
+			if (typeOfValue == TYPE_DOUBLE)
+			{
+				obj = d;
+			}
+		}
 		
 		//deep copy
 		public Value(Value src) 
@@ -57,6 +75,12 @@ public class Value
 			case TYPE_LIST:
 				this.obj = new ListValue((ListValue)src.obj);
 				break;
+			case TYPE_BOOLEAN:
+				this.obj = new Boolean((Boolean)src.obj);
+				break;
+			case TYPE_DOUBLE:
+				this.obj = new Double((Double)src.obj);
+				break;
 			default:
 				break; //err!!
 			}
@@ -72,6 +96,18 @@ public class Value
 			throwIfNot(TYPE_STRING);
 			String s = (String)obj;
 			return s;
+		}
+		public boolean getBoolean()
+		{
+			throwIfNot(TYPE_BOOLEAN);
+			Boolean b = (Boolean)obj;
+			return b;
+		}
+		public double getDouble()
+		{
+			throwIfNot(TYPE_DOUBLE);
+			Double d = (Double)obj;
+			return d;
 		}
 		
 		public void forceValue(Object obj)

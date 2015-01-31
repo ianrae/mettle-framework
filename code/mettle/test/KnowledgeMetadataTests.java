@@ -158,6 +158,12 @@ public class KnowledgeMetadataTests extends BaseTest
 		
 		val = new Value(Value.TYPE_STRING, "abc");
 		assertEquals("abc", val.getString());
+
+		val = new Value(Value.TYPE_BOOLEAN, true);
+		assertEquals(true, val.getBoolean());
+
+		val = new Value(Value.TYPE_DOUBLE, 5.4);
+		assertEquals(5.4, val.getDouble(), 0.1);
 	}
 	
 	@Test
