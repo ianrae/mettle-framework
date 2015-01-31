@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.util.HashMap;
 
 import org.junit.Test;
+import org.mef.framework.metadata.BooleanValue;
 import org.mef.framework.metadata.EnumValue;
 import org.mef.framework.metadata.IntegerValue;
 import org.mef.framework.metadata.IntegerValueAndValidator;
@@ -140,12 +141,15 @@ public class KnowledgeMetadataTests extends BaseTest
 		public SmallInt weekday = new SmallInt(4);
 
 		public PersonName joe = new PersonName("bob", "smith");
+		
+		public BooleanValue demoMode = new BooleanValue(true);
 
 		public void validate(ValContext vtx)
 		{
 			vtx.validate(retries);
 			vtx.validate(weekday);
 			joe.validate(vtx);
+			vtx.validate(demoMode);
 		}
 	}
 
