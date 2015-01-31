@@ -128,7 +128,7 @@ public class KnowledgeMetadataTests extends BaseTest
 		}
 
 		@Override
-		public void validate(ValContext vtx)
+		public void validateContainer(ValContext vtx)
 		{
 			vtx.validate(firstName);
 			vtx.validate(lastName);
@@ -147,11 +147,11 @@ public class KnowledgeMetadataTests extends BaseTest
 		
 		public BooleanValue demoMode = new BooleanValue(true);
 
-		public void validate(ValContext vtx)
+		public void validateContainer(ValContext vtx)
 		{
 			vtx.validate(retries);
 			vtx.validate(weekday);
-			joe.validate(vtx);
+			joe.validateContainer(vtx);
 			vtx.validate(demoMode);
 		}
 	}
@@ -292,14 +292,9 @@ public class KnowledgeMetadataTests extends BaseTest
 		sys.joe = badjoe;
 
 		ValContext vtx = new ValContext();
-		chkContainer(vtx, sys, 0);
+		chkContainer(vtx, sys, 1);
 
 		assertEquals("", sys.joe.firstName.getString());
-	}
-
-	private void chkContainer(ValContext vtx, System sys, int i) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	public static class Coin extends EnumValue
@@ -443,7 +438,7 @@ public class KnowledgeMetadataTests extends BaseTest
 	
 	private void chkContainer(ValContext vtx, ValueContainer container, int expectedValErrors)
 	{
-		container.validate(vtx);
+		container.validateContainer(vtx);
 		assertEquals(expectedValErrors, vtx.getFailCount());
 		logValErrors(vtx);
 	}

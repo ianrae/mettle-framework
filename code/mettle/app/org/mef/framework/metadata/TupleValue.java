@@ -36,7 +36,7 @@ public class TupleValue implements ValueContainer
 	}
 	
 	//validation
-	public void validate(ValContext vtx)
+	public void validateContainer(ValContext vtx)
 	{
 		for(String fieldName : map.keySet())
 		{

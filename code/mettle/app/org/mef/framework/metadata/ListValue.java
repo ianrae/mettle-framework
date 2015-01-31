@@ -41,7 +41,7 @@ public class ListValue implements ValueContainer
 	}
 	
 	//validation
-	public void validate(ValContext vtx)
+	public void validateContainer(ValContext vtx)
 	{
 		for(Value val : list)
 		{

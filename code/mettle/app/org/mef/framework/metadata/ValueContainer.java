@@ -4,5 +4,5 @@ import org.mef.framework.metadata.validate.ValContext;
 
 public interface ValueContainer
 {
-	void validate(ValContext vtx);
+	void validateContainer(ValContext vtx);
 }
