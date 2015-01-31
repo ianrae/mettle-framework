@@ -24,7 +24,7 @@ public class RangeIntValidator implements IValidator
 		if (! ok)
 		{
 //			errors.addError(String.format("value %d not in range %d to %d", n, min, max));
-			errors.addError(ErrorMessages.RANGE_INT);
+			errors.addError(ErrorMessages.RANGE_INT, n, min, max);
 			return false;
 		}
 		return true;

@@ -16,11 +16,11 @@ public class ValidationErrors
     	return itemName;
     }
     
-    public void addError(String message)
+    public void addError(String message, Object... arguments)
     {
     	ValidationErrorSpec spec = new ValidationErrorSpec();
     	spec.key = itemName;
-    	spec.message = getMessageFromConf(message);
+    	spec.message = getMessageFromConf(message, arguments);
     	
     	List<ValidationErrorSpec> L = map.get(itemName);
     	if (L == null)
