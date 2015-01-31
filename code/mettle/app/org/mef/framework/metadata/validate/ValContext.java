@@ -1,5 +1,6 @@
 package org.mef.framework.metadata.validate;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,5 +38,20 @@ public class ValContext
     public Map<String,List<ValidationErrorSpec>> getErrors()
     {
     	return mapErrors;
+    }
+    
+    public List<ValidationErrorSpec> getFlattendErrorList()
+    {
+    	List<ValidationErrorSpec> resultL = new ArrayList<ValidationErrorSpec>();
+    	
+		for(String key : mapErrors.keySet())
+		{
+			List<ValidationErrorSpec> L = mapErrors.get(key);
+			for(ValidationErrorSpec spec : L)
+			{
+				resultL.add(spec);
+			}
+		}
+		return resultL;
     }
 }
