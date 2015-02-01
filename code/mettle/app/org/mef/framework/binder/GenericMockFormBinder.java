@@ -32,4 +32,12 @@ public class GenericMockFormBinder<T> implements IFormBinder<T>
 	{
 		return null;
 	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public Form<T> fillForm(T input) 
+	{
+		Form<T> form = (Form<T>) Form.form(input.getClass());
+		form = form.fill(input);
+		return form;
+	}
 }

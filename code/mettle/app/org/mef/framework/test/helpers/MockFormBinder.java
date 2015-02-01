@@ -42,4 +42,9 @@ public class MockFormBinder implements IFormBinder<Entity>
 	{
 		return null;
 	}
+	@Override
+	public Form<Entity> fillForm(Entity input) 
+	{
+		return null;
+	}
 }

@@ -1,7 +1,7 @@
 package org.mef.framework;
 
 public class Version {
-	public static final String version = "0.4.2.1";
+	public static final String version = "0.4.2.2";
 	
 	//v0.4.2.1 minor
 	//v0.4.2.0 adding metadata

@@ -11,4 +11,6 @@ public interface IFormBinder<T>
 
 	T get(); //return even if bind failed. may be partially filled
 	Form<T> getForm();
+	
+	Form<T> fillForm(T input);
 }
