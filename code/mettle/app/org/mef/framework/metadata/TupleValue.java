@@ -45,5 +45,6 @@ public class TupleValue implements ValueContainer
 		}
 	}
 	
+	//how handle toString?
 	
 }

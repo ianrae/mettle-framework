@@ -23,4 +23,6 @@ public abstract class EnumValue extends IntegerValueAndValidator
 	}
 
 	protected abstract boolean onValidate(int val);
+	
+	//how handle toString()??
 }

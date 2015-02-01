@@ -48,4 +48,6 @@ public class ListValue implements ValueContainer
 			vtx.validate(val);
 		}
 	}
+	
+	//how handle to string?
 }

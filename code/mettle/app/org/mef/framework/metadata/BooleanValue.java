@@ -8,4 +8,12 @@ public class BooleanValue extends Value
 		super(Value.TYPE_BOOLEAN, val);
 	}
 
+	@Override
+	public String toString() 
+	{
+		Boolean b = this.getBoolean();
+		return b.toString();
+	}
+
+	
 }

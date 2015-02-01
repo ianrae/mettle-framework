@@ -7,5 +7,12 @@ public class IntegerValue extends Value
 	{
 		super(Value.TYPE_INT, val);
 	}
+	
+	@Override
+	public String toString() 
+	{
+		Integer n = this.getInt();
+		return n.toString();
+	}
 
 }

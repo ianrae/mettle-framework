@@ -12,4 +12,11 @@ public class StringValue extends Value
 			super(Value.TYPE_STRING, val);
 		}
 		
+		
+		@Override
+		public String toString() 
+		{
+			String s = this.getString();
+			return s;
+		}
 	}

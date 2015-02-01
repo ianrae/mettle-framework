@@ -7,5 +7,12 @@ public class DoubleValue extends Value
 	{
 		super(Value.TYPE_DOUBLE, val);
 	}
+	
+	@Override
+	public String toString() 
+	{
+		Double d = this.getDouble();
+		return d.toString();
+	}
 
 }
