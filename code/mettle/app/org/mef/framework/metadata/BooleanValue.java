@@ -14,6 +14,12 @@ public class BooleanValue extends Value
 		Boolean b = this.getBoolean();
 		return b.toString();
 	}
+	
+	//return in our type
+	public boolean get()
+	{
+		return this.getBoolean();
+	}
 
 	
 }

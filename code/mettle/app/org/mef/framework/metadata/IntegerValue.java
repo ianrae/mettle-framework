@@ -14,5 +14,11 @@ public class IntegerValue extends Value
 		Integer n = this.getInt();
 		return n.toString();
 	}
+	
+	//return in our type
+	public int get()
+	{
+		return this.getInt();
+	}
 
 }

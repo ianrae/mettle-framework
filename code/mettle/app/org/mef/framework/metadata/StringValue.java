@@ -19,4 +19,10 @@ public class StringValue extends Value
 			String s = this.getString();
 			return s;
 		}
+		
+		//return in our type
+		public String get()
+		{
+			return this.getString();
+		}
 	}

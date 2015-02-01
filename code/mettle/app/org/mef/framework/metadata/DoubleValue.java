@@ -14,5 +14,11 @@ public class DoubleValue extends Value
 		Double d = this.getDouble();
 		return d.toString();
 	}
+	
+	//return in our type
+	public double get()
+	{
+		return this.getDouble();
+	}
 
 }
