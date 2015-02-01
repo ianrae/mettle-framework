@@ -5,174 +5,218 @@ import org.mef.framework.metadata.validate.ValidationErrors;
 
 
 public class Value 
+{
+	public static final int TYPE_INT=1;
+	public static final int TYPE_STRING=2;
+	public static final int TYPE_TUPLE=3;
+	public static final int TYPE_LIST=4;
+	public static final int TYPE_BOOLEAN=5;
+	public static final int TYPE_DOUBLE=6;
+
+	private int typeOfValue;
+	private Object obj;
+	private IValidator validator;
+	private String validatorItemName;  //eg. "email"
+
+	public Value(int typeOfValue)
 	{
-		public static final int TYPE_INT=1;
-		public static final int TYPE_STRING=2;
-		public static final int TYPE_TUPLE=3;
-		public static final int TYPE_LIST=4;
-		public static final int TYPE_BOOLEAN=5;
-		public static final int TYPE_DOUBLE=6;
-		
-		private int typeOfValue;
-		private Object obj;
-		private IValidator validator;
-		private String validatorItemName;  //eg. "email"
-		
-		public Value(int typeOfValue)
-		{
-			this.typeOfValue = typeOfValue;
-		}
-		public Value(int typeOfValue, int val)
-		{
-			this(typeOfValue);
-			if (typeOfValue == TYPE_INT)
-			{
-				obj = new Integer(val);
-			}
-		}
-		public Value(int typeOfValue, String val)
-		{
-			this(typeOfValue);
-			if (typeOfValue == TYPE_STRING)
-			{
-				obj = val;
-			}
-		}
-		public Value(int typeOfValue, Boolean b)
-		{
-			this(typeOfValue);
-			if (typeOfValue == TYPE_BOOLEAN)
-			{
-				obj = b;
-			}
-		}
-		public Value(int typeOfValue, Double d)
-		{
-			this(typeOfValue);
-			if (typeOfValue == TYPE_DOUBLE)
-			{
-				obj = d;
-			}
-		}
-		
-		//deep copy
-		public Value(Value src) 
-		{
-			this.typeOfValue = src.typeOfValue;
-			this.validator = src.validator;
-			
-			switch(this.typeOfValue)
-			{
-			case TYPE_INT:
-				this.obj = new Integer((Integer)src.obj);
-				break;
-			case TYPE_STRING:
-				this.obj = new String((String)src.obj);
-				break;
-			case TYPE_TUPLE:
-				this.obj = new TupleValue((TupleValue)src.obj);
-				break;
-			case TYPE_LIST:
-				this.obj = new ListValue((ListValue)src.obj);
-				break;
-			case TYPE_BOOLEAN:
-				this.obj = new Boolean((Boolean)src.obj);
-				break;
-			case TYPE_DOUBLE:
-				this.obj = new Double((Double)src.obj);
-				break;
-			default:
-				break; //err!!
-			}
-		}
-		public int getInt()
-		{
-			throwIfNot(TYPE_INT);
-			Integer nObj = (Integer)obj;
-			return nObj;
-		}
-		public String getString()
-		{
-			throwIfNot(TYPE_STRING);
-			String s = (String)obj;
-			return s;
-		}
-		public boolean getBoolean()
-		{
-			throwIfNot(TYPE_BOOLEAN);
-			Boolean b = (Boolean)obj;
-			return b;
-		}
-		public double getDouble()
-		{
-			throwIfNot(TYPE_DOUBLE);
-			Double d = (Double)obj;
-			return d;
-		}
-		
-		public void forceValue(Object obj)
-		{
-			this.obj = obj;
-		}
-		
-		public TupleValue getTuple() 
-		{
-			throwIfNot(TYPE_TUPLE);
-			TupleValue tuple = (TupleValue)obj;
-			return tuple;
-		}
-		public Value field(String fieldName) 
-		{
-			throwIfNot(TYPE_TUPLE);
-			TupleValue tuple = (TupleValue)obj;
-			return tuple.field(fieldName);
-		}
-		
-		public ListValue getList() 
-		{
-			throwIfNot(TYPE_LIST);
-			ListValue list = (ListValue)obj;
-			return list;
-		}
-		
-		
-		//helpers
-		protected void throwIfNot(int expectedType)
-		{
-			if (typeOfValue != expectedType)
-			{
-				throw new IllegalArgumentException(); //!!
-			}
-		}
-		
-		
-		
-		//validation
-		public boolean validate(ValidationErrors errors)
-		{
-			if (validator == null)
-			{
-				return true;
-			}
-			return validator.validate(obj, errors);
-		}
-		
-		public IValidator getValidator() {
-			return validator;
-		}
-		public void setValidator(String itemName, IValidator validator) {
-			this.validator = validator;
-			this.validatorItemName = itemName;
-		}
-		
-//		@Override
-//		public void validate(ValContext vtx) 
-//		{
-//			vtx.validate(this);
-//		}
-		
-	    public String getItemName()
-	    {
-	    	return validatorItemName;
-	    }
+		this.typeOfValue = typeOfValue;
 	}
+	public Value(int typeOfValue, int val)
+	{
+		this(typeOfValue);
+		if (typeOfValue == TYPE_INT)
+		{
+			obj = new Integer(val);
+		}
+	}
+	public Value(int typeOfValue, String val)
+	{
+		this(typeOfValue);
+		if (typeOfValue == TYPE_STRING)
+		{
+			obj = val;
+		}
+	}
+	public Value(int typeOfValue, Boolean b)
+	{
+		this(typeOfValue);
+		if (typeOfValue == TYPE_BOOLEAN)
+		{
+			obj = b;
+		}
+	}
+	public Value(int typeOfValue, Double d)
+	{
+		this(typeOfValue);
+		if (typeOfValue == TYPE_DOUBLE)
+		{
+			obj = d;
+		}
+	}
+
+	//deep copy
+	public Value(Value src) 
+	{
+		this.typeOfValue = src.typeOfValue;
+		this.validator = src.validator;
+
+		switch(this.typeOfValue)
+		{
+		case TYPE_INT:
+			this.obj = new Integer((Integer)src.obj);
+			break;
+		case TYPE_STRING:
+			this.obj = new String((String)src.obj);
+			break;
+		case TYPE_TUPLE:
+			this.obj = new TupleValue((TupleValue)src.obj);
+			break;
+		case TYPE_LIST:
+			this.obj = new ListValue((ListValue)src.obj);
+			break;
+		case TYPE_BOOLEAN:
+			this.obj = new Boolean((Boolean)src.obj);
+			break;
+		case TYPE_DOUBLE:
+			this.obj = new Double((Double)src.obj);
+			break;
+		default:
+			break; //err!!
+		}
+	}
+	//deep copy
+	public boolean fromString(String sVal) 
+	{
+		boolean b = false;
+
+		try
+		{
+			b = fromStringImpl(sVal);
+		}
+		catch(Exception ex)
+		{}
+
+		return b;
+	}
+	public boolean fromStringImpl(String sVal) throws Exception
+	{
+		boolean ok = true;
+		
+		switch(this.typeOfValue)
+		{
+		case TYPE_INT:
+			this.obj = Integer.parseInt(sVal);
+			break;
+		case TYPE_STRING:
+			this.obj = sVal;
+			break;
+		case TYPE_BOOLEAN:
+			this.obj = Boolean.parseBoolean(sVal);
+			break;
+		case TYPE_DOUBLE:
+			this.obj = Double.parseDouble(sVal);
+			break;
+
+		case TYPE_TUPLE:
+		case TYPE_LIST:
+		default:
+			ok = false;
+			break; 
+		}
+		return ok;
+	}
+
+
+
+	public int getInt()
+	{
+		throwIfNot(TYPE_INT);
+		Integer nObj = (Integer)obj;
+		return nObj;
+	}
+	public String getString()
+	{
+		throwIfNot(TYPE_STRING);
+		String s = (String)obj;
+		return s;
+	}
+	public boolean getBoolean()
+	{
+		throwIfNot(TYPE_BOOLEAN);
+		Boolean b = (Boolean)obj;
+		return b;
+	}
+	public double getDouble()
+	{
+		throwIfNot(TYPE_DOUBLE);
+		Double d = (Double)obj;
+		return d;
+	}
+
+	public void forceValue(Object obj)
+	{
+		this.obj = obj;
+	}
+
+	public TupleValue getTuple() 
+	{
+		throwIfNot(TYPE_TUPLE);
+		TupleValue tuple = (TupleValue)obj;
+		return tuple;
+	}
+	public Value field(String fieldName) 
+	{
+		throwIfNot(TYPE_TUPLE);
+		TupleValue tuple = (TupleValue)obj;
+		return tuple.field(fieldName);
+	}
+
+	public ListValue getList() 
+	{
+		throwIfNot(TYPE_LIST);
+		ListValue list = (ListValue)obj;
+		return list;
+	}
+
+
+	//helpers
+	protected void throwIfNot(int expectedType)
+	{
+		if (typeOfValue != expectedType)
+		{
+			throw new IllegalArgumentException(); //!!
+		}
+	}
+
+
+
+	//validation
+	public boolean validate(ValidationErrors errors)
+	{
+		if (validator == null)
+		{
+			return true;
+		}
+		return validator.validate(obj, errors);
+	}
+
+	public IValidator getValidator() {
+		return validator;
+	}
+	public void setValidator(String itemName, IValidator validator) {
+		this.validator = validator;
+		this.validatorItemName = itemName;
+	}
+
+	//		@Override
+	//		public void validate(ValContext vtx) 
+	//		{
+	//			vtx.validate(this);
+	//		}
+
+	public String getItemName()
+	{
+		return validatorItemName;
+	}
+}

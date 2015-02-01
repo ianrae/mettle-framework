@@ -386,7 +386,15 @@ public class KnowledgeMetadataTests extends BaseTest
 		String s = Messages.get("error.required");
 		log(s);
 	}
-	
+	@Test
+	public void testFromString()
+	{
+		String s = "45";
+		IntegerValue val = new IntegerValue(0);
+		boolean b = val.fromString(s);
+		assertEquals(true, b);
+		assertEquals(45, val.get());
+	}
 	@Test
 	public void testVarArg()
 	{
