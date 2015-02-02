@@ -49,11 +49,12 @@ public class PresenterCodeGeneratorPhase extends CodeGeneratorPhase
 			inner = new BoundaryCodeGen(_ctx);
 			gen = new PresenterGenerator(_ctx, inner, baseDir, filename, def,  "boundaries", "app\\boundaries");
 			add(gen);
-			
-			filename = "formbinder.stg";
-			inner = new FormBinderCodeGen(_ctx);
-			gen = new PresenterGenerator(_ctx, inner, baseDir, filename, def, "boundaries.binders", "app\\boundaries\\binders");
-			add(gen);
+
+			//no longer needed. use generic binders
+//			filename = "formbinder.stg";
+//			inner = new FormBinderCodeGen(_ctx);
+//			gen = new PresenterGenerator(_ctx, inner, baseDir, filename, def, "boundaries.binders", "app\\boundaries\\binders");
+//			add(gen);
 			
 			filename = "presenter-unit-test.stg";
 			inner = new PresenterUnitTestCodeGen(_ctx);
