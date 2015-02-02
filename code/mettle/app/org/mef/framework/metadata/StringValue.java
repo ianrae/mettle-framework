@@ -25,4 +25,9 @@ public class StringValue extends Value
 		{
 			return this.getString();
 		}
+		public void setValue(String s)
+		{
+			this.forceValueObject(s);
+		}
+		
 	}

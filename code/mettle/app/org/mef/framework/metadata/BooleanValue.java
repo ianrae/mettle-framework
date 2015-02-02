@@ -20,6 +20,10 @@ public class BooleanValue extends Value
 	{
 		return this.getBoolean();
 	}
+	public void setValue(boolean b)
+	{
+		this.forceValueObject(new Boolean(b));
+	}
 
 	
 }

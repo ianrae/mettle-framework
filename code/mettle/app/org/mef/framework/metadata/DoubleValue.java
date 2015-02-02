@@ -20,5 +20,9 @@ public class DoubleValue extends Value
 	{
 		return this.getDouble();
 	}
+	public void setValue(double d)
+	{
+		this.forceValueObject(new Double(d));
+	}
 
 }

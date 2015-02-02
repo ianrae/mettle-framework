@@ -154,7 +154,7 @@ public class Value
 		return d;
 	}
 
-	public void forceValue(Object obj)
+	public void forceValueObject(Object obj)
 	{
 		this.obj = obj;
 	}

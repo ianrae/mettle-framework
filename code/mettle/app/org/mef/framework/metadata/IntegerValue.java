@@ -20,5 +20,9 @@ public class IntegerValue extends Value
 	{
 		return this.getInt();
 	}
+	public void setValue(int n)
+	{
+		this.forceValueObject(new Integer(n));
+	}
 
 }

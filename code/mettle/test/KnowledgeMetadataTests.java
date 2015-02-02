@@ -191,7 +191,7 @@ public class KnowledgeMetadataTests extends BaseTest
 
 		val = reg.create("PosInt");
 		assertEquals(14, val.getInt());
-		val.forceValue(new Integer(33));
+		val.forceValueObject(new Integer(33));
 		assertEquals(33, val.getInt());
 
 		val = reg.create("PosInt");
@@ -208,7 +208,7 @@ public class KnowledgeMetadataTests extends BaseTest
 		tuple.addField("lastName", reg.create("string"));
 
 		Value obj = new Value(Value.TYPE_TUPLE);
-		obj.forceValue(tuple);
+		obj.forceValueObject(tuple);
 		reg.register("personName", obj);
 
 		Value val = reg.create("personName");
@@ -217,8 +217,8 @@ public class KnowledgeMetadataTests extends BaseTest
 		assertEquals("", field1.getString());
 		Value field2 = tup.field("lastName");
 		assertEquals("", field2.getString());
-		field1.forceValue("bob");
-		field2.forceValue("jones");
+		field1.forceValueObject("bob");
+		field2.forceValueObject("jones");
 
 		field1 = tup.field("firstName");
 		field2 = tup.field("lastName");
@@ -245,12 +245,12 @@ public class KnowledgeMetadataTests extends BaseTest
 
 		ListValue listobj = new ListValue();
 		Value el1 = reg.create("string");
-		el1.forceValue("abc");
+		el1.forceValueObject("abc");
 		listobj.addElement(el1);
 		assertEquals(1, listobj.size());
 
 		Value xval = new Value(Value.TYPE_LIST);
-		xval.forceValue(listobj);
+		xval.forceValueObject(listobj);
 		reg.register("mylist", xval);
 
 		Value val = reg.create("mylist");
@@ -259,7 +259,7 @@ public class KnowledgeMetadataTests extends BaseTest
 
 		Value el100 = z.getIth(0);
 		assertEquals("abc", el100.getString());
-		el100.forceValue("def");
+		el100.forceValueObject("def");
 
 		Value val2 = reg.create("mylist");
 		ListValue z2 = val2.getList();
@@ -378,9 +378,9 @@ public class KnowledgeMetadataTests extends BaseTest
 
 		ValContext vtx = new ValContext();
 		chkVal(vtx, val, 0);
-		val.forceValue(4);
+		val.forceValueObject(4);
 		chkVal(vtx, val, 0);
-		val.forceValue(5);
+		val.forceValueObject(5);
 		chkVal(vtx, val, 1);
 		
 		String s = Messages.get("error.required");
