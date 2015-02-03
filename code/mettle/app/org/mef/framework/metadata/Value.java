@@ -14,6 +14,7 @@ public class Value
 	public static final int TYPE_LIST=4;
 	public static final int TYPE_BOOLEAN=5;
 	public static final int TYPE_DOUBLE=6;
+	public static final int TYPE_LONG=7;
 
 	private int typeOfValue;
 	private Object obj;
@@ -31,6 +32,14 @@ public class Value
 		if (typeOfValue == TYPE_INT)
 		{
 			obj = new Integer(val);
+		}
+	}
+	public Value(int typeOfValue, long val)
+	{
+		this(typeOfValue);
+		if (typeOfValue == TYPE_LONG)
+		{
+			obj = new Long(val);
 		}
 	}
 	public Value(int typeOfValue, String val)
@@ -68,6 +77,9 @@ public class Value
 		{
 		case TYPE_INT:
 			this.obj = new Integer((Integer)src.obj);
+			break;
+		case TYPE_LONG:
+			this.obj = new Long((Long)src.obj);
 			break;
 		case TYPE_STRING:
 			this.obj = new String((String)src.obj);
@@ -118,6 +130,9 @@ public class Value
 		case TYPE_INT:
 			this.obj = Integer.parseInt(sVal);
 			break;
+		case TYPE_LONG:
+			this.obj = Long.parseLong(sVal);
+			break;
 		case TYPE_STRING:
 			this.obj = sVal;
 			break;
@@ -143,6 +158,12 @@ public class Value
 	{
 		throwIfNot(TYPE_INT);
 		Integer nObj = (Integer)obj;
+		return nObj;
+	}
+	public long getLong()
+	{
+		throwIfNot(TYPE_LONG);
+		Long nObj = (Long)obj;
 		return nObj;
 	}
 	public String getString()

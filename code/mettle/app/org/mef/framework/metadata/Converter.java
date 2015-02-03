@@ -11,6 +11,10 @@ public abstract class Converter
 	{
 		return null;
 	}
+	public String printLong(long n, Locale l)
+	{
+		return null;
+	}
 	public String printString(String s, Locale l)
 	{
 		return null;
@@ -30,6 +34,10 @@ public abstract class Converter
 
 	//--- parse
 	public int parseInt(String s, Locale l)
+	{
+		return 0;
+	}
+	public long parseLong(String s, Locale l)
 	{
 		return 0;
 	}
