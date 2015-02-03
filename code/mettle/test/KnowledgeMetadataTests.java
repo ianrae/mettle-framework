@@ -1,11 +1,14 @@
 
 
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
+import java.util.Locale;
 
 import org.junit.Test;
 import org.mef.framework.metadata.BooleanValue;
+import org.mef.framework.metadata.Converter;
 import org.mef.framework.metadata.EnumValue;
 import org.mef.framework.metadata.IntegerValue;
 import org.mef.framework.metadata.IntegerValueAndValidator;
@@ -198,12 +201,42 @@ public class KnowledgeMetadataTests extends BaseTest
 		assertEquals(14, val.getInt());
 	}
 	
+	public static class MyIntConv extends Converter
+	{
+		@Override
+		public String printInt(int n, Locale l) 
+		{
+			String s = String.format("%dA", n);
+			return s;
+		}
+
+		@Override
+		public int parseInt(String s, Locale l) 
+		{
+			int pos = s.indexOf("A");
+			String sub = s.substring(0, pos);
+			Integer n = Integer.parseInt(sub);
+			return n;
+		}
+	}
+	
 	@Test
 	public void testRender()
 	{
 		IntegerValue val = new IntegerValue(34);
 		String s = val.render();
 		assertEquals("34", s);
+		boolean b = val.fromString("45");
+		assertTrue(b);
+		assertEquals(45, val.getInt());
+		
+		val.setConverter(new MyIntConv());
+		s = val.toString();
+		assertEquals("45A", s);
+		
+		b = val.fromString("44A");
+		assertTrue(b);
+		assertEquals(44, val.getInt());
 	}
 
 	@Test

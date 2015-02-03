@@ -88,14 +88,21 @@ public class Value
 			break; //err!!
 		}
 	}
-	//deep copy
+	
 	public boolean fromString(String sVal) 
 	{
 		boolean b = false;
 
 		try
 		{
-			b = fromStringImpl(sVal);
+			if (hasConverter())
+			{
+				b = fromStringUsingConverter(sVal);
+			}
+			else
+			{
+				b = fromStringImpl(sVal);
+			}
 		}
 		catch(Exception ex)
 		{}
@@ -262,6 +269,36 @@ public class Value
 			break; 
 		}
 		return s;
+	}
+	
+	private boolean fromStringUsingConverter(String sVal) 
+	{
+		boolean ok = true;
+		Locale locale = Locale.getDefault(); //fix later!!
+		
+		switch(this.typeOfValue)
+		{
+		case TYPE_INT:
+			obj = new Integer(converter.parseInt(sVal, locale));
+			break;
+		case TYPE_STRING:
+			obj = converter.parseString(sVal, locale);
+			break;
+		case TYPE_BOOLEAN:
+			obj = new Boolean(converter.parseBoolean(sVal, locale));
+			break;
+		case TYPE_DOUBLE:
+			obj = new Double(converter.parseDouble(sVal, locale));
+			break;
+
+		case TYPE_TUPLE:
+		case TYPE_LIST:
+		default:
+			ok = false;
+			//err!!ok = false;
+			break; 
+		}
+		return ok;
 	}
 	
 	@Override
