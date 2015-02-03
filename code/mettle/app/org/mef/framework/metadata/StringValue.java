@@ -14,7 +14,7 @@ public class StringValue extends Value
 		
 		
 		@Override
-		public String toString() 
+		public String render() 
 		{
 			String s = this.getString();
 			return s;

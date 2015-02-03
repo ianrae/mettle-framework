@@ -9,7 +9,7 @@ public class DoubleValue extends Value
 	}
 	
 	@Override
-	public String toString() 
+	public String render()
 	{
 		Double d = this.getDouble();
 		return d.toString();

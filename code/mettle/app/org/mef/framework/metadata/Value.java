@@ -1,4 +1,6 @@
 package org.mef.framework.metadata;
+import java.util.Locale;
+
 import org.mef.framework.metadata.validate.IValidator;
 import org.mef.framework.metadata.validate.ValidationErrors;
 
@@ -17,6 +19,7 @@ public class Value
 	private Object obj;
 	private IValidator validator;
 	private String validatorItemName;  //eg. "email"
+	private Converter converter; //can be null
 
 	public Value(int typeOfValue)
 	{
@@ -219,4 +222,62 @@ public class Value
 	{
 		return validatorItemName;
 	}
+	
+	
+	public Converter getConverter() {
+		return converter;
+	}
+	public void setConverter(Converter converter) {
+		this.converter = converter;
+	}
+	public boolean hasConverter() 
+	{
+		return (converter != null);
+	}
+	
+	public String convert()
+	{
+		String s = null;
+		Locale locale = Locale.getDefault(); //fix later!!
+		
+		switch(this.typeOfValue)
+		{
+		case TYPE_INT:
+			s = converter.printInt(this.getInt(), locale);
+			break;
+		case TYPE_STRING:
+			s = converter.printString(this.getString(), locale);
+			break;
+		case TYPE_BOOLEAN:
+			s = converter.printBoolean(this.getBoolean(), locale);
+			break;
+		case TYPE_DOUBLE:
+			s = converter.printDouble(this.getDouble(), locale);
+			break;
+
+		case TYPE_TUPLE:
+		case TYPE_LIST:
+		default:
+			//err!!ok = false;
+			break; 
+		}
+		return s;
+	}
+	
+	@Override
+	public String toString() 
+	{
+		if (hasConverter())
+		{
+			return convert();
+		}
+		return render();
+	}
+
+	//you must override this!
+	public String render()
+	{
+		return null;
+	}
+	
 }

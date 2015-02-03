@@ -197,6 +197,14 @@ public class KnowledgeMetadataTests extends BaseTest
 		val = reg.create("PosInt");
 		assertEquals(14, val.getInt());
 	}
+	
+	@Test
+	public void testRender()
+	{
+		IntegerValue val = new IntegerValue(34);
+		String s = val.render();
+		assertEquals("34", s);
+	}
 
 	@Test
 	public void testTuple() 

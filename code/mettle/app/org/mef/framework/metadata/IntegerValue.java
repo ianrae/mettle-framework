@@ -9,7 +9,7 @@ public class IntegerValue extends Value
 	}
 	
 	@Override
-	public String toString() 
+	public String render()
 	{
 		Integer n = this.getInt();
 		return n.toString();

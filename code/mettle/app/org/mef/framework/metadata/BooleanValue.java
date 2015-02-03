@@ -9,7 +9,7 @@ public class BooleanValue extends Value
 	}
 
 	@Override
-	public String toString() 
+	public String render()
 	{
 		Boolean b = this.getBoolean();
 		return b.toString();
@@ -24,6 +24,4 @@ public class BooleanValue extends Value
 	{
 		this.forceValueObject(new Boolean(b));
 	}
-
-	
 }
