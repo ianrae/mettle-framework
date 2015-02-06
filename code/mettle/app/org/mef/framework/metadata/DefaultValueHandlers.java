@@ -17,12 +17,17 @@ public class DefaultValueHandlers
 			Integer n = (Integer) obj;
 			return n;
 		}
+		
+		@Override
+		public Object copy(Object value)
+		{
+			return new Integer((Integer)value);			
+		}
 	}
 	
 	//one handle shared by all value objects, so don't put any member variables in here
 	public static class LongHandler implements ValueHandler<Long>
 	{
-
 		@Override
 		public Object toObj(Long value) 
 		{
@@ -36,12 +41,16 @@ public class DefaultValueHandlers
 			return n;
 		}
 		
+		@Override
+		public Object copy(Object value)
+		{
+			return new Long((Long)value);			
+		}
 	}
 	
 	//one handle shared by all value objects, so don't put any member variables in here
 	public static class BooleanHandler implements ValueHandler<Boolean>
 	{
-
 		@Override
 		public Object toObj(Boolean value) 
 		{
@@ -55,13 +64,17 @@ public class DefaultValueHandlers
 			return n;
 		}
 		
+		@Override
+		public Object copy(Object value)
+		{
+			return new Boolean((Boolean)value);			
+		}
 	}
 	
 	
 	//one handle shared by all value objects, so don't put any member variables in here
 	public static class StringHandler implements ValueHandler<String>
 	{
-
 		@Override
 		public Object toObj(String value) 
 		{
@@ -75,12 +88,16 @@ public class DefaultValueHandlers
 			return n;
 		}
 		
+		@Override
+		public Object copy(Object value)
+		{
+			return new String((String)value);			
+		}
 	}
 	
 	//one handle shared by all value objects, so don't put any member variables in here
 	public static class DoubleHandler implements ValueHandler<Double>
 	{
-
 		@Override
 		public Object toObj(Double value) 
 		{
@@ -94,5 +111,10 @@ public class DefaultValueHandlers
 			return n;
 		}
 		
+		@Override
+		public Object copy(Object value)
+		{
+			return new Double((Double)value);			
+		}
 	}
 }

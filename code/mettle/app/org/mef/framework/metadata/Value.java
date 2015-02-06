@@ -81,37 +81,14 @@ public class Value
 	}
 
 	//deep copy
+	@SuppressWarnings("rawtypes")
 	public Value(Value src) 
 	{
 		this.typeOfValue = src.typeOfValue;
 		this.validator = src.validator;
-
-		switch(this.typeOfValue)
-		{
-		case TYPE_INT:
-			this.obj = new Integer((Integer)src.obj);
-			break;
-		case TYPE_LONG:
-			this.obj = new Long((Long)src.obj);
-			break;
-		case TYPE_STRING:
-			this.obj = new String((String)src.obj);
-			break;
-		case TYPE_TUPLE:
-			this.obj = new TupleValue((TupleValue)src.obj);
-			break;
-		case TYPE_LIST:
-			this.obj = new ListValue((ListValue)src.obj);
-			break;
-		case TYPE_BOOLEAN:
-			this.obj = new Boolean((Boolean)src.obj);
-			break;
-		case TYPE_DOUBLE:
-			this.obj = new Double((Double)src.obj);
-			break;
-		default:
-			break; //err!!
-		}
+		
+		ValueHandler h = reg.get(this.typeOfValue);
+		this.obj = h.copy(src.obj);
 	}
 	
 	public boolean fromString(String sVal) 
