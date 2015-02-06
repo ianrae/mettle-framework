@@ -4,35 +4,13 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Test;
+import org.mef.framework.metadata.DefaultValueHandlers;
 import org.mef.framework.metadata.Value;
+import org.mef.framework.metadata.ValueHandler;
 
 
 public class ValueHandlerTests 
 {
-	public interface ValueHandler<T>
-	{
-		Object toObj(T value);
-		T fromObj(Object obj);
-	}
-	//one handle shared by all value objects, so don't put any member variables in here
-	public static class IntValueHandler implements ValueHandler<Integer>
-	{
-
-		@Override
-		public Object toObj(Integer value) 
-		{
-			return value;
-		}
-
-		@Override
-		public Integer fromObj(Object obj) 
-		{
-			Integer n = (Integer) obj;
-			return n;
-		}
-		
-	}
-	
 	public static class ValueHandlerRegistry
 	{
 		private List<ValueHandler> reg;
@@ -40,8 +18,8 @@ public class ValueHandlerTests
 		public ValueHandlerRegistry()
 		{
 			ValueHandler[] arregistry = {
-					new IntValueHandler(),
-					new IntValueHandler()
+					null,
+					new DefaultValueHandlers.IntHandler()
 			};
 			
 			reg = Arrays.asList(arregistry);
@@ -73,9 +51,21 @@ public class ValueHandlerTests
 	@Test
 	public void test() 
 	{
-		IntValueHandler h = new IntValueHandler();
+		DefaultValueHandlers.IntHandler h = new DefaultValueHandlers.IntHandler();
 		Integer n = (Integer) h.toObj(45);
 		assertEquals(45, n.intValue());
+	}
+	
+	@Test
+	public void testReg()
+	{
+		ValueHandlerRegistry reg = new ValueHandlerRegistry();
+		
+		ValueHandler h = reg.get(0);
+		assertNull(h);
+		
+		h = reg.get(Value.TYPE_INT);
+		assertNotNull(h);
 	}
 	
 	@Test
