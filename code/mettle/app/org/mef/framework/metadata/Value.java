@@ -21,49 +21,62 @@ public class Value
 	private IValidator validator;
 	private String validatorItemName;  //eg. "email"
 	private Converter converter; //can be null
+	
+	//static
+	private static ValueHandlerRegistry reg = new ValueHandlerRegistry();
 
 	public Value(int typeOfValue)
 	{
 		this.typeOfValue = typeOfValue;
 	}
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public Value(int typeOfValue, int val)
 	{
 		this(typeOfValue);
 		if (typeOfValue == TYPE_INT)
 		{
-			obj = new Integer(val);
+			ValueHandler h = reg.get(TYPE_INT);
+			obj = h.toObj(new Integer(val));
 		}
 	}
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public Value(int typeOfValue, long val)
 	{
 		this(typeOfValue);
 		if (typeOfValue == TYPE_LONG)
 		{
-			obj = new Long(val);
+			ValueHandler h = reg.get(TYPE_LONG);
+			obj = h.toObj(new Long(val));
 		}
 	}
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public Value(int typeOfValue, String val)
 	{
 		this(typeOfValue);
 		if (typeOfValue == TYPE_STRING)
 		{
-			obj = val;
+			ValueHandler h = reg.get(TYPE_STRING);
+			obj = h.toObj(val);
 		}
 	}
-	public Value(int typeOfValue, Boolean b)
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public Value(int typeOfValue, boolean b)
 	{
 		this(typeOfValue);
 		if (typeOfValue == TYPE_BOOLEAN)
 		{
-			obj = b;
+			ValueHandler h = reg.get(TYPE_BOOLEAN);
+			obj = h.toObj(new Boolean(b));
 		}
 	}
-	public Value(int typeOfValue, Double d)
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public Value(int typeOfValue, double d)
 	{
 		this(typeOfValue);
 		if (typeOfValue == TYPE_DOUBLE)
 		{
-			obj = d;
+			ValueHandler h = reg.get(TYPE_DOUBLE);
+			obj = h.toObj(new Double(d));
 		}
 	}
 

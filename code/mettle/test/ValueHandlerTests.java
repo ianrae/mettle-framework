@@ -1,53 +1,15 @@
 import static org.junit.Assert.*;
 
-import java.util.Arrays;
-import java.util.List;
 
 import org.junit.Test;
 import org.mef.framework.metadata.DefaultValueHandlers;
 import org.mef.framework.metadata.Value;
 import org.mef.framework.metadata.ValueHandler;
+import org.mef.framework.metadata.ValueHandlerRegistry;
 
 
 public class ValueHandlerTests 
 {
-	public static class ValueHandlerRegistry
-	{
-		private List<ValueHandler> reg;
-		
-		public ValueHandlerRegistry()
-		{
-			ValueHandler[] arregistry = {
-					null,
-					new DefaultValueHandlers.IntHandler()
-			};
-			
-			reg = Arrays.asList(arregistry);
-			
-//			ValueHandler<Integer> zz = arregistry[0];
-//			Object x = zz.toObj(555);
-		}
-		
-		
-		//keep all type values sequential, or at least close together!
-		public void register(int type, ValueHandler handler)
-		{
-			int desiredLen = type + 1;
-			for(int i = reg.size(); i <= desiredLen; i++)
-			{
-				reg.add(null);
-			}
-			
-			reg.set(type, handler);
-		}
-		
-		public ValueHandler get(int type)
-		{
-			return reg.get(type);
-		}
-		
-	}
-	
 	@Test
 	public void test() 
 	{
