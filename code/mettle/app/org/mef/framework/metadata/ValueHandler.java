@@ -6,4 +6,5 @@ public interface ValueHandler<T>
 	T fromObj(Object obj);
 	
 	Object copy(Object value);
+	Object fromString(String sVal);	
 }

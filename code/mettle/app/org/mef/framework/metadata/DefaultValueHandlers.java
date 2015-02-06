@@ -23,6 +23,12 @@ public class DefaultValueHandlers
 		{
 			return new Integer((Integer)value);			
 		}
+
+		@Override
+		public Object fromString(String sVal) 
+		{
+			return Integer.parseInt(sVal);			
+		}
 	}
 	
 	//one handle shared by all value objects, so don't put any member variables in here
@@ -46,6 +52,12 @@ public class DefaultValueHandlers
 		{
 			return new Long((Long)value);			
 		}
+
+		@Override
+		public Object fromString(String sVal) 
+		{
+			return Long.parseLong(sVal);			
+		}
 	}
 	
 	//one handle shared by all value objects, so don't put any member variables in here
@@ -68,6 +80,12 @@ public class DefaultValueHandlers
 		public Object copy(Object value)
 		{
 			return new Boolean((Boolean)value);			
+		}
+
+		@Override
+		public Object fromString(String sVal) 
+		{
+			return Boolean.parseBoolean(sVal);
 		}
 	}
 	
@@ -93,6 +111,12 @@ public class DefaultValueHandlers
 		{
 			return new String((String)value);			
 		}
+
+		@Override
+		public Object fromString(String sVal) 
+		{
+			return sVal;
+		}
 	}
 	
 	//one handle shared by all value objects, so don't put any member variables in here
@@ -115,6 +139,12 @@ public class DefaultValueHandlers
 		public Object copy(Object value)
 		{
 			return new Double((Double)value);			
+		}
+
+		@Override
+		public Object fromString(String sVal) 
+		{
+			return Double.parseDouble(sVal);
 		}
 	}
 }

@@ -111,67 +111,63 @@ public class Value
 
 		return b;
 	}
+	
+	@SuppressWarnings("rawtypes")
 	public boolean fromStringImpl(String sVal) throws Exception
 	{
-		boolean ok = true;
+		boolean ok = false;
 		
-		switch(this.typeOfValue)
+		ValueHandler h = reg.get(this.typeOfValue);
+		Object o = h.fromString(sVal);
+		if (o != null)
 		{
-		case TYPE_INT:
-			this.obj = Integer.parseInt(sVal);
-			break;
-		case TYPE_LONG:
-			this.obj = Long.parseLong(sVal);
-			break;
-		case TYPE_STRING:
-			this.obj = sVal;
-			break;
-		case TYPE_BOOLEAN:
-			this.obj = Boolean.parseBoolean(sVal);
-			break;
-		case TYPE_DOUBLE:
-			this.obj = Double.parseDouble(sVal);
-			break;
-
-		case TYPE_TUPLE:
-		case TYPE_LIST:
-		default:
-			ok = false;
-			break; 
+			this.obj = o;
+			ok = true;
 		}
+		
 		return ok;
 	}
 
 
 
+	@SuppressWarnings("rawtypes")
 	public int getInt()
 	{
 		throwIfNot(TYPE_INT);
-		Integer nObj = (Integer)obj;
+		ValueHandler h = reg.get(this.typeOfValue);
+		Integer nObj = (Integer)h.fromObj(this.obj);
 		return nObj;
 	}
+	@SuppressWarnings("rawtypes")
 	public long getLong()
 	{
 		throwIfNot(TYPE_LONG);
-		Long nObj = (Long)obj;
+		ValueHandler h = reg.get(this.typeOfValue);
+		Long nObj = (Long)h.fromObj(this.obj);
 		return nObj;
 	}
+	@SuppressWarnings("rawtypes")
 	public String getString()
 	{
 		throwIfNot(TYPE_STRING);
-		String s = (String)obj;
+		ValueHandler h = reg.get(this.typeOfValue);
+		String s = (String)h.fromObj(this.obj);
 		return s;
 	}
+	@SuppressWarnings("rawtypes")
 	public boolean getBoolean()
 	{
 		throwIfNot(TYPE_BOOLEAN);
-		Boolean b = (Boolean)obj;
+		ValueHandler h = reg.get(this.typeOfValue);
+		Boolean b = (Boolean)h.fromObj(this.obj);
 		return b;
 	}
+	@SuppressWarnings("rawtypes")
 	public double getDouble()
 	{
 		throwIfNot(TYPE_DOUBLE);
-		Double d = (Double)obj;
+		ValueHandler h = reg.get(this.typeOfValue);
+		Double d = (Double)h.fromObj(this.obj);
 		return d;
 	}
 
