@@ -1,6 +1,6 @@
 package org.mef.framework.metadata;
 
-public interface ValueHandler<T>
+public interface ValueHandler<T> extends Converter
 {
 	Object toObj(T value);
 	T fromObj(Object obj);

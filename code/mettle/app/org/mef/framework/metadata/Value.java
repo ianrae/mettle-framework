@@ -249,61 +249,29 @@ public class Value
 		return (converter != null);
 	}
 	
+	@SuppressWarnings("rawtypes")
 	public String convert()
 	{
 		String s = null;
 		Locale locale = Locale.getDefault(); //fix later!!
 		
-		switch(this.typeOfValue)
-		{
-		case TYPE_INT:
-			s = converter.printInt(this.getInt(), locale);
-			break;
-		case TYPE_STRING:
-			s = converter.printString(this.getString(), locale);
-			break;
-		case TYPE_BOOLEAN:
-			s = converter.printBoolean(this.getBoolean(), locale);
-			break;
-		case TYPE_DOUBLE:
-			s = converter.printDouble(this.getDouble(), locale);
-			break;
-
-		case TYPE_TUPLE:
-		case TYPE_LIST:
-		default:
-			//err!!ok = false;
-			break; 
-		}
+		ValueHandler h = reg.get(this.typeOfValue);
+		s = h.print(this.obj, locale);
+		
 		return s;
 	}
 	
+	@SuppressWarnings("rawtypes")
 	private boolean fromStringUsingConverter(String sVal) 
 	{
-		boolean ok = true;
+		boolean ok = false;
 		Locale locale = Locale.getDefault(); //fix later!!
 		
-		switch(this.typeOfValue)
+		ValueHandler h = reg.get(this.typeOfValue);
+		this.obj = h.parse(sVal, locale);
+		if (this.obj != null)
 		{
-		case TYPE_INT:
-			obj = new Integer(converter.parseInt(sVal, locale));
-			break;
-		case TYPE_STRING:
-			obj = converter.parseString(sVal, locale);
-			break;
-		case TYPE_BOOLEAN:
-			obj = new Boolean(converter.parseBoolean(sVal, locale));
-			break;
-		case TYPE_DOUBLE:
-			obj = new Double(converter.parseDouble(sVal, locale));
-			break;
-
-		case TYPE_TUPLE:
-		case TYPE_LIST:
-		default:
-			ok = false;
-			//err!!ok = false;
-			break; 
+			ok = true;
 		}
 		return ok;
 	}
