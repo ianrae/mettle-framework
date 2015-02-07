@@ -10,6 +10,53 @@ import org.mef.framework.metadata.ValueHandlerRegistry;
 
 public class ValueHandlerTests 
 {
+	public static class MyValue extends Value
+	{
+
+		public MyValue(int typeOfValue, int val) 
+		{
+			super(typeOfValue, val);
+		}
+
+		public MyValue(int typeOfValue, long val) 
+		{
+			super(typeOfValue, val);
+		}
+
+		public MyValue(int typeOfValue, boolean b) 
+		{
+			super(typeOfValue, b);
+		}
+
+		public MyValue(int typeOfValue, String s) 
+		{
+			super(typeOfValue, s);
+		}
+
+		public MyValue(int typeOfValue, double d) 
+		{
+			super(typeOfValue, d);
+		}
+
+		public MyValue(Value val) 
+		{
+			super(val);
+		}
+
+		public MyValue(int type) 
+		{
+			super(type);
+		}
+
+		@Override
+		public String render() 
+		{
+			return null;
+		}
+		
+	}
+	
+	
 	@Test
 	public void test() 
 	{
@@ -33,23 +80,23 @@ public class ValueHandlerTests
 	@Test
 	public void testAll()
 	{
-		Value v = new Value(Value.TYPE_BOOLEAN, true);
+		Value v = new MyValue(Value.TYPE_BOOLEAN, true);
 		Boolean b = v.getBoolean();
 		assertEquals(true, b);
 		
-		v = new Value(Value.TYPE_DOUBLE, 34.5);
+		v = new MyValue(Value.TYPE_DOUBLE, 34.5);
 		Double d = v.getDouble();
 		assertEquals(34.5, d.doubleValue(), 0.1);
 		
-		v = new Value(Value.TYPE_INT, 18);
+		v = new MyValue(Value.TYPE_INT, 18);
 		Integer n = v.getInt();
 		assertEquals(18, n.intValue());
 		
-		v = new Value(Value.TYPE_LONG, 3402L);
+		v = new MyValue(Value.TYPE_LONG, 3402L);
 		Long lval = v.getLong();
 		assertEquals(3402L, lval.longValue());
 		
-		v = new Value(Value.TYPE_STRING, "abc");
+		v = new MyValue(Value.TYPE_STRING, "abc");
 		String s = v.getString();
 		assertEquals("abc", s);
 	}

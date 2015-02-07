@@ -277,7 +277,6 @@ public class Value
 		return render();
 	}
 
-	//you must override this!
 	public String render()
 	{
 		return null;

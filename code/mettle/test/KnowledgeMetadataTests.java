@@ -54,10 +54,10 @@ public class KnowledgeMetadataTests extends BaseTest
 
 		private void regDefaultTypes() 
 		{
-			Value val = new Value(Value.TYPE_INT, 0);
+			Value val = new ValueHandlerTests.MyValue(Value.TYPE_INT, 0);
 			map.put("int", val);
 
-			val = new Value(Value.TYPE_STRING, "");
+			val = new ValueHandlerTests.MyValue(Value.TYPE_STRING, "");
 			map.put("string", val);
 
 		}
@@ -67,7 +67,7 @@ public class KnowledgeMetadataTests extends BaseTest
 			Value val = map.get(typeName);
 
 			//deep copy
-			Value copy = new Value(val);
+			Value copy = new ValueHandlerTests.MyValue(val);
 			//			if (copy.typeOfValue == MValue.TYPE_TUPLE)
 			//			{
 			//				MTupleValueObject newtuple = new MTupleValueObject(copy.getTuple());
@@ -162,19 +162,19 @@ public class KnowledgeMetadataTests extends BaseTest
 	@Test
 	public void test() 
 	{
-		Value val = new Value(Value.TYPE_INT, 0);
+		Value val = new ValueHandlerTests.MyValue(Value.TYPE_INT, 0);
 		assertEquals(0, val.getInt());
 
-		val = new Value(Value.TYPE_INT, 23);
+		val = new ValueHandlerTests.MyValue(Value.TYPE_INT, 23);
 		assertEquals(23, val.getInt());
 
-		val = new Value(Value.TYPE_STRING, "abc");
+		val = new ValueHandlerTests.MyValue(Value.TYPE_STRING, "abc");
 		assertEquals("abc", val.getString());
 
-		val = new Value(Value.TYPE_BOOLEAN, true);
+		val = new ValueHandlerTests.MyValue(Value.TYPE_BOOLEAN, true);
 		assertEquals(true, val.getBoolean());
 
-		val = new Value(Value.TYPE_DOUBLE, 5.4);
+		val = new ValueHandlerTests.MyValue(Value.TYPE_DOUBLE, 5.4);
 		assertEquals(5.4, val.getDouble(), 0.1);
 	}
 
@@ -189,7 +189,7 @@ public class KnowledgeMetadataTests extends BaseTest
 		val = reg.create("string");
 		assertEquals("", val.getString());
 
-		val = new Value(Value.TYPE_INT, 14);
+		val = new ValueHandlerTests.MyValue(Value.TYPE_INT, 14);
 		reg.register("PosInt", val);
 
 		val = reg.create("PosInt");
@@ -247,7 +247,7 @@ public class KnowledgeMetadataTests extends BaseTest
 		tuple.addField("firstName", reg.create("string"));
 		tuple.addField("lastName", reg.create("string"));
 
-		Value obj = new Value(Value.TYPE_TUPLE);
+		Value obj = (Value) new ValueHandlerTests.MyValue(Value.TYPE_TUPLE);
 		obj.forceValueObject(tuple);
 		reg.register("personName", obj);
 
@@ -289,7 +289,7 @@ public class KnowledgeMetadataTests extends BaseTest
 		listobj.addElement(el1);
 		assertEquals(1, listobj.size());
 
-		Value xval = new Value(Value.TYPE_LIST);
+		Value xval = new ValueHandlerTests.MyValue(Value.TYPE_LIST);
 		xval.forceValueObject(listobj);
 		reg.register("mylist", xval);
 
