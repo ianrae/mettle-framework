@@ -113,7 +113,7 @@ public class Value
 	}
 	
 	@SuppressWarnings("rawtypes")
-	public boolean fromStringImpl(String sVal) throws Exception
+	private boolean fromStringImpl(String sVal) throws Exception
 	{
 		boolean ok = false;
 		
