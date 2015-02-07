@@ -23,8 +23,8 @@ public class ValueHandlerRegistry
 				null,
 				new DefaultValueHandlers.IntHandler(),
 				new DefaultValueHandlers.StringHandler(),
-				null,
-				null,
+				new DefaultValueHandlers.TupleValueHandler(),
+				new DefaultValueHandlers.ListValueHandler(),
 				new DefaultValueHandlers.BooleanHandler(),
 				new DefaultValueHandlers.DoubleHandler(),
 				new DefaultValueHandlers.LongHandler()

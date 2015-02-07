@@ -147,4 +147,62 @@ public class DefaultValueHandlers
 			return Double.parseDouble(sVal);
 		}
 	}
+	
+	//one handle shared by all value objects, so don't put any member variables in here
+	public static class TupleValueHandler implements ValueHandler<TupleValue>
+	{
+		@Override
+		public Object toObj(TupleValue value) 
+		{
+			return value;
+		}
+
+		@Override
+		public TupleValue fromObj(Object obj) 
+		{
+			TupleValue n = (TupleValue) obj;
+			return n;
+		}
+		
+		@Override
+		public Object copy(Object value)
+		{
+			return new TupleValue((TupleValue)value);			
+		}
+
+		@Override
+		public Object fromString(String sVal) 
+		{
+			return null; //!!
+		}
+	}
+	
+	//one handle shared by all value objects, so don't put any member variables in here
+	public static class ListValueHandler implements ValueHandler<ListValue>
+	{
+		@Override
+		public Object toObj(ListValue value) 
+		{
+			return value;
+		}
+
+		@Override
+		public ListValue fromObj(Object obj) 
+		{
+			ListValue n = (ListValue) obj;
+			return n;
+		}
+		
+		@Override
+		public Object copy(Object value)
+		{
+			return new ListValue((ListValue)value);			
+		}
+
+		@Override
+		public Object fromString(String sVal) 
+		{
+			return null; //!!
+		}
+	}
 }
