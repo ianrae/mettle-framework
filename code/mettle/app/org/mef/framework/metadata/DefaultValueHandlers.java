@@ -31,20 +31,6 @@ public class DefaultValueHandlers
 		{
 			return Integer.parseInt(sVal);			
 		}
-
-		@Override
-		public String print(Object obj, Locale l) 
-		{
-			Integer n = (Integer) obj;
-			return n.toString();
-		}
-
-		@Override
-		public Object parse(String s, Locale l) 
-		{
-			// TODO Auto-generated method stub
-			return null;
-		}
 	}
 	
 	//one handle shared by all value objects, so don't put any member variables in here
@@ -75,18 +61,6 @@ public class DefaultValueHandlers
 			return Long.parseLong(sVal);			
 		}
 
-		@Override
-		public String print(Object obj, Locale l) 
-		{
-			Long n = (Long) obj;
-			return n.toString();
-		}
-
-		@Override
-		public Object parse(String s, Locale l) {
-			// TODO Auto-generated method stub
-			return null;
-		}
 	}
 	
 	//one handle shared by all value objects, so don't put any member variables in here
@@ -115,19 +89,6 @@ public class DefaultValueHandlers
 		public Object fromString(String sVal) 
 		{
 			return Boolean.parseBoolean(sVal);
-		}
-
-		@Override
-		public String print(Object obj, Locale l) 
-		{
-			Boolean n = (Boolean) obj;
-			return n.toString();
-		}
-
-		@Override
-		public Object parse(String s, Locale l) {
-			// TODO Auto-generated method stub
-			return null;
 		}
 	}
 	
@@ -159,19 +120,6 @@ public class DefaultValueHandlers
 		{
 			return sVal;
 		}
-
-		@Override
-		public String print(Object obj, Locale l) 
-		{
-			String s = (String) obj;
-			return s;
-		}
-
-		@Override
-		public Object parse(String s, Locale l) {
-			// TODO Auto-generated method stub
-			return null;
-		}
 	}
 	
 	//one handle shared by all value objects, so don't put any member variables in here
@@ -200,19 +148,6 @@ public class DefaultValueHandlers
 		public Object fromString(String sVal) 
 		{
 			return Double.parseDouble(sVal);
-		}
-
-		@Override
-		public String print(Object obj, Locale l) 
-		{
-			Double n = (Double) obj;
-			return n.toString();
-		}
-
-		@Override
-		public Object parse(String s, Locale l) {
-			// TODO Auto-generated method stub
-			return null;
 		}
 	}
 	
@@ -243,18 +178,6 @@ public class DefaultValueHandlers
 		{
 			return null; //!!
 		}
-
-		@Override
-		public String print(Object obj, Locale l) 
-		{
-			return null;
-		}
-
-		@Override
-		public Object parse(String s, Locale l) 
-		{
-			return null;
-		}
 	}
 	
 	//one handle shared by all value objects, so don't put any member variables in here
@@ -283,18 +206,6 @@ public class DefaultValueHandlers
 		public Object fromString(String sVal) 
 		{
 			return null; //!!
-		}
-
-		@Override
-		public String print(Object obj, Locale l) 
-		{
-			return null;
-		}
-
-		@Override
-		public Object parse(String s, Locale l)
-		{
-			return null;
 		}
 	}
 }

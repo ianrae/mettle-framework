@@ -226,12 +226,6 @@ public class Value
 		this.validatorItemName = itemName;
 	}
 
-	//		@Override
-	//		public void validate(ValContext vtx) 
-	//		{
-	//			vtx.validate(this);
-	//		}
-
 	public String getItemName()
 	{
 		return validatorItemName;
@@ -255,9 +249,7 @@ public class Value
 		String s = null;
 		Locale locale = Locale.getDefault(); //fix later!!
 		
-		ValueHandler h = reg.get(this.typeOfValue);
-		s = h.print(this.obj, locale);
-		
+		s = this.converter.print(this.obj, locale);
 		return s;
 	}
 	
@@ -267,8 +259,7 @@ public class Value
 		boolean ok = false;
 		Locale locale = Locale.getDefault(); //fix later!!
 		
-		ValueHandler h = reg.get(this.typeOfValue);
-		this.obj = h.parse(sVal, locale);
+		this.obj = this.converter.parse(sVal, locale);
 		if (this.obj != null)
 		{
 			ok = true;

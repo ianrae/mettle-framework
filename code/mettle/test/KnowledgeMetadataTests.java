@@ -201,18 +201,17 @@ public class KnowledgeMetadataTests extends BaseTest
 		assertEquals(14, val.getInt());
 	}
 	
-	public static class MyIntConv extends Converter
+	public static class MyIntConv implements Converter
 	{
 		@Override
-		public String printInt(int n, Locale l) 
-		{
+		public String print(Object obj, Locale l) {
+			Integer n = (Integer)obj;
 			String s = String.format("%dA", n);
 			return s;
 		}
 
 		@Override
-		public int parseInt(String s, Locale l) 
-		{
+		public Object parse(String s, Locale l) {
 			int pos = s.indexOf("A");
 			String sub = s.substring(0, pos);
 			Integer n = Integer.parseInt(sub);
