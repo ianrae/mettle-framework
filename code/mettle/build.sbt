@@ -9,7 +9,7 @@ libraryDependencies ++= Seq(
   cache,
     "commons-io" % "commons-io" % "2.3",
     "commons-lang" % "commons-lang" % "2.6",
-	"play-sprig" % "play-sprig_2.10" % "0.1-SNAPSHOT"	  
+	"play-sprig" % "play-sprig_2.11" % "0.2-SNAPSHOT"	  
 )
 
 lazy val root = (project in file(".")).enablePlugins(PlayJava)
