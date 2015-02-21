@@ -5,4 +5,6 @@ import org.mef.framework.metadata.validate.ValContext;
 public interface ValueContainer
 {
 	void validateContainer(ValContext vtx);
+	void copyTo(Object model);
+	void copyFrom(Object model);
 }

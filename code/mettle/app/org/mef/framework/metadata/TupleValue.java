@@ -44,6 +44,18 @@ public class TupleValue implements ValueContainer
 			vtx.validate(val);
 		}
 	}
+
+	@Override
+	public void copyTo(Object model) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void copyFrom(Object model) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	//how handle toString?
 	
