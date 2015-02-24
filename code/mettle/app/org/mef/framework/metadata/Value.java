@@ -175,6 +175,10 @@ public class Value
 	{
 		this.obj = obj;
 	}
+	public Object getRawValue()
+	{
+		return obj;
+	}
 
 	public TupleValue getTuple() 
 	{
