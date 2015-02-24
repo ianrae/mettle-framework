@@ -3,6 +3,10 @@ package org.mef.framework.metadata;
 
 public class DoubleValue extends Value
 {
+	public DoubleValue()
+	{
+		this(0.0);
+	}
 	public DoubleValue(double val)
 	{
 		super(Value.TYPE_DOUBLE, val);

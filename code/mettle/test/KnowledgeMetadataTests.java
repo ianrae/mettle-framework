@@ -137,6 +137,18 @@ public class KnowledgeMetadataTests extends BaseTest
 			vtx.validate(lastName);
 		}
 
+		@Override
+		public void copyTo(Object model) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void copyFrom(Object model) {
+			// TODO Auto-generated method stub
+			
+		}
+
 	}
 
 	public static class System implements ValueContainer
@@ -156,6 +168,18 @@ public class KnowledgeMetadataTests extends BaseTest
 			vtx.validate(weekday);
 			joe.validateContainer(vtx);
 			vtx.validate(demoMode);
+		}
+
+		@Override
+		public void copyTo(Object model) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void copyFrom(Object model) {
+			// TODO Auto-generated method stub
+			
 		}
 	}
 

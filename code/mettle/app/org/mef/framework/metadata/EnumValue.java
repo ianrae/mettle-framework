@@ -5,6 +5,10 @@ import org.mef.framework.metadata.validate.ValidationErrors;
 
 public abstract class EnumValue extends IntegerValueAndValidator
 {
+	public EnumValue()
+	{
+		this(0, ""); //oops, how get itemName!!
+	}
 	public EnumValue(int val, String itemName)
 	{
 		super(val, itemName);

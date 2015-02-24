@@ -1,8 +1,9 @@
 package org.mef.framework;
 
 public class Version {
-	public static final String version = "0.4.2.2";
+	public static final String version = "0.4.2.3";
 	
+	//v0.4.2.3 Value, add default constructors
 	//v0.4.2.1 minor
 	//v0.4.2.0 adding metadata
 	//v0.4.1.3 cleanup

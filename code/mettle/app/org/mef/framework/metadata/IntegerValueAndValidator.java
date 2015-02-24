@@ -5,6 +5,10 @@ import org.mef.framework.metadata.validate.ValidationErrors;
 
 public abstract class IntegerValueAndValidator extends IntegerValue implements IValidator
 {
+	public IntegerValueAndValidator()
+	{
+		this(0, ""); //oops!!
+	}
 	public IntegerValueAndValidator(int val, String itemName)
 	{
 		super(val);

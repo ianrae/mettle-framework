@@ -3,6 +3,10 @@ package org.mef.framework.metadata;
 
 public class LongValue extends Value
 {
+	public LongValue()
+	{
+		this(0L);
+	}
 	public LongValue(long val)
 	{
 		super(Value.TYPE_LONG, val);

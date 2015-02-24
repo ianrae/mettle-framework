@@ -3,6 +3,10 @@ package org.mef.framework.metadata;
 
 public class IntegerValue extends Value
 {
+	public IntegerValue()
+	{
+		this(0);
+	}
 	public IntegerValue(int val)
 	{
 		super(Value.TYPE_INT, val);
