@@ -11,7 +11,7 @@ public class DateValue extends Value
 	}
 	public DateValue(Date dt)
 	{
-		super(Value.TYPE_DOUBLE, dt);
+		super(Value.TYPE_DATE, dt);
 	}
 	
 	@Override
