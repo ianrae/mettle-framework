@@ -1,5 +1,6 @@
 package org.mef.framework.metadata;
 
+import java.util.Date;
 import java.util.Locale;
 
 public class DefaultValueHandlers 
@@ -148,6 +149,35 @@ public class DefaultValueHandlers
 		public Object fromString(String sVal) 
 		{
 			return Double.parseDouble(sVal);
+		}
+	}
+	//one handle shared by all value objects, so don't put any member variables in here
+	public static class DateHandler implements ValueHandler<Date>
+	{
+		@Override
+		public Object toObj(Date value) 
+		{
+			return value;
+		}
+
+		@Override
+		public Date fromObj(Object obj) 
+		{
+			Date n = (Date) obj;
+			return n;
+		}
+		
+		@Override
+		public Object copy(Object value)
+		{
+			Long n = ((Date)value).getTime();
+			return new Date(n);			
+		}
+
+		@Override
+		public Object fromString(String sVal) 
+		{
+			return Date.parse(sVal);
 		}
 	}
 	

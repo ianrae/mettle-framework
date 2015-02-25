@@ -1,4 +1,5 @@
 package org.mef.framework.metadata;
+import java.util.Date;
 import java.util.Locale;
 
 import org.mef.framework.metadata.validate.IValidator;
@@ -15,6 +16,7 @@ public class Value
 	public static final int TYPE_BOOLEAN=5;
 	public static final int TYPE_DOUBLE=6;
 	public static final int TYPE_LONG=7;
+	public static final int TYPE_DATE=8;
 
 	private int typeOfValue;
 	private Object obj;
@@ -77,6 +79,16 @@ public class Value
 		{
 			ValueHandler h = reg.get(TYPE_DOUBLE);
 			obj = h.toObj(new Double(d));
+		}
+	}
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public Value(int typeOfValue, Date dt)
+	{
+		this(typeOfValue);
+		if (typeOfValue == TYPE_DATE)
+		{
+			ValueHandler h = reg.get(TYPE_DATE);
+			obj = h.toObj(dt);
 		}
 	}
 
@@ -169,6 +181,14 @@ public class Value
 		ValueHandler h = reg.get(this.typeOfValue);
 		Double d = (Double)h.fromObj(this.obj);
 		return d;
+	}
+	@SuppressWarnings("rawtypes")
+	public Date getDate()
+	{
+		throwIfNot(TYPE_DATE);
+		ValueHandler h = reg.get(this.typeOfValue);
+		Date dt = (Date)h.fromObj(this.obj);
+		return dt;
 	}
 
 	public void forceValueObject(Object obj)

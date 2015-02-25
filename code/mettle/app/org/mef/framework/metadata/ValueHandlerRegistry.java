@@ -27,7 +27,8 @@ public class ValueHandlerRegistry
 				new DefaultValueHandlers.ListValueHandler(),
 				new DefaultValueHandlers.BooleanHandler(),
 				new DefaultValueHandlers.DoubleHandler(),
-				new DefaultValueHandlers.LongHandler()
+				new DefaultValueHandlers.LongHandler(),
+				new DefaultValueHandlers.DateHandler()
 		};
 		
 		reg = Arrays.asList(arregistry);
