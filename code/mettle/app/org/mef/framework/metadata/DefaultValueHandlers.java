@@ -177,7 +177,8 @@ public class DefaultValueHandlers
 		@Override
 		public Object fromString(String sVal) 
 		{
-			return Date.parse(sVal);
+			long n = Date.parse(sVal);
+			return new Date(n);
 		}
 	}
 	
