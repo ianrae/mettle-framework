@@ -2,6 +2,7 @@ package twixt;
 
 import static org.junit.Assert.*;
 
+import java.text.NumberFormat;
 import java.util.Locale;
 
 import org.junit.Test;
@@ -49,16 +50,17 @@ public class TwixtTests extends BaseTest
 			this.obj = obj;
 		}
 		
-		public void validate(ZValContext valctx)
+		public boolean validate(ZValContext valctx)
 		{
 			if (validator != null)
 			{
-				validator.validate(valctx, obj);
+				return validator.validate(valctx, obj);
 			}
+			return true;
 		}
 		
-		public abstract void parse(String input);
-		public abstract String render();
+		protected abstract void parse(String input);
+		protected abstract String render();
 		@Override
 		public String toString()
 		{
@@ -110,14 +112,71 @@ public class TwixtTests extends BaseTest
 		}
 		
 		@Override
-		public String render()
+		protected String render()
 		{
 			Integer n = get();
 			return n.toString();
 		}
 		
 		@Override
-		public void parse(String input)
+		protected void parse(String input)
+		{
+			Integer n = Integer.parseInt(input);
+			this.setUnderlyingValue(n);
+		}
+		
+		//return in our type
+		public Integer get()
+		{
+			return (Integer) obj;
+		}
+		public void set(Integer n)
+		{
+			setUnderlyingValue(n);
+		}
+	}
+	
+	public class ZCommaIntegerValue extends ZValue
+	{
+		private class Conv implements ZConverter
+		{
+
+			@Override
+			public String print(Object obj) 
+			{
+				Integer n = get();
+				String s = NumberFormat.getNumberInstance(Locale.US).format(n);
+				return s;
+			}
+
+			@Override
+			public Object parse(String s) 
+			{
+				s = s.replace(",", "");
+				Integer n = Integer.parseInt(s);
+				return n;
+			}
+			
+		}
+		public ZCommaIntegerValue()
+		{
+			this(0);
+		}
+		public ZCommaIntegerValue(Integer n)
+		{
+			super(n);
+			setConverter(new Conv());
+		}
+		
+		@Override
+		protected String render()
+		{
+			Integer n = get();
+			return n.toString();
+		}
+		
+		@Override
+		protected void parse(String input)
 		{
 			Integer n = Integer.parseInt(input);
 			this.setUnderlyingValue(n);
@@ -141,4 +200,13 @@ public class TwixtTests extends BaseTest
 		ZIntegerValue v = new ZIntegerValue();
 	}
 
+	@Test
+	public void testComma() 
+	{
+		ZCommaIntegerValue v = new ZCommaIntegerValue(12345);
+		assertEquals("12,345", v.toString());
+		
+		v.fromString("4,5678");
+		assertEquals(45678, v.get().intValue());
+	}
 }
