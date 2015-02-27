@@ -1,32 +1,38 @@
 package org.mef.framework.metadata;
 
-
 public class LongValue extends Value
 {
 	public LongValue()
 	{
 		this(0L);
 	}
-	public LongValue(long val)
+	public LongValue(Long n)
 	{
-		super(Value.TYPE_LONG, val);
-	}
-	
-	@Override
-	public String render()
-	{
-		Long n = this.getLong();
-		return n.toString();
-	}
-	
-	//return in our type
-	public long get()
-	{
-		return this.getLong();
-	}
-	public void setValue(long n)
-	{
-		this.forceValueObject(new Long(n));
+		super(n);
 	}
 
+	@Override
+	protected String render()
+	{
+		Long n = get();
+		return n.toString();
+	}
+
+	@Override
+	protected void parse(String input)
+	{
+		Long n = Long.parseLong(input);
+		this.setUnderlyingValue(n);
+	}
+
+	//return in our type
+	public Long get()
+	{
+		Long nVal = (Long)obj;
+		return nVal;
+	}
+	public void set(Long nVal)
+	{
+		setUnderlyingValue(nVal);
+	}
 }

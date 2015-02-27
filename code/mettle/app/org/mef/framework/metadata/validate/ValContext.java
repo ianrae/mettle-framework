@@ -23,12 +23,15 @@ public class ValContext
 	{
 		ValidationErrors errors = new ValidationErrors();
 		errors.map = mapErrors;
-		errors.itemName = val.getItemName();
-		if (! val.validate(errors))
-		{
-			failCount++;
-		}
+//		errors.itemName = val.getItemName();
+//		if (! val.validate(errors))
+//		{
+//			failCount++;
+//		}
 	}
+	
+	public void addError(String fmt, Object...strings)
+	{}
 	
 	public int getFailCount()
 	{

@@ -1,32 +1,37 @@
 package org.mef.framework.metadata;
 
-
 public class StringValue extends Value
 {
 	public StringValue()
 	{
-		this(null);
+		this("");
 	}
-	public StringValue(String val)
+	public StringValue(String n)
 	{
-		super(Value.TYPE_STRING, val);
+		super(n);
 	}
 
 	@Override
-	public String render() 
+	protected String render()
 	{
-		String s = this.getString();
-		return s;
+		String n = get();
+		return n.toString();
+	}
+
+	@Override
+	protected void parse(String input)
+	{
+		this.setUnderlyingValue(input);
 	}
 
 	//return in our type
 	public String get()
 	{
-		return this.getString();
+		String nVal = (String)obj;
+		return nVal;
 	}
-	public void setValue(String s)
+	public void set(String nVal)
 	{
-		this.forceValueObject(s);
+		setUnderlyingValue(nVal);
 	}
-
 }

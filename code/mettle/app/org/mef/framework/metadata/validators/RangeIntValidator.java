@@ -2,6 +2,7 @@ package org.mef.framework.metadata.validators;
 
 import org.mef.framework.metadata.validate.IValidator;
 import org.mef.framework.metadata.validate.ErrorMessages;
+import org.mef.framework.metadata.validate.ValContext;
 import org.mef.framework.metadata.validate.ValidationErrors;
 
 
@@ -16,15 +17,15 @@ public class RangeIntValidator implements IValidator
 		this.max = max;
 	}
 	@Override
-	public boolean validate(Object val, ValidationErrors errors) 
+	public boolean validate(ValContext valctx, Object obj) 
 	{
-		int n = (Integer)val;
+		int n = (Integer)obj;
 		
 		boolean ok = (n >= min && n <= max);
 		if (! ok)
 		{
 //			errors.addError(String.format("value %d not in range %d to %d", n, min, max));
-			errors.addError(ErrorMessages.RANGE_INT, n, min, max);
+			valctx.addError(ErrorMessages.RANGE_INT, n, min, max);
 			return false;
 		}
 		return true;

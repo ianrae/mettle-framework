@@ -1,31 +1,38 @@
 package org.mef.framework.metadata;
 
-
 public class BooleanValue extends Value
 {
 	public BooleanValue()
 	{
 		this(false);
 	}
-	public BooleanValue(boolean val)
+	public BooleanValue(Boolean n)
 	{
-		super(Value.TYPE_BOOLEAN, val);
+		super(n);
 	}
 
 	@Override
-	public String render()
+	protected String render()
 	{
-		Boolean b = this.getBoolean();
-		return b.toString();
+		Boolean n = get();
+		return n.toString();
 	}
-	
+
+	@Override
+	protected void parse(String input)
+	{
+		Boolean n = Boolean.parseBoolean(input);
+		this.setUnderlyingValue(n);
+	}
+
 	//return in our type
-	public boolean get()
+	public Boolean get()
 	{
-		return this.getBoolean();
+		Boolean nVal = (Boolean)obj;
+		return new Boolean(nVal);
 	}
-	public void setValue(boolean b)
+	public void set(Boolean bVal)
 	{
-		this.forceValueObject(new Boolean(b));
+		setUnderlyingValue(bVal);
 	}
 }

@@ -2,33 +2,40 @@ package org.mef.framework.metadata;
 
 import java.util.Date;
 
-
 public class DateValue extends Value
 {
 	public DateValue()
 	{
-		this(null);
+		this(new Date());
 	}
-	public DateValue(Date dt)
+	public DateValue(Date n)
 	{
-		super(Value.TYPE_DATE, dt);
+		super(n);
 	}
-	
+
 	@Override
-	public String render()
+	protected String render()
 	{
-		Date d = this.getDate();
-		return d.toString();
+		Date n = get();
+		return n.toString();
 	}
-	
+
+	@Override
+	protected void parse(String input)
+	{
+		long lval = Date.parse(input);
+		Date dt = new Date(lval);
+		this.setUnderlyingValue(dt);
+	}
+
 	//return in our type
 	public Date get()
 	{
-		return this.getDate();
+		Date nVal = (Date)obj;
+		return nVal;
 	}
-	public void setValue(Date dt)
+	public void set(Date dt)
 	{
-		this.forceValueObject(dt);
+		setUnderlyingValue(dt);
 	}
-
 }
