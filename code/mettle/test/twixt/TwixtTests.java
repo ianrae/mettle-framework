@@ -41,6 +41,8 @@ public class TwixtTests extends BaseTest
 			this.obj = obj;
 		}
 		
+		//??deep copy needed!!
+		
 		public Object getUnderlyingValue()
 		{
 			return obj;
@@ -128,15 +130,17 @@ public class TwixtTests extends BaseTest
 		//return in our type
 		public Integer get()
 		{
-			return (Integer) obj;
+			Integer nVal = (Integer)obj;
+			return new Integer(nVal.intValue()); //return copy
 		}
 		public void set(Integer n)
 		{
-			setUnderlyingValue(n);
+			Integer nVal = new Integer(n.intValue());
+			setUnderlyingValue(nVal);
 		}
 	}
 	
-	public class ZCommaIntegerValue extends ZValue
+	public class ZCommaIntegerValue extends ZIntegerValue
 	{
 		private class Conv implements ZConverter
 		{
@@ -168,29 +172,6 @@ public class TwixtTests extends BaseTest
 			setConverter(new Conv());
 		}
 		
-		@Override
-		protected String render()
-		{
-			Integer n = get();
-			return n.toString();
-		}
-		
-		@Override
-		protected void parse(String input)
-		{
-			Integer n = Integer.parseInt(input);
-			this.setUnderlyingValue(n);
-		}
-		
-		//return in our type
-		public Integer get()
-		{
-			return (Integer) obj;
-		}
-		public void set(Integer n)
-		{
-			setUnderlyingValue(n);
-		}
 
 	}
 	
