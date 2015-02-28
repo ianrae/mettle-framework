@@ -26,7 +26,7 @@ public class DateValue extends Value
 	}
 
 	@Override
-	//input has already been validated so parsing should not fail
+	//input has not yet been validated so parsing may fail and throw an exception
 	protected void parse(String input) throws Exception 
 	{
 		SimpleDateFormat dateFormat = createFormatter();
