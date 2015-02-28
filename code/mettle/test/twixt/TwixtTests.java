@@ -3,7 +3,9 @@ package twixt;
 import static org.junit.Assert.*;
 
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import org.junit.Test;
@@ -12,6 +14,7 @@ import org.mef.framework.metadata.Converter;
 import org.mef.framework.metadata.DateValue;
 import org.mef.framework.metadata.DoubleValue;
 import org.mef.framework.metadata.IntegerValue;
+import org.mef.framework.metadata.ListValue;
 import org.mef.framework.metadata.LongValue;
 import org.mef.framework.metadata.StringValue;
 import org.mef.framework.metadata.Value;
@@ -216,6 +219,13 @@ public class TwixtTests extends BaseTest
 		v6.set(45.6);
 		assertEquals(45.6, v6.get(), 0.001);
 		
+		List<Value> L = new ArrayList<Value>();
+		L.add(v3);
+		L.add(v4);
+		ListValue v7 = new ListValue();
+		assertEquals(0, v7.size());
+		v7.set(L);
+		assertEquals(2, v7.size());
 	}
 
 	@Test
