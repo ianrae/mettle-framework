@@ -35,7 +35,7 @@ public abstract class Value
 		}
 	}
 
-	protected abstract void parse(String input);
+	protected abstract void parse(String input) throws Exception;
 	protected abstract String render();
 	@Override
 	public String toString()
@@ -49,7 +49,7 @@ public abstract class Value
 			return render();
 		}
 	}
-	public void fromString(String input)
+	public void fromString(String input) throws Exception
 	{
 		if (converter != null)
 		{

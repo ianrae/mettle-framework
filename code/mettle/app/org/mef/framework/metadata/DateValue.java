@@ -20,22 +20,24 @@ public class DateValue extends Value
 	{
 		Date dt = get();
 		//default rendering is the same as HTML5 date input: yyyy-mm-dd
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat dateFormat = createFormatter();
 		String s = dateFormat.format(dt);
 		return s;
 	}
 
 	@Override
-	protected void parse(String input)
+	//input has already been validated so parsing should not fail
+	protected void parse(String input) throws Exception 
+	{
+		SimpleDateFormat dateFormat = createFormatter();
+		Date dt = dateFormat.parse(input);
+		this.setUnderlyingValue(dt);
+	}
+
+	private SimpleDateFormat createFormatter()
 	{
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		Date dt = null;
-		try {
-			dt = dateFormat.parse(input);
-			this.setUnderlyingValue(dt);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+		return dateFormat;
 	}
 
 	//return in our type

@@ -229,7 +229,7 @@ public class TwixtTests extends BaseTest
 	}
 	
 	@Test
-	public void testDate()
+	public void testDate() throws Exception
 	{
 		Date dt = new Date(115, 01, 21, 8, 30); //Thu Feb 21 08:30:00 EST 2015
 		log(dt.toString());
@@ -244,7 +244,7 @@ public class TwixtTests extends BaseTest
 	}
 
 	@Test
-	public void testComma() 
+	public void testComma() throws Exception 
 	{
 		CommaIntegerValue v = new CommaIntegerValue(12345);
 		assertEquals("12,345", v.toString());

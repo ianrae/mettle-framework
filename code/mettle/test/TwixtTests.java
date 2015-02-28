@@ -35,7 +35,7 @@ public class TwixtTests
 	}
 
 	@Test
-	public void test() 
+	public void test() throws Exception 
 	{
 		String s = "258-9099";
 		PhoneNum ph = new PhoneNum(s);
