@@ -17,7 +17,7 @@ public class RangeIntValidator implements IValidator
 		this.max = max;
 	}
 	@Override
-	public boolean validate(ValContext valctx, Object obj) 
+	public void validate(ValContext valctx, Object obj) 
 	{
 		int n = (Integer)obj;
 		
@@ -26,8 +26,6 @@ public class RangeIntValidator implements IValidator
 		{
 //			errors.addError(String.format("value %d not in range %d to %d", n, min, max));
 			valctx.addError(ErrorMessages.RANGE_INT, n, min, max);
-			return false;
 		}
-		return true;
 	}
 }

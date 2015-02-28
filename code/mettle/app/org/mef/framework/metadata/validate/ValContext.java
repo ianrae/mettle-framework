@@ -30,6 +30,7 @@ public class ValContext
 		errors.setItemName(currentItemName);
 		
 		errors.addError(fmt, strings);
+		failCount++;
 	}
 	
 	public int getFailCount()
@@ -56,4 +57,9 @@ public class ValContext
 		}
 		return resultL;
     }
+
+	public Object succeeded() 
+	{
+		return failCount == 0;
+	}
 }

@@ -8,14 +8,12 @@ import org.mef.framework.metadata.validate.ValidationErrors;
 public class NotEmptyStringValidator implements IValidator
 {
 	@Override
-	public boolean validate(ValContext valctx, Object obj) 
+	public void validate(ValContext valctx, Object obj) 
 	{
 		String s = (String)obj;
 		if (s == null || s.isEmpty())
 		{
 			valctx.addError(ErrorMessages.NOTEMPTY);
-			return false;
 		}
-		return true;
 	}
 }

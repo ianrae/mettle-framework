@@ -14,15 +14,14 @@ public class TwixtTests
 		{
 
 			@Override
-			public boolean validate(ValContext valctx, Object obj) 
+			public void validate(ValContext valctx, Object obj) 
 			{
-				String s = (String)obj;
+				StringValue val = (StringValue) obj;
+				String s = val.get();
 				if (s.length() != 8) //258-1833
 				{
 					valctx.addError("sdfdfs");
-					return false;
 				}
-				return true;
 			}
 			
 		}
@@ -45,13 +44,13 @@ public class TwixtTests
 		assertEquals(s, s2);
 		
 		ValContext vtx = new ValContext();
-		boolean b = ph.validate(vtx);
-		assertEquals(true, b);
+		ph.validate(vtx);
+		assertEquals(true, vtx.succeeded());
 		
 		ph.fromString("555-66");
 		assertEquals("555-66", ph.get());
-		b = ph.validate(vtx);
-		assertEquals(false, b);
+		ph.validate(vtx);
+		assertEquals(false, vtx.succeeded());
 	}
 
 }

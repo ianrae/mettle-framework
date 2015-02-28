@@ -59,21 +59,17 @@ public class ListValue extends Value
 	
 	
 	@Override
-	public boolean validate(ValContext valctx)
+	public void validate(ValContext valctx)
 	{
 		if (validator != null)
 		{
-			return validator.validate(valctx, obj);
+			validator.validate(valctx, obj);
+			return;
 		}
 		
 		for(Value val : get())
 		{
-			if (! val.validate(valctx))
-			{
-				return false;
-			}
+			val.validate(valctx);
 		}
-		
-		return true;
 	}	
 }

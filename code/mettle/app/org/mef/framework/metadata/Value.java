@@ -27,13 +27,12 @@ public abstract class Value
 		this.obj = obj;
 	}
 
-	public boolean validate(ValContext valctx)
+	public void validate(ValContext valctx)
 	{
 		if (validator != null)
 		{
-			return validator.validate(valctx, obj);
+			validator.validate(valctx, this);
 		}
-		return true;
 	}
 
 	protected abstract void parse(String input);

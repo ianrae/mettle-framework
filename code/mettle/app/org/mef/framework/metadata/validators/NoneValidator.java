@@ -8,7 +8,6 @@ public class NoneValidator implements IValidator
 {
 
 	@Override
-	public boolean validate(ValContext valctx, Object obj) {
-		return true;
+	public void validate(ValContext valctx, Object obj) {
 	}
 }
