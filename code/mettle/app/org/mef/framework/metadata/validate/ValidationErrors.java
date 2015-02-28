@@ -15,6 +15,10 @@ public class ValidationErrors
     {
     	return itemName;
     }
+    public void setItemName(String itemName)
+    {
+    	this.itemName = itemName;
+    }
     
     public void addError(String message, Object... arguments)
     {

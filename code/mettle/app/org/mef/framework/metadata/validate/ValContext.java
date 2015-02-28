@@ -5,33 +5,32 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.mef.framework.metadata.Value;
-
 
 
 public class ValContext
 {
 	private int failCount;
     private Map<String,List<ValidationErrorSpec>> mapErrors;
+    private String currentItemName;
 	
 	public ValContext()
 	{
 		mapErrors = new HashMap<String,List<ValidationErrorSpec>>();
 	}
 	
-	public void validate(Value val)
+	public void setCurrentItemName(String itemName)
 	{
-		ValidationErrors errors = new ValidationErrors();
-		errors.map = mapErrors;
-//		errors.itemName = val.getItemName();
-//		if (! val.validate(errors))
-//		{
-//			failCount++;
-//		}
+		currentItemName = itemName;
 	}
 	
 	public void addError(String fmt, Object...strings)
-	{}
+	{
+		ValidationErrors errors = new ValidationErrors();
+		errors.map = mapErrors;
+		errors.setItemName(currentItemName);
+		
+		errors.addError(fmt, strings);
+	}
 	
 	public int getFailCount()
 	{
