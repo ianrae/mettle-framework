@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.TreeMap;
 
 import org.junit.Test;
 import org.mef.framework.metadata.BooleanValue;
@@ -16,8 +18,10 @@ import org.mef.framework.metadata.DoubleValue;
 import org.mef.framework.metadata.IntegerValue;
 import org.mef.framework.metadata.ListValue;
 import org.mef.framework.metadata.LongValue;
+import org.mef.framework.metadata.SelectValue;
 import org.mef.framework.metadata.StringValue;
 import org.mef.framework.metadata.Value;
+import org.mef.framework.metadata.validate.ValContext;
 import org.mef.framework.metadata.validate.ValidationErrors;
 
 import tools.BaseTest;
@@ -251,5 +255,24 @@ public class TwixtTests extends BaseTest
 		
 		v.fromString("4,5678");
 		assertEquals(45678, v.get());
+	}
+	
+	@Test
+	public void testSelect() throws Exception 
+	{
+		Map<String,String> map = new TreeMap<String,String>();
+		map.put("1", "apple");
+		map.put("2", "banana");
+		map.put("3", "cherry");
+		
+		SelectValue v = new SelectValue("2", map);
+		assertEquals("2", v.get());
+		
+		ValContext vtx = new ValContext();
+		v.validate(vtx);
+		assertEquals(true, vtx.succeeded());
+		v.set("4");
+		v.validate(vtx);
+		assertEquals(false, vtx.succeeded());
 	}
 }
