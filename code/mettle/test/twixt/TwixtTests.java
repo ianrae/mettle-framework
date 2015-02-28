@@ -227,6 +227,21 @@ public class TwixtTests extends BaseTest
 		v7.set(L);
 		assertEquals(2, v7.size());
 	}
+	
+	@Test
+	public void testDate()
+	{
+		Date dt = new Date(115, 01, 21, 8, 30); //Thu Feb 21 08:30:00 EST 2015
+		log(dt.toString());
+		
+		DateValue val = new DateValue(dt);
+		String s = val.toString();
+		assertEquals("2015-02-21", s);
+		
+		val.fromString("2014-12-25");
+		s = val.toString();
+		assertEquals("2014-12-25", s);
+	}
 
 	@Test
 	public void testComma() 

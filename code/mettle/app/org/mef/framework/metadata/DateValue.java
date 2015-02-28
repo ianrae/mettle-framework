@@ -1,5 +1,7 @@
 package org.mef.framework.metadata;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class DateValue extends Value
@@ -16,16 +18,24 @@ public class DateValue extends Value
 	@Override
 	protected String render()
 	{
-		Date n = get();
-		return n.toString();
+		Date dt = get();
+		//default rendering is the same as HTML5 date input: yyyy-mm-dd
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		String s = dateFormat.format(dt);
+		return s;
 	}
 
 	@Override
 	protected void parse(String input)
 	{
-		long lval = Date.parse(input);
-		Date dt = new Date(lval);
-		this.setUnderlyingValue(dt);
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date dt = null;
+		try {
+			dt = dateFormat.parse(input);
+			this.setUnderlyingValue(dt);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 	}
 
 	//return in our type
