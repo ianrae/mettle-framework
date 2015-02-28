@@ -26,13 +26,13 @@ public class IntegerValue extends Value
 	}
 
 	//return in our type
-	public Integer get()
+	public int get()
 	{
 		Integer nVal = (Integer)obj;
 		return nVal;
 	}
-	public void set(Integer nVal)
+	public void set(int val)
 	{
-		setUnderlyingValue(nVal);
+		setUnderlyingValue(new Integer(val));
 	}
 }

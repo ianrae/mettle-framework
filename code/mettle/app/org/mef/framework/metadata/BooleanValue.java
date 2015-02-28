@@ -26,13 +26,13 @@ public class BooleanValue extends Value
 	}
 
 	//return in our type
-	public Boolean get()
+	public boolean get()
 	{
-		Boolean nVal = (Boolean)obj;
-		return new Boolean(nVal);
+		Boolean bVal = (Boolean)obj;
+		return bVal;
 	}
-	public void set(Boolean bVal)
+	public void set(boolean b)
 	{
-		setUnderlyingValue(bVal);
+		setUnderlyingValue(new Boolean(b));
 	}
 }

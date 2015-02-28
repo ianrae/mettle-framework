@@ -26,13 +26,13 @@ public class DoubleValue extends Value
 	}
 
 	//return in our type
-	public Double get()
+	public double get()
 	{
 		Double nVal = (Double)obj;
 		return nVal;
 	}
-	public void set(Double nVal)
+	public void set(double val)
 	{
-		setUnderlyingValue(nVal);
+		setUnderlyingValue(new Double(val));
 	}
 }

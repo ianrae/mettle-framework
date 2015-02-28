@@ -3,11 +3,17 @@ package twixt;
 import static org.junit.Assert.*;
 
 import java.text.NumberFormat;
+import java.util.Date;
 import java.util.Locale;
 
 import org.junit.Test;
+import org.mef.framework.metadata.BooleanValue;
 import org.mef.framework.metadata.Converter;
+import org.mef.framework.metadata.DateValue;
+import org.mef.framework.metadata.DoubleValue;
 import org.mef.framework.metadata.IntegerValue;
+import org.mef.framework.metadata.LongValue;
+import org.mef.framework.metadata.StringValue;
 import org.mef.framework.metadata.Value;
 import org.mef.framework.metadata.validate.ValidationErrors;
 
@@ -181,6 +187,35 @@ public class TwixtTests extends BaseTest
 	public void test() 
 	{
 		IntegerValue v = new IntegerValue();
+		v.set(44);
+		assertEquals(44, v.get());
+		
+		LongValue v2 = new LongValue();
+		v2.set(456L);
+		assertEquals(456L, v2.get());
+		
+		BooleanValue v3 = new BooleanValue();
+		assertEquals(false, v3.get());
+		v3.set(true);
+		assertEquals(true, v3.get());
+		
+		StringValue v4 = new StringValue();
+		assertEquals("", v4.get());
+		v4.set("sdf");
+		assertEquals("sdf", v4.get());
+		
+		DateValue v5 = new DateValue();
+		assertNotNull(v5.get());
+		
+		Date dt = new Date();
+		int yr = dt.getYear();
+		v5.set(dt);
+		assertEquals(yr, v5.get().getYear());
+		
+		DoubleValue v6 = new DoubleValue();
+		v6.set(45.6);
+		assertEquals(45.6, v6.get(), 0.001);
+		
 	}
 
 	@Test
@@ -190,6 +225,6 @@ public class TwixtTests extends BaseTest
 		assertEquals("12,345", v.toString());
 		
 		v.fromString("4,5678");
-		assertEquals(45678, v.get().intValue());
+		assertEquals(45678, v.get());
 	}
 }

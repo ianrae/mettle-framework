@@ -26,13 +26,13 @@ public class LongValue extends Value
 	}
 
 	//return in our type
-	public Long get()
+	public long get()
 	{
 		Long nVal = (Long)obj;
 		return nVal;
 	}
-	public void set(Long nVal)
+	public void set(long nVal)
 	{
-		setUnderlyingValue(nVal);
+		setUnderlyingValue(new Long(nVal));
 	}
 }
