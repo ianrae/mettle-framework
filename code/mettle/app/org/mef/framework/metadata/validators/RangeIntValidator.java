@@ -1,5 +1,7 @@
 package org.mef.framework.metadata.validators;
 
+import org.mef.framework.metadata.IntegerValue;
+import org.mef.framework.metadata.Value;
 import org.mef.framework.metadata.validate.IValidator;
 import org.mef.framework.metadata.validate.ErrorMessages;
 import org.mef.framework.metadata.validate.ValContext;
@@ -17,9 +19,10 @@ public class RangeIntValidator implements IValidator
 		this.max = max;
 	}
 	@Override
-	public void validate(ValContext valctx, Object obj) 
+	public void validate(ValContext valctx, Value obj) 
 	{
-		int n = (Integer)obj;
+		IntegerValue value = (IntegerValue) obj;
+		int n = value.get();
 		
 		boolean ok = (n >= min && n <= max);
 		if (! ok)

@@ -5,6 +5,7 @@ import org.mef.framework.metadata.validate.IValidator;
 import org.mef.framework.metadata.validate.ValContext;
 import org.mef.framework.metadata.validate.ValidationErrors;
 import org.mef.framework.metadata.StringValue;
+import org.mef.framework.metadata.Value;
 
 public class TwixtTests 
 {
@@ -14,7 +15,7 @@ public class TwixtTests
 		{
 
 			@Override
-			public void validate(ValContext valctx, Object obj) 
+			public void validate(ValContext valctx, Value obj) 
 			{
 				StringValue val = (StringValue) obj;
 				String s = val.get();

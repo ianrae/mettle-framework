@@ -63,7 +63,7 @@ public class ListValue extends Value
 	{
 		if (validator != null)
 		{
-			validator.validate(valctx, obj);
+			validator.validate(valctx, this);
 			return;
 		}
 		
