@@ -274,5 +274,8 @@ public class TwixtTests extends BaseTest
 		v.set("4");
 		v.validate(vtx);
 		assertEquals(false, vtx.succeeded());
+		
+		assertEquals(false, SelectValue.class.isAssignableFrom(StringValue.class));
+		assertEquals(true, StringValue.class.isAssignableFrom(SelectValue.class)); //StringValue v = vselect;
 	}
 }
