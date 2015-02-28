@@ -5,7 +5,7 @@ import java.util.Map;
 import org.mef.framework.metadata.validate.IValidator;
 import org.mef.framework.metadata.validate.ValContext;
 
-public class SelectValue extends StringValue
+public class LongSelectValue extends LongValue
 {
 	class Validator implements IValidator
 	{
@@ -17,27 +17,27 @@ public class SelectValue extends StringValue
 				return;
 			}
 
-			String id = (String)value.toString();
-			boolean b = options.containsKey(id);
+			LongValue lval = (LongValue)value;
+			Long tmp = lval.get();
+			boolean b = options.containsKey(tmp);
 			if (!b)
 			{
-				valctx.addError("select: unknown id: " + id);
+				valctx.addError("select: unknown id: " + tmp.toString());
 			}
 		}
 	}
 
-	protected Map<String, String> options;
+	protected Map<Long, String> options;
 
-	public SelectValue()
+	public LongSelectValue()
 	{
-		this("", null);
+		this(0L, null);
 	}
-	public SelectValue(String id)
+	public LongSelectValue(Long id) 
 	{
 		this(id, null);
 	}
-
-	public SelectValue(String id, Map<String,String> options) 
+	public LongSelectValue(Long id, Map<Long,String> options) 
 	{
 		super(id);
 		this.options = options;
@@ -45,11 +45,11 @@ public class SelectValue extends StringValue
 	}
 
 
-	public Map<String,String> options()
+	public Map<Long,String> options()
 	{
 		return options;
 	}
-	public void setOptions(Map<String,String> map)
+	public void setOptions(Map<Long,String> map)
 	{
 		options = map;
 	}

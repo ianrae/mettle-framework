@@ -17,6 +17,7 @@ import org.mef.framework.metadata.DateValue;
 import org.mef.framework.metadata.DoubleValue;
 import org.mef.framework.metadata.IntegerValue;
 import org.mef.framework.metadata.ListValue;
+import org.mef.framework.metadata.LongSelectValue;
 import org.mef.framework.metadata.LongValue;
 import org.mef.framework.metadata.SelectValue;
 import org.mef.framework.metadata.StringValue;
@@ -277,5 +278,23 @@ public class TwixtTests extends BaseTest
 		
 		assertEquals(false, SelectValue.class.isAssignableFrom(StringValue.class));
 		assertEquals(true, StringValue.class.isAssignableFrom(SelectValue.class)); //StringValue v = vselect;
+	}
+	@Test
+	public void testLongSelect() throws Exception 
+	{
+		Map<Long,String> map = new TreeMap<Long,String>();
+		map.put(1L, "apple");
+		map.put(2L, "banana");
+		map.put(3L, "cherry");
+		
+		LongSelectValue v = new LongSelectValue(2L, map);
+		assertEquals(2L, v.get());
+		
+		ValContext vtx = new ValContext();
+		v.validate(vtx);
+		assertEquals(true, vtx.succeeded());
+		v.set(4L);
+		v.validate(vtx);
+		assertEquals(false, vtx.succeeded());
 	}
 }
