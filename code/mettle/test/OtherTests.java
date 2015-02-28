@@ -10,6 +10,8 @@ import org.mef.framework.sfx.SfxFileUtils;
 import testentities.Hotel;
 import testentities.StreetAddress;
 import tools.BaseTest;
+import java.util.Date;
+import java.text.*;
 
 
 public class OtherTests extends BaseTest
@@ -99,5 +101,19 @@ public class OtherTests extends BaseTest
 		assertEquals("StreetAddress", clazz.getSimpleName());
 	}
 	
-	
+	@Test
+	public void testFmt()
+	{
+		int planet = 7;
+		 String event = "a disturbance in the Force";
+
+		 String result = MessageFormat.format(
+		     "At {1,time} on {1,date}, there was {2} on planet {0,number,integer}.",
+		     planet, new Date(), event);
+		 log(result);
+
+		 result = MessageFormat.format(
+			     "on planet {0}.", planet);
+			 log(result);
+	}	
 }
