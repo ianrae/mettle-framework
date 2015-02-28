@@ -1,4 +1,5 @@
 package org.mef.framework.metadata.validate;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -37,10 +38,16 @@ public class ValidationErrors
     
 	private String getMessageFromConf(String message, Object... arguments) 
 	{
-		String s = Messages.get(message, arguments);
-		return s;
+		if (Messages.isDefined(message))
+		{
+			String s = Messages.get(message, arguments);
+			return s;
+		}
+		else
+		{
+			String s = MessageFormat.format(message, arguments);
+			return s;
+		}
 	}
-    
-    
 
 }
