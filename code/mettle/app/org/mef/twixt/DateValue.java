@@ -1,4 +1,4 @@
-package org.mef.framework.metadata;
+package org.mef.twixt;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

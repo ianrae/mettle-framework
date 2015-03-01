@@ -1,4 +1,4 @@
-package org.mef.framework.metadata;
+package org.mef.twixt;
 
 public class DoubleValue extends Value
 {

@@ -1,4 +1,4 @@
-package org.mef.framework.metadata.validate;
+package org.mef.twixt.validate;
 
 import java.util.ArrayList;
 import java.util.HashMap;

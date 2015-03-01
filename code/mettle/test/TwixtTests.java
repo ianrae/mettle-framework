@@ -1,17 +1,17 @@
 import static org.junit.Assert.*;
 
 import org.junit.Test;
-import org.mef.framework.metadata.validate.IValidator;
-import org.mef.framework.metadata.validate.ValContext;
-import org.mef.framework.metadata.validate.ValidationErrors;
-import org.mef.framework.metadata.StringValue;
-import org.mef.framework.metadata.Value;
+import org.mef.twixt.StringValue;
+import org.mef.twixt.Value;
+import org.mef.twixt.validate.Validator;
+import org.mef.twixt.validate.ValContext;
+import org.mef.twixt.validate.ValidationErrors;
 
 public class TwixtTests 
 {
 	public static class PhoneNum extends StringValue
 	{
-		private class Validator implements IValidator
+		private class MyValidator implements Validator
 		{
 
 			@Override
@@ -30,7 +30,7 @@ public class TwixtTests
 		public PhoneNum(String val) 
 		{
 			super(val);
-			this.setValidator(new Validator());
+			this.setValidator(new MyValidator());
 		}
 	}
 

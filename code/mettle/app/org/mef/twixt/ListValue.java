@@ -1,9 +1,10 @@
-package org.mef.framework.metadata;
+package org.mef.twixt;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.mef.framework.metadata.validate.ValContext;
+import org.mef.twixt.validate.ValContext;
+
 
 public class ListValue extends Value
 {

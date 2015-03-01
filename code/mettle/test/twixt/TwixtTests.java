@@ -11,19 +11,19 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import org.junit.Test;
-import org.mef.framework.metadata.BooleanValue;
-import org.mef.framework.metadata.Converter;
-import org.mef.framework.metadata.DateValue;
-import org.mef.framework.metadata.DoubleValue;
-import org.mef.framework.metadata.IntegerValue;
-import org.mef.framework.metadata.ListValue;
-import org.mef.framework.metadata.LongSelectValue;
-import org.mef.framework.metadata.LongValue;
-import org.mef.framework.metadata.SelectValue;
-import org.mef.framework.metadata.StringValue;
-import org.mef.framework.metadata.Value;
-import org.mef.framework.metadata.validate.ValContext;
-import org.mef.framework.metadata.validate.ValidationErrors;
+import org.mef.twixt.BooleanValue;
+import org.mef.twixt.Converter;
+import org.mef.twixt.DateValue;
+import org.mef.twixt.DoubleValue;
+import org.mef.twixt.IntegerValue;
+import org.mef.twixt.ListValue;
+import org.mef.twixt.LongSelectValue;
+import org.mef.twixt.LongValue;
+import org.mef.twixt.SelectValue;
+import org.mef.twixt.StringValue;
+import org.mef.twixt.Value;
+import org.mef.twixt.validate.ValContext;
+import org.mef.twixt.validate.ValidationErrors;
 
 import tools.BaseTest;
 

@@ -1,13 +1,14 @@
-package org.mef.framework.metadata;
+package org.mef.twixt;
 
 import java.util.Map;
 
-import org.mef.framework.metadata.validate.IValidator;
-import org.mef.framework.metadata.validate.ValContext;
+import org.mef.twixt.validate.Validator;
+import org.mef.twixt.validate.ValContext;
+
 
 public class SelectValue extends StringValue
 {
-	class Validator implements IValidator
+	class SelectValidator implements Validator
 	{
 		@Override
 		public void validate(ValContext valctx, Value value) 
@@ -41,7 +42,7 @@ public class SelectValue extends StringValue
 	{
 		super(id);
 		this.options = options;
-		setValidator(new Validator());
+		setValidator(new SelectValidator());
 	}
 
 

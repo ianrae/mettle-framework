@@ -1,14 +1,13 @@
-package org.mef.framework.metadata.validators;
+package org.mef.twixt.validators;
 
-import org.mef.framework.metadata.IntegerValue;
-import org.mef.framework.metadata.Value;
-import org.mef.framework.metadata.validate.IValidator;
-import org.mef.framework.metadata.validate.ErrorMessages;
-import org.mef.framework.metadata.validate.ValContext;
-import org.mef.framework.metadata.validate.ValidationErrors;
+import org.mef.twixt.IntegerValue;
+import org.mef.twixt.Value;
+import org.mef.twixt.validate.ErrorMessages;
+import org.mef.twixt.validate.Validator;
+import org.mef.twixt.validate.ValContext;
 
 
-public class RangeIntValidator implements IValidator
+public class RangeIntValidator implements Validator
 {
 	private int min;
 	private int max;

@@ -1,13 +1,14 @@
-package org.mef.framework.metadata;
-import org.mef.framework.metadata.validate.IValidator;
-import org.mef.framework.metadata.validate.ValContext;
+package org.mef.twixt;
+
+import org.mef.twixt.validate.Validator;
+import org.mef.twixt.validate.ValContext;
 
 
 public abstract class Value
 {
 	protected Object obj;
 	protected Converter converter;
-	protected IValidator validator;
+	protected Validator validator;
 
 	public Value()
 	{}
@@ -67,10 +68,10 @@ public abstract class Value
 	public void setConverter(Converter converter) {
 		this.converter = converter;
 	}
-	public IValidator getValidator() {
+	public Validator getValidator() {
 		return validator;
 	}
-	public void setValidator(IValidator validator) {
+	public void setValidator(Validator validator) {
 		this.validator = validator;
 	}
 

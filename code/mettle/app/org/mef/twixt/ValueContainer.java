@@ -1,5 +1,6 @@
-package org.mef.framework.metadata;
-import org.mef.framework.metadata.validate.ValContext;
+package org.mef.twixt;
+
+import org.mef.twixt.validate.ValContext;
 
 
 public interface ValueContainer

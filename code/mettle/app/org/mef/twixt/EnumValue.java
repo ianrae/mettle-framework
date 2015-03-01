@@ -1,3 +1,4 @@
+package org.mef.twixt;
 //package org.mef.framework.metadata;
 //
 //import org.mef.framework.metadata.validate.ValidationErrors;
