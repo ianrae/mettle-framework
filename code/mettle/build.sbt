@@ -9,7 +9,8 @@ libraryDependencies ++= Seq(
   cache,
     "commons-io" % "commons-io" % "2.3",
     "commons-lang" % "commons-lang" % "2.6",
-	"play-sprig" % "play-sprig_2.11" % "0.2-SNAPSHOT"	  
+	"play-sprig" % "play-sprig_2.11" % "0.2-SNAPSHOT",
+	"twixt" % "twixt_2.11" % "0.1.0-SNAPSHOT"	
 )
 
 lazy val root = (project in file(".")).enablePlugins(PlayJava)
