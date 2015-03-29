@@ -8,7 +8,7 @@ package <package>;
 
 import mef.entities.*;
 import java.util.List;
-import org.mef.framework.binder.IFormBinder;
+import org.mef.twixt.binder.IFormBinder;
 import org.mef.framework.dao.IDAO;
 import mef.gen.*;
 import java.util.Date;

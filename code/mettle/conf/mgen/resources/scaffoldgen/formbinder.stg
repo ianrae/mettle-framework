@@ -9,7 +9,7 @@ import mef.entities.*;
 import mef.viewinputs.*;
 
 import org.mef.framework.binder.BinderHelper;
-import org.mef.framework.binder.IFormBinder;
+import org.mef.twixt.binder.IFormBinder;
 import org.mef.framework.sfx.SfxBaseObj;
 import org.mef.framework.sfx.SfxContext;
 

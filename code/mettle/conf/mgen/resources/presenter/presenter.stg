@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.mef.framework.Logger;
-import org.mef.framework.binder.IFormBinder;
+import org.mef.twixt.binder.IFormBinder;
 import org.mef.framework.commands.CreateCommand;
 import org.mef.framework.commands.DeleteCommand;
 import org.mef.framework.commands.EditCommand;
