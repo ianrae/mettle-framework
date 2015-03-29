@@ -3,7 +3,7 @@ package org.mef.framework.commands;
 import java.util.Map;
 
 import org.mef.framework.auth2.AuthUser;
-import org.mef.framework.binder.IFormBinder;
+import org.mef.twixt.binder.IFormBinder;
 
 public class Command 
 {

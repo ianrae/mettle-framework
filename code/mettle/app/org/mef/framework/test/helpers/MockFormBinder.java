@@ -1,7 +1,7 @@
 package org.mef.framework.test.helpers;
 
 import org.mef.framework.entities.*;
-import org.mef.framework.binder.IFormBinder;
+import org.mef.twixt.binder.IFormBinder;
 
 import play.data.Form;
 

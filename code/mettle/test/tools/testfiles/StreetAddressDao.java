@@ -2,7 +2,6 @@ package tools.testfiles;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.mef.framework.binder.IFormBinder;
 import org.mef.framework.dao.IDAO;
 import org.mef.framework.fluent.IQueryActionProcessor;
 import org.mef.framework.fluent.QStep;

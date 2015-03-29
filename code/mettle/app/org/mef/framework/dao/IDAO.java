@@ -1,7 +1,6 @@
 package org.mef.framework.dao;
 
 
-import org.mef.framework.binder.IFormBinder;
 import org.mef.framework.sfx.SfxContext;
 
 public interface IDAO 

@@ -1,5 +1,7 @@
 package org.mef.framework.binder;
 
+import org.mef.twixt.binder.IFormBinder;
+
 import play.data.Form;
 
 public class GenericMockFormBinder<T> implements IFormBinder<T>
